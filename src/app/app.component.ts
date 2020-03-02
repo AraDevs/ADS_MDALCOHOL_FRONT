@@ -3,6 +3,8 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 import { MENU } from '@config/menu-config';
+import { Store } from '@ngrx/store';
+import { SetLoggedUser } from '@state/global.actions';
 
 @Component({
   selector: 'md-root',
@@ -17,5 +19,7 @@ export class AppComponent {
     shareReplay()
   );
 
-  constructor(private breakpointObserver: BreakpointObserver) {}
+  constructor(private breakpointObserver: BreakpointObserver, private store: Store<any>) {
+    this.store.dispatch(SetLoggedUser({ username: 'Moises' }));
+  }
 }

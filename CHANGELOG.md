@@ -17,6 +17,8 @@ Create commit example:
 ## [ADD] 01-03-2020 21:22
 Add basic dashboard configuration
 
-
 ## [ADD] 01-03-2020 22:10
 Add transloco
+
+## [ADD] 01-03-2020 22:48
+Add NgRx

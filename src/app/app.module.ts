@@ -13,15 +13,15 @@ import { MatListModule } from '@angular/material/list';
 import { HttpClientModule } from '@angular/common/http';
 import { TranslocoRootModule } from './transloco-root.module';
 import { RouterModule } from '@angular/router';
+import { CoreModule } from '@core/core.module';
 
 @NgModule({
-  declarations: [
-    AppComponent
-  ],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    CoreModule,
     LayoutModule,
     MatToolbarModule,
     MatButtonModule,
@@ -30,9 +30,9 @@ import { RouterModule } from '@angular/router';
     MatListModule,
     HttpClientModule,
     TranslocoRootModule,
-    RouterModule
+    RouterModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}

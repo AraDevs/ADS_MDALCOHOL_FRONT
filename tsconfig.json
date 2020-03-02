@@ -33,6 +33,9 @@
       ],
       "@config/*": [
         "app/config/*"
+      ],
+      "@state/*": [
+        "app/state/*"
       ]
     }
   },
