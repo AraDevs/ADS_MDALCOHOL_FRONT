@@ -28,3 +28,6 @@ Add Basic configuration of Ngrx using effects in UsersModule
 
 ## [ADD] 02-03-2020 23:02
 Add angular material module
+
+## [ADD] 02-03-2020 23:12
+Add AppState Interface
