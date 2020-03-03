@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 import { MENU } from '@config/menu-config';
 import { Store } from '@ngrx/store';
-import { SetLoggedUser } from '@state/global.actions';
+import { SetLoggedUser } from '@state/actions';
 
 @Component({
   selector: 'md-root',

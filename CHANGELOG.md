@@ -22,3 +22,6 @@ Add transloco
 
 ## [ADD] 01-03-2020 22:48
 Add NgRx
+
+## [ADD] 02-03-2020 22:51
+Add Basic configuration of Ngrx using effects in UsersModule

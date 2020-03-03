@@ -1,16 +1,17 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { StoreModule } from '@ngrx/store';
-import { reducer } from '@state/global.reducer';
-import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-import { environment } from '@environments/environment';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {StoreModule} from '@ngrx/store';
+import {StoreDevtoolsModule} from '@ngrx/store-devtools';
+import {environment} from '@environments/environment';
+import {EffectsModule} from '@ngrx/effects';
+import {reducer} from '@state/index';
 
 @NgModule({
   declarations: [],
   imports: [
     CommonModule,
     StoreModule.forRoot(
-      { app: reducer },
+      {app: reducer},
       {
         runtimeChecks: {
           strictStateImmutability: true,
@@ -23,7 +24,9 @@ import { environment } from '@environments/environment';
     StoreDevtoolsModule.instrument({
       maxAge: 25,
       logOnly: environment.production
-    })
+    }),
+    EffectsModule.forRoot([])
   ]
 })
-export class CoreModule {}
+export class CoreModule {
+}

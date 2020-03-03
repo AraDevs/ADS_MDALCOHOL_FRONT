@@ -1,1 +1,5 @@
-<div>{{'Users.users' | transloco }}</div>
+<ul>
+  <li *ngFor="let user of users$ | async">
+    {{user.username}}
+  </li>
+</ul>
