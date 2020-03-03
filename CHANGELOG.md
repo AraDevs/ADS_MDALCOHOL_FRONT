@@ -25,3 +25,6 @@ Add NgRx
 
 ## [ADD] 02-03-2020 22:51
 Add Basic configuration of Ngrx using effects in UsersModule
+
+## [ADD] 02-03-2020 23:02
+Add angular material module
