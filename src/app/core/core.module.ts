@@ -9,6 +9,8 @@ import {HttpClientModule} from '@angular/common/http';
 import {TranslocoRootModule} from '../transloco-root.module';
 import {RouterModule} from '@angular/router';
 import {MaterialModule} from '@shared/material.module';
+import {RequestHttpClient} from '@core/client/http/request-http-client';
+import {RequestClient} from '@core/client/request-client';
 
 @NgModule({
   declarations: [],
@@ -37,6 +39,12 @@ import {MaterialModule} from '@shared/material.module';
     }),
     // Configure Effects
     EffectsModule.forRoot([])
+  ],
+  providers: [
+    {
+      provide: RequestClient,
+      useClass: RequestHttpClient
+    }
   ],
   exports: [
     TranslocoRootModule,

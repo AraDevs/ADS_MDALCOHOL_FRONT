@@ -31,3 +31,6 @@ Add angular material module
 
 ## [ADD] 02-03-2020 23:12
 Add AppState Interface
+
+## [ADD] 04-03-2020 21:08
+Add HttpRequestClient
