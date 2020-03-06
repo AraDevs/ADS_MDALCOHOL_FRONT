@@ -1,6 +1,9 @@
-import { State } from './reducer';
 import { createSelector } from '@ngrx/store';
+import { AppState } from './app-state';
 
-export const selectAuth = (state: State) => state.auth;
 
-export const selectUserLogged = createSelector(selectAuth, auth => auth.userLogged);
+export const selectError = createSelector(
+  (state: AppState) => state.app.errors,
+  (errors, props: { action: string; }) => errors.find(obj => obj.action === props.action)
+);
+

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ResponseClientResultModel } from '@core/client';
+import { ResponseClientResultModel, RequestData } from '@core/client';
 import { Actions, ofType } from '@ngrx/effects';
 import { Observable } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
@@ -15,35 +15,46 @@ export class EffectsFactoryService {
 
 
   create(config: EffectConfigModel): Observable<Action> {
-    const { requestConfig, requestData, actionsConfig } = config;
+    const { requestConfig, resource, resourceFactory, actionsConfig, requestOptions } = config;
     const { method, requestClient } = requestConfig;
     const { actionToListen } = actionsConfig;
 
     return this.actions$.pipe(
       ofType(actionToListen),
       switchMap((action: { type: string, data?: any; }) => {
+        const requestData = new RequestData();
         const isDataAction = !!action.data;
+
+        requestData.resource = resource;
+
         if (isDataAction) {
+          requestData.resource = !!resource ? resource : resourceFactory.create(action.data);
           requestData.data = action.data;
+          requestData.options = !!requestOptions ? requestOptions : null;
         }
+
 
         const { result } = requestClient[method]<any>(requestData);
         return result.pipe(
           map((res: Partial<ResponseClientResultModel<any>>) =>
-            this.getAction(res, actionsConfig))
+            this.getAction(action.type)(res, actionsConfig))
         ) as Observable<Action>;
       })
     );
   }
 
+
   // Returns success action or fail action that will be dispatched to the store
-  private getAction(result: Partial<ResponseClientResultModel<any>>, config: EffectActionsConfig): Action {
-    const { successAction, failAction } = config;
-    const { success, data, error } = result;
-    if (success) {
-      return successAction({ data });
-    }
-    return failAction({ data: error });
+  private getAction(action: string) {
+    return (result: Partial<ResponseClientResultModel<any>>, config: EffectActionsConfig) => {
+      const { successAction, failAction } = config;
+      const { success, data, error } = result;
+      if (success) {
+        return successAction({ data });
+      }
+
+      return failAction({ data: { error, action } });
+    };
   }
 
 }

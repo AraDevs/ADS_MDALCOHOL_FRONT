@@ -37,3 +37,6 @@ Add HttpRequestClient
 
 ## [ADD] 05-03-2020 11:38
 Create a basic request abstraction
+
+## [ADD] 05-03-2020 14:24
+Add HttpResourceFactory

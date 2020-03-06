@@ -3,3 +3,7 @@
     {{user.username}}
   </li>
 </ul>
+<ng-container *ngIf="user$ | async as user">
+  <h1>{{user.name | uppercase}}</h1>
+</ng-container>
+

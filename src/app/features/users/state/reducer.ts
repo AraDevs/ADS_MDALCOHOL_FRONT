@@ -1,19 +1,22 @@
-import {createReducer, Action, on} from '@ngrx/store';
+import { createReducer, Action, on } from '@ngrx/store';
 import * as actions from './actions';
 
 export const FEATURE_KEY = 'users';
 
 export interface UsersState {
   users: any[];
+  user: any;
 }
 
 const INITIAL_STATE: UsersState = {
-  users: []
+  users: [],
+  user: null
 };
 
 const usersReducer = createReducer(
   INITIAL_STATE,
-  on(actions.UsersLoadedSuccess, (state, {data}) => ({...state, users: data}))
+  on(actions.UsersLoadedSuccess, (state, { data }) => ({ ...state, users: data })),
+  on(actions.UserLoadedSuccess, (state, { data }) => ({ ...state, user: data }))
 );
 
 export function reducer(state: UsersState | undefined, action: Action) {
