@@ -1,3 +1,8 @@
+<button (click)="load()">LoadUsers</button>
+<br>
+<ng-container *ngIf="loading$ | async ">
+  Loading ...
+</ng-container>
 <ul>
   <li *ngFor="let user of users$ | async">
     {{user.username}}
@@ -6,4 +11,7 @@
 <ng-container *ngIf="user$ | async as user">
   <h1>{{user.name | uppercase}}</h1>
 </ng-container>
-
+<ng-container *ngIf="error$ | async as result">
+  <div *ngIf="result.translate">{{ result.message | transloco }}</div>
+  <div *ngIf="!result.translate">{{ result.message }}</div>
+</ng-container>

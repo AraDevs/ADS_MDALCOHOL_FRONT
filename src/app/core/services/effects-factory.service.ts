@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
-import { ResponseClientResultModel, RequestData } from '@core/client';
+import { RequestData, ResponseClientResultModel } from '@core/client';
+import { EffectActionsConfig, EffectConfigModel } from '@core/types';
 import { Actions, ofType } from '@ngrx/effects';
+import { TypedAction } from '@ngrx/store/src/models';
 import { Observable } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
-import { EffectConfigModel, EffectActionsConfig } from '@core/types';
-import { TypedAction } from '@ngrx/store/src/models';
 
 
 type Action = { data: any; } & TypedAction<string>;
@@ -52,8 +52,7 @@ export class EffectsFactoryService {
       if (success) {
         return successAction({ data });
       }
-
-      return failAction({ data: { error, action } });
+      return failAction({ data: { error, fromServer: false } });
     };
   }
 

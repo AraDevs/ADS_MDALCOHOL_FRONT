@@ -1,3 +1,6 @@
 {
-  "users": "Usuarios"
+  "users": "Usuarios",
+  "Errors": {
+    "LoadUsersFail": "Error al cargar usuarios"
+  }
 }

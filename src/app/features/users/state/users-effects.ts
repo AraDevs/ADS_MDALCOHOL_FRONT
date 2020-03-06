@@ -5,7 +5,6 @@ import { EffectActionsConfig, EffectConfigModel, EffectRequestConfig } from '@co
 import { createEffect } from '@ngrx/effects';
 import * as actions from './actions';
 import { RestResourceFactory } from '@core/utils';
-import {GlobalError} from '@state/index';
 
 @Injectable()
 export class UsersEffects {
@@ -15,27 +14,26 @@ export class UsersEffects {
     private requestClient: RequestClient) { }
 
   loadUsers$ = createEffect(() => {
-    const { LoadUsers, UsersLoadedSuccess } = actions;
+    const { LoadUsers, UsersLoadedSuccess, LoadUsersFail } = actions;
 
     const effectReqConfig = new EffectRequestConfig(this.requestClient, 'get');
-    const actionsConfig = new EffectActionsConfig(LoadUsers, UsersLoadedSuccess, GlobalError);
-    const config = new EffectConfigModel(effectReqConfig, actionsConfig, 'https://jsonplaceholder.typicode.com/users');
+    const actionsConfig = new EffectActionsConfig(LoadUsers, UsersLoadedSuccess, LoadUsersFail);
+    const config = new EffectConfigModel(effectReqConfig, actionsConfig, 'https://jsonplaceholder.typicode.com/userss');
 
     return this.effectFactory.create(config);
   });
 
   loadUser$ = createEffect(() => {
-    const { LoadUser, UserLoadedSuccess } = actions;
+    const { LoadUser, UserLoadedSuccess, LoadUserFaild } = actions;
 
     const effectReqConfig = new EffectRequestConfig(this.requestClient, 'get');
-    const actionsConfig = new EffectActionsConfig(LoadUser, UserLoadedSuccess, GlobalError);
+    const actionsConfig = new EffectActionsConfig(LoadUser, UserLoadedSuccess, LoadUserFaild);
 
     const config = new EffectConfigModel(effectReqConfig, actionsConfig);
     config.resourceFactory = new RestResourceFactory('https://jsonplaceholder.typicode.com/users/$$0', ['id']);
     return this.effectFactory.create(config);
   });
 
-
 }
-// 'https://jsonplaceholder.typicode.com/users'
+
 

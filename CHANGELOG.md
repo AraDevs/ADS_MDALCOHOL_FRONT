@@ -40,3 +40,6 @@ Create a basic request abstraction
 
 ## [ADD] 05-03-2020 14:24
 Add HttpResourceFactory
+
+## [ADD] 05-03-2020 16:58
+Add solution for loading and error
