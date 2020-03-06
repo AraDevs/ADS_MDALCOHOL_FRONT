@@ -34,3 +34,6 @@ Add AppState Interface
 
 ## [ADD] 04-03-2020 21:08
 Add HttpRequestClient
+
+## [ADD] 05-03-2020 11:38
+Create a basic request abstraction

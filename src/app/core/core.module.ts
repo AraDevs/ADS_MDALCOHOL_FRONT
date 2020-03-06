@@ -9,8 +9,7 @@ import {HttpClientModule} from '@angular/common/http';
 import {TranslocoRootModule} from '../transloco-root.module';
 import {RouterModule} from '@angular/router';
 import {MaterialModule} from '@shared/material.module';
-import {RequestHttpClient} from '@core/client/http/request-http-client';
-import {RequestClient} from '@core/client/request-client';
+import {RequestClient, RequestHttpClient} from '@core/client';
 
 @NgModule({
   declarations: [],

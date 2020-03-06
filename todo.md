@@ -1,3 +1,3 @@
 - Create effect factory
 - Create Request factory
-- Create 
+- Create input component
