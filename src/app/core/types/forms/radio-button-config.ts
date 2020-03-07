@@ -1,5 +1,5 @@
-import { FieldConfig } from './field-config';
+import { ControlConfig } from './control-config';
 
-export interface RadioButtonConfig extends FieldConfig {
+export interface RadioButtonConfig extends ControlConfig {
   groupName: string;
 }

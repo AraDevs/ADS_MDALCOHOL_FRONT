@@ -1,7 +1,7 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { AbstractControl, FormGroup, FormGroupDirective } from '@angular/forms';
 import { ControlValidationService } from '@core/services';
-import { InputFieldConfig } from '@core/types';
+import { InputControlConfig } from '@core/types';
 import { Subject } from 'rxjs';
 import { SubSink } from 'subsink';
 
@@ -13,7 +13,7 @@ import { SubSink } from 'subsink';
 export class InputComponent implements OnInit, OnDestroy {
 
   @Input() form: FormGroup;
-  @Input() field: InputFieldConfig;
+  @Input() field: InputControlConfig;
   @Input() formReference: FormGroupDirective;
   @Input() control: AbstractControl;
 

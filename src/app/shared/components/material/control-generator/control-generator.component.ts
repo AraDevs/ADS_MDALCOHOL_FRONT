@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { FieldConfig } from '@core/types';
+import { ControlConfig } from '@core/types';
 import { FormGroup, FormGroupDirective } from '@angular/forms';
 
 @Component({
@@ -8,7 +8,7 @@ import { FormGroup, FormGroupDirective } from '@angular/forms';
   styleUrls: ['./control-generator.component.scss']
 })
 export class ControlGeneratorComponent implements OnInit {
-  @Input() field: FieldConfig;
+  @Input() field: ControlConfig;
   @Input() form: FormGroup;
   @Input() formReference: FormGroupDirective;
 

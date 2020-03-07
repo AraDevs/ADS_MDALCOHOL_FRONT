@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { AbstractControl, FormGroup } from '@angular/forms';
-import { FieldConfig } from '@core/types';
+import { ControlConfig } from '@core/types';
 
 @Component({
   selector: 'md-checkbox',
@@ -10,7 +10,7 @@ import { FieldConfig } from '@core/types';
 export class CheckboxComponent implements OnInit {
 
   @Input() form: FormGroup;
-  @Input() field: FieldConfig;
+  @Input() field: ControlConfig;
   @Input() control: AbstractControl;
 
 

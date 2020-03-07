@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Validators } from '@angular/forms';
-import { InputFieldConfig, SelectFieldConfig, RadioButtonConfig } from '@core/types';
+import { InputControlConfig, SelectControlConfig, RadioButtonConfig } from '@core/types';
 
 @Injectable()
 export class LoginFormConfig {
-  get fields(): Partial<InputFieldConfig | SelectFieldConfig | RadioButtonConfig>[] {
+  get fields(): Partial<InputControlConfig | SelectControlConfig | RadioButtonConfig>[] {
     return [
       {
         key: 'email',

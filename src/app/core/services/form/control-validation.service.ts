@@ -1,10 +1,10 @@
 import { AbstractControl } from '@angular/forms';
 import { Injectable } from '@angular/core';
-import { FieldConfig } from '@core/types';
+import { ControlConfig } from '@core/types';
 
 @Injectable({ providedIn: 'root' })
 export class ControlValidationService {
-  valid(control: AbstractControl, field: FieldConfig) {
+  valid(control: AbstractControl, field: ControlConfig) {
     const names = field.validationNames;
     const messages = field.validatorMessages;
 

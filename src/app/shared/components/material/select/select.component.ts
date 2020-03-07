@@ -1,7 +1,7 @@
 import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormGroupDirective, AbstractControl } from '@angular/forms';
 import { ControlValidationService } from '@core/services';
-import { SelectFieldConfig } from '@core/types';
+import { SelectControlConfig } from '@core/types';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { filter } from 'rxjs/operators';
 import { SubSink } from 'subsink';
@@ -14,7 +14,7 @@ import { SubSink } from 'subsink';
 export class SelectComponent implements OnInit, OnDestroy {
 
   @Input() form: FormGroup;
-  @Input() field: SelectFieldConfig;
+  @Input() field: SelectControlConfig;
   @Input() formReference: FormGroupDirective;
   @Input() cssClasses = '';
   @Input() options$: Observable<{ label: string;[key: string]: string; }[]>;

@@ -72,3 +72,6 @@ Add RadioComponent
 
 ## [ADD] 07-03-2020 15:12
 Add form generator
+
+## [ADD] 07-03-2020 15:17
+Rename files related  with forms

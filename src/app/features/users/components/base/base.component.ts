@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ErrorService, FormService, LoadingService } from '@core/services';
-import { InputFieldConfig, FieldConfig, SelectFieldConfig } from '@core/types';
+import { InputControlConfig, ControlConfig, SelectControlConfig } from '@core/types';
 import { LoginFormConfig } from '@features/users/config/login-form-config';
 import * as userState from '@features/users/state';
 import { select, Store } from '@ngrx/store';
@@ -33,7 +33,7 @@ export class BaseComponent implements OnInit {
   error$: Observable<CustomErrorMessage>;
 
 
-  fields: FieldConfig[];
+  fields: ControlConfig[];
   form: FormGroup;
 
   constructor(
@@ -55,13 +55,13 @@ export class BaseComponent implements OnInit {
     this.store$.dispatch(userState.LoadUser({ data: { id: 1 } }));
 
     // Config form
-    this.fields = this.formConfig.fields.map((field: FieldConfig) => {
+    this.fields = this.formConfig.fields.map((field: ControlConfig) => {
 
       if (field.fieldType === 'Select') {
-        const _field = field as SelectFieldConfig;
-        return { ..._field, options$: this.options$ } as FieldConfig;
+        const _field = field as SelectControlConfig;
+        return { ..._field, options$: this.options$ } as ControlConfig;
       }
-      return field as FieldConfig;
+      return field as ControlConfig;
 
     });
 
