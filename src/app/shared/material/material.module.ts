@@ -14,6 +14,7 @@ import {MatSortModule} from '@angular/material/sort';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatRadioModule} from '@angular/material/radio';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 @NgModule({
   providers: [{ provide: ErrorStateMatcher, useClass: CustomErrorStateMatcher }],
@@ -32,6 +33,7 @@ import {MatRadioModule} from '@angular/material/radio';
     MatSelectModule,
     MatCheckboxModule,
     MatRadioModule,
+    MatProgressSpinnerModule,
   ],
   exports: [
     LayoutModule,
@@ -48,6 +50,7 @@ import {MatRadioModule} from '@angular/material/radio';
     MatSelectModule,
     MatCheckboxModule,
     MatRadioModule,
+    MatProgressSpinnerModule,
 
   ]
 })

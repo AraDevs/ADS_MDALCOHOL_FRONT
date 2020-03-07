@@ -32,6 +32,7 @@ import { FormGeneratorComponent } from './components/material/form-generator/for
     ControlGeneratorComponent,
     SelectComponent,
     DataTableComponent,
+    DataTableComponent,
     CheckboxComponent,
     RadioComponent,
     FormGeneratorComponent

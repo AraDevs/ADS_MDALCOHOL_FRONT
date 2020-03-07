@@ -78,3 +78,6 @@ Rename files related  with forms
 
 ## [ADD] 07-03-2020 15:56
 Add stable version of dycnamic forms generator
+
+## [ADD] 07-03-2020 17:03
+Add Custom DataTable

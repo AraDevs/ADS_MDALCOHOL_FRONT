@@ -20,8 +20,8 @@
     <div class="col-10">
       <form [formGroup]="form" (submit)="submit()" #formReference="ngForm">
         <md-form-generator [form]="form" [formReference]="formReference" [fields]="fields" cssContainerClassess='row'
-          [displayContainerCheckboxs]="true" [displayContainerRadios]="true"
-          cssContainerRadiosClasses='d-flex'></md-form-generator>
+          [displayContainerCheckboxs]="true" [displayContainerRadios]="true" cssContainerRadiosClasses='d-flex'>
+        </md-form-generator>
         <div class="d-flex justify-content-center">
           <button mat-raised-button color="primary">Aceptar</button>
         </div>
@@ -31,3 +31,8 @@
 </div>
 <br>
 <br>
+
+<div class="p-4">
+  <md-data-table [dataSource$]="users$" [config]="tableConfig" [loading$]="loading$">
+  </md-data-table>
+</div>

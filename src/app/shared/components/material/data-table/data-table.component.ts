@@ -1,5 +1,6 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Observable, of } from 'rxjs';
+import { DataTableConfig } from '@shared/types';
 
 @Component({
   selector: 'md-data-table',
@@ -7,16 +8,15 @@ import { Observable, of } from 'rxjs';
   styleUrls: ['./data-table.component.scss']
 })
 export class DataTableComponent implements OnInit {
-
-  @Input() displayedColumns: string[] = [];
-  @Input() titles: { [column: string]: string; } = {};
+  @Input() config: DataTableConfig = {
+    displayedColumns: [],
+    titles: {}
+  };
   @Input() dataSource$: Observable<any[]> = of([]);
+  @Input() loading$: Observable<boolean>;
+  @Output() selectedRow = new EventEmitter<any>();
 
-  constructor() { }
+  constructor() {}
 
-
-
-  ngOnInit(): void {
-  }
-
+  ngOnInit(): void {}
 }
