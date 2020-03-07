@@ -3,8 +3,8 @@ import { Observable } from 'rxjs';
 
 export interface FieldConfig {
   key: string;
-  name?: string;
   fieldType: 'Input' | 'Select' | 'Checkbox' | 'Radio';
+  name?: string;
   label?: string;
   placeholder?: string;
   id?: string;

@@ -16,13 +16,8 @@
 <div class="container">
   <div class="row justify-content-center">
     <div class="col-10">
-      <form [formGroup]="form" (submit)="submit()" #myform="ngForm">
-        <div class="row flex-column">
-          <div class="col-12" *ngFor="let field of fields">
-            <md-control-generator [field]="field" [form]="form" [formReference]="myform">
-            </md-control-generator>
-          </div>
-        </div>
+      <form [formGroup]="form" (submit)="submit()" #formReference="ngForm">
+        <md-form-generator [form]="form" [formReference]="formReference" [fields]="fields"></md-form-generator>
         <div class="d-flex justify-content-center">
           <button mat-raised-button color="primary">Aceptar</button>
         </div>
