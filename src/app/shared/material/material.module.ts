@@ -8,6 +8,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { CustomErrorStateMatcher } from './custom-error-state-matcher';
+import { MatSelectModule } from '@angular/material/select';
 
 @NgModule({
   providers: [{ provide: ErrorStateMatcher, useClass: CustomErrorStateMatcher }],
@@ -19,6 +20,7 @@ import { CustomErrorStateMatcher } from './custom-error-state-matcher';
     MatIconModule,
     MatListModule,
     MatInputModule,
+    MatSelectModule,
   ],
   exports: [
     LayoutModule,
@@ -28,6 +30,7 @@ import { CustomErrorStateMatcher } from './custom-error-state-matcher';
     MatIconModule,
     MatListModule,
     MatInputModule,
+    MatSelectModule,
   ]
 })
 export class MaterialModule {

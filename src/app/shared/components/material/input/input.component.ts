@@ -19,7 +19,7 @@ export class InputComponent implements OnInit, OnDestroy {
 
   private subs = new SubSink();
   private error = new Subject<string>();
-  $error = this.error.asObservable();
+  error$ = this.error.asObservable();
 
   constructor(private validator: ControlValidationService) { }
 

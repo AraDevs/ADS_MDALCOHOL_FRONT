@@ -56,3 +56,6 @@ Add CustomErrorStateProvider
 
 ## [ADD] 07-03-2020 01:00
 Add Control generator component
+
+## [ADD] 07-03-2020 01:36
+Add SelectComponent

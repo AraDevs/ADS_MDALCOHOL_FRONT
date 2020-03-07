@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ErrorService, FormService, LoadingService } from '@core/services';
-import { InputFieldConfig } from '@core/types';
+import { InputFieldConfig, FieldConfig, SelectFieldConfig } from '@core/types';
 import { LoginFormConfig } from '@features/users/config/login-form-config';
 import * as userState from '@features/users/state';
 import { select, Store } from '@ngrx/store';
 import { CustomErrorMessage } from '@shared/types';
 import { Observable } from 'rxjs';
-import { filter } from 'rxjs/operators';
+import { filter, map, tap } from 'rxjs/operators';
 
 
 
@@ -19,13 +19,12 @@ import { filter } from 'rxjs/operators';
   providers: [LoginFormConfig]
 })
 export class BaseComponent implements OnInit {
-  // emailFormControl = new FormControl('', [
-  //   Validators.required,
-  //   Validators.email,
-  // ]);
 
-  // matcher = new MyErrorStateMatcher();
   users$ = this.store$.pipe(select(userState.selectUsers));
+  options$ = this.users$.pipe(map(users => {
+   return users.map(user => ({ label: user.name }));
+  })).pipe(tap(console.log));
+
   user$ = this.store$.pipe(
     select(userState.selectUser),
     filter(user => user != null)
@@ -34,7 +33,7 @@ export class BaseComponent implements OnInit {
   error$: Observable<CustomErrorMessage>;
 
 
-  fields: InputFieldConfig[];
+  fields: FieldConfig[];
   form: FormGroup;
 
   constructor(
@@ -56,15 +55,28 @@ export class BaseComponent implements OnInit {
     this.store$.dispatch(userState.LoadUser({ data: { id: 1 } }));
 
     // Config form
-    this.fields = this.formConfig.fields;
+    this.fields = this.formConfig.fields.map((field: FieldConfig) => {
+
+      if (field.fieldType === 'Select') {
+        const _field = field as SelectFieldConfig;
+        return { ..._field, options$: this.options$ } as FieldConfig;
+      }
+      return field as FieldConfig;
+
+    });
+
+
     this.form = this.formService.createPlainForm(this.fields);
 
   }
 
   submit() {
-   // console.log(this.form);
+    // console.log(this.form);
 
-    // this.store$.dispatch(userState.LoadUsers());
+
   }
 
+  load(){
+    this.store$.dispatch(userState.LoadUsers());
+  }
 }

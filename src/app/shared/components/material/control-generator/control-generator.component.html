@@ -1,4 +1,5 @@
 <div [ngSwitch]="field.fieldType" class="pb-2">
   <md-input *ngSwitchCase="'Input'" [field]="field" [form]="form" [formReference]="formReference">
   </md-input>
+  <md-select *ngSwitchCase="'Select'" [field]="field" [form]="form" [formReference]="formReference"></md-select>
 </div>

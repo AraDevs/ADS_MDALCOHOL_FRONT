@@ -26,6 +26,17 @@ export class LoginFormConfig {
         validations: [Validators.required],
         validatorMessages: ['Users.FormValidator.Password.Required'],
         validationNames: ['required']
+      },
+      {
+        label: 'Users.Form.Options',
+        options$: null,
+        key: 'majorGroup',
+        fieldType: 'Select',
+        id: 'majorGroup',
+        validations: [Validators.required],
+        validatorMessages: ['Users.FormValidator.Options.Required'],
+        validationNames: ['required'],
+        placeholder: 'ProductSales.Filter.MajorGroupPlaceholder'
       }
     ];
   }

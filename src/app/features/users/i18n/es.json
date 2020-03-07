@@ -5,7 +5,8 @@
   },
   "Form": {
     "User": "admin@demo.com",
-    "Password": "Contraseña"
+    "Password": "Contraseña",
+    "Options": "Selecciona una opción"
   },
   "FormValidator": {
     "User": {
@@ -13,6 +14,9 @@
       "Email": "Introduzca un correo electrónico válido"
     },
     "Password": {
+      "Required": "Contraseña requerida"
+    },
+    "Options": {
       "Required": "Contraseña requerida"
     }
   }
