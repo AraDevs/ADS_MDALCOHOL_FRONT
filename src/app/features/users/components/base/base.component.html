@@ -1,5 +1,3 @@
-<button (click)="load()">LoadUsers</button>
-<br>
 <ng-container *ngIf="loading$ | async ">
   Loading ...
 </ng-container>
@@ -15,3 +13,14 @@
   <div *ngIf="result.translate">{{ result.message | transloco }}</div>
   <div *ngIf="!result.translate">{{ result.message }}</div>
 </ng-container>
+<form [formGroup]="form" novalidate (submit)="submit()" #myform="ngForm">
+  <div class="row flex-column">
+    <div class="col-12" *ngFor="let field of fields">
+      <md-input [field]="field" [form]="form" [formReference]="myform">
+      </md-input>
+    </div>
+  </div>
+  <div class="d-flex justify-content-center">
+    <button type="submit">Aceptar</button>
+  </div>
+</form>

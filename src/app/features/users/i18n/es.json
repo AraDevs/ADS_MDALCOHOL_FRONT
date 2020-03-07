@@ -2,5 +2,18 @@
   "users": "Usuarios",
   "Errors": {
     "LoadUsersFail": "Error al cargar usuarios"
+  },
+  "Form": {
+    "User": "admin@demo.com",
+    "Password": "Contraseña"
+  },
+  "FormValidator": {
+    "User": {
+      "Required": "Correo requerido",
+      "Email": "Introduzca un correo electrónico válido"
+    },
+    "Password": {
+      "Required": "Contraseña requerida"
+    }
   }
 }

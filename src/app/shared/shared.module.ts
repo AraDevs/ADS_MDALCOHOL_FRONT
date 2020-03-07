@@ -1,12 +1,15 @@
-import {NgModule} from '@angular/core';
-import {CommonModule} from '@angular/common';
-import {TranslocoModule} from '@ngneat/transloco';
-import {MaterialModule} from '@shared/material.module';
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { TranslocoModule } from '@ngneat/transloco';
+import { MaterialModule } from '@shared/material.module';
+import { InputComponent } from '@shared/components';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
-  declarations: [],
-  imports: [CommonModule, TranslocoModule, MaterialModule],
-  exports: [CommonModule, TranslocoModule, MaterialModule]
+  declarations: [InputComponent],
+  imports: [CommonModule, TranslocoModule, MaterialModule, FormsModule, ReactiveFormsModule],
+  exports: [CommonModule, TranslocoModule, MaterialModule, FormsModule, ReactiveFormsModule,
+    InputComponent],
 })
 export class SharedModule {
 }

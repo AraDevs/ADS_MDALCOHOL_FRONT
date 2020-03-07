@@ -43,3 +43,6 @@ Add HttpResourceFactory
 
 ## [ADD] 05-03-2020 16:58
 Add solution for loading and error
+
+## [ADD] 06-03-2020 23:26
+Add types and services to create dynamics forms
