@@ -59,3 +59,7 @@ Add Control generator component
 
 ## [ADD] 07-03-2020 01:36
 Add SelectComponent
+
+## [ADD] 07-03-2020 13:33
+Add DataTableComponent
+Add ProvidersModule

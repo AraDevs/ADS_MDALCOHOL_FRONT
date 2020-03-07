@@ -6,12 +6,17 @@ import { InputComponent } from '@shared/components';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ControlGeneratorComponent } from './components/material/control-generator/control-generator.component';
 import { SelectComponent } from './components/material/select/select.component';
+import { DataTableComponent } from './components/material/data-table/data-table.component';
 
 @NgModule({
-  declarations: [InputComponent, ControlGeneratorComponent, SelectComponent],
+  declarations: [InputComponent, ControlGeneratorComponent, SelectComponent, DataTableComponent],
   imports: [CommonModule, TranslocoModule, MaterialModule, FormsModule, ReactiveFormsModule],
-  exports: [CommonModule, TranslocoModule, MaterialModule, FormsModule, ReactiveFormsModule,
-    InputComponent, ControlGeneratorComponent],
+  exports: [
+    CommonModule, TranslocoModule, MaterialModule, FormsModule, ReactiveFormsModule,
+    InputComponent,
+    ControlGeneratorComponent,
+    SelectComponent,
+    DataTableComponent],
 })
 export class SharedModule {
 }

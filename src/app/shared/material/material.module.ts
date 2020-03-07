@@ -9,6 +9,9 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { CustomErrorStateMatcher } from './custom-error-state-matcher';
 import { MatSelectModule } from '@angular/material/select';
+import {MatTableModule} from '@angular/material/table';
+import {MatSortModule} from '@angular/material/sort';
+import {MatPaginatorModule} from '@angular/material/paginator';
 
 @NgModule({
   providers: [{ provide: ErrorStateMatcher, useClass: CustomErrorStateMatcher }],
@@ -21,6 +24,9 @@ import { MatSelectModule } from '@angular/material/select';
     MatListModule,
     MatInputModule,
     MatSelectModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSelectModule,
   ],
   exports: [
     LayoutModule,
@@ -30,6 +36,9 @@ import { MatSelectModule } from '@angular/material/select';
     MatIconModule,
     MatListModule,
     MatInputModule,
+    MatSelectModule,
+    MatTableModule,
+    MatPaginatorModule,
     MatSelectModule,
   ]
 })

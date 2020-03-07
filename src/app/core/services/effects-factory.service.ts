@@ -22,6 +22,7 @@ export class EffectsFactoryService {
     return this.actions$.pipe(
       ofType(actionToListen),
       switchMap((action: { type: string, data?: any; }) => {
+
         const requestData = new RequestData();
         const isDataAction = !!action.data;
 
