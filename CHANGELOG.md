@@ -46,3 +46,6 @@ Add solution for loading and error
 
 ## [ADD] 06-03-2020 23:26
 Add types and services to create dynamics forms
+
+## [ADD] 06-03-2020 23:42
+Add bootstrap 
