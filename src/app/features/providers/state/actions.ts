@@ -9,10 +9,10 @@ export const ProvidersLoadedFailAction = '[Providers] Providers Loaded Fail';
 export const LoadProviders = createAction(LoadProvidersAction);
 export const ProvidersLoadedSuccess = createAction(
   ProvidersLoadedSuccessAction,
-  props<{ data: any[]; }>()
+  props<{ payload: any[]; }>()
 );
 
 export const ProvidersLoadedFail = createAction(
   ProvidersLoadedFailAction,
-  props<{ data: ErrorActionData; }>()
+  props<{ payload: ErrorActionData; }>()
 );

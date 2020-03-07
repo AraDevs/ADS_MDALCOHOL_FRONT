@@ -38,7 +38,7 @@ export class BaseComponent implements OnInit {
     titles: {
       name: 'Users.Table.Titles.Name',
       username: 'Users.Table.Titles.User'
-    },
+    }
     // sortActiveColumn: 'name',
     // sortDirection: 'asc'
   };
@@ -58,7 +58,11 @@ export class BaseComponent implements OnInit {
     this.loading$ = this.loading.getLoading(actions).pipe(tap(console.log));
     this.error$ = this.error.getError(LoadUsersFailAction, 'Users.Errors.LoadUsersFail');
 
-    this.store$.dispatch(userState.LoadUser({ data: { id: 1 } }));
+    this.store$.dispatch(
+      userState.LoadUser({
+        payload: { metadata: { resource: { id: '2' } } }
+      })
+    );
 
     // Config form
     this.fields = this.formConfig.fields.map((field: ControlConfig) => {

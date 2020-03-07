@@ -1,11 +1,12 @@
-export class RestResourceFactory {
-  constructor(
-    private resourceTemplate: string,
-    private keys: string[]) { }
+import { ResourceFactory } from '@core/types';
+
+export class RestResourceFactory implements ResourceFactory {
+  constructor(private resourceTemplate: string, private keys: string[]) {}
 
   create(data: any) {
+    const resourceData = data.resource;
     const result = this.keys.reduce((values: string[], key: string) => {
-      return [...values, data[key]];
+      return [...values, resourceData[key]];
     }, []);
 
     return result.reduce((resource, value, i) => {
@@ -14,4 +15,3 @@ export class RestResourceFactory {
     }, this.resourceTemplate);
   }
 }
-

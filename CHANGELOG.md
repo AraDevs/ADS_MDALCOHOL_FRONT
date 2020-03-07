@@ -81,3 +81,6 @@ Add stable version of dycnamic forms generator
 
 ## [ADD] 07-03-2020 17:03
 Add Custom DataTable
+
+## [ADD] 07-03-2020 17:50
+Add new type to action payload
