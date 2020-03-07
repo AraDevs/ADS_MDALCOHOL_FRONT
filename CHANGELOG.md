@@ -53,3 +53,6 @@ Add bootstrap
 ## [ADD] 07-03-2020 00:43
 Add custom implementation of material input 
 Add CustomErrorStateProvider
+
+## [ADD] 07-03-2020 01:00
+Add Control generator component
