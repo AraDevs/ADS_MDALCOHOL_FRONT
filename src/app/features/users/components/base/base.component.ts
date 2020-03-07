@@ -67,6 +67,7 @@ export class BaseComponent implements OnInit {
 
 
     this.form = this.formService.createPlainForm(this.fields);
+    this.store$.dispatch(userState.LoadUsers());
 
   }
 
@@ -76,7 +77,5 @@ export class BaseComponent implements OnInit {
 
   }
 
-  load(){
-    this.store$.dispatch(userState.LoadUsers());
-  }
+
 }

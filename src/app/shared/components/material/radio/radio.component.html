@@ -1,1 +1,3 @@
-<p>radio works!</p>
+<mat-radio-group [name]="field.groupName" [formControl]="control">
+  <mat-radio-button>{{ field.label | transloco }}</mat-radio-button>
+</mat-radio-group>

@@ -13,6 +13,7 @@ import {MatTableModule} from '@angular/material/table';
 import {MatSortModule} from '@angular/material/sort';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatCheckboxModule} from '@angular/material/checkbox';
+import {MatRadioModule} from '@angular/material/radio';
 
 @NgModule({
   providers: [{ provide: ErrorStateMatcher, useClass: CustomErrorStateMatcher }],
@@ -30,6 +31,7 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
     MatSortModule,
     MatSelectModule,
     MatCheckboxModule,
+    MatRadioModule,
   ],
   exports: [
     LayoutModule,
@@ -45,6 +47,7 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
     MatSortModule,
     MatSelectModule,
     MatCheckboxModule,
+    MatRadioModule,
 
   ]
 })

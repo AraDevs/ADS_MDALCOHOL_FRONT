@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { AbstractControl, FormGroup } from '@angular/forms';
+import { RadioButtonConfig } from '@core/types';
+
 
 @Component({
   selector: 'md-radio',
@@ -7,9 +10,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class RadioComponent implements OnInit {
 
+  @Input() form: FormGroup;
+  @Input() field: RadioButtonConfig;
+  @Input() control: AbstractControl;
+
+
   constructor() { }
 
   ngOnInit(): void {
+    this.control = this.form.get(this.field.key);
   }
+
 
 }

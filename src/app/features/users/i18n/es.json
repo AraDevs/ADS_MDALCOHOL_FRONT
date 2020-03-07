@@ -6,7 +6,9 @@
   "Form": {
     "User": "admin@demo.com",
     "Password": "Contraseña",
-    "Options": "Selecciona una opción"
+    "Options": "Selecciona una opción",
+    "Radio1": "Radio 1",
+    "Radio2": "Radio 2"
   },
   "FormValidator": {
     "User": {

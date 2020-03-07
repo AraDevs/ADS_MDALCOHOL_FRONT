@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Validators } from '@angular/forms';
-import { InputFieldConfig, SelectFieldConfig } from '@core/types';
+import { InputFieldConfig, SelectFieldConfig, RadioButtonConfig } from '@core/types';
 
 @Injectable()
 export class LoginFormConfig {
-  get fields(): Partial<InputFieldConfig | SelectFieldConfig>[] {
+  get fields(): Partial<InputFieldConfig | SelectFieldConfig | RadioButtonConfig>[] {
     return [
       {
         key: 'email',
@@ -44,6 +44,20 @@ export class LoginFormConfig {
         label: 'Users.Form.Password',
         fieldType: 'Checkbox',
         defautlValue: true
+      },
+      {
+        key: 'radio1',
+        label: 'Users.Form.Radio1',
+        fieldType: 'Radio',
+        groupName: 'Options',
+        defautlValue: true
+      },
+      {
+        key: 'radio2',
+        label: 'Users.Form.Radio2',
+        fieldType: 'Radio',
+        groupName: 'Options',
+        defautlValue: false
       }
     ];
   }

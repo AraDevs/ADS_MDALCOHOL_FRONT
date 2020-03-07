@@ -66,3 +66,6 @@ Add ProvidersModule
 
 ## [ADD] 07-03-2020 14:22
 Add CheckboxComponent
+
+## [ADD] 07-03-2020 14:48
+Add RadioComponent

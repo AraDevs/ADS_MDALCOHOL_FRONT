@@ -1,21 +1,18 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { AbstractControl, FormGroup, FormGroupDirective } from '@angular/forms';
-import { InputFieldConfig } from '@core/types';
-import { Subject } from 'rxjs';
-import { SubSink } from 'subsink';
+import { Component, Input, OnInit } from '@angular/core';
+import { AbstractControl, FormGroup } from '@angular/forms';
+import { FieldConfig } from '@core/types';
 
 @Component({
   selector: 'md-checkbox',
   templateUrl: './checkbox.component.html',
   styleUrls: ['./checkbox.component.scss']
 })
-export class CheckboxComponent implements OnInit, OnDestroy {
+export class CheckboxComponent implements OnInit {
 
   @Input() form: FormGroup;
-  @Input() field: InputFieldConfig;
+  @Input() field: FieldConfig;
   @Input() control: AbstractControl;
 
-  private subs = new SubSink();
 
 
   constructor() { }
@@ -24,7 +21,5 @@ export class CheckboxComponent implements OnInit, OnDestroy {
     this.control = this.form.get(this.field.key);
   }
 
-  ngOnDestroy() {
-    this.subs.unsubscribe();
-  }
+
 }
