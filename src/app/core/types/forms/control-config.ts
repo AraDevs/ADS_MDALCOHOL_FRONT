@@ -13,4 +13,5 @@ export interface ControlConfig {
   validatorMessages?: string[];
   validationNames?: string[];
   globalValidatorMessage?: Observable<string>;
+  cssClasses: string;
 }

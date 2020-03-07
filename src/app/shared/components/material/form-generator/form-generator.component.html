@@ -1,8 +1,28 @@
-<div class="row">
+<div [class]="cssContainerClasses">
+
+  <!-- Render Input and Select components -->
   <ng-container *ngFor="let field of fields">
-
-    <md-control-generator class="col-6" [field]="field" [form]="form" [formReference]="formReference">
+    <md-control-generator *ngIf="field.fieldType == 'Input' || field.fieldType == 'Select' " [class]="field.cssClasses"
+      [field]="field" [form]="form" [formReference]="formReference">
     </md-control-generator>
-
   </ng-container>
+
+  <!-- Render radio components -->
+  <div *ngIf="displayContainerRadios"  [class]="cssContainerRadiosClasses">
+    <ng-container *ngFor="let field of fields">
+      <md-control-generator *ngIf="field.fieldType == 'Radio'" [class]="field.cssClasses" [field]="field" [form]="form"
+        [formReference]="formReference">
+      </md-control-generator>
+    </ng-container>
+  </div>
+
+  <!-- Render checkbox components -->
+  <div *ngIf="displayContainerCheckboxs"  [class]="cssContainerCheckboxClasses">
+    <ng-container *ngFor="let field of fields">
+      <md-control-generator *ngIf="field.fieldType == 'Checkbox'" [class]="field.cssClasses" [field]="field"
+        [form]="form" [formReference]="formReference">
+      </md-control-generator>
+    </ng-container>
+  </div>
+
 </div>

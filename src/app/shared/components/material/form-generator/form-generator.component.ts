@@ -8,6 +8,12 @@ import { FormGroup, FormGroupDirective } from '@angular/forms';
   styleUrls: ['./form-generator.component.scss']
 })
 export class FormGeneratorComponent implements OnInit {
+  @Input() cssContainerClasses = '';
+  @Input() cssContainerRadiosClasses = '';
+  @Input() cssContainerCheckboxClasses = '';
+  @Input() displayContainerCheckboxs = false;
+  @Input() displayContainerRadios = false;
+
   @Input() fields: ControlConfig[];
   @Input() form: FormGroup;
   @Input() formReference: FormGroupDirective;

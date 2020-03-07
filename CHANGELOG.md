@@ -75,3 +75,6 @@ Add form generator
 
 ## [ADD] 07-03-2020 15:17
 Rename files related  with forms
+
+## [ADD] 07-03-2020 15:56
+Add stable version of dycnamic forms generator

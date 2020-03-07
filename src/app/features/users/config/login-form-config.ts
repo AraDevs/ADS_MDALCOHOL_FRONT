@@ -15,7 +15,8 @@ export class LoginFormConfig {
         id: 'email',
         validations: [Validators.required, Validators.email],
         validatorMessages: ['Users.FormValidator.User.Required', 'Users.FormValidator.User.Email'],
-        validationNames: ['required', 'email']
+        validationNames: ['required', 'email'],
+        cssClasses: 'col-6'
       },
       {
         key: 'password',
@@ -26,7 +27,8 @@ export class LoginFormConfig {
         id: 'password',
         validations: [Validators.required],
         validatorMessages: ['Users.FormValidator.Password.Required'],
-        validationNames: ['required']
+        validationNames: ['required'],
+        cssClasses: 'col-6'
       },
       {
         label: 'Users.Form.Options',
@@ -37,28 +39,32 @@ export class LoginFormConfig {
         validations: [Validators.required],
         validatorMessages: ['Users.FormValidator.Options.Required'],
         validationNames: ['required'],
-        placeholder: 'ProductSales.Filter.MajorGroupPlaceholder'
+        placeholder: 'ProductSales.Filter.MajorGroupPlaceholder',
+        cssClasses: 'col-6'
       },
       {
         key: 'save-password',
         label: 'Users.Form.Password',
         fieldType: 'Checkbox',
-        defautlValue: true
+        defautlValue: true,
+        cssClasses: 'pl-3'
       },
       {
         key: 'radio1',
         label: 'Users.Form.Radio1',
         fieldType: 'Radio',
         groupName: 'Options',
-        defautlValue: true
+        defautlValue: true,
+        cssClasses: 'pl-3'
       },
       {
         key: 'radio2',
         label: 'Users.Form.Radio2',
         fieldType: 'Radio',
         groupName: 'Options',
-        defautlValue: false
-      }
+        defautlValue: false,
+        cssClasses: 'pl-3'
+      },
     ];
   }
 }
