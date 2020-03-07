@@ -71,7 +71,7 @@ export class BaseComponent implements OnInit {
   }
 
   submit() {
-    // console.log(this.form);
+   console.log(this.form);
 
 
   }

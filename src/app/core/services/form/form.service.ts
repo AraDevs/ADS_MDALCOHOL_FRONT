@@ -8,7 +8,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 export class FormService {
   createPlainForm(fields: FieldConfig[]) {
     const model = fields.reduce((prev, value) => {
-      const defaultValue = value.defautlValue ? value.defautlValue : '';
+      const defaultValue = value.defautlValue !== undefined ? value.defautlValue : '';
       const validations = value.validations ? value.validations : [];
       return { ...prev, [value.key]: new FormControl(defaultValue, validations) };
     }, {});

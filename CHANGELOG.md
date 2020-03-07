@@ -63,3 +63,6 @@ Add SelectComponent
 ## [ADD] 07-03-2020 13:33
 Add DataTableComponent
 Add ProvidersModule
+
+## [ADD] 07-03-2020 14:22
+Add CheckboxComponent

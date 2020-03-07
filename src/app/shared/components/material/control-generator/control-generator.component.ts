@@ -15,8 +15,6 @@ export class ControlGeneratorComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    console.log('Hi');
-
   }
 
 }

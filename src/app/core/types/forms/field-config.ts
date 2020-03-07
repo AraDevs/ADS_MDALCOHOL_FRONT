@@ -3,11 +3,11 @@ import { Observable } from 'rxjs';
 
 export interface FieldConfig {
   key: string;
-  fieldType: 'Input' | 'Select';
+  fieldType: 'Input' | 'Select' | 'Checkbox' | 'Radio';
   label?: string;
   placeholder?: string;
   id?: string;
-  defautlValue?: string;
+  defautlValue?: any;
   validations?: ValidatorFn | ValidatorFn[];
   validatorMessages?: string[];
   validationNames?: string[];

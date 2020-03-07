@@ -1,9 +1,9 @@
-import { Component, OnInit, Input, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
-import { FormGroup, FormGroupDirective, FormControl, AbstractControl } from '@angular/forms';
-import { InputFieldConfig } from '@core/types';
-import { SubSink } from 'subsink';
-import { Subject } from 'rxjs';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { AbstractControl, FormGroup, FormGroupDirective } from '@angular/forms';
 import { ControlValidationService } from '@core/services';
+import { InputFieldConfig } from '@core/types';
+import { Subject } from 'rxjs';
+import { SubSink } from 'subsink';
 
 @Component({
   selector: 'md-input',

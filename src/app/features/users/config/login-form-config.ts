@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Validators } from '@angular/forms';
+import { InputFieldConfig, SelectFieldConfig } from '@core/types';
 
 @Injectable()
 export class LoginFormConfig {
-  get fields(): any[] {
+  get fields(): Partial<InputFieldConfig | SelectFieldConfig>[] {
     return [
       {
         key: 'email',
@@ -37,6 +38,12 @@ export class LoginFormConfig {
         validatorMessages: ['Users.FormValidator.Options.Required'],
         validationNames: ['required'],
         placeholder: 'ProductSales.Filter.MajorGroupPlaceholder'
+      },
+      {
+        key: 'save-password',
+        label: 'Users.Form.Password',
+        fieldType: 'Checkbox',
+        defautlValue: true
       }
     ];
   }

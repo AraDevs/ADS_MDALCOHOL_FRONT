@@ -12,6 +12,7 @@ import { MatSelectModule } from '@angular/material/select';
 import {MatTableModule} from '@angular/material/table';
 import {MatSortModule} from '@angular/material/sort';
 import {MatPaginatorModule} from '@angular/material/paginator';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 
 @NgModule({
   providers: [{ provide: ErrorStateMatcher, useClass: CustomErrorStateMatcher }],
@@ -26,7 +27,9 @@ import {MatPaginatorModule} from '@angular/material/paginator';
     MatSelectModule,
     MatTableModule,
     MatPaginatorModule,
+    MatSortModule,
     MatSelectModule,
+    MatCheckboxModule,
   ],
   exports: [
     LayoutModule,
@@ -39,7 +42,10 @@ import {MatPaginatorModule} from '@angular/material/paginator';
     MatSelectModule,
     MatTableModule,
     MatPaginatorModule,
+    MatSortModule,
     MatSelectModule,
+    MatCheckboxModule,
+
   ]
 })
 export class MaterialModule {
