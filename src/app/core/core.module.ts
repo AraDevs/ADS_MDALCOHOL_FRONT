@@ -8,7 +8,7 @@ import {reducer} from '@state/index';
 import {HttpClientModule} from '@angular/common/http';
 import {TranslocoRootModule} from '../transloco-root.module';
 import {RouterModule} from '@angular/router';
-import {MaterialModule} from '@shared/material.module';
+import {MaterialModule} from '@shared/material/material.module';
 import {RequestClient, RequestHttpClient} from '@core/client';
 
 @NgModule({

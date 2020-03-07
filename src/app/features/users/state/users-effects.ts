@@ -18,7 +18,7 @@ export class UsersEffects {
 
     const effectReqConfig = new EffectRequestConfig(this.requestClient, 'get');
     const actionsConfig = new EffectActionsConfig(LoadUsers, UsersLoadedSuccess, LoadUsersFail);
-    const config = new EffectConfigModel(effectReqConfig, actionsConfig, 'https://jsonplaceholder.typicode.com/userss');
+    const config = new EffectConfigModel(effectReqConfig, actionsConfig, 'https://jsonplaceholder.typicode.com/users');
 
     return this.effectFactory.create(config);
   });

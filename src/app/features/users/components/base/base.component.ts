@@ -1,13 +1,16 @@
-import { InputFieldConfig } from '@core/types';
 import { Component, OnInit } from '@angular/core';
-import { ErrorService, LoadingService, FormService } from '@core/services';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { ErrorService, FormService, LoadingService } from '@core/services';
+import { InputFieldConfig } from '@core/types';
+import { LoginFormConfig } from '@features/users/config/login-form-config';
 import * as userState from '@features/users/state';
 import { select, Store } from '@ngrx/store';
+import { CustomErrorMessage } from '@shared/types';
 import { Observable } from 'rxjs';
 import { filter } from 'rxjs/operators';
-import { CustomErrorMessage } from '@shared/types';
-import { LoginFormConfig } from '@features/users/config/login-form-config';
-import { FormGroup } from '@angular/forms';
+
+
+
 
 @Component({
   selector: 'md-base',
@@ -16,7 +19,12 @@ import { FormGroup } from '@angular/forms';
   providers: [LoginFormConfig]
 })
 export class BaseComponent implements OnInit {
+  // emailFormControl = new FormControl('', [
+  //   Validators.required,
+  //   Validators.email,
+  // ]);
 
+  // matcher = new MyErrorStateMatcher();
   users$ = this.store$.pipe(select(userState.selectUsers));
   user$ = this.store$.pipe(
     select(userState.selectUser),
@@ -54,7 +62,9 @@ export class BaseComponent implements OnInit {
   }
 
   submit() {
-    this.store$.dispatch(userState.LoadUsers());
+   // console.log(this.form);
+
+    // this.store$.dispatch(userState.LoadUsers());
   }
 
 }

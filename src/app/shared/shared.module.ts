@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslocoModule } from '@ngneat/transloco';
-import { MaterialModule } from '@shared/material.module';
+import { MaterialModule } from '@shared/material/material.module';
 import { InputComponent } from '@shared/components';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
