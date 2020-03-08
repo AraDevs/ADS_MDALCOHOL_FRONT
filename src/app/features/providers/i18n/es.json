@@ -1,1 +1,12 @@
-{}
+{
+  "Form": {
+    "Name": "Nombre",
+    "Address": "Dirección",
+    "Nit": "NIT",
+    "PartnerPhone": "Nombre del Socio",
+    "SellerPhone": "Telefono del vendedor",
+    "Deparment": "Departamento",
+    "Municipality": "Municipio",
+    "State": "Activo"
+  }
+}
