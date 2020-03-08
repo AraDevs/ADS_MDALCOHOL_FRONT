@@ -7,6 +7,7 @@ import { SelectControlConfig } from '@core/types/forms/select-control-config';
 import { Store, select } from '@ngrx/store';
 import * as state from '@features/clients/state';
 import { Observable } from 'rxjs';
+import * as globalState from '@state/index';
 
 @Component({
   selector: 'md-base',
@@ -25,8 +26,8 @@ export class BaseComponent implements OnInit {
   ngOnInit(): void {
     this.fields = this.formModel.getModel();
     this.form = this.formService.createPlainForm(this.fields as any);
-    this.store$.dispatch(state.LOAD_SELLERS());
-    this.data = this.store$.pipe(select(state.selectSellers));
+    this.store$.dispatch(globalState.LOAD_SELLERS());
+    this.data = this.store$.pipe(select(globalState.selectSellers));
   }
 
 }

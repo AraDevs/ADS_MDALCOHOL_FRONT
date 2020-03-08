@@ -1,15 +1,16 @@
-import {NgModule} from '@angular/core';
-import {CommonModule} from '@angular/common';
-import {StoreModule} from '@ngrx/store';
-import {StoreDevtoolsModule} from '@ngrx/store-devtools';
-import {environment} from '@environments/environment';
-import {EffectsModule} from '@ngrx/effects';
-import {reducer} from '@state/index';
-import {HttpClientModule} from '@angular/common/http';
-import {TranslocoRootModule} from '../transloco-root.module';
-import {RouterModule} from '@angular/router';
-import {MaterialModule} from '@shared/material/material.module';
-import {RequestClient, RequestHttpClient} from '@core/client';
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { StoreModule } from '@ngrx/store';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { environment } from '@environments/environment';
+import { EffectsModule } from '@ngrx/effects';
+import { reducer } from '@state/index';
+import { HttpClientModule } from '@angular/common/http';
+import { TranslocoRootModule } from '../transloco-root.module';
+import { RouterModule } from '@angular/router';
+import { MaterialModule } from '@shared/material/material.module';
+import { RequestClient, RequestHttpClient } from '@core/client';
+import { LoadDataEffects } from '@state/load-data-effects';
 
 @NgModule({
   declarations: [],
@@ -21,7 +22,7 @@ import {RequestClient, RequestHttpClient} from '@core/client';
     MaterialModule,
     // Configure Ngrx Store
     StoreModule.forRoot(
-      {app: reducer},
+      { data: reducer },
       {
         runtimeChecks: {
           strictStateImmutability: true,
@@ -37,7 +38,7 @@ import {RequestClient, RequestHttpClient} from '@core/client';
       logOnly: environment.production
     }),
     // Configure Effects
-    EffectsModule.forRoot([])
+    EffectsModule.forRoot([LoadDataEffects])
   ],
   providers: [
     {
@@ -45,10 +46,6 @@ import {RequestClient, RequestHttpClient} from '@core/client';
       useClass: RequestHttpClient
     }
   ],
-  exports: [
-    TranslocoRootModule,
-    MaterialModule
-  ]
+  exports: [TranslocoRootModule, MaterialModule]
 })
-export class CoreModule {
-}
+export class CoreModule {}

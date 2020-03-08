@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
+import * as state from '@features/providers/state';
+import { TRANSLOCO_SCOPE } from '@ngneat/transloco';
+import { EffectsModule } from '@ngrx/effects';
+import { LoadI18nFile } from '@shared/helpers';
 import { SharedModule } from '@shared/shared.module';
+
 import { BaseComponent } from './components/base/base.component';
 import { ProvidersRoutingModule } from './providers-routing.module';
-import { LoadI18nFile } from '@shared/helpers';
-import * as state from '@features/providers/state';
-import { StoreModule } from '@ngrx/store';
-import { EffectsModule } from '@ngrx/effects';
-import { TRANSLOCO_SCOPE } from '@ngneat/transloco';
 
 const loader = LoadI18nFile((lang: string) => () => import(`./i18n/${lang}.json`));
 
@@ -15,7 +15,6 @@ const loader = LoadI18nFile((lang: string) => () => import(`./i18n/${lang}.json`
   imports: [
     SharedModule,
     ProvidersRoutingModule,
-    StoreModule.forFeature(state.FEATURE_KEY, state.reducer),
     EffectsModule.forFeature([state.ProvidersEffects])
   ],
 

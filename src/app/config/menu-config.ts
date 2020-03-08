@@ -6,5 +6,13 @@ export const MENU = [
   {
     title: 'SideNav.Users',
     route: '/users'
+  },
+  {
+    title: 'SideNav.Clients',
+    route: '/clients'
+  },
+  {
+    title: 'SideNav.Sellers',
+    route: '/sellers'
   }
 ];

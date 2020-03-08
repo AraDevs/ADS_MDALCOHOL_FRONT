@@ -3,6 +3,7 @@ import { FormGroup } from '@angular/forms';
 import { FormService } from '@core/services';
 import { InputControlConfig } from '@core/types';
 import { FormModel } from '@features/sellers/config/form-model';
+import * as globalState from '@state/index';
 import * as state from '@features/sellers/state';
 import { select, Store } from '@ngrx/store';
 import { DataTableConfig } from '@shared/types';
@@ -38,8 +39,8 @@ export class BaseComponent implements OnInit {
   ngOnInit(): void {
     this.fields = this.formModel.getModel();
     this.form = this.formService.createPlainForm(this.fields as any);
-    this.store$.dispatch(state.LOAD_SELLERS());
-    this.data = this.store$.pipe(select(state.selectSellers));
+    this.store$.dispatch(globalState.LOAD_SELLERS());
+    this.data = this.store$.pipe(select(globalState.selectSellers));
   }
 
   saveSeller() {

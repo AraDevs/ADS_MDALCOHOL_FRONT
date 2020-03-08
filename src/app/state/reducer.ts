@@ -1,15 +1,27 @@
-import { Action, createReducer } from '@ngrx/store';
+import { Action, createReducer, on } from '@ngrx/store';
+import * as actions from './actions';
 
 export interface State {
-  app: 'Hello';
+  departments: any[];
+  municipalities: any[];
+  clients: any[];
+  products: any[];
+  sellers: any[];
+  providers: any[];
 }
 
 const INITIAL_STATE: State = {
-  app: 'Hello'
+  departments: [],
+  municipalities: [],
+  clients: [],
+  products: [],
+  sellers: [],
+  providers: []
 };
 
 const globalReducer = createReducer(
-  INITIAL_STATE
+  INITIAL_STATE,
+  on(actions.SELLERS_LOADED_SUCCESS, (state, {payload}) => ({ ...state, sellers: payload }))
 );
 
 export function reducer(state: State | undefined, action: Action) {

@@ -1,15 +1,6 @@
 import { createAction, props } from '@ngrx/store';
 import { ErrorActionData, PayloadAction } from '@shared/types';
 
-export const LOAD_SELLERS = createAction('[Sellers] Load Sellers');
-export const SELLERS_LOADED_SUCCESS = createAction(
-  '[Sellers] Sellers Loaded Succes',
-  props<{ payload: any[] }>()
-);
-export const SELLERS_LOADED_FAIL = createAction(
-  '[Sellers] Sellers Loaded Fail',
-  props<{ payload: ErrorActionData }>()
-);
 
 /**
  * Las acciones que manden data al servidor deben ser de tipo PayloadAction
