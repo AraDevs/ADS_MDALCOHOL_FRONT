@@ -23,4 +23,14 @@ export class SellersEffects {
     return this.effectFactory.create(config);
   });
 
+  saveSellers$ = createEffect(() => {
+    const { SaveSellers, SaveSellersLoadedSuccess, SaveSellerLoadedFail } = actions;
+
+    const effectReqConfig = new EffectRequestConfig(this.requestClient, 'save');
+    const actionsConfig = new EffectActionsConfig(SaveSellers, SaveSellersLoadedSuccess, SaveSellerLoadedFail);
+    const config = new EffectConfigModel(effectReqConfig, actionsConfig, `${environment.host}/sellers`);
+
+    return this.effectFactory.create(config);
+  });
+
 }
