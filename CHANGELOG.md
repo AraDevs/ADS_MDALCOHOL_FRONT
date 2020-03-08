@@ -87,3 +87,6 @@ Add new type to action payload
 
 ## [ADD] 07-03-2020 20:19
 Update the of method in effects factory
+
+## [UPDATE] 07-03-2020 20:19
+Add merge of seller and client branch
