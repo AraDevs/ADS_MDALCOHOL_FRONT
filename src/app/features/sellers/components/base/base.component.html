@@ -1,0 +1,10 @@
+<div class="container">
+    <h1>Sellers</h1>
+    <form [formGroup]="form" #formReference="ngForm">
+        <md-form-generator [form]="form" [formReference]="formReference" [fields]="fields" [displayContainerCheckboxs]="true">
+    
+        </md-form-generator>
+    </form>
+</div>
+
+<div *ngFor="let item of data | async" >{{item.name}}</div>

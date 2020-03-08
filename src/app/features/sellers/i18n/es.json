@@ -1,0 +1,7 @@
+{
+    "Form" :{
+        "Name": "Ingrese el nombre y apellidos del vendedor",
+        "SellerCode": "Ingrese el código del vendedor",
+        "State": "Activo"
+    }
+}
