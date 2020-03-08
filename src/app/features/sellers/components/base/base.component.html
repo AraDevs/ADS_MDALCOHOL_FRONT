@@ -1,16 +1,16 @@
 <div class="container">
-    <h1>Sellers</h1>
-    <form [formGroup]="form" #formReference="ngForm">
-        <md-form-generator [form]="form" [formReference]="formReference" [fields]="fields" [displayContainerCheckboxs]="true">
-    
-        </md-form-generator>
-    </form>
-    <button (click)="saveSeller()">Guardar</button>
+  <h1>Sellers</h1>
+  <form [formGroup]="form" #formReference="ngForm">
+    <md-form-generator [form]="form" [formReference]="formReference" [fields]="fields"
+      [displayContainerCheckboxs]="true">
+
+    </md-form-generator>
+  </form>
+  <button (click)="saveSeller()">Guardar</button>
 </div>
 
 <!--<div *ngFor="let item of data | async" >{{item.name}}</div>-->
 <div class="p-4">
-    <md-data-table [dataSource$]="data" [config]="tableConfig" (selectedRow)="selectedRow($event)">
-    </md-data-table>
-  </div>
-  
+  <md-data-table [dataSource$]="data" [config]="tableConfig" (update)="selectedRow($event)">
+  </md-data-table>
+</div>

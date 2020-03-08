@@ -21,10 +21,11 @@ export class BaseComponent implements OnInit {
   fields: Partial<InputControlConfig>[];
   data: Observable<any[]>;
   tableConfig: DataTableConfig = {
-    displayedColumns: ['name', 'seller_code'],
+    displayedColumns: ['name', 'seller_code', 'actions'],
     titles: {
       name: 'Nombre',
-      seller_code: 'Codigo Vendedor'
+      seller_code: 'Codigo Vendedor',
+      actions: 'Acciones'
     }
     // sortActiveColumn: 'name',
     // sortDirection: 'asc'

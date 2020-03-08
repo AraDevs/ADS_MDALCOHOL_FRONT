@@ -5,3 +5,9 @@
 table {
   width: 100%;
 }
+.actions {
+  i {
+    cursor: pointer;
+    user-select: none;
+  }
+}

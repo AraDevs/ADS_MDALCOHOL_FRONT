@@ -14,7 +14,11 @@ export class DataTableComponent implements OnInit {
   };
   @Input() dataSource$: Observable<any[]> = of([]);
   @Input() loading$: Observable<boolean>;
-  @Output() selectedRow = new EventEmitter<any>();
+  @Output() add = new EventEmitter<any>();
+
+  @Output() update = new EventEmitter<any>();
+  @Output() delete = new EventEmitter<any>();
+
 
   constructor() {}
 

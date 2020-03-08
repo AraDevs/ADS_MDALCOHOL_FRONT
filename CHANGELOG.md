@@ -105,3 +105,6 @@ Remove un used actions
 
 ## [UPDATE] 08-03-2020 14:42
 Update the type of EffectActionsConfig
+
+## [Add] 08-03-2020 15:18
+Add Icon to DataTable
