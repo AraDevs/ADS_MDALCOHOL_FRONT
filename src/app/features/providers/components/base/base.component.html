@@ -1,1 +1,8 @@
-<h1>Providers</h1>
+<div class="container">
+  <form [formGroup]="form" #formReference="ngForm">
+    <md-form-generator [form]="form" [formReference]="formReference" [fields]="fields"
+      [displayContainerCheckboxs]="true">
+
+    </md-form-generator>
+  </form>
+</div>
