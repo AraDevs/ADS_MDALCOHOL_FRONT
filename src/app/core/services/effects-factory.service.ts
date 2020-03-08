@@ -21,9 +21,9 @@ export class EffectsFactoryService {
     return this.actions$.pipe(
       ofType(actionToListen),
       switchMap((action: { type: string; payload?: PayloadAction }) => {
-        const requestData = new RequestData();
         const hasPayload = !!action.payload;
 
+        const requestData = new RequestData();
         requestData.resource = resource;
 
         if (hasPayload) {
@@ -38,15 +38,15 @@ export class EffectsFactoryService {
         const { result } = requestClient[method]<any>(requestData);
         return result.pipe(
           map((res: Partial<ResponseClientResultModel<any>>) =>
-            this.getAction(action.type)(res, actionsConfig)
+            this.getActionToDispatch(action.type)(res, actionsConfig)
           )
         ) as Observable<Action>;
       })
     );
   }
 
-  // Returns success action or fail action that will be dispatched to the store
-  private getAction(action: string) {
+  // Returns success action or fail action that the effect will be dispatch to the store
+  private getActionToDispatch(action: string) {
     return (result: Partial<ResponseClientResultModel<any>>, config: EffectActionsConfig) => {
       const { successAction, failAction } = config;
       const { success, data, error } = result;

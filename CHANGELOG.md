@@ -84,3 +84,6 @@ Add Custom DataTable
 
 ## [ADD] 07-03-2020 17:50
 Add new type to action payload
+
+## [ADD] 07-03-2020 20:19
+Update the of method in effects factory

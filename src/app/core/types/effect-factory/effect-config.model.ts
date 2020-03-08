@@ -1,11 +1,12 @@
-import { EffectRequestConfig } from './effect-request-config';
-import { EffectActionsConfig } from './effect-actions-config';
 import { RestResourceFactory } from '@core/utils';
- 
+import { EffectActionsConfig } from './effect-actions-config';
+import { EffectRequestConfig } from './effect-request-config';
+
 
 /**
  * @description All the data needed to create an effect
-*/
+ */
+
 export class EffectConfigModel {
 
   private _requestOptions: any = null;
