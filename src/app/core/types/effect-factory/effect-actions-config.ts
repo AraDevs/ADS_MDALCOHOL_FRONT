@@ -6,6 +6,7 @@ import { PlainActionCreator, DataActionCreator } from './action-types';
 export class EffectActionsConfig {
   constructor(
     public actionToListen: PlainActionCreator | DataActionCreator,
-    public successAction: DataActionCreator,
-    public failAction: DataActionCreator) { }
+    public successAction: PlainActionCreator | DataActionCreator,
+    public failAction: DataActionCreator
+  ) {}
 }

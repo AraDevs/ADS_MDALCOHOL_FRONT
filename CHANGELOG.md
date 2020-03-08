@@ -102,3 +102,6 @@ Update the name of actions
 
 ## [REMOVE] 08-03-2020 14:27
 Remove un used actions
+
+## [UPDATE] 08-03-2020 14:42
+Update the type of EffectActionsConfig

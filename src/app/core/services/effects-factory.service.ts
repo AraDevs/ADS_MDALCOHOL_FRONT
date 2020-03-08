@@ -38,7 +38,7 @@ export class EffectsFactoryService {
         const { result } = requestClient[method]<any>(requestData);
         return result.pipe(
           map((res: Partial<ResponseClientResultModel<any>>) =>
-            this.getActionToDispatch(action.type)(res, actionsConfig)
+            this.getActionToDispatch()(res, actionsConfig)
           )
         ) as Observable<Action>;
       })
@@ -46,7 +46,7 @@ export class EffectsFactoryService {
   }
 
   // Returns success action or fail action that the effect will be dispatch to the store
-  private getActionToDispatch(action: string) {
+  private getActionToDispatch() {
     return (result: Partial<ResponseClientResultModel<any>>, config: EffectActionsConfig) => {
       const { successAction, failAction } = config;
       const { success, data, error } = result;
