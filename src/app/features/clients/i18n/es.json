@@ -1,0 +1,15 @@
+{
+  "Form": {
+    "BusinessName": "Nombre del Negocio",
+    "Dui": "Ingrese el número de DUI",
+    "Registry": "Número de Registro",
+    "PersonType": "Tipo de Persona",
+    "SellerId": "Vendedor",
+    "Name": "Nombre del Socio",
+    "Address": "Dirección",
+    "MunicipalityId": "Seleccione un Municipio",
+    "Nit": "Ingrese el número de NIT",
+    "Phone": "Ingrese un número teléfonico",
+    "State": "Activo"
+  }
+}

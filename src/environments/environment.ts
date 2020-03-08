@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  host: 'http://35.192.170.6/index.php'
+  host: 'http://35.192.170.6'
 };
 
 /*
