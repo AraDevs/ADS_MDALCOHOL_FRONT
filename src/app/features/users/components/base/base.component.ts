@@ -8,6 +8,8 @@ import { select, Store } from '@ngrx/store';
 import { CustomErrorMessage, DataTableConfig } from '@shared/types';
 import { Observable } from 'rxjs';
 import { filter, map, tap } from 'rxjs/operators';
+import { PlainActionCreator } from '@core/types/effect-factory/action-types';
+import { AppState } from '@state/app-state';
 
 @Component({
   selector: 'md-base',
@@ -44,7 +46,7 @@ export class BaseComponent implements OnInit {
   };
 
   constructor(
-    private store$: Store<any>,
+    private store$: Store<AppState>,
     private loading: LoadingService,
     private error: ErrorService,
     private formConfig: LoginFormConfig,
@@ -52,14 +54,17 @@ export class BaseComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    const { LoadUsersAction, UsersLoadedSuccessAction, LoadUsersFailAction } = userState;
-    const actions = [LoadUsersAction, UsersLoadedSuccessAction, LoadUsersFailAction];
+    const actions = [
+      userState.LOAD_USERS,
+      userState.USERS_LOADED_SUCCESS,
+      userState.USERS_LOADED_FAIL
+    ] as PlainActionCreator[];
 
-    this.loading$ = this.loading.getLoading(actions).pipe(tap(console.log));
-    this.error$ = this.error.getError(LoadUsersFailAction, 'Users.Errors.LoadUsersFail');
+    this.loading$ = this.loading.getLoading(actions);
+    this.error$ = this.error.getError(userState.USERS_LOADED_FAIL, 'Users.Errors.LoadUsersFail');
 
     this.store$.dispatch(
-      userState.LoadUser({
+      userState.LOAD_USER({
         payload: { metadata: { resource: { id: '2' } } }
       })
     );
@@ -74,7 +79,7 @@ export class BaseComponent implements OnInit {
     });
 
     this.form = this.formService.createPlainForm(this.fields);
-    this.store$.dispatch(userState.LoadUsers());
+    this.store$.dispatch(userState.LOAD_USERS());
   }
 
   submit() {

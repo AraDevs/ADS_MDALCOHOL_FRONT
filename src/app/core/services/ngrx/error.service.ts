@@ -4,20 +4,18 @@ import { map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { ErrorActionData, CustomErrorMessage } from '@shared/types';
 import { Observable } from 'rxjs';
-
-interface ErrorAction extends Action, ErrorActionData { }
+import { ErrorActionCreator } from '@core/types/effect-factory/action-types';
 
 @Injectable({ providedIn: 'root' })
 export class ErrorService {
-  constructor(private dispatcher: ActionsSubject) { }
+  constructor(private dispatcher: ActionsSubject) {}
 
-  getError(actionToListen: string, message: string): Observable<CustomErrorMessage> {
+  getError(actionToListen: ErrorActionCreator, message: string): Observable<CustomErrorMessage> {
     return this.dispatcher.pipe(ofType(actionToListen)).pipe(
-      map((action: ErrorAction) => {
-        const { error, fromServer } = action;
+      map(({ payload }) => {
+        const { error, fromServer } = payload;
         return { message: fromServer ? error : message, translate: !fromServer };
       })
     );
   }
-
 }

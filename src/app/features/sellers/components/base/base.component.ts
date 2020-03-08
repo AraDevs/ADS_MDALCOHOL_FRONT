@@ -1,14 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { FormsModule, FormGroup } from '@angular/forms';
-import {FormModel} from '@features/sellers/config/form-model';
-import { InputControlConfig } from '@core/types';
+import { FormGroup } from '@angular/forms';
 import { FormService } from '@core/services';
-import { Store, select } from '@ngrx/store';
+import { InputControlConfig } from '@core/types';
+import { FormModel } from '@features/sellers/config/form-model';
 import * as state from '@features/sellers/state';
-import { Observable } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { select, Store } from '@ngrx/store';
 import { DataTableConfig } from '@shared/types';
-
+import { Observable } from 'rxjs';
+import { AppState } from '@state/app-state';
 
 @Component({
   selector: 'md-base',
@@ -17,10 +16,9 @@ import { DataTableConfig } from '@shared/types';
   providers: [FormModel]
 })
 export class BaseComponent implements OnInit {
-
-  form:FormGroup;
-  fields:Partial<InputControlConfig>[];
-  data:Observable<any[]>;
+  form: FormGroup;
+  fields: Partial<InputControlConfig>[];
+  data: Observable<any[]>;
   tableConfig: DataTableConfig = {
     displayedColumns: ['name', 'seller_code'],
     titles: {
@@ -31,25 +29,32 @@ export class BaseComponent implements OnInit {
     // sortDirection: 'asc'
   };
 
-  constructor(private formModel:FormModel, private formService:FormService, private store$:Store<any>) { }
+  constructor(
+    private formModel: FormModel,
+    private formService: FormService,
+    private store$: Store<AppState>
+  ) {}
 
   ngOnInit(): void {
     this.fields = this.formModel.getModel();
     this.form = this.formService.createPlainForm(this.fields as any);
-    this.store$.dispatch(state.LoadSellers());
+    this.store$.dispatch(state.LOAD_SELLERS());
     this.data = this.store$.pipe(select(state.selectSellers));
   }
 
-  saveSeller(){
+  saveSeller() {
     const values = this.form.value;
-    
-    const dataToSave =  {name: values['name'], seller_code: values['seller_code'], state: values['state'] ? 1 : 0 };
-    const action = state.SaveSellers({payload: {data: dataToSave}})
+
+    const dataToSave = {
+      name: values.name,
+      seller_code: values.seller_code,
+      state: values.state ? 1 : 0
+    };
+    const action = state.SAVE_SELLERS({ payload: { data: dataToSave } });
     this.store$.dispatch(action);
   }
 
-  selectedRow(row:any){
-    this.form.patchValue({name: row.name})
+  selectedRow(row: any) {
+    this.form.patchValue({ name: row.name });
   }
-
 }

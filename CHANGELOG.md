@@ -95,3 +95,8 @@ Add FormModel
 ## [UPDATE] 08-03-2020 11:39
 Add merge of seller ,client branch and providers
 
+## [UPDATE] 08-03-2020 12:24
+Update LoadingService
+Update ErrorService
+Update the name of actions
+

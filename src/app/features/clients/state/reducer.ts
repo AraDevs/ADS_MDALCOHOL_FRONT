@@ -13,7 +13,7 @@ const INITIAL_STATE: ClientsState = {
 
 const sellersReducer = createReducer(
   INITIAL_STATE,
-  on(actions.SellersLoadedSuccess, (state, { payload }) => ({ ...state, sellers: payload })),
+  on(actions.SELLERS_LOADED_SUCCESS, (state, { payload }) => ({ ...state, sellers: payload }))
 );
 
 export function reducer(state: ClientsState | undefined, action: Action) {

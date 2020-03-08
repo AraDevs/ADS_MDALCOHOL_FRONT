@@ -25,7 +25,7 @@ export class BaseComponent implements OnInit {
   ngOnInit(): void {
     this.fields = this.formModel.getModel();
     this.form = this.formService.createPlainForm(this.fields as any);
-    this.store$.dispatch(state.LoadSellers());
+    this.store$.dispatch(state.LOAD_SELLERS());
     this.data = this.store$.pipe(select(state.selectSellers));
   }
 

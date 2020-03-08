@@ -13,7 +13,7 @@ const INITIAL_STATE: ProvidersState = {
 
 const providersReducer = createReducer(
   INITIAL_STATE,
-  on(actions.ProvidersLoadedSuccess, (state, { payload }) => ({ ...state, providers: payload })),
+  on(actions.PROVIDERS_LOADED_SUCCESS, (state, { payload }) => ({ ...state, providers: payload })),
 );
 
 export function reducer(state: ProvidersState | undefined, action: Action) {

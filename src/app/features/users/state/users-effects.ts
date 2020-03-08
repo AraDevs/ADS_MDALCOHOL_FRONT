@@ -8,30 +8,35 @@ import { RestResourceFactory } from '@core/utils';
 
 @Injectable()
 export class UsersEffects {
-
-  constructor(
-    private effectFactory: EffectsFactoryService,
-    private requestClient: RequestClient) { }
+  constructor(private effectFactory: EffectsFactoryService, private requestClient: RequestClient) {}
 
   loadUsers$ = createEffect(() => {
-    const { LoadUsers, UsersLoadedSuccess, LoadUsersFail } = actions;
-
     const effectReqConfig = new EffectRequestConfig(this.requestClient, 'get');
-    const actionsConfig = new EffectActionsConfig(LoadUsers, UsersLoadedSuccess, LoadUsersFail);
-    const config = new EffectConfigModel(effectReqConfig, actionsConfig, 'https://jsonplaceholder.typicode.com/users');
+    const actionsConfig = new EffectActionsConfig(
+      actions.LOAD_USERS,
+      actions.USERS_LOADED_SUCCESS,
+      actions.USERS_LOADED_FAIL
+    );
+    const config = new EffectConfigModel(
+      effectReqConfig,
+      actionsConfig,
+      'https://jsonplaceholder.typicode.com/users'
+    );
 
     return this.effectFactory.create(config);
   });
 
   loadUser$ = createEffect(() => {
-    const { LoadUser, UserLoadedSuccess, LoadUserFaild } = actions;
+    const { LOAD_USER, USER_LOADED_SUCCESS, USER_LOADED_FAIL } = actions;
 
     const effectReqConfig = new EffectRequestConfig(this.requestClient, 'get');
-    const actionsConfig = new EffectActionsConfig(LoadUser, UserLoadedSuccess, LoadUserFaild);
+    const actionsConfig = new EffectActionsConfig(LOAD_USER, USER_LOADED_SUCCESS, USER_LOADED_FAIL);
 
     const config = new EffectConfigModel(effectReqConfig, actionsConfig);
-    config.resourceFactory = new RestResourceFactory('https://jsonplaceholder.typicode.com/users/$$0', ['id']);
+    config.resourceFactory = new RestResourceFactory(
+      'https://jsonplaceholder.typicode.com/users/$$0',
+      ['id']
+    );
     return this.effectFactory.create(config);
   });
-
 }

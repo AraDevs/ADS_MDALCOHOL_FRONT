@@ -1,27 +1,22 @@
 import { createAction, props } from '@ngrx/store';
 import { ErrorActionData, ActionMetadata } from '@shared/types';
 
-export const LoadUsersAction = '[Users] Load Users';
-export const UsersLoadedSuccessAction = '[Users] Users Loaded Success';
-export const LoadUsersFailAction = '[Users] Load UsersFail';
-
-export const LoadUserAction = '[Users] Load User';
-export const UserLoadedSuccessAction = '[Users] User Loaded Success';
-export const LoadUserFaildAction = '[Users] Load User Faild';
-
-export const LoadUsers = createAction(LoadUsersAction);
-export const UsersLoadedSuccess = createAction(
-  UsersLoadedSuccessAction,
+export const LOAD_USERS = createAction('[Users] Load Users');
+export const USERS_LOADED_SUCCESS = createAction(
+  '[Users] Users Loaded Success',
   props<{ payload: any[] }>()
 );
-export const LoadUsersFail = createAction(
-  LoadUsersFailAction,
+export const USERS_LOADED_FAIL = createAction(
+  '[Users] Load UsersFail',
   props<{ payload: ErrorActionData }>()
 );
 
-export const LoadUser = createAction(LoadUserAction, props<{ payload: ActionMetadata }>());
-export const UserLoadedSuccess = createAction(UserLoadedSuccessAction, props<{ payload: any[] }>());
-export const LoadUserFaild = createAction(
-  LoadUserFaildAction,
+export const LOAD_USER = createAction('[Users] Load User', props<{ payload: ActionMetadata }>());
+export const USER_LOADED_SUCCESS = createAction(
+  '[Users] User Loaded Success',
+  props<{ payload: any[] }>()
+);
+export const USER_LOADED_FAIL = createAction(
+  '[Users] Load User Faild',
   props<{ payload: ErrorActionData }>()
 );
