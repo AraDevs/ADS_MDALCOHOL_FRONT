@@ -9,23 +9,25 @@ import { select, Store } from '@ngrx/store';
 import { DataTableConfig } from '@shared/types';
 import { Observable } from 'rxjs';
 import { AppState } from '@state/app-state';
+import {SuccessService} from '@shared/services';
 
 @Component({
   selector: 'md-base',
   templateUrl: './base.component.html',
   styleUrls: ['./base.component.scss'],
-  providers: [FormModel]
+  providers: [FormModel, SuccessService]
 })
 export class BaseComponent implements OnInit {
   form: FormGroup;
   fields: Partial<InputControlConfig>[];
   data: Observable<any[]>;
   tableConfig: DataTableConfig = {
-    displayedColumns: ['name', 'seller_code', 'actions'],
+    displayedColumns: ['name', 'seller_code', 'state', 'actions'],
     titles: {
-      name: 'Nombre',
-      seller_code: 'Codigo Vendedor',
-      actions: 'Acciones'
+      name: 'Sellers.Table.Name',
+      seller_code: 'Sellers.Table.SellerCode',
+      state: 'Sellers.Table.State',
+      actions: 'Sellers.Table.Actions'
     }
     // sortActiveColumn: 'name',
     // sortDirection: 'asc'
@@ -34,7 +36,8 @@ export class BaseComponent implements OnInit {
   constructor(
     private formModel: FormModel,
     private formService: FormService,
-    private store$: Store<AppState>
+    private store$: Store<AppState>,
+    private successService: SuccessService
   ) {}
 
   ngOnInit(): void {
@@ -42,18 +45,28 @@ export class BaseComponent implements OnInit {
     this.form = this.formService.createPlainForm(this.fields as any);
     this.store$.dispatch(globalState.LOAD_SELLERS());
     this.data = this.store$.pipe(select(globalState.selectSellers));
+
+    this.successService.success(state.SAVE_SELLERS_SUCCESS, ()=> {
+      this.store$.dispatch(globalState.LOAD_SELLERS());
+    })
   }
 
-  saveSeller() {
-    const values = this.form.value;
+  save() {
+    if(this.form.valid)
+    {
+      const values = this.form.value;
 
-    const dataToSave = {
-      name: values.name,
-      seller_code: values.seller_code,
-      state: values.state ? 1 : 0
-    };
-    const action = state.SAVE_SELLERS({ payload: { data: dataToSave } });
-    this.store$.dispatch(action);
+      const dataToSave = {
+        name: values.name,
+        seller_code: values.seller_code,
+        state: values.state ? 1 : 0
+      };
+      const action = state.SAVE_SELLERS({ payload: { data: dataToSave } });
+      this.store$.dispatch(action);
+      return
+    }
+
+    //alert('Llene los campos:*');
   }
 
   selectedRow(row: any) {

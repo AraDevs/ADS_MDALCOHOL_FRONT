@@ -1,12 +1,12 @@
 <div class="container">
   <h1>Sellers</h1>
-  <form [formGroup]="form" #formReference="ngForm">
+  <form [formGroup]="form" #formReference="ngForm" (submit)="save()">
     <md-form-generator [form]="form" [formReference]="formReference" [fields]="fields"
       [displayContainerCheckboxs]="true">
 
     </md-form-generator>
+    <button class="mat-focus-indicator mat-raised-button mat-button-primary" mat-raised-button="" color="primary">{{ 'Sellers.Button.Save' | transloco}}</button>
   </form>
-  <button (click)="saveSeller()">Guardar</button>
 </div>
 
 <!--<div *ngFor="let item of data | async" >{{item.name}}</div>-->

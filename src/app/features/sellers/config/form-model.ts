@@ -1,5 +1,7 @@
 import { InputControlConfig } from "@core/types";
 import { Injectable } from '@angular/core';
+import { Validators } from '@angular/forms';
+import { minLength } from '@shared/Validator';
 
 @Injectable()
 export class FormModel
@@ -11,6 +13,9 @@ export class FormModel
             fieldType:'Input', 
             type:'text', 
             id:'name', 
+            validations: [Validators.required],
+            validatorMessages: ['Sellers.FormValidator.Seller.Required'],
+            validationNames: ['required'],
             cssClasses:'', 
             label:'Sellers.Form.Name' },
 
@@ -18,6 +23,9 @@ export class FormModel
             fieldType:'Input', 
             type:'text', 
             id:'seller_code', 
+            validations: [Validators.required, minLength(4)],
+            validatorMessages: ['Sellers.FormValidator.Seller.Required', 'Sellers.FormValidator.Seller.MinLength'],
+            validationNames: ['required','min'],
             cssClasses:'', 
             label:'Sellers.Form.SellerCode'},
 
