@@ -3,10 +3,50 @@ import { ErrorActionData } from '@shared/types';
 
 export const LOAD_SELLERS = createAction('Load Sellers');
 export const SELLERS_LOADED_SUCCESS = createAction(
-  'Sellers Loaded Succes',
+  'Sellers Loaded Success',
   props<{ payload: any[] }>()
 );
 export const SELLERS_LOADED_FAIL = createAction(
   'Sellers Loaded Fail',
   props<{ payload: ErrorActionData }>()
+);
+
+// Clients
+export const LOAD_CLIENTS = createAction('Load Clients');
+export const CLIENTS_LOADED_SUCCESS = createAction(
+  'Clients Loaded Success',
+  props<{ payload: any[] }>()
+);
+export const CLIENTS_LOADED_FAIL = createAction(
+  'Clients Loaded Fail',
+  props<{ payload: ErrorActionData }>()
+);
+
+// Departments
+export const LOAD_DEPARTMENTS = createAction('Load Departments');
+export const DEPARTMENTS_LOADED_SUCCESS = createAction(
+  'Departments Loaded Success',
+  props<{ payload: any[] }>()
+);
+export const DEPARTMENTS_LOADED_FAIL = createAction(
+  'Departments Loaded Fail',
+  props<{ payload: ErrorActionData }>()
+);
+
+// Municipalities
+export const LOAD_MUNICIPALITIES = createAction('Load Municipalities');
+export const MUNICIPALITIES_LOADED_SUCCESS = createAction(
+  'Municipalities Loaded Success',
+  props<{ payload: any[] }>()
+);
+export const MUNICIPALITIES_LOADED_FAIL = createAction(
+  'Municipalities Loaded Fail',
+  props<{ payload: ErrorActionData }>()
+);
+
+export const FILTER_MUNICIPALITIES = createAction(
+  'Filter Municipalities',
+  props<{ payload: {
+    id: number
+  } }>()
 );

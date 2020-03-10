@@ -2,17 +2,27 @@ import { InputControlConfig } from "@core/types";
 import { Injectable } from "@angular/core";
 import { SelectControlConfig } from '@core/types/forms/select-control-config';
 import { Observable, of } from 'rxjs';
+import { Store, select } from '@ngrx/store';
+import * as globalState from '@state/index';
+import { Validators } from '@angular/forms';
 
 @Injectable()
 export class FormModel {
+
+  constructor(private store$: Store<any>) {}
+
   getModel(): Partial<InputControlConfig | SelectControlConfig>[] {
     return [
       {
-        key: 'business-name',
+        // client
+        key: 'business_name',
         fieldType: 'Input',
         type: 'text',
-        id: 'business-name',
+        id: 'business_name',
         cssClasses: '',
+        validations: [Validators.required],
+        validatorMessages: ['Clients.FormValidator.Client.Required'],
+        validationNames: ['required'],
         label: 'Clients.Form.BusinessName'
       },
       {
@@ -24,27 +34,28 @@ export class FormModel {
         label: 'Clients.Form.Dui'
       },
       {
-        key: 'registry-no',
+        key: 'registry_no',
         fieldType: 'Input',
         type: 'text',
-        id: 'registry-no',
+        id: 'registry_no',
         cssClasses: '',
         label: 'Clients.Form.Registry'
       },
       {
-        key: 'person-type',
+        key: 'person_type',
         fieldType: 'Select',
-        id: 'person-type',
+        id: 'person_type',
         cssClasses: '',
         label: 'Clients.Form.PersonType'
       },
       {
-        key: 'seller-id',
+        key: 'seller_id',
         fieldType: 'Select',
-        id: 'seller-id',
+        id: 'seller_id',
         cssClasses: '',
         label: 'Clients.Form.SellerId'
       },
+      // seller
       {
         key: 'name',
         fieldType: 'Input',
@@ -62,16 +73,20 @@ export class FormModel {
         label: 'Clients.Form.Address'
       },
       {
-        key: 'municipality-id',
+        key: 'department_id',
         fieldType: 'Select',
-        id: 'municipality-id',
+        id: 'department_id',
+        cssClasses: '',
+        label: 'Clients.Form.DepartmentId',
+        options$: this.store$.pipe(select(globalState.selectDepartments))
+      },
+      {
+        key: 'municipality_id',
+        fieldType: 'Select',
+        id: 'municipality_id',
         cssClasses: '',
         label: 'Clients.Form.MunicipalityId',
-        options$: of([
-          {
-            label: "Nombre"
-          }
-        ])
+        options$: this.store$.pipe(select(globalState.selectMunicipalities))
       },
       {
         key: 'nit',
