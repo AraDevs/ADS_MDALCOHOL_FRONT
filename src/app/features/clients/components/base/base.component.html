@@ -1,10 +1,14 @@
 <h1>Clients</h1>
 
 <div class="container">
-    <form [formGroup]="form" #formReference="ngForm">
+    <form [formGroup]="form" #formReference="ngForm" (submit)="save()">
         <md-form-generator [form]="form" [formReference]="formReference" [fields]="fields" [displayContainerCheckboxs]="true">
         </md-form-generator>
     </form>
+    <button class="mat-focus-indicator mat-raised-button mat-button-primary" mat-raised-button="" color="primary">{{ 'Clients.Button.Save' | transloco}}</button>
 </div>
 
-<div *ngFor="let s of data | async">{{ s.name }}</div>
+<div class="p-4">
+    <md-data-table [dataSource$]="dataClients" [config]="tableConfig">
+    </md-data-table>
+</div>

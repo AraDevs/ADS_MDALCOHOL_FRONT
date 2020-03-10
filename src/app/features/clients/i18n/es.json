@@ -8,8 +8,26 @@
     "Name": "Nombre del Socio",
     "Address": "Dirección",
     "MunicipalityId": "Seleccione un Municipio",
+    "DepartmentId": "Seleccione un Departamento",
     "Nit": "Ingrese el número de NIT",
     "Phone": "Ingrese un número teléfonico",
     "State": "Activo"
+  },
+  "Table": {
+    "Titles": {
+      "BusinessName": "Empresa",
+      "Dui": "DUI",
+      "Registry": "# de Registro",
+      "PersonType": "Tipo",
+      "SellerId": "Vendedor"
+    }
+  },
+  "FormValidator": {
+    "Client": {
+      "Required": "Debe llenar este campo"
+    }
+  },
+  "Button": {
+    "Save": "Guardar"
   }
 }

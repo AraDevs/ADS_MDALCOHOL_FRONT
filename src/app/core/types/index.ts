@@ -1,7 +1,7 @@
 export * from './effect-factory/effect-actions-config';
 export * from './effect-factory/effect-config.model';
 export * from './effect-factory/effect-request-config';
-
+export * from './effect-factory/action-types';
 // Forms
 export { ControlConfig } from './forms/control-config';
 export { SelectControlConfig } from './forms/select-control-config';

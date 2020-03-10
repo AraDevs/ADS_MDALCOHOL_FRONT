@@ -108,3 +108,6 @@ Update the type of EffectActionsConfig
 
 ## [Add] 08-03-2020 15:18
 Add Icon to DataTable
+
+## [UPDATE] 10-03-2020 15:37
+Merge seller and client branch

@@ -9,7 +9,7 @@ import { select, Store } from '@ngrx/store';
 import { DataTableConfig } from '@shared/types';
 import { Observable } from 'rxjs';
 import { AppState } from '@state/app-state';
-import {SuccessService} from '@shared/services';
+import { SuccessService } from '@shared/services';
 
 @Component({
   selector: 'md-base',
@@ -46,14 +46,13 @@ export class BaseComponent implements OnInit {
     this.store$.dispatch(globalState.LOAD_SELLERS());
     this.data = this.store$.pipe(select(globalState.selectSellers));
 
-    this.successService.success(state.SAVE_SELLERS_SUCCESS, ()=> {
+    this.successService.success(state.SAVE_SELLERS_SUCCESS, () => {
       this.store$.dispatch(globalState.LOAD_SELLERS());
-    })
+    });
   }
 
   save() {
-    if(this.form.valid)
-    {
+    if (this.form.valid) {
       const values = this.form.value;
 
       const dataToSave = {
@@ -63,7 +62,7 @@ export class BaseComponent implements OnInit {
       };
       const action = state.SAVE_SELLERS({ payload: { data: dataToSave } });
       this.store$.dispatch(action);
-      return
+      return;
     }
 
     //alert('Llene los campos:*');
