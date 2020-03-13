@@ -5,5 +5,12 @@
     "Providers": "Proveedores",
     "Clients": "Clients",
     "Sellers": "Vendedores"
+  },
+  "FormValidator": {
+    "Required": "Debe llenar este campo",
+    "RequiredSelected": "Debe seleccionar un campo"
+  },
+  "Buttons": {
+    "Save": "Guardar"
   }
 }

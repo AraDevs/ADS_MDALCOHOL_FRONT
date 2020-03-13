@@ -5,6 +5,7 @@ import { Observable, of } from 'rxjs';
 import { Store, select } from '@ngrx/store';
 import * as globalState from '@state/index';
 import { Validators } from '@angular/forms';
+import { map } from 'rxjs/operators';
 
 @Injectable()
 export class FormModel {
@@ -15,13 +16,13 @@ export class FormModel {
     return [
       {
         // client
-        key: 'business_name',
+        key: 'businessName',
         fieldType: 'Input',
         type: 'text',
-        id: 'business_name',
+        id: 'businessName',
         cssClasses: '',
         validations: [Validators.required],
-        validatorMessages: ['Clients.FormValidator.Client.Required'],
+        validatorMessages: ['FormValidator.Required'],
         validationNames: ['required'],
         label: 'Clients.Form.BusinessName'
       },
@@ -31,37 +32,61 @@ export class FormModel {
         type: 'text',
         id: 'dui',
         cssClasses: '',
+        validations: [Validators.required],
+        validatorMessages: ['FormValidator.RequiredSelected'],
+        validationNames: ['required'],
         label: 'Clients.Form.Dui'
       },
       {
-        key: 'registry_no',
+        key: 'registry',
         fieldType: 'Input',
         type: 'text',
-        id: 'registry_no',
+        id: 'registry',
         cssClasses: '',
+        validations: [Validators.required],
+        validatorMessages: ['FormValidator.Required'],
+        validationNames: ['required'],
         label: 'Clients.Form.Registry'
       },
       {
-        key: 'person_type',
+        key: 'personType',
         fieldType: 'Select',
-        id: 'person_type',
+        id: 'personType',
         cssClasses: '',
-        label: 'Clients.Form.PersonType'
+        validations: [Validators.required],
+        validatorMessages: ['FormValidator.RequiredSelected'],
+        validationNames: ['required'],
+        label: 'Clients.Form.PersonType',
+        options$: this.store$.pipe(select(globalState.selectTypePerson),
+          map((typesPerson: string[]) => {
+            return typesPerson.map(person => ({ label: person, value: person }));
+          }))
       },
       {
-        key: 'seller_id',
+        key: 'seller',
         fieldType: 'Select',
-        id: 'seller_id',
+        id: 'seller',
         cssClasses: '',
-        label: 'Clients.Form.SellerId'
+        label: 'Clients.Form.SellerId',
+        validations: [Validators.required],
+        validatorMessages: ['FormValidator.RequiredSelected'],
+        validationNames: ['required'],
+        options$: this.store$.pipe(
+          select(globalState.selectSellers),
+          map((sellers: any[]) => {
+            return sellers.map(obj => ({ ...obj, label: obj.name}));
+        }))
       },
       // seller
       {
-        key: 'name',
+        key: 'sellerName',
         fieldType: 'Input',
         type: 'text',
-        id: 'name',
+        id: 'sellerName',
         cssClasses: '',
+        validations: [Validators.required],
+        validatorMessages: ['FormValidator.Required'],
+        validationNames: ['required'],
         label: 'Clients.Form.Name'
       },
       {
@@ -70,22 +95,31 @@ export class FormModel {
         type: 'text',
         id: 'address',
         cssClasses: '',
+        validations: [Validators.required],
+        validatorMessages: ['FormValidator.Required'],
+        validationNames: ['required'],
         label: 'Clients.Form.Address'
       },
       {
-        key: 'department_id',
+        key: 'departmentId',
         fieldType: 'Select',
-        id: 'department_id',
+        id: 'departmentId',
         cssClasses: '',
         label: 'Clients.Form.DepartmentId',
+        validations: [Validators.required],
+        validatorMessages: ['FormValidator.RequiredSelected'],
+        validationNames: ['required'],
         options$: this.store$.pipe(select(globalState.selectDepartments))
       },
       {
-        key: 'municipality_id',
+        key: 'municipality',
         fieldType: 'Select',
-        id: 'municipality_id',
+        id: 'municipality',
         cssClasses: '',
         label: 'Clients.Form.MunicipalityId',
+        validations: [Validators.required],
+        validatorMessages: ['FormValidator.RequiredSelected'],
+        validationNames: ['required'],
         options$: this.store$.pipe(select(globalState.selectMunicipalities))
       },
       {
@@ -94,6 +128,9 @@ export class FormModel {
         type: 'text',
         id: 'nit',
         cssClasses: '',
+        validations: [Validators.required],
+        validatorMessages: ['FormValidator.Required'],
+        validationNames: ['required'],
         label: 'Clients.Form.Nit'
       },
       {
@@ -102,6 +139,9 @@ export class FormModel {
         type: 'text',
         id: 'phone',
         cssClasses: '',
+        validations: [Validators.required],
+        validatorMessages: ['FormValidator.Required'],
+        validationNames: ['required'],
         label: 'Clients.Form.Phone'
       },
       {
@@ -109,6 +149,9 @@ export class FormModel {
         fieldType: 'Checkbox',
         id: 'state',
         cssClasses: '',
+        validations: [Validators.required],
+        validatorMessages: ['FormValidator.Required'],
+        validationNames: ['required'],
         label: 'Clients.Form.State',
         defautlValue: true
       }

@@ -4,11 +4,11 @@
     <form [formGroup]="form" #formReference="ngForm" (submit)="save()">
         <md-form-generator [form]="form" [formReference]="formReference" [fields]="fields" [displayContainerCheckboxs]="true">
         </md-form-generator>
+        <button class="mat-focus-indicator mat-raised-button mat-button-primary" mat-raised-button="" color="primary">{{ 'Buttons.Save' | transloco}}</button>
     </form>
-    <button class="mat-focus-indicator mat-raised-button mat-button-primary" mat-raised-button="" color="primary">{{ 'Clients.Button.Save' | transloco}}</button>
 </div>
 
 <div class="p-4">
-    <md-data-table [dataSource$]="dataClients" [config]="tableConfig">
+    <md-data-table [dataSource$]="dataClients" [config]="tableConfig" (update)="update($event)">
     </md-data-table>
 </div>

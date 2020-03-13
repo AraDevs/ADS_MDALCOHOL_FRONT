@@ -4,6 +4,8 @@
     "Dui": "Ingrese el número de DUI",
     "Registry": "Número de Registro",
     "PersonType": "Tipo de Persona",
+    "Natural": "Natural",
+    "Legal": "Jurídica",
     "SellerId": "Vendedor",
     "Name": "Nombre del Socio",
     "Address": "Dirección",
@@ -21,13 +23,5 @@
       "PersonType": "Tipo",
       "SellerId": "Vendedor"
     }
-  },
-  "FormValidator": {
-    "Client": {
-      "Required": "Debe llenar este campo"
-    }
-  },
-  "Button": {
-    "Save": "Guardar"
   }
 }

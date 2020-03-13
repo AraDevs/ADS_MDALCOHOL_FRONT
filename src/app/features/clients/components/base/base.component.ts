@@ -8,15 +8,17 @@ import * as state from '@features/clients/state';
 import { Store, select } from '@ngrx/store';
 import { DataTableConfig } from '@shared/types';
 import { SelectControlConfig } from '@core/types/forms/select-control-config';
-import { Observable } from 'rxjs';
+import { Observable, combineLatest } from 'rxjs';
 import { SubSink } from 'subsink';
 import { AppState } from '@state/app-state';
+import { SuccessService } from '@shared/services';
+import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'md-base',
   templateUrl: './base.component.html',
   styleUrls: ['./base.component.scss'],
-  providers: [FormModel]
+  providers: [FormModel, SuccessService]
 })
 export class BaseComponent implements OnInit, OnDestroy {
   private subs = new SubSink();
@@ -43,7 +45,8 @@ export class BaseComponent implements OnInit, OnDestroy {
   constructor(
     private formModel: FormModel,
     private formService: FormService,
-    private store$: Store<any>,
+    private store$: Store<AppState>,
+    private successService: SuccessService
     ) { }
 
   ngOnInit(): void {
@@ -52,17 +55,18 @@ export class BaseComponent implements OnInit, OnDestroy {
     this.store$.dispatch(globalState.LOAD_DEPARTMENTS());
     this.store$.dispatch(globalState.LOAD_MUNICIPALITIES());
     this.store$.dispatch(globalState.LOAD_CLIENTS());
+    this.store$.dispatch(globalState.LOAD_SELLERS());
     this.data = this.store$.pipe(select(globalState.selectDepartments));
     this.dataClients = this.store$.pipe(select(globalState.selectClients));
 
-    this.subs.sink =  this.form.get('department_id').valueChanges.subscribe(department => {
+    this.subs.sink =  this.form.get('departmentId').valueChanges.subscribe(department => {
       const {id} = department;
       this.store$.dispatch(globalState.FILTER_MUNICIPALITIES({payload: {id}}));
     });
 
-    // this.sucessService.sucess(state.SAVE_CLIENTS_SUCCESS, () => {
-    //   this.store$.dispatch(globalState.LOAD_CLIENTS);
-    // });
+    this.successService.success(state.SAVE_CLIENTS_SUCCESS, () => {
+      this.store$.dispatch(globalState.LOAD_CLIENTS);
+    });
   }
 
   ngOnDestroy() {
@@ -70,20 +74,18 @@ export class BaseComponent implements OnInit, OnDestroy {
   }
 
   save() {
-    if (this.form.valid)
-    {
+    if (this.form.valid) {
       const values = this.form.value;
-
       const dataToSave = {
-        business_name: values.business_name,
+        business_name: values.businessName,
         dui: values.dui,
-        registry_no: values.regisrty_no,
-        person_type: values.person_type,
-        seller_id: values.seller_id,
+        registry_no: values.registry,
+        person_type: values.personType.value,
+        seller_id: values.seller.id,
         partner: {
-          name: values.name,
+          name: values.sellerName,
           address: values.address,
-          municipality_id: values.municipality_id,
+          municipality_id: values.municipality.id,
           nit: values.nit,
           phone: values.phone,
           state: values.state ? 1 : 0
@@ -91,8 +93,51 @@ export class BaseComponent implements OnInit, OnDestroy {
       };
       const action = state.SAVE_CLIENTS({ payload: { data: dataToSave } });
       this.store$.dispatch(action);
-      return;
     }
   }
 
+  update(client: any) {
+    const deparment$ = this.store$.pipe(
+      select(globalState.selectDepartmentByMunicipalityId, client.partner.municipality_id),
+      take(1)
+    );
+
+    const municipality$ = this.store$.pipe(
+      select(globalState.selectMunicipalityById, client.partner.municipality_id),
+      take(1)
+    );
+
+    const seller$ = this.store$.pipe(
+      select(globalState.selectSellersById, client.seller.id),
+      take(1)
+    );
+
+    console.log(client);
+    combineLatest([deparment$, municipality$, seller$ ]).subscribe(([deparment, municipality, seller]) => {
+      this.form.patchValue({
+        departmentId: {id: deparment.id, name: deparment.name, label: deparment.name},
+        municipality,
+        businessName: client.business_name,
+        dui: client.dui,
+        registry: client.registry_no,
+        personType: {
+          label: client.person_type,
+          value: client.person_type
+        },
+        seller: {
+          ...seller, label: seller.name, value: seller.name
+        },
+        sellerName: client.seller.name,
+        address: client.partner.address,
+        nit: client.partner.nit,
+        phone: client.partner.phone,
+        state: !!client.partner.state
+      });
+    // console.log(this.form.value)
+    });
+  }
+
+  // delete(client: any) {
+  //   console.log(client);
+  // }
 }

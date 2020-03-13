@@ -9,6 +9,7 @@ export interface State {
   sellers: any[];
   providers: any[];
   filterMunicipalities: any[];
+  typesPerson: string[];
 }
 
 const INITIAL_STATE: State = {
@@ -18,7 +19,8 @@ const INITIAL_STATE: State = {
   products: [],
   sellers: [],
   providers: [],
-  filterMunicipalities: []
+  filterMunicipalities: [],
+  typesPerson: ['Natural', 'Jurídica']
 };
 
 const globalReducer = createReducer(
