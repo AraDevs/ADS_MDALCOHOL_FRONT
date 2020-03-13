@@ -1,7 +1,7 @@
 import { Directive, ViewContainerRef } from '@angular/core';
 
 @Directive({
-  selector: '[appModalAnchor]'
+  selector: '[mdModalAnchor]'
 })
 export class ModalAnchorDirective {
   constructor(public viewContainerRef: ViewContainerRef) {}

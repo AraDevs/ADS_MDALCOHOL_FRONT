@@ -11,6 +11,7 @@ import { CheckboxComponent } from './components/material/checkbox/checkbox.compo
 import { RadioComponent } from './components/material/radio/radio.component';
 import { FormGeneratorComponent } from './components/material/form-generator/form-generator.component';
 import { ModalComponent } from './components';
+import { ModalAnchorDirective } from './directives';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { ModalComponent } from './components';
     CheckboxComponent,
     RadioComponent,
     FormGeneratorComponent,
-    ModalComponent
+    ModalComponent,
+    ModalAnchorDirective
   ],
   imports: [CommonModule, TranslocoModule, MaterialModule, FormsModule, ReactiveFormsModule],
   entryComponents: [ModalComponent],
@@ -39,7 +41,8 @@ import { ModalComponent } from './components';
     CheckboxComponent,
     RadioComponent,
     FormGeneratorComponent,
-    ModalComponent
+    ModalComponent,
+    ModalAnchorDirective
   ]
 })
 export class SharedModule {}

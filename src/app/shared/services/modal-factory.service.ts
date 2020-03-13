@@ -7,6 +7,9 @@ export class ModalFactoryService {
   constructor(private dialog: MatDialog) {}
 
   create(component: any) {
-    this.dialog.open(ModalComponent, { data: { component } });
+    this.dialog.open(ModalComponent, {
+      data: { component },
+      panelClass: ['p-0', 'md-modal']
+    });
   }
 }

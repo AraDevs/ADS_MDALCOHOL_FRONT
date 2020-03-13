@@ -12,7 +12,7 @@ import { ModalData } from '@shared/types';
 import { DYNAMIC_MODAL_DATA } from '@shared/constants';
 
 @Component({
-  selector: 'app-modal',
+  selector: 'md-modal',
   templateUrl: './modal.component.html',
   styleUrls: ['./modal.component.scss']
 })
@@ -27,9 +27,10 @@ export class ModalComponent implements OnInit {
 
   ngOnInit(): void {
     const componentFactory = this.componentFactory.resolveComponentFactory(this.data.component);
+
     const viewContainerRef = this.ref.viewContainerRef;
     const injector = Injector.create({
-      providers: [{ provide: DYNAMIC_MODAL_DATA, useValue: { name: 'Moises Leonor' } }]
+      providers: [{ provide: DYNAMIC_MODAL_DATA, useValue: { hello: 'Hello Moises Leonor' } }]
     });
     const componentRef = viewContainerRef.createComponent(componentFactory, null, injector);
   }
