@@ -10,6 +10,7 @@ import { DataTableComponent } from './components/material/data-table/data-table.
 import { CheckboxComponent } from './components/material/checkbox/checkbox.component';
 import { RadioComponent } from './components/material/radio/radio.component';
 import { FormGeneratorComponent } from './components/material/form-generator/form-generator.component';
+import { ModalComponent } from './components';
 
 @NgModule({
   declarations: [
@@ -19,9 +20,11 @@ import { FormGeneratorComponent } from './components/material/form-generator/for
     DataTableComponent,
     CheckboxComponent,
     RadioComponent,
-    FormGeneratorComponent
+    FormGeneratorComponent,
+    ModalComponent
   ],
   imports: [CommonModule, TranslocoModule, MaterialModule, FormsModule, ReactiveFormsModule],
+  entryComponents: [ModalComponent],
   exports: [
     CommonModule,
     TranslocoModule,
@@ -35,7 +38,8 @@ import { FormGeneratorComponent } from './components/material/form-generator/for
     DataTableComponent,
     CheckboxComponent,
     RadioComponent,
-    FormGeneratorComponent
+    FormGeneratorComponent,
+    ModalComponent
   ]
 })
 export class SharedModule {}
