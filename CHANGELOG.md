@@ -116,3 +116,6 @@ Merge seller and client branch
 ## [ADD] 13-03-2020 12:29
 Add ModalComponent
 Add ModalFactoryService
+
+## [ADD] 13-03-2020 13:15
+Add Basic Modal 
