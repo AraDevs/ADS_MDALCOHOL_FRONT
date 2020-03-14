@@ -1,15 +1,9 @@
-import {
-  Component,
-  ComponentFactoryResolver,
-  Inject,
-  OnInit,
-  ViewChild,
-  Injector
-} from '@angular/core';
+import { Component, ComponentFactoryResolver, Inject, Injector, OnInit, ViewChild } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { DYNAMIC_MODAL_DATA, MODAL_ACCEPT_EVENT, MODAL_INITIAL_EVENT } from '@shared/constants';
 import { ModalAnchorDirective } from '@shared/directives';
 import { ModalData } from '@shared/types';
-import { DYNAMIC_MODAL_DATA } from '@shared/constants';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'md-modal',
@@ -18,6 +12,11 @@ import { DYNAMIC_MODAL_DATA } from '@shared/constants';
 })
 export class ModalComponent implements OnInit {
   @ViewChild(ModalAnchorDirective, { static: true }) ref: ModalAnchorDirective;
+
+  private events = new BehaviorSubject<string>(MODAL_INITIAL_EVENT);
+  private component: any;
+
+  events$ = this.events.asObservable();
 
   constructor(
     @Inject(MAT_DIALOG_DATA) private data: ModalData,
@@ -33,5 +32,18 @@ export class ModalComponent implements OnInit {
       providers: [{ provide: DYNAMIC_MODAL_DATA, useValue: { hello: 'Hello Moises Leonor' } }]
     });
     const componentRef = viewContainerRef.createComponent(componentFactory, null, injector);
+    this.component = componentRef.instance;
+  }
+
+  getRenderedComponent<T>(): T {
+    return this.component;
+  }
+
+  accept() {
+    this.events.next(MODAL_ACCEPT_EVENT);
+  }
+
+  cancel() {
+    this.modalRef.close();
   }
 }

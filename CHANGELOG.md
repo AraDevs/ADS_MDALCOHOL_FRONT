@@ -125,3 +125,6 @@ Merge client and modal branch
 
 ## [ADD] 13-03-2020 23:18
 Add Modal
+
+## [Add] 14-03-2020 01:42
+Add Providers form to modal
