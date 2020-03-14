@@ -11,7 +11,8 @@ import * as state from '@features/providers/state';
 import { SubSink } from 'subsink';
 import { DataTableConfig } from '@shared/types';
 import { take } from 'rxjs/operators';
-import { SuccessService } from '@shared/services';
+import { SuccessService, ModalFactoryService } from '@shared/services';
+import { FormComponent } from '../form/form.component';
 
 @Component({
   selector: 'md-base',
@@ -22,8 +23,6 @@ import { SuccessService } from '@shared/services';
 export class BaseComponent implements OnInit, OnDestroy {
   private subs = new SubSink();
 
-  form: FormGroup;
-  fields: Partial<InputControlConfig | SelectControlConfig>[];
   dataDepartments: Observable<any[]>;
   dataProviders: Observable<any[]>;
   tableConfig: DataTableConfig = {
@@ -38,25 +37,17 @@ export class BaseComponent implements OnInit, OnDestroy {
   };
 
   constructor(
-    private formModel: FormModel,
-    private formService: FormService,
     private store$: Store<AppState>,
-    private successService: SuccessService
+    private successService: SuccessService,
+    private modalFactory: ModalFactoryService
   ) {}
 
   ngOnInit(): void {
-    this.fields = this.formModel.getModel();
-    this.form = this.formService.createPlainForm(this.fields as any);
     this.store$.dispatch(globalState.LOAD_PROVIDERS());
     this.store$.dispatch(globalState.LOAD_DEPARTMENTS());
     this.store$.dispatch(globalState.LOAD_MUNICIPALITIES());
     this.dataDepartments = this.store$.pipe(select(globalState.selectDepartments));
     this.dataProviders = this.store$.pipe(select(globalState.selectProviders));
-
-    this.subs.sink =  this.form.get('department').valueChanges.subscribe(department => {
-      const {id} = department;
-      this.store$.dispatch(globalState.FILTER_MUNICIPALITIES({payload: {id}}));
-    });
 
     this.successService.success(state.SAVE_PROVIDERS_SUCCESS, () => {
       this.store$.dispatch(globalState.LOAD_PROVIDERS);
@@ -67,7 +58,7 @@ export class BaseComponent implements OnInit, OnDestroy {
     this.subs.unsubscribe();
   }
 
-  save() {
+  /* save() {
     if (this.form.valid) {
       const values = this.form.value;
       const dataToSave = {
@@ -110,6 +101,10 @@ export class BaseComponent implements OnInit, OnDestroy {
         state: !!provider.partner.state
       });
     });
+  }*/
+
+  add() {
+    this.modalFactory.create(FormComponent);
   }
 
   delete(client: any) {

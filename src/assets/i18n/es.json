@@ -11,6 +11,7 @@
     "RequiredSelected": "Debe seleccionar un campo"
   },
   "Buttons": {
-    "Save": "Guardar"
+    "Save": "Guardar",
+    "Cancel": "Cancelar"
   }
 }

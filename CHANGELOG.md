@@ -119,3 +119,9 @@ Add ModalFactoryService
 
 ## [ADD] 13-03-2020 13:15
 Add Basic Modal 
+
+## [ADD] 13-03-2020 22:42
+Merge client and modal branch
+
+## [ADD] 13-03-2020 23:18
+Add Modal

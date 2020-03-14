@@ -1,2 +1,8 @@
-<ng-template mdModalAnchor></ng-template>
-<div class="close-modal">Close</div>
+<div class="p-4 h-100">
+  <ng-template mdModalAnchor></ng-template>
+</div>
+<div class="close-modal p-2 pb-4 d-flex justify-content-end">
+  <button mat-button class="mr-1">{{ 'Buttons.Cancel' | transloco}}</button>
+  <button class="mat-focus-indicator mat-raised-button mat-button-primary" mat-raised-button=""
+    color="primary">{{ 'Buttons.Save' | transloco}}</button>
+</div>

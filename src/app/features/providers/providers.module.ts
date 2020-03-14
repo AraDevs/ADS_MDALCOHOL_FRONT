@@ -7,17 +7,18 @@ import { SharedModule } from '@shared/shared.module';
 
 import { BaseComponent } from './components/base/base.component';
 import { ProvidersRoutingModule } from './providers-routing.module';
+import { FormComponent } from './components/form/form.component';
 
 const loader = LoadI18nFile((lang: string) => () => import(`./i18n/${lang}.json`));
 
 @NgModule({
-  declarations: [BaseComponent],
+  declarations: [BaseComponent, FormComponent],
   imports: [
     SharedModule,
     ProvidersRoutingModule,
     EffectsModule.forFeature([state.ProvidersEffects])
   ],
-
+  entryComponents: [FormComponent],
   providers: [
     {
       provide: TRANSLOCO_SCOPE,
@@ -25,4 +26,4 @@ const loader = LoadI18nFile((lang: string) => () => import(`./i18n/${lang}.json`
     }
   ]
 })
-export class ProvidersModule { }
+export class ProvidersModule {}

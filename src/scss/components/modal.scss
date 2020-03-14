@@ -1,0 +1,18 @@
+.md-modal {
+  .mat-dialog-container {
+    padding: 0;
+    width: 100vw;
+    height: 80vh;
+    @media (min-width: 992px) {
+      width: 80vw;
+      height: 90vh;
+    }
+  }
+  .close-modal {
+    position: -webkit-sticky;
+    position: sticky;
+    display: block;
+    width: 100%;
+    bottom: 0;
+  }
+}

@@ -1,15 +1,6 @@
-<h1>Proveedores</h1>
-
-<div class="container">
-  <form [formGroup]="form" #formReference="ngForm" (submit)="save()">
-    <md-form-generator [form]="form" [formReference]="formReference" [fields]="fields"
-      [displayContainerCheckboxs]="true">
-    </md-form-generator>
-    <button class="mat-focus-indicator mat-raised-button mat-button-primary" mat-raised-button="" color="primary">{{ 'Buttons.Save' | transloco}}</button>
-  </form>
-</div>
 
 <div class="p-4">
-  <md-data-table [dataSource$]="dataProviders" [config]="tableConfig" (update)="update($event)">
+  <button (click)="add()" >Nuevo</button>
+  <md-data-table [dataSource$]="dataProviders" [config]="tableConfig" >
   </md-data-table>
 </div>
