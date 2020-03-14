@@ -77,4 +77,20 @@ export class LoadDataEffects {
 
     return this.effectFactory.create(config);
   });
+
+  loadProviders$ = createEffect(() => {
+    const effectReqConfig = new EffectRequestConfig(this.requestClient, 'get');
+    const actionsConfig = new EffectActionsConfig(
+      actions.LOAD_PROVIDERS,
+      actions.PROVIDERS_LOADED_SUCCESS,
+      actions.PROVIDERS_LOADED_FAIL
+    );
+    const config = new EffectConfigModel(
+      effectReqConfig,
+      actionsConfig,
+      `${environment.host}/providers`
+    );
+
+    return this.effectFactory.create(config);
+  });
 }

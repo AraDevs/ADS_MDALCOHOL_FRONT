@@ -3,10 +3,18 @@
     "Name": "Nombre",
     "Address": "Dirección",
     "Nit": "NIT",
-    "PartnerPhone": "Nombre del Socio",
-    "SellerPhone": "Telefono del vendedor",
-    "Deparment": "Departamento",
-    "Municipality": "Municipio",
+    "PartnerPhone": "Teléfono del Socio",
+    "SellerPhone": "Teléfono del vendedor",
+    "Deparment": "Seleccione un Departamento",
+    "Municipality": "Seleccione un Municipio",
     "State": "Activo"
+  },
+  "Table": {
+    "Titles": {
+      "Name": "Empresa",
+      "Nit": "Nit",
+      "PartnerPhone": "Teléfono",
+      "SellerPhone": "Teléfono de Vendedor"
+    }
   }
 }

@@ -50,3 +50,14 @@ export const FILTER_MUNICIPALITIES = createAction(
     id: number
   } }>()
 );
+
+// Providers
+export const LOAD_PROVIDERS = createAction('Load Providers');
+export const PROVIDERS_LOADED_SUCCESS = createAction(
+  'Providers Loaded Success',
+  props<{ payload: any[] }>()
+);
+export const PROVIDERS_LOADED_FAIL = createAction(
+  'Providers Loaded Fail',
+  props<{ payload: ErrorActionData }>()
+);

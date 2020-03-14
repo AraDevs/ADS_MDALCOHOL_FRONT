@@ -51,6 +51,10 @@ const globalReducer = createReducer(
     const { id } = payload;
     const data = state.municipalities.filter(municipality => municipality.department.id === id);
     return { ...state, filterMunicipalities: data };
+  }),
+  on(actions.PROVIDERS_LOADED_SUCCESS, (state, { payload }) => {
+    const data = payload.map(obj => ({ ...obj, state: obj.state === 1 ? 'Activo' : 'Inactivo' }));
+    return { ...state, providers: data };
   })
 );
 

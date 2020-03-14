@@ -1,17 +1,27 @@
 import { InputControlConfig, SelectControlConfig } from '@core/types';
 import { Injectable } from '@angular/core';
 import { of } from 'rxjs';
+import { Store, select } from '@ngrx/store';
+import { Validators } from '@angular/forms';
+import * as globalState from '@state/index';
 
 @Injectable()
 export class FormModel {
+
+  constructor(private store$: Store<any>) {}
+
   getModel(): Partial<InputControlConfig | SelectControlConfig>[] {
     return [
+      // partner
       {
         key: 'name',
         fieldType: 'Input',
         type: 'text',
         id: 'name',
         cssClasses: '',
+        validations: [Validators.required],
+        validatorMessages: ['FormValidator.Required'],
+        validationNames: ['required'],
         label: 'Providers.Form.Name'
       },
       {
@@ -20,7 +30,32 @@ export class FormModel {
         id: 'address',
         type: 'text',
         label: 'Providers.Form.Address',
-        cssClasses: ''
+        cssClasses: '',
+        validations: [Validators.required],
+        validatorMessages: ['FormValidator.Required'],
+        validationNames: ['required']
+      },
+      {
+        key: 'department',
+        fieldType: 'Select',
+        id: 'department',
+        cssClasses: '',
+        label: 'Providers.Form.Deparment',
+        validations: [Validators.required],
+        validatorMessages: ['FormValidator.RequiredSelected'],
+        validationNames: ['required'],
+        options$: this.store$.pipe(select(globalState.selectDepartments))
+      },
+      {
+        key: 'municipality',
+        fieldType: 'Select',
+        id: 'municipality',
+        cssClasses: '',
+        label: 'Providers.Form.Municipality',
+        validations: [Validators.required],
+        validatorMessages: ['FormValidator.RequiredSelected'],
+        validationNames: ['required'],
+        options$: this.store$.pipe(select(globalState.selectMunicipalities))
       },
       {
         key: 'nit',
@@ -28,39 +63,32 @@ export class FormModel {
         id: 'nit',
         type: 'text',
         label: 'Providers.Form.Nit',
-        cssClasses: ''
+        cssClasses: '',
+        validations: [Validators.required],
+        validatorMessages: ['FormValidator.Required'],
+        validationNames: ['required']
       },
       {
-        key: 'partner-phone',
+        key: 'partner_phone',
         fieldType: 'Input',
-        id: 'partner-phone',
+        id: 'partner_phone',
         type: 'text',
         label: 'Providers.Form.PartnerPhone',
-        cssClasses: ''
+        cssClasses: '',
+        validations: [Validators.required],
+        validatorMessages: ['FormValidator.Required'],
+        validationNames: ['required']
       },
       {
-        key: 'seller-phone',
+        key: 'seller_phone',
         fieldType: 'Input',
-        id: 'seller-phone',
+        id: 'seller_phone',
         type: 'text',
         label: 'Providers.Form.SellerPhone',
-        cssClasses: ''
-      },
-      {
-        key: 'department',
-        fieldType: 'Select',
-        id: 'department',
-        label: 'Providers.Form.Deparment',
-        options$: of([{ label: 'Option' }]),
-        cssClasses: ''
-      },
-      {
-        key: 'municipality',
-        fieldType: 'Select',
-        id: 'municipality',
-        label: 'Providers.Form.Deparment',
-        options$: of([{ label: 'Option' }]),
-        cssClasses: ''
+        cssClasses: '',
+        validations: [Validators.required],
+        validatorMessages: ['FormValidator.Required'],
+        validationNames: ['required']
       },
       {
         key: 'state',
