@@ -150,3 +150,6 @@ Update logic execute method in Clients
 
 ## [Add] 14-03-2020 21:24
 Merge client branch to master
+
+## [Add] 14-03-2020 22:39
+Add logic update operation in clients form

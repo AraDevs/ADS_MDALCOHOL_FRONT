@@ -10,23 +10,24 @@ export class FormService {
   getClient(data: any) {
     const { client, seller, department, municipality } = data;
     return {
+      id: client.id,
       departmentId: {id: department.id, name: department.name, label: department.name},
-        municipality,
-        businessName: client.business_name,
-        dui: client.dui,
-        registry: client.registry_no,
-        personType: {
-          label: client.person_type,
-          value: client.person_type
-        },
-        seller: {
-          ...seller, label: seller.name, value: seller.name
-        },
-        sellerName: client.seller.name,
-        address: client.partner.address,
-        nit: client.partner.nit,
-        phone: client.partner.phone,
-        state: !!client.partner.state
+      municipality,
+      businessName: client.business_name,
+      dui: client.dui,
+      registry: client.registry_no,
+      personType: {
+        label: client.person_type,
+        value: client.person_type
+      },
+      seller: {
+        ...seller, label: seller.name, value: seller.name
+      },
+      sellerName: client.seller.name,
+      address: client.partner.address,
+      nit: client.partner.nit,
+      phone: client.partner.phone,
+      state: !!client.partner.state
     };
   }
 

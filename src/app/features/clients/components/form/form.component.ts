@@ -12,6 +12,7 @@ import * as globalState from '@state/index';
 import { MODAL_INITIAL_EVENT } from '@shared/constants';
 import { MODAL_ACCEPT_EVENT } from '../../../../shared/constants/index';
 import { FormService } from '@features/clients/components/form/form.service';
+import { MessageService } from '@core/services/message.service';
 
 @Component({
   selector: 'md-form',
@@ -22,6 +23,7 @@ import { FormService } from '@features/clients/components/form/form.service';
 export class FormComponent implements OnInit {
   private subs = new SubSink();
   private update = false;
+  private client: any = null;
 
   form: FormGroup;
   fields: Partial<InputControlConfig | SelectControlConfig>[];
@@ -32,7 +34,8 @@ export class FormComponent implements OnInit {
     private factoryForm: FactoryFormService,
     private store$: Store<AppState>,
     private successService: SuccessService,
-    private formService: FormService
+    private formService: FormService,
+    private message: MessageService
   ) { }
 
   ngOnInit(): void {
@@ -44,24 +47,39 @@ export class FormComponent implements OnInit {
       this.store$.dispatch(globalState.FILTER_MUNICIPALITIES({payload: {id}}));
     });
     this.successService.success(state.SAVE_CLIENTS_SUCCESS, () => {
-      this.store$.dispatch(globalState.LOAD_CLIENTS);
+      this.store$.dispatch(globalState.LOAD_CLIENTS());
+      this.message.success('Messages.Add.Success');
+    });
+    this.successService.success(state.UPDATE_CLIENTS_SUCCESS, () => {
+      this.store$.dispatch(globalState.LOAD_CLIENTS());
+      this.message.success('Messages.Update.Success');
     });
   }
 
   save() {
     if (this.form.valid) {
       const values = this.form.value;
-      const dataToSave = this.formService.getClientDTO(values);
-      const action = state.SAVE_CLIENTS({ payload: { data: dataToSave } });
-      this.store$.dispatch(action);
+      const data = this.formService.getClientDTO(values);
+      if (this.update) {
+        const action = state.UPDATE_CLIENTS({
+          payload: { data: { ...data, id: this.client.id }}
+        });
+        this.store$.dispatch(action);
+      } else {
+        const action = state.SAVE_CLIENTS({ payload: { data } });
+        this.store$.dispatch(action);
+      }
+    } else {
+      this.message.error('Message.InvalidForm');
     }
   }
 
   execute({ event, data }: any) {
     if (event === MODAL_INITIAL_EVENT) {
       this.update = !!data;
-      if (this.update) {
-        this.form.patchValue(this.formService.getClient(data));
+      if (this.update) {        
+        this.client = this.formService.getClient(data);
+        this.form.patchValue(this.client);
       }
     } else if (event === MODAL_ACCEPT_EVENT) {
       this.formBtn.nativeElement.click();

@@ -27,4 +27,22 @@ export class ClientsEffects {
 
     return this.effectFactory.create(config);
   });
+
+  updateClients$ = createEffect(() => {
+    const { UPDATE_CLIENTS, UPDATE_CLIENTS_SUCCESS, UPDATE_CLIENTS_FAIL } = actions;
+
+    const effectReqConfig = new EffectRequestConfig(this.requestClient, 'update');
+    const actionsConfig = new EffectActionsConfig(
+      UPDATE_CLIENTS,
+      UPDATE_CLIENTS_SUCCESS,
+      UPDATE_CLIENTS_FAIL
+    );
+    const config = new EffectConfigModel(
+      effectReqConfig,
+      actionsConfig,
+      `${environment.host}/clients`
+    );
+
+    return this.effectFactory.create(config);
+  });
 }

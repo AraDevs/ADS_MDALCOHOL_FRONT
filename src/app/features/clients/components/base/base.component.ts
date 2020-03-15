@@ -65,7 +65,6 @@ export class BaseComponent implements OnInit, OnDestroy {
     const municipality$ = this.selectData.getMunicipalityById(client.partner.municipality_id);
     const seller$ = this.selectData.getSellerById(client.seller_id);
 
-    console.log(client);
     this.modalFactory
       .create({ component: FormComponent })
       .pipe(
