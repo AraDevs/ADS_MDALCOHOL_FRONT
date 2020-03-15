@@ -2,6 +2,6 @@
 
 <div class="p-4">
     <button class="mb-2" mat-raised-button color="primary" (click)="add()" >Nuevo</button>
-    <md-data-table [dataSource$]="dataClients" [config]="tableConfig" (update)="update($event)">
+    <md-data-table [dataSource$]="dataClients" [config]="tableConfig" (update)="update($event)" (delete)="update($event)">
     </md-data-table>
 </div>

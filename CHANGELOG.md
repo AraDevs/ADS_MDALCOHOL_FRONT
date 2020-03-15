@@ -164,3 +164,7 @@ Merge client and providers branch to master
 
 ## [Update] 14-03-2020 23:14
 Finish CRUD of providers
+Finish CRUD of clients
+
+## [Add] 14-03-2020 23:17
+Merge client and providers branch to master

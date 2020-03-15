@@ -36,9 +36,8 @@ export class BaseComponent implements OnInit, OnDestroy {
       person_type: 'Clients.Table.Titles.PersonType',
       partnerName: 'Clients.Table.Titles.SellerId',
       actions: 'Acciones'
-    }
-    // sortActiveColumn: 'name',
-    // sortDirection: 'asc'
+    },
+    keys: ['business_name', 'dui', 'registry_no', 'person_type', 'partnerName', 'actions']
   };
 
   constructor(
@@ -96,8 +95,4 @@ export class BaseComponent implements OnInit, OnDestroy {
       component.execute({ event: result.event});
     });
   }
-
-  // delete(client: any) {
-  //   console.log(client);
-  // }
 }

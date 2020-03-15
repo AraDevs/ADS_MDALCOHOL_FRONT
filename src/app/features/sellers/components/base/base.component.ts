@@ -28,9 +28,8 @@ export class BaseComponent implements OnInit {
       seller_code: 'Sellers.Table.SellerCode',
       state: 'Sellers.Table.State',
       actions: 'Sellers.Table.Actions'
-    }
-    // sortActiveColumn: 'name',
-    // sortDirection: 'asc'
+    },
+    keys: ['name', 'seller_code', 'state', 'actions']
   };
 
   constructor(
