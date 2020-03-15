@@ -67,13 +67,12 @@ export class BaseComponent implements OnInit, OnDestroy {
             return { result };
           }
           const data = { provider, department, municipality };
-          const formData = this.providers.getFormData(data);
-          return { data: formData, result };
+          return { data: this.providers.getProviderDTO(data), result };
         })
       )
       .subscribe(({ data, result }) => {
         const component = result.modal.componentInstance.getRenderedComponent<FormComponent>();
-        component.execute({ event: result.event, data, update: true });
+        component.execute({ event: result.event, data });
       });
   }
 
@@ -83,7 +82,7 @@ export class BaseComponent implements OnInit, OnDestroy {
       .pipe(filter(result => result.event !== MODAL_INITIAL_EVENT))
       .subscribe(result => {
         const component = result.modal.componentInstance.getRenderedComponent<FormComponent>();
-        component.execute({ event: result.event, update: false });
+        component.execute({ event: result.event });
       });
   }
 

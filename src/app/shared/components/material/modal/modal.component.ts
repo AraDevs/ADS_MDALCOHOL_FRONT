@@ -1,4 +1,11 @@
-import { Component, ComponentFactoryResolver, Inject, Injector, OnInit, ViewChild } from '@angular/core';
+import {
+  Component,
+  ComponentFactoryResolver,
+  Inject,
+  Injector,
+  OnInit,
+  ViewChild
+} from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { DYNAMIC_MODAL_DATA, MODAL_ACCEPT_EVENT, MODAL_INITIAL_EVENT } from '@shared/constants';
 import { ModalAnchorDirective } from '@shared/directives';
@@ -29,7 +36,7 @@ export class ModalComponent implements OnInit {
 
     const viewContainerRef = this.ref.viewContainerRef;
     const injector = Injector.create({
-      providers: [{ provide: DYNAMIC_MODAL_DATA, useValue: { hello: 'Hello Moises Leonor' } }]
+      providers: [{ provide: DYNAMIC_MODAL_DATA, useValue: { modalRef: this.modalRef } }]
     });
     const componentRef = viewContainerRef.createComponent(componentFactory, null, injector);
     this.component = componentRef.instance;

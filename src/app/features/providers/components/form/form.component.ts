@@ -37,6 +37,7 @@ export class FormComponent implements OnInit {
     this.fields = this.formModel.getModel();
     this.form = this.formService.createPlainForm(this.fields as any);
 
+    // If the department change we filter the municipalities
     this.subs.sink = this.form
       .get('department')
       .valueChanges.pipe(filter(deparment => deparment))
@@ -75,8 +76,8 @@ export class FormComponent implements OnInit {
     }
   }
 
-  execute({ event, data, update }: any) {
-    this.update = update;
+  execute({ event, data }: any) {
+    this.update = !!data;
     if (event === MODAL_INITIAL_EVENT) {
       this.form.patchValue(data);
     } else if (event === MODAL_ACCEPT_EVENT) {

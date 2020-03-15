@@ -8,7 +8,7 @@ import * as globalState from '@state/index';
 export class ProvidersService {
   constructor(private store$: Store<AppState>) {}
 
-  getFormData(data: any) {
+  getProviderDTO(data: any) {
     const { provider, department, municipality } = data;
     return {
       department: { id: department.id, name: department.name, label: department.name },
