@@ -1,0 +1,5 @@
+<form [formGroup]="form" #formReference="ngForm" (submit)="save()">
+    <md-form-generator [form]="form" [formReference]="formReference" [fields]="fields" [displayContainerCheckboxs]="true">
+    </md-form-generator>
+    <button class="mat-focus-indicator mat-raised-button mat-button-primary" mat-raised-button="" color="primary">{{ 'Buttons.Save' | transloco}}</button>
+</form>

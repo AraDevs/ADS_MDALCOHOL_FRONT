@@ -10,13 +10,13 @@ import { combineLatest, Observable, of } from 'rxjs';
 import { filter, map, switchMap } from 'rxjs/operators';
 import { SubSink } from 'subsink';
 import { FormComponent } from '../form/form.component';
-import { ProvidersService } from './providers.service';
+import { SelectService, FactoryFormService } from '@core/services';
 
 @Component({
   selector: 'md-base',
   templateUrl: './base.component.html',
   styleUrls: ['./base.component.scss'],
-  providers: [FormModel, SuccessService, ProvidersService]
+  providers: [FormModel, SuccessService, FactoryFormService]
 })
 export class BaseComponent implements OnInit, OnDestroy {
   private subs = new SubSink();
@@ -37,7 +37,7 @@ export class BaseComponent implements OnInit, OnDestroy {
   constructor(
     private store$: Store<AppState>,
     private modalFactory: ModalFactoryService,
-    private providers: ProvidersService
+    private selectData: SelectService
   ) {}
 
   ngOnInit(): void {
@@ -53,8 +53,8 @@ export class BaseComponent implements OnInit, OnDestroy {
   }
 
   update(provider: any) {
-    const department$ = this.providers.getDepartment(provider);
-    const municipality$ = this.providers.getMunicipality(provider);
+    const department$ = this.selectData.getDepartmentByMunicipalityId(provider.partner.municipality_id);
+    const municipality$ = this.selectData.getMunicipalityById(provider.partner.municipality_id);
 
     this.modalFactory
       .create({ component: FormComponent })
@@ -67,7 +67,7 @@ export class BaseComponent implements OnInit, OnDestroy {
             return { result };
           }
           const data = { provider, department, municipality };
-          return { data: this.providers.getProviderDTO(data), result };
+          return { data , result };
         })
       )
       .subscribe(({ data, result }) => {

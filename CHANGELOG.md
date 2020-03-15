@@ -131,3 +131,9 @@ Add Providers form to modal
 
 ## [Add] 14-03-2020 18:24
 Add Provider form to modal
+
+## [Add, Update] 14-03-2020 20:46
+Add Select Service
+Update Clients
+Update Providers
+Update Rename Form Service to Factory Form

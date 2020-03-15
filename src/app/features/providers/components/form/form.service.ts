@@ -5,10 +5,10 @@ import { take } from 'rxjs/operators';
 import * as globalState from '@state/index';
 
 @Injectable()
-export class ProvidersService {
+export class FormService {
   constructor(private store$: Store<AppState>) {}
 
-  getProviderDTO(data: any) {
+  getProvider(data: any) {
     const { provider, department, municipality } = data;
     return {
       department: { id: department.id, name: department.name, label: department.name },
@@ -22,17 +22,17 @@ export class ProvidersService {
     };
   }
 
-  getDepartment(provider: any) {
-    return this.store$.pipe(
-      select(globalState.selectDepartmentByMunicipalityId, provider.partner.municipality_id),
-      take(1)
-    );
-  }
-
-  getMunicipality(provider: any) {
-    return this.store$.pipe(
-      select(globalState.selectMunicipalityById, provider.partner.municipality_id),
-      take(1)
-    );
+  getProviderDTO(provider: any) {
+    return {
+      seller_phone: provider.seller_phone,
+      partner: {
+        name: provider.name,
+        address: provider.address,
+        municipality_id: provider.municipality.id,
+        nit: provider.nit,
+        phone: provider.partner_phone,
+        state: provider.state ? 1 : 0
+      }
+    };
   }
 }
