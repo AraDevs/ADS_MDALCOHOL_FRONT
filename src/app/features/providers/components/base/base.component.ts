@@ -30,7 +30,8 @@ export class BaseComponent implements OnInit, OnDestroy {
       phone: 'Providers.Table.Titles.PartnerPhone',
       seller_phone: 'Providers.Table.Titles.SellerPhone',
       actions: 'Acciones'
-    }
+    },
+    keys: ['partner.name', 'partner.nit', 'partner.phone', 'seller_phone', 'actions'],
   };
 
   constructor(
@@ -52,7 +53,9 @@ export class BaseComponent implements OnInit, OnDestroy {
   }
 
   update(provider: any) {
-    const department$ = this.selectData.getDepartmentByMunicipalityId(provider.partner.municipality_id);
+    const department$ = this.selectData.getDepartmentByMunicipalityId(
+      provider.partner.municipality_id
+    );
     const municipality$ = this.selectData.getMunicipalityById(provider.partner.municipality_id);
 
     this.modalFactory
@@ -66,7 +69,7 @@ export class BaseComponent implements OnInit, OnDestroy {
             return { result };
           }
           const data = { provider, department, municipality };
-          return { data , result };
+          return { data, result };
         })
       )
       .subscribe(({ data, result }) => {

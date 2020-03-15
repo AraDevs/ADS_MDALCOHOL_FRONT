@@ -23,6 +23,7 @@ import { MessageService } from '@core/services/message.service';
 export class FormComponent implements OnInit {
   private subs = new SubSink();
   private update = false;
+  private provider: any = null;
 
   form: FormGroup;
   fields: Partial<InputControlConfig | SelectControlConfig>[];
@@ -52,31 +53,40 @@ export class FormComponent implements OnInit {
 
     this.successService.success(state.SAVE_PROVIDERS_SUCCESS, () => {
       this.form.reset();
-      this.store$.dispatch(globalState.LOAD_PROVIDERS);
+      this.store$.dispatch(globalState.LOAD_PROVIDERS());
+      this.message.success('Messages.Add.Success');
+    });
+
+    this.successService.success(state.UPDATE_PROVIDERS_SUCCESS, () => {
+      this.store$.dispatch(globalState.LOAD_PROVIDERS());
+      this.message.success('Messages.Update.Success');
     });
   }
 
   save() {
     if (this.form.valid) {
-      if (this.update) {
-        this.message.success('Messages.Add.Success');
-        return;
-      }
-
       const values = this.form.value;
       const data = this.formService.getProviderDTO(values);
-      const action = state.SAVE_PROVIDERS({ payload: { data } });
-      this.store$.dispatch(action);
-      return;
+      if (this.update) {
+        const action = state.UPDATE_PROVIDERS({
+          payload: { data: { ...data, id: this.provider.id } }
+        });
+        this.store$.dispatch(action);
+      } else {
+        const action = state.SAVE_PROVIDERS({ payload: { data } });
+        this.store$.dispatch(action);
+      }
+    } else {
+      this.message.error('Messages.InvalidForm');
     }
-    this.message.error('Messages.InvalidForm');
   }
 
   execute({ event, data }: any) {
     if (event === MODAL_INITIAL_EVENT) {
       this.update = !!data;
       if (this.update) {
-        this.form.patchValue(this.formService.getProvider(data));
+        this.provider = this.formService.getProvider(data);
+        this.form.patchValue(this.provider);
       }
     } else if (event === MODAL_ACCEPT_EVENT) {
       this.formBtn.nativeElement.click();

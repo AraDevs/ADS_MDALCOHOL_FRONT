@@ -151,5 +151,13 @@ Update logic execute method in Clients
 ## [Add] 14-03-2020 21:24
 Merge client branch to master
 
+## [Add,Update] 14-03-2020 22:37
+Add ObjPath library
+Add ObjPathService
+Update DataTable
+
 ## [Add] 14-03-2020 22:39
 Add logic update operation in clients form
+
+## [Update] 14-03-2020 22:41
+Merge client and providers branch to master

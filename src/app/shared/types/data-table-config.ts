@@ -3,4 +3,5 @@ export interface DataTableConfig {
   titles: { [column: string]: any };
   sortActiveColumn?: string;
   sortDirection?: 'desc' | 'asc';
+  keys?: string[]
 }
