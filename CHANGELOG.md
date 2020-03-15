@@ -147,3 +147,6 @@ Merge sweet-alert branch with master
 ## [Update] 14-03-2020 21:20
 Add FormService to FormComponent's Providers
 Update logic execute method in Clients
+
+## [Add] 14-03-2020 21:24
+Merge client branch to master
