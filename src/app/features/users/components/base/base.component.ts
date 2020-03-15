@@ -18,28 +18,16 @@ import { AppState } from '@state/app-state';
   providers: [LoginFormConfig]
 })
 export class BaseComponent implements OnInit {
-  users$ = this.store$.pipe(select(userState.selectUsers));
-  options$ = this.users$.pipe(
-    map(users => {
-      return users.map(user => ({ label: user.name }));
-    })
-  );
-
-  user$ = this.store$.pipe(
-    select(userState.selectUser),
-    filter(user => user != null)
-  );
-  loading$: Observable<boolean>;
-  error$: Observable<CustomErrorMessage>;
-
-  fields: ControlConfig[];
   form: FormGroup;
+  fields: Partial<InputControlConfig | SelectControlConfig>[];
+  dataUsers: Observable<any[]>;
 
   tableConfig: DataTableConfig = {
-    displayedColumns: ['name', 'username'],
+    displayedColumns: ['name', 'username', 'actions'],
     titles: {
       name: 'Users.Table.Titles.Name',
-      username: 'Users.Table.Titles.User'
+      username: 'Users.Table.Titles.User',
+      actions: 'Acciones'
     }
     // sortActiveColumn: 'name',
     // sortDirection: 'asc'
@@ -54,36 +42,36 @@ export class BaseComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    const actions = [
-      userState.LOAD_USERS,
-      userState.USERS_LOADED_SUCCESS,
-      userState.USERS_LOADED_FAIL
-    ] as PlainActionCreator[];
-
-    this.loading$ = this.loading.getLoading(actions);
-    this.error$ = this.error.getError(userState.USERS_LOADED_FAIL, 'Users.Errors.LoadUsersFail');
-
-    this.store$.dispatch(
-      userState.LOAD_USER({
-        payload: { metadata: { resource: { id: '2' } } }
-      })
-    );
-
-    // Config form
-    this.fields = this.formConfig.fields.map((field: ControlConfig) => {
-      if (field.fieldType === 'Select') {
-        const _field = field as SelectControlConfig;
-        return { ..._field, options$: this.options$ } as ControlConfig;
-      }
-      return field as ControlConfig;
-    });
-
-    this.form = this.formService.createPlainForm(this.fields);
+    this.fields = this.formConfig.getModel()
+    this.form = this.formService.createPlainForm(this.fields as any);
     this.store$.dispatch(userState.LOAD_USERS());
+    this.dataUsers = this.store$.pipe(select(userState.selectUsers));
+  }
+  
+  save()
+  {
+    if (this.form.valid) {
+      const values = this.form.value;
+
+      const dataToSave = {
+        username: values.user_name,
+        name: values.name,
+        pass: values.password,
+        user_type: "Produccion",
+        state: values.state ? 1 : 0
+      };
+
+      console.log(dataToSave);
+      const action = userState.SAVE_USERS({ payload: { data: dataToSave } });
+      this.store$.dispatch(action);
+    }
   }
 
-  submit() {
-    console.log(this.form);
-    // this.store$.dispatch(userState.LoadUsers());
+  update(users: any)
+  {
+    this.form.patchValue({ 
+      user_name: users.username,
+      name: users.name,
+     });
   }
 }

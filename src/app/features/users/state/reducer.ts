@@ -6,11 +6,13 @@ export const FEATURE_KEY = 'users';
 export interface UsersState {
   users: any[];
   user: any;
+  userType: string[];
 }
 
 const INITIAL_STATE: UsersState = {
   users: [],
-  user: null
+  user: null,
+  userType: ['Administracion', 'Produccion'],
 };
 
 const usersReducer = createReducer(

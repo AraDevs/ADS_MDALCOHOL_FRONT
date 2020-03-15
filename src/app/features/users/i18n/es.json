@@ -4,11 +4,11 @@
     "LoadUsersFail": "Error al cargar usuarios"
   },
   "Form": {
-    "User": "admin@demo.com",
+    "UserName": "Nombre de usuario",
+    "Name": "Ingrese su nombre completo",
     "Password": "Contraseña",
-    "Options": "Selecciona una opción",
-    "Radio1": "Radio 1",
-    "Radio2": "Radio 2"
+    "UserType": "Seleccione el tipo de usuario",
+    "State": "Seleccione el estado"
   },
   "FormValidator": {
     "User": {
