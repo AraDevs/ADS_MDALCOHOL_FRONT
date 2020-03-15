@@ -1,8 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormModel } from '@features/providers/config/form-model';
+import { SelectService } from '@core/services';
 import { select, Store } from '@ngrx/store';
 import { MODAL_INITIAL_EVENT } from '@shared/constants';
-import { ModalFactoryService, SuccessService } from '@shared/services';
+import { ModalFactoryService } from '@shared/services';
 import { DataTableConfig } from '@shared/types';
 import { AppState } from '@state/app-state';
 import * as globalState from '@state/index';
@@ -10,7 +10,6 @@ import { combineLatest, Observable, of } from 'rxjs';
 import { filter, map, switchMap } from 'rxjs/operators';
 import { SubSink } from 'subsink';
 import { FormComponent } from '../form/form.component';
-import { SelectService } from '@core/services';
 
 @Component({
   selector: 'md-base',
@@ -88,7 +87,4 @@ export class BaseComponent implements OnInit, OnDestroy {
       });
   }
 
-  delete(client: any) {
-    console.log(client);
-  }
 }

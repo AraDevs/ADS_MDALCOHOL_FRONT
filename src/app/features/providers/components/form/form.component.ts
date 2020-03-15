@@ -1,11 +1,11 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild, Inject } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { FactoryFormService } from '@core/services';
 import { InputControlConfig, SelectControlConfig } from '@core/types';
 import { FormModel } from '@features/providers/config/form-model';
 import * as state from '@features/providers/state';
 import { Store } from '@ngrx/store';
-import { MODAL_ACCEPT_EVENT, MODAL_INITIAL_EVENT } from '@shared/constants';
+import { MODAL_ACCEPT_EVENT, MODAL_INITIAL_EVENT, DYNAMIC_MODAL_DATA } from '@shared/constants';
 import { SuccessService } from '@shared/services';
 import { AppState } from '@state/app-state';
 import * as globalState from '@state/index';
@@ -35,7 +35,8 @@ export class FormComponent implements OnInit {
     private store$: Store<AppState>,
     private successService: SuccessService,
     private formService: FormService,
-    private message: MessageService
+    private message: MessageService,
+    @Inject(DYNAMIC_MODAL_DATA) private data: any
   ) {}
 
   ngOnInit(): void {
@@ -52,14 +53,13 @@ export class FormComponent implements OnInit {
       });
 
     this.successService.success(state.SAVE_PROVIDERS_SUCCESS, () => {
-      this.form.reset();
       this.store$.dispatch(globalState.LOAD_PROVIDERS());
-      this.message.success('Messages.Add.Success');
+      this.message.success('Messages.Add.Success').then(() => this.data.modalRef.close());
     });
 
     this.successService.success(state.UPDATE_PROVIDERS_SUCCESS, () => {
       this.store$.dispatch(globalState.LOAD_PROVIDERS());
-      this.message.success('Messages.Update.Success');
+      this.message.success('Messages.Update.Success').then(() => this.data.modalRef.close());
     });
   }
 
