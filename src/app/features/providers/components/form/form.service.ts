@@ -7,6 +7,7 @@ export class FormService {
   getProvider(data: any) {
     const { provider, department, municipality } = data;
     return {
+      id: provider.id,
       department: { id: department.id, name: department.name, label: department.name },
       municipality,
       seller_phone: provider.seller_phone,
