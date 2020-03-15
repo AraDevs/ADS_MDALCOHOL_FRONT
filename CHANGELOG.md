@@ -161,3 +161,6 @@ Add logic update operation in clients form
 
 ## [Update] 14-03-2020 22:41
 Merge client and providers branch to master
+
+## [Update] 14-03-2020 23:14
+Finish CRUD of clients
