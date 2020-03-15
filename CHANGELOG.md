@@ -137,3 +137,9 @@ Add Select Service
 Update Clients
 Update Providers
 Update Rename Form Service to Factory Form
+## [Add] 14-03-2020 20:48
+Add MessageService
+
+## [Add] 14-03-2020 21:04
+Merge client with master 
+Merge sweet-alert branch with master

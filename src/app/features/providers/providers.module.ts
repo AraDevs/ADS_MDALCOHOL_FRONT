@@ -4,13 +4,10 @@ import { TRANSLOCO_SCOPE } from '@ngneat/transloco';
 import { EffectsModule } from '@ngrx/effects';
 import { LoadI18nFile } from '@shared/helpers';
 import { SharedModule } from '@shared/shared.module';
-
 import { BaseComponent } from './components/base/base.component';
-import { ProvidersRoutingModule } from './providers-routing.module';
 import { FormComponent } from './components/form/form.component';
-import { FormModel } from '@features/providers/config/form-model';
-import { SuccessService } from '@shared/services';
-import { FactoryFormService } from '@core/services';
+import { ProvidersRoutingModule } from './providers-routing.module';
+
 
 const loader = LoadI18nFile((lang: string) => () => import(`./i18n/${lang}.json`));
 
@@ -26,8 +23,7 @@ const loader = LoadI18nFile((lang: string) => () => import(`./i18n/${lang}.json`
     {
       provide: TRANSLOCO_SCOPE,
       useValue: { scope: 'providers', alias: 'Providers', loader }
-    },
-    FormModel, SuccessService, FactoryFormService
+    }
   ]
 })
 export class ProvidersModule {}

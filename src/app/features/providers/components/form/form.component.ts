@@ -12,11 +12,13 @@ import * as globalState from '@state/index';
 import { filter } from 'rxjs/operators';
 import { SubSink } from 'subsink';
 import { FormService } from './form.service';
+import { MessageService } from '@core/services/message.service';
 
 @Component({
   selector: 'md-form',
   templateUrl: './form.component.html',
-  styleUrls: ['./form.component.scss']
+  styleUrls: ['./form.component.scss'],
+  providers: [FormModel, SuccessService, FactoryFormService, FormService]
 })
 export class FormComponent implements OnInit {
   private subs = new SubSink();
@@ -31,7 +33,8 @@ export class FormComponent implements OnInit {
     private factoryForm: FactoryFormService,
     private store$: Store<AppState>,
     private successService: SuccessService,
-    private formService: FormService
+    private formService: FormService,
+    private message: MessageService
   ) {}
 
   ngOnInit(): void {
@@ -56,7 +59,7 @@ export class FormComponent implements OnInit {
   save() {
     if (this.form.valid) {
       if (this.update) {
-        alert('updated');
+        this.message.success('Messages.Add.Success');
         return;
       }
 
@@ -64,15 +67,16 @@ export class FormComponent implements OnInit {
       const data = this.formService.getProviderDTO(values);
       const action = state.SAVE_PROVIDERS({ payload: { data } });
       this.store$.dispatch(action);
+      return;
     }
+    this.message.error('Messages.InvalidForm');
   }
 
   execute({ event, data }: any) {
-    this.update = !!data;
     if (event === MODAL_INITIAL_EVENT) {
+      this.update = !!data;
       if (this.update) {
-        this.formService.getProvider(data);
-        this.form.patchValue(data);
+        this.form.patchValue(this.formService.getProvider(data));
       }
     } else if (event === MODAL_ACCEPT_EVENT) {
       this.formBtn.nativeElement.click();
