@@ -11,6 +11,7 @@ import { AppState } from '@state/app-state';
 import * as globalState from '@state/index';
 import { filter } from 'rxjs/operators';
 import { SubSink } from 'subsink';
+import { MessageService } from '@core/services/message.service';
 
 @Component({
   selector: 'md-form',
@@ -30,7 +31,8 @@ export class FormComponent implements OnInit {
     private formModel: FormModel,
     private formService: FormService,
     private store$: Store<AppState>,
-    private successService: SuccessService
+    private successService: SuccessService,
+    private message: MessageService
   ) {}
 
   ngOnInit(): void {
@@ -55,7 +57,7 @@ export class FormComponent implements OnInit {
   save() {
     if (this.form.valid) {
       if (this.update) {
-        alert('updated');
+        this.message.success('Messages.Add.Success');
         return;
       }
 
@@ -73,12 +75,14 @@ export class FormComponent implements OnInit {
       };
       const action = state.SAVE_PROVIDERS({ payload: { data: dataToSave } });
       this.store$.dispatch(action);
+      return;
     }
+    this.message.error('Messages.InvalidForm');
   }
 
   execute({ event, data }: any) {
-    this.update = !!data;
     if (event === MODAL_INITIAL_EVENT) {
+      this.update = !!data;
       this.form.patchValue(data);
     } else if (event === MODAL_ACCEPT_EVENT) {
       this.formBtn.nativeElement.click();
