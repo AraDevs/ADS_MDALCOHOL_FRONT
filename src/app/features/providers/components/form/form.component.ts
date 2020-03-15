@@ -18,7 +18,7 @@ import { MessageService } from '@core/services/message.service';
   selector: 'md-form',
   templateUrl: './form.component.html',
   styleUrls: ['./form.component.scss'],
-  providers: [FormModel, SuccessService, FactoryFormService, FormService]
+  providers: [FormModel, SuccessService, FormService]
 })
 export class FormComponent implements OnInit {
   private subs = new SubSink();

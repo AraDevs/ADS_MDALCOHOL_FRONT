@@ -7,7 +7,7 @@ export class FormService {
 
   constructor(private store$: Store<AppState>) { }
 
-  getSeller(data: any) {
+  getClient(data: any) {
     const { client, seller, department, municipality } = data;
     return {
       departmentId: {id: department.id, name: department.name, label: department.name},

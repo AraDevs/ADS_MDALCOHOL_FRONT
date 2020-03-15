@@ -11,13 +11,13 @@ import * as state from '@features/clients/state';
 import * as globalState from '@state/index';
 import { MODAL_INITIAL_EVENT } from '@shared/constants';
 import { MODAL_ACCEPT_EVENT } from '../../../../shared/constants/index';
-import { FormService } from '@features/providers/components/form/form.service';
+import { FormService } from '@features/clients/components/form/form.service';
 
 @Component({
   selector: 'md-form',
   templateUrl: './form.component.html',
   styleUrls: ['./form.component.scss'],
-  providers: [FormModel]
+  providers: [FormModel, SuccessService, FormService]
 })
 export class FormComponent implements OnInit {
   private subs = new SubSink();
@@ -51,16 +51,18 @@ export class FormComponent implements OnInit {
   save() {
     if (this.form.valid) {
       const values = this.form.value;
-      const dataToSave = this.formService.getProviderDTO(values);
+      const dataToSave = this.formService.getClientDTO(values);
       const action = state.SAVE_CLIENTS({ payload: { data: dataToSave } });
       this.store$.dispatch(action);
     }
   }
 
   execute({ event, data }: any) {
-    this.update = !!data;
     if (event === MODAL_INITIAL_EVENT) {
-      this.form.patchValue(data);
+      this.update = !!data;
+      if (this.update) {
+        this.form.patchValue(this.formService.getClient(data));
+      }
     } else if (event === MODAL_ACCEPT_EVENT) {
       this.formBtn.nativeElement.click();
     }
