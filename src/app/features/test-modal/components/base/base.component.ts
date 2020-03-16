@@ -13,6 +13,6 @@ export class BaseComponent implements OnInit {
   ngOnInit(): void {}
 
   open() {
-    this.modalFactory.create(HelloComponent);
+    // this.modalFactory.create(HelloComponent);
   }
 }

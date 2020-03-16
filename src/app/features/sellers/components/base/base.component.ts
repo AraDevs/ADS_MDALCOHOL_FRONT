@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { FormService } from '@core/services';
+import { FactoryFormService } from '@core/services';
 import { InputControlConfig } from '@core/types';
 import { FormModel } from '@features/sellers/config/form-model';
 import * as globalState from '@state/index';
@@ -28,21 +28,20 @@ export class BaseComponent implements OnInit {
       seller_code: 'Sellers.Table.SellerCode',
       state: 'Sellers.Table.State',
       actions: 'Sellers.Table.Actions'
-    }
-    // sortActiveColumn: 'name',
-    // sortDirection: 'asc'
+    },
+    keys: ['name', 'seller_code', 'state', 'actions']
   };
 
   constructor(
     private formModel: FormModel,
-    private formService: FormService,
+    private FactoryFormService: FactoryFormService,
     private store$: Store<AppState>,
     private successService: SuccessService
   ) {}
 
   ngOnInit(): void {
     this.fields = this.formModel.getModel();
-    this.form = this.formService.createPlainForm(this.fields as any);
+    this.form = this.FactoryFormService.createPlainForm(this.fields as any);
     this.store$.dispatch(globalState.LOAD_SELLERS());
     this.data = this.store$.pipe(select(globalState.selectSellers));
 

@@ -9,3 +9,4 @@ export { InputControlConfig } from './forms/input-control-config';
 export { GlobalValidator } from './forms/global-validator';
 export { RadioButtonConfig } from './forms/radio-button-config';
 export { ResourceFactory } from './resource-factory';
+export * from './message';

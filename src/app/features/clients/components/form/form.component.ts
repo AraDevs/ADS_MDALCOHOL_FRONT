@@ -1,17 +1,17 @@
-import { Component, ElementRef, OnInit, ViewChild, Inject } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, Inject } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { FactoryFormService } from '@core/services';
 import { InputControlConfig, SelectControlConfig } from '@core/types';
-import { FormModel } from '@features/providers/config/form-model';
-import * as state from '@features/providers/state';
+import { FormModel } from '@features/clients/config/form-model';
 import { Store } from '@ngrx/store';
-import { MODAL_ACCEPT_EVENT, MODAL_INITIAL_EVENT, DYNAMIC_MODAL_DATA } from '@shared/constants';
-import { SuccessService } from '@shared/services';
 import { AppState } from '@state/app-state';
-import * as globalState from '@state/index';
-import { filter } from 'rxjs/operators';
+import { SuccessService } from '@shared/services';
 import { SubSink } from 'subsink';
-import { FormService } from './form.service';
+import * as state from '@features/clients/state';
+import * as globalState from '@state/index';
+import { MODAL_INITIAL_EVENT } from '@shared/constants';
+import { MODAL_ACCEPT_EVENT, DYNAMIC_MODAL_DATA } from '../../../../shared/constants/index';
+import { FormService } from '@features/clients/components/form/form.service';
 import { MessageService } from '@core/services/message.service';
 
 @Component({
@@ -23,7 +23,7 @@ import { MessageService } from '@core/services/message.service';
 export class FormComponent implements OnInit {
   private subs = new SubSink();
   private update = false;
-  private provider: any = null;
+  private client: any = null;
 
   form: FormGroup;
   fields: Partial<InputControlConfig | SelectControlConfig>[];
@@ -37,28 +37,21 @@ export class FormComponent implements OnInit {
     private formService: FormService,
     private message: MessageService,
     @Inject(DYNAMIC_MODAL_DATA) private data: any
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.fields = this.formModel.getModel();
     this.form = this.factoryForm.createPlainForm(this.fields as any);
-
-    // If the department change we filter the municipalities
-    this.subs.sink = this.form
-      .get('department')
-      .valueChanges.pipe(filter(deparment => deparment))
-      .subscribe(department => {
-        const { id } = department;
-        this.store$.dispatch(globalState.FILTER_MUNICIPALITIES({ payload: { id } }));
-      });
-
-    this.successService.success(state.SAVE_PROVIDERS_SUCCESS, () => {
-      this.store$.dispatch(globalState.LOAD_PROVIDERS());
+    this.subs.sink =  this.form.get('departmentId').valueChanges.subscribe(department => {
+      const {id} = department;
+      this.store$.dispatch(globalState.FILTER_MUNICIPALITIES({payload: {id}}));
+    });
+    this.successService.success(state.SAVE_CLIENTS_SUCCESS, () => {
+      this.store$.dispatch(globalState.LOAD_CLIENTS());
       this.message.success('Messages.Add.Success').then(() => this.data.modalRef.close());
     });
-
-    this.successService.success(state.UPDATE_PROVIDERS_SUCCESS, () => {
-      this.store$.dispatch(globalState.LOAD_PROVIDERS());
+    this.successService.success(state.UPDATE_CLIENTS_SUCCESS, () => {
+      this.store$.dispatch(globalState.LOAD_CLIENTS());
       this.message.success('Messages.Update.Success').then(() => this.data.modalRef.close());
     });
   }
@@ -66,27 +59,27 @@ export class FormComponent implements OnInit {
   save() {
     if (this.form.valid) {
       const values = this.form.value;
-      const data = this.formService.getProviderDTO(values);
+      const data = this.formService.getClientDTO(values);
       if (this.update) {
-        const action = state.UPDATE_PROVIDERS({
-          payload: { data: { ...data, id: this.provider.id } }
+        const action = state.UPDATE_CLIENTS({
+          payload: { data: { ...data, id: this.client.id }}
         });
         this.store$.dispatch(action);
       } else {
-        const action = state.SAVE_PROVIDERS({ payload: { data } });
+        const action = state.SAVE_CLIENTS({ payload: { data } });
         this.store$.dispatch(action);
       }
     } else {
-      this.message.error('Messages.InvalidForm');
+      this.message.error('Message.InvalidForm');
     }
   }
 
   execute({ event, data }: any) {
     if (event === MODAL_INITIAL_EVENT) {
       this.update = !!data;
-      if (this.update) {
-        this.provider = this.formService.getProvider(data);
-        this.form.patchValue(this.provider);
+      if (this.update) {        
+        this.client = this.formService.getClient(data);
+        this.form.patchValue(this.client);
       }
     } else if (event === MODAL_ACCEPT_EVENT) {
       this.formBtn.nativeElement.click();

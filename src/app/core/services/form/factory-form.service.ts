@@ -5,7 +5,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 @Injectable({
   providedIn: 'root'
 })
-export class FormService {
+export class FactoryFormService {
   createPlainForm(fields: ControlConfig[]) {
     const model = fields.reduce((prev, value) => {
       const defaultValue = value.defautlValue !== undefined ? value.defautlValue : '';

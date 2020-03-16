@@ -13,5 +13,16 @@
   "Buttons": {
     "Save": "Guardar",
     "Cancel": "Cancelar"
+  },
+  "Messages": {
+    "Update": {
+      "Success": "Registro actualizado",
+      "Error": "Error al actualizar registro"
+    },
+    "Add": {
+      "Success": "Registro agregado",
+      "Error": "Error al agregar registro"
+    },
+    "InvalidForm": "Formulario Inválido"
   }
 }

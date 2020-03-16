@@ -1,24 +1,20 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { FormGroup } from '@angular/forms';
-import { FormService } from '@core/services';
-import { InputControlConfig, SelectControlConfig } from '@core/types';
-import { FormModel } from '@features/providers/config/form-model';
-import { Store, select } from '@ngrx/store';
-import { AppState } from '@state/app-state';
-import { Observable, combineLatest } from 'rxjs';
-import * as globalState from '@state/index';
-import * as state from '@features/providers/state';
-import { SubSink } from 'subsink';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { SelectService } from '@core/services';
+import { select, Store } from '@ngrx/store';
+import { MODAL_INITIAL_EVENT } from '@shared/constants';
+import { ModalFactoryService } from '@shared/services';
 import { DataTableConfig } from '@shared/types';
-import { take } from 'rxjs/operators';
-import { SuccessService, ModalFactoryService } from '@shared/services';
+import { AppState } from '@state/app-state';
+import * as globalState from '@state/index';
+import { combineLatest, Observable, of } from 'rxjs';
+import { filter, map, switchMap } from 'rxjs/operators';
+import { SubSink } from 'subsink';
 import { FormComponent } from '../form/form.component';
 
 @Component({
   selector: 'md-base',
   templateUrl: './base.component.html',
-  styleUrls: ['./base.component.scss'],
-  providers: [FormModel, SuccessService]
+  styleUrls: ['./base.component.scss']
 })
 export class BaseComponent implements OnInit, OnDestroy {
   private subs = new SubSink();
@@ -33,13 +29,14 @@ export class BaseComponent implements OnInit, OnDestroy {
       phone: 'Providers.Table.Titles.PartnerPhone',
       seller_phone: 'Providers.Table.Titles.SellerPhone',
       actions: 'Acciones'
-    }
+    },
+    keys: ['partner.name', 'partner.nit', 'partner.phone', 'seller_phone', 'actions'],
   };
 
   constructor(
     private store$: Store<AppState>,
-    private successService: SuccessService,
-    private modalFactory: ModalFactoryService
+    private modalFactory: ModalFactoryService,
+    private selectData: SelectService
   ) {}
 
   ngOnInit(): void {
@@ -48,66 +45,46 @@ export class BaseComponent implements OnInit, OnDestroy {
     this.store$.dispatch(globalState.LOAD_MUNICIPALITIES());
     this.dataDepartments = this.store$.pipe(select(globalState.selectDepartments));
     this.dataProviders = this.store$.pipe(select(globalState.selectProviders));
-
-    this.successService.success(state.SAVE_PROVIDERS_SUCCESS, () => {
-      this.store$.dispatch(globalState.LOAD_PROVIDERS);
-    });
   }
 
   ngOnDestroy() {
     this.subs.unsubscribe();
   }
 
-  /* save() {
-    if (this.form.valid) {
-      const values = this.form.value;
-      const dataToSave = {
-        seller_phone: values.seller_phone,
-        partner: {
-          name: values.name,
-          address: values.address,
-          munipality_id: values.municipality  .id,
-          nit: values.nit,
-          phone: values.partner_phone,
-          state: values.state ? 1 : 0
-        }
-      };
-      const action = state.SAVE_PROVIDERS({ payload: { data: dataToSave }});
-      this.store$.dispatch(action);
-    }
-  }
-
   update(provider: any) {
-    const deparment$ = this.store$.pipe(
-      select(globalState.selectDepartmentByMunicipalityId, provider.partner.municipality_id),
-      take(1)
+    const department$ = this.selectData.getDepartmentByMunicipalityId(
+      provider.partner.municipality_id
     );
+    const municipality$ = this.selectData.getMunicipalityById(provider.partner.municipality_id);
 
-    const municipality$ = this.store$.pipe(
-      select(globalState.selectMunicipalityById, provider.partner.municipality_id),
-      take(1)
-    );
-
-    console.log(provider);
-    combineLatest([deparment$, municipality$ ]).subscribe(([deparment, municipality]) => {
-      this.form.patchValue({
-        department: {id: deparment.id, name: deparment.name, label: deparment.name},
-        municipality,
-        seller_phone: provider.seller_phone,
-        name: provider.partner.name,
-        address: provider.partner.address,
-        nit: provider.partner.nit,
-        partner_phone: provider.partner.phone,
-        state: !!provider.partner.state
+    this.modalFactory
+      .create({ component: FormComponent })
+      .pipe(
+        switchMap(result => {
+          return combineLatest([department$, municipality$, of(result)]);
+        }),
+        map(([department, municipality, result]) => {
+          if (result.event !== MODAL_INITIAL_EVENT) {
+            return { result };
+          }
+          const data = { provider, department, municipality };
+          return { data, result };
+        })
+      )
+      .subscribe(({ data, result }) => {
+        const component = result.modal.componentInstance.getRenderedComponent<FormComponent>();
+        component.execute({ event: result.event, data });
       });
-    });
-  }*/
+  }
 
   add() {
-    this.modalFactory.create(FormComponent);
+    this.modalFactory
+      .create({ component: FormComponent })
+      .pipe(filter(result => result.event !== MODAL_INITIAL_EVENT))
+      .subscribe(result => {
+        const component = result.modal.componentInstance.getRenderedComponent<FormComponent>();
+        component.execute({ event: result.event });
+      });
   }
 
-  delete(client: any) {
-    console.log(client);
-  }
 }

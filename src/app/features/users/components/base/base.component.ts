@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { ErrorService, FormService, LoadingService } from '@core/services';
+import { ErrorService, FactoryFormService, LoadingService } from '@core/services';
 import { InputControlConfig, ControlConfig, SelectControlConfig } from '@core/types';
 import { LoginFormConfig } from '@features/users/config/login-form-config';
 import * as userState from '@features/users/state';
@@ -38,7 +38,7 @@ export class BaseComponent implements OnInit {
     private loading: LoadingService,
     private error: ErrorService,
     private formConfig: LoginFormConfig,
-    private formService: FormService
+    private FactoryFormService: FactoryFormService
   ) {}
 
   ngOnInit(): void {
@@ -61,10 +61,15 @@ export class BaseComponent implements OnInit {
         state: values.state ? 1 : 0
       };
 
+<<<<<<< HEAD
       console.log(dataToSave);
       const action = userState.SAVE_USERS({ payload: { data: dataToSave } });
       this.store$.dispatch(action);
     }
+=======
+    this.form = this.FactoryFormService.createPlainForm(this.fields);
+    this.store$.dispatch(userState.LOAD_USERS());
+>>>>>>> master
   }
 
   update(users: any)

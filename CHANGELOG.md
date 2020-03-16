@@ -125,3 +125,46 @@ Merge client and modal branch
 
 ## [ADD] 13-03-2020 23:18
 Add Modal
+
+## [Add] 14-03-2020 01:42
+Add Providers form to modal
+
+## [Add] 14-03-2020 18:24
+Add Provider form to modal
+
+## [Add, Update] 14-03-2020 20:46
+Add Select Service
+Update Clients
+Update Providers
+Update Rename Form Service to Factory Form
+## [Add] 14-03-2020 20:48
+Add MessageService
+
+## [Add] 14-03-2020 21:04
+Merge client with master 
+Merge sweet-alert branch with master
+
+## [Update] 14-03-2020 21:20
+Add FormService to FormComponent's Providers
+Update logic execute method in Clients
+
+## [Add] 14-03-2020 21:24
+Merge client branch to master
+
+## [Add,Update] 14-03-2020 22:37
+Add ObjPath library
+Add ObjPathService
+Update DataTable
+
+## [Add] 14-03-2020 22:39
+Add logic update operation in clients form
+
+## [Update] 14-03-2020 22:41
+Merge client and providers branch to master
+
+## [Update] 14-03-2020 23:14
+Finish CRUD of providers
+Finish CRUD of clients
+
+## [Add] 14-03-2020 23:17
+Merge client and providers branch to master
