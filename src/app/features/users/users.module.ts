@@ -7,11 +7,12 @@ import {TRANSLOCO_SCOPE} from '@ngneat/transloco';
 import {StoreModule} from '@ngrx/store';
 import {EffectsModule} from '@ngrx/effects';
 import {UsersEffects, FEATURE_KEY, reducer} from '@features/users/state';
+import { FormComponent } from './components/form/form.component';
 
 const loader = LoadI18nFile((lang: string) => () => import(`./i18n/${lang}.json`));
 
 @NgModule({
-  declarations: [BaseComponent],
+  declarations: [BaseComponent, FormComponent],
   imports: [
     SharedModule, UsersRoutingModule,
     StoreModule.forFeature(FEATURE_KEY, reducer),

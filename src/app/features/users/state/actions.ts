@@ -29,3 +29,8 @@ export const SAVE_USERS_FAIL = createAction(
     '[Users] Save Users Fail',
     props<{ payload: ErrorActionData }>()
 );
+
+export const UPDATE_USERS = createAction(
+  '[Users] Update Users',
+  props<{ payload: PayloadAction }>()
+);

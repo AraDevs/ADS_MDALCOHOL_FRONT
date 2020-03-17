@@ -15,7 +15,13 @@
 </ng-container>-->
 
 <h1>Usuarios</h1>
-<div class="container">
+
+<div class="p-4">
+  <button class="mb-2" mat-raised-button color="primary" (click)="add()" >Nuevo</button>
+  <md-data-table [dataSource$]="dataUsers" [config]="tableConfig" (update)="update($event)">
+  </md-data-table>
+</div>
+<!--<div class="container">
   <div class="row justify-content-center">
     <div class="col-10">
       <form [formGroup]="form" (submit)="save()" #formReference="ngForm">
@@ -35,4 +41,4 @@
 <div class="p-4">
   <md-data-table [dataSource$]="dataUsers" [config]="tableConfig" (update)="update($event)">
   </md-data-table>
-</div>
+</div>-->

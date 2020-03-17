@@ -1,25 +1,25 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { ErrorService, FactoryFormService, LoadingService } from '@core/services';
+import { ErrorService, FactoryFormService, LoadingService, SelectService } from '@core/services';
 import { InputControlConfig, ControlConfig, SelectControlConfig } from '@core/types';
-import { LoginFormConfig } from '@features/users/config/login-form-config';
+import {  } from '@features/users/config/login-form-config';
 import * as userState from '@features/users/state';
 import { select, Store } from '@ngrx/store';
 import { CustomErrorMessage, DataTableConfig } from '@shared/types';
-import { Observable } from 'rxjs';
-import { filter, map, tap } from 'rxjs/operators';
+import { Observable, combineLatest, of } from 'rxjs';
+import { filter, map, tap, switchMap } from 'rxjs/operators';
 import { PlainActionCreator } from '@core/types/effect-factory/action-types';
 import { AppState } from '@state/app-state';
+import { ModalFactoryService, SuccessService } from '@shared/services';
+import { FormComponent } from '../form/form.component';
+import { MODAL_INITIAL_EVENT } from '@shared/constants';
 
 @Component({
   selector: 'md-base',
   templateUrl: './base.component.html',
-  styleUrls: ['./base.component.scss'],
-  providers: [LoginFormConfig]
+  styleUrls: ['./base.component.scss']
 })
 export class BaseComponent implements OnInit {
-  form: FormGroup;
-  fields: Partial<InputControlConfig | SelectControlConfig>[];
   dataUsers: Observable<any[]>;
 
   tableConfig: DataTableConfig = {
@@ -28,55 +28,51 @@ export class BaseComponent implements OnInit {
       name: 'Users.Table.Titles.Name',
       username: 'Users.Table.Titles.User',
       actions: 'Acciones'
-    }
-    // sortActiveColumn: 'name',
-    // sortDirection: 'asc'
+    },
+    keys: ['name', 'username', 'actions']
   };
 
   constructor(
     private store$: Store<AppState>,
-    private loading: LoadingService,
-    private error: ErrorService,
-    private formConfig: LoginFormConfig,
-    private FactoryFormService: FactoryFormService
+    private modalFactory: ModalFactoryService,
   ) {}
 
   ngOnInit(): void {
-    this.fields = this.formConfig.getModel()
-    this.form = this.formService.createPlainForm(this.fields as any);
     this.store$.dispatch(userState.LOAD_USERS());
     this.dataUsers = this.store$.pipe(select(userState.selectUsers));
   }
-  
-  save()
+
+  update(user: any)
   {
-    if (this.form.valid) {
-      const values = this.form.value;
-
-      const dataToSave = {
-        username: values.user_name,
-        name: values.name,
-        pass: values.password,
-        user_type: "Produccion",
-        state: values.state ? 1 : 0
-      };
-
-<<<<<<< HEAD
-      console.log(dataToSave);
-      const action = userState.SAVE_USERS({ payload: { data: dataToSave } });
-      this.store$.dispatch(action);
-    }
-=======
-    this.form = this.FactoryFormService.createPlainForm(this.fields);
-    this.store$.dispatch(userState.LOAD_USERS());
->>>>>>> master
+    this.modalFactory
+      .create({component: FormComponent})
+      .pipe(
+        switchMap(result => {
+          return combineLatest([of(result)]);
+        }),
+        map(([result]) => {
+          if (result.event !== MODAL_INITIAL_EVENT) {
+            return { result };
+          }
+          const data = { user };
+          return { data, result };
+        })
+      )
+      .subscribe(({ data, result }) => {
+        const component = result.modal.componentInstance.getRenderedComponent<FormComponent>();
+        component.execute({ event: result.event, data });
+      });
   }
 
-  update(users: any)
-  {
-    this.form.patchValue({ 
-      user_name: users.username,
-      name: users.name,
-     });
+  add(){
+    this.modalFactory
+    .create({ component: FormComponent })
+    .pipe(filter(result => result.event !== MODAL_INITIAL_EVENT))
+    .subscribe(result => {
+      const component = result.modal.
+      componentInstance.
+      getRenderedComponent<FormComponent>();
+      component.execute({ event: result.event});
+    });
   }
 }
