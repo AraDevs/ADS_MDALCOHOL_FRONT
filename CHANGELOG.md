@@ -179,3 +179,5 @@ Merge client and Alejandro branch to master
 Add Error Server Validator
 Add List of error in providers form
 
+## [Add] 17-03-2020 00:38
+Add unsubscribe in ErrorService

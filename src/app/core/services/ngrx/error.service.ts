@@ -1,14 +1,14 @@
 import { ActionsSubject, Action } from '@ngrx/store';
 import { ofType } from '@ngrx/effects';
 import { map } from 'rxjs/operators';
-import { Injectable } from '@angular/core';
+import { Injectable, OnDestroy } from '@angular/core';
 import { ErrorActionData, CustomErrorMessage } from '@shared/types';
 import { Observable } from 'rxjs';
 import { ErrorActionCreator } from '@core/types/effect-factory/action-types';
 import { SubSink } from 'subsink';
 
 @Injectable()
-export class ErrorService {
+export class ErrorService implements OnDestroy {
   private subs = new SubSink();
   constructor(private dispatcher: ActionsSubject) {}
 
@@ -23,5 +23,9 @@ export class ErrorService {
       }
       callback({ customErrorsServer });
     });
+  }
+
+  ngOnDestroy() {
+    this.subs.unsubscribe();
   }
 }
