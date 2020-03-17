@@ -175,3 +175,7 @@ Add module inventories and components of then
 ## [Update] 15-03-2020 23:32
 Merge client and Alejandro branch to master
 
+## [Add] 17-03-2020 00:33
+Add Error Server Validator
+Add List of error in providers form
+

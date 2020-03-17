@@ -4,9 +4,9 @@ import { RequestData } from './request-data';
 export class ResponseClientResultModel<T> {
   success: boolean;
   data?: T;
-  errors?: string[];
-  error?: string;
+  error?: any;
   status: number;
+  message: string;
 }
 
 export class ResponseClientModel<T> {
@@ -18,5 +18,3 @@ export abstract class RequestClient {
   abstract save<T>(requestData: RequestData): ResponseClientModel<T>;
   abstract update<T>(requestData: RequestData): ResponseClientModel<T>;
 }
-
-

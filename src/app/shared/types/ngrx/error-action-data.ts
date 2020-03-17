@@ -1,4 +1,5 @@
 export interface ErrorActionData {
-  error: string;
+  message: string;
+  error: any;
   fromServer: boolean;
 }

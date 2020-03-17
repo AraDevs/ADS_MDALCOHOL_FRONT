@@ -1,6 +1,6 @@
 import { Component, ElementRef, OnInit, ViewChild, Inject } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { FactoryFormService } from '@core/services';
+import { FactoryFormService, ErrorService } from '@core/services';
 import { InputControlConfig, SelectControlConfig } from '@core/types';
 import { FormModel } from '@features/providers/config/form-model';
 import * as state from '@features/providers/state';
@@ -13,20 +13,23 @@ import { filter } from 'rxjs/operators';
 import { SubSink } from 'subsink';
 import { FormService } from './form.service';
 import { MessageService } from '@core/services/message.service';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'md-form',
   templateUrl: './form.component.html',
   styleUrls: ['./form.component.scss'],
-  providers: [FormModel, SuccessService, FormService]
+  providers: [FormModel, SuccessService, FormService, ErrorService]
 })
 export class FormComponent implements OnInit {
   private subs = new SubSink();
+  private errors = new Subject<string[]>();
   private update = false;
   private provider: any = null;
 
   form: FormGroup;
   fields: Partial<InputControlConfig | SelectControlConfig>[];
+  errors$ = this.errors.asObservable();
 
   @ViewChild('formBtn') formBtn: ElementRef<HTMLButtonElement>;
   constructor(
@@ -34,6 +37,7 @@ export class FormComponent implements OnInit {
     private factoryForm: FactoryFormService,
     private store$: Store<AppState>,
     private successService: SuccessService,
+    private errorService: ErrorService,
     private formService: FormService,
     private message: MessageService,
     @Inject(DYNAMIC_MODAL_DATA) private data: any
@@ -60,6 +64,11 @@ export class FormComponent implements OnInit {
     this.successService.success(state.UPDATE_PROVIDERS_SUCCESS, () => {
       this.store$.dispatch(globalState.LOAD_PROVIDERS());
       this.message.success('Messages.Update.Success').then(() => this.data.modalRef.close());
+    });
+
+    this.errorService.error(state.SAVE_PROVIDERS_FAIL, (payload: any) => {
+      const { customErrorsServer } = payload;
+      this.errors.next(customErrorsServer);
     });
   }
 

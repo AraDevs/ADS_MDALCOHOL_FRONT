@@ -49,11 +49,13 @@ export class EffectsFactoryService {
   private getActionToDispatch() {
     return (result: Partial<ResponseClientResultModel<any>>, config: EffectActionsConfig) => {
       const { successAction, failAction } = config;
-      const { success, data, error } = result;
+      const { success, data, error, message } = result;
       if (success) {
         return successAction({ payload: data });
       }
-      return failAction({ payload: { error, fromServer: false } });
+      console.log(error);
+
+      return failAction({ payload: { error } });
     };
   }
 }

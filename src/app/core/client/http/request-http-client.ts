@@ -6,7 +6,6 @@ import { catchError, map } from 'rxjs/operators';
 import { RequestData } from '../request-client/request-data';
 import { HttpOptions } from './http-options';
 
-
 @Injectable()
 export class RequestHttpClient extends RequestClient {
   private globalOptions = { observe: 'response' };
@@ -17,28 +16,25 @@ export class RequestHttpClient extends RequestClient {
 
   get<T>(requestData: RequestData<HttpOptions>): ResponseClientModel<T> {
     const { resource, options } = requestData;
-    const data$ = this.http.get<T>(resource, this.getOptions(options)).pipe(
-      map(this.handlerSuccessRequest),
-      catchError(this.handlerFailRequest)
-    );
+    const data$ = this.http
+      .get<T>(resource, this.getOptions(options))
+      .pipe(map(this.handlerSuccessRequest), catchError(this.handlerFailRequest));
     return { result: data$ };
   }
 
   save<T>(requestData: RequestData<HttpOptions>): ResponseClientModel<T> {
     const { resource, options, data } = requestData;
-    const data$ = this.http.post<T>(resource, data, this.getOptions(options)).pipe(
-      map(this.handlerSuccessRequest),
-      catchError(this.handlerFailRequest)
-    );
+    const data$ = this.http
+      .post<T>(resource, data, this.getOptions(options))
+      .pipe(map(this.handlerSuccessRequest), catchError(this.handlerFailRequest));
     return { result: data$ };
   }
 
   update<T>(requestData: RequestData<HttpOptions>): ResponseClientModel<T> {
     const { resource, options, data } = requestData;
-    const data$ = this.http.put<T>(resource, data, this.getOptions(options)).pipe(
-      map(this.handlerSuccessRequest),
-      catchError(this.handlerFailRequest)
-    );
+    const data$ = this.http
+      .put<T>(resource, data, this.getOptions(options))
+      .pipe(map(this.handlerSuccessRequest), catchError(this.handlerFailRequest));
     return { result: data$ };
   }
 
@@ -48,8 +44,8 @@ export class RequestHttpClient extends RequestClient {
   }
 
   private handlerFailRequest(res: HttpErrorResponse) {
-    const { message, status } = res;
-    return of({ success: false, error: message, status });
+    const { message, status, error } = res;
+    return of({ success: false, error, message, status });
   }
 
   private getOptions(options: any) {
@@ -59,5 +55,4 @@ export class RequestHttpClient extends RequestClient {
     }
     return globalOptions;
   }
-
 }

@@ -5,17 +5,23 @@ import { Injectable } from '@angular/core';
 import { ErrorActionData, CustomErrorMessage } from '@shared/types';
 import { Observable } from 'rxjs';
 import { ErrorActionCreator } from '@core/types/effect-factory/action-types';
+import { SubSink } from 'subsink';
 
-@Injectable({ providedIn: 'root' })
+@Injectable()
 export class ErrorService {
+  private subs = new SubSink();
   constructor(private dispatcher: ActionsSubject) {}
 
-  getError(actionToListen: ErrorActionCreator, message: string): Observable<CustomErrorMessage> {
-    return this.dispatcher.pipe(ofType(actionToListen)).pipe(
-      map(({ payload }) => {
-        const { error, fromServer } = payload;
-        return { message: fromServer ? error : message, translate: !fromServer };
-      })
-    );
+  error(actionToListen: ErrorActionCreator, callback: (payload: any) => void) {
+    this.subs.sink = this.dispatcher.pipe(ofType(actionToListen)).subscribe(({ payload }) => {
+      let customErrorsServer = [];
+      const { error } = payload;
+      if (error.hasOwnProperty('errors')) {
+        customErrorsServer = Object.keys(error.errors).reduce((errs, key) => {
+          return [...errs, ...error.errors[key]];
+        }, []);
+      }
+      callback({ customErrorsServer });
+    });
   }
 }
