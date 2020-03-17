@@ -4,7 +4,8 @@
     "Users": "Usuarios",
     "Providers": "Proveedores",
     "Clients": "Clients",
-    "Sellers": "Vendedores"
+    "Sellers": "Vendedores",
+    "Inventories": "Inventarios"
   },
   "FormValidator": {
     "Required": "Debe llenar este campo",
