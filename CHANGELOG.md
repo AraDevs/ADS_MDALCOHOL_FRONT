@@ -168,3 +168,6 @@ Finish CRUD of clients
 
 ## [Add] 14-03-2020 23:17
 Merge client and providers branch to master
+
+## [Add] 15-03-2020 23:28
+Add module inventories and components of then
