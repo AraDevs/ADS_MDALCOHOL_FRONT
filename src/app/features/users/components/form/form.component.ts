@@ -2,74 +2,69 @@ import { Component, OnInit, ViewChild, ElementRef, Inject } from '@angular/core'
 import { FormGroup } from '@angular/forms';
 import { FactoryFormService } from '@core/services';
 import { InputControlConfig, SelectControlConfig } from '@core/types';
-import { FormModel } from '@features/clients/config/form-model';
+import { LoginFormConfig } from '@features/users/config/login-form-config';
 import { Store } from '@ngrx/store';
-import { AppState } from '@state/app-state';
 import { SuccessService } from '@shared/services';
 import { SubSink } from 'subsink';
-import * as state from '@features/clients/state';
-import * as globalState from '@state/index';
+import * as UserState from '@features/users/state';
 import { MODAL_INITIAL_EVENT } from '@shared/constants';
 import { MODAL_ACCEPT_EVENT, DYNAMIC_MODAL_DATA } from '../../../../shared/constants/index';
-import { FormService } from '@features/clients/components/form/form.service';
+import { FormService } from '@features/users/components/form/form.service';
 import { MessageService } from '@core/services/message.service';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+import { UsersState } from '@features/users/state';
 
 @Component({
   selector: 'md-form',
   templateUrl: './form.component.html',
   styleUrls: ['./form.component.scss'],
-  providers: [FormModel, SuccessService, FormService]
+  providers: [LoginFormConfig, SuccessService, FormService]
 })
 export class FormComponent implements OnInit {
   private subs = new SubSink();
   private update = false;
-  private client: any = null;
+  private user: any = null;
   
   form: FormGroup;
   fields: Partial<InputControlConfig | SelectControlConfig>[];
 
   @ViewChild('formBtn') formBtn: ElementRef<HTMLButtonElement>;
   constructor(
-    private formModel: FormModel,
+    private loginFomConfig: LoginFormConfig,
     private factoryForm: FactoryFormService,
-    private store$: Store<AppState>,
+    private store$: Store<UsersState>,
     private successService: SuccessService,
     private formService: FormService,
     private message: MessageService,
     @Inject(DYNAMIC_MODAL_DATA) private data: any
   ) { }
-
+  
   ngOnInit(): void {
-    this.fields = this.formModel.getModel();
+    this.fields = this.loginFomConfig.getModel();
     this.form = this.factoryForm.createPlainForm(this.fields as any);
-    this.subs.sink =  this.form.get('departmentId').valueChanges.subscribe(department => {
-      const {id} = department;
-      this.store$.dispatch(globalState.FILTER_MUNICIPALITIES({payload: {id}}));
-    });
-    this.successService.success(state.SAVE_CLIENTS_SUCCESS, () => {
-      this.store$.dispatch(globalState.LOAD_CLIENTS());
+    this.successService.success(UserState.SAVE_USERS_SUCCESS, () => {
+      this.store$.dispatch(UserState.LOAD_USERS());
       this.message.success('Messages.Add.Success').then(() => this.data.modalRef.close());
-    });
-    this.successService.success(state.UPDATE_CLIENTS_SUCCESS, () => {
-      this.store$.dispatch(globalState.LOAD_CLIENTS());
-      this.message.success('Messages.Update.Success').then(() => this.data.modalRef.close());
     });
   }
 
-  save() {
-    if (this.form.valid) {
+  save()
+  {
+    if(this.form.valid){
       const values = this.form.value;
-      const data = this.formService.getClientDTO(values);
-      if (this.update) {
-        const action = state.UPDATE_CLIENTS({
-          payload: { data: { ...data, id: this.client.id }}
+      const data = this.formService.getUserDTO(values);
+      if(this.update){
+        const action = UserState.UPDATE_USERS({
+          payload: { data: { ...data, id: this.user.id }}
         });
         this.store$.dispatch(action);
-      } else {
-        const action = state.SAVE_CLIENTS({ payload: { data } });
+      }
+      else{
+        const action = UserState.SAVE_USERS({payload: { data } });
         this.store$.dispatch(action);
       }
-    } else {
+    }
+    else{
       this.message.error('Message.InvalidForm');
     }
   }
@@ -78,10 +73,10 @@ export class FormComponent implements OnInit {
     if (event === MODAL_INITIAL_EVENT) {
       this.update = !!data;
       if (this.update) {        
-        this.client = this.formService.getClient(data);
-        this.form.patchValue(this.client);
+        this.user = this.formService.getUser(data);
+        this.form.patchValue(this.user);
       }
-    } else if (event === MODAL_ACCEPT_EVENT) {
+    }else if (event === MODAL_ACCEPT_EVENT) {
       this.formBtn.nativeElement.click();
     }
   }

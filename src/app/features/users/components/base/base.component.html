@@ -1,4 +1,4 @@
-<ng-container *ngIf="loading$ | async ">
+<!--<ng-container *ngIf="loading$ | async ">
   Loading ...
 </ng-container>
 <ul>
@@ -12,13 +12,19 @@
 <ng-container *ngIf="error$ | async as result">
   <div *ngIf="result.translate">{{ result.message | transloco }}</div>
   <div *ngIf="!result.translate">{{ result.message }}</div>
-</ng-container>
+</ng-container>-->
 
+<h1>Usuarios</h1>
 
-<div class="container">
+<div class="p-4">
+  <button class="mb-2" mat-raised-button color="primary" (click)="add()" >Nuevo</button>
+  <md-data-table [dataSource$]="dataUsers" [config]="tableConfig" (update)="update($event)">
+  </md-data-table>
+</div>
+<!--<div class="container">
   <div class="row justify-content-center">
     <div class="col-10">
-      <form [formGroup]="form" (submit)="submit()" #formReference="ngForm">
+      <form [formGroup]="form" (submit)="save()" #formReference="ngForm">
         <md-form-generator [form]="form" [formReference]="formReference" [fields]="fields" cssContainerClassess='row'
           [displayContainerCheckboxs]="true" [displayContainerRadios]="true" cssContainerRadiosClasses='d-flex'>
         </md-form-generator>
@@ -33,6 +39,6 @@
 <br>
 
 <div class="p-4">
-  <md-data-table [dataSource$]="users$" [config]="tableConfig" [loading$]="loading$">
+  <md-data-table [dataSource$]="dataUsers" [config]="tableConfig" (update)="update($event)">
   </md-data-table>
-</div>
+</div>-->

@@ -1,21 +1,37 @@
 import { Injectable } from '@angular/core';
 import { Validators } from '@angular/forms';
 import { InputControlConfig, SelectControlConfig, RadioButtonConfig } from '@core/types';
+import * as userState from '@features/users/state';
+import { Store, select } from '@ngrx/store';
+import { usersFeature } from '../state';
+import { map } from 'rxjs/operators';
 
 @Injectable()
 export class LoginFormConfig {
-  get fields(): Partial<InputControlConfig | SelectControlConfig | RadioButtonConfig>[] {
+  constructor(private store$: Store<any>) {}
+  
+  getModel(): Partial<InputControlConfig | SelectControlConfig | RadioButtonConfig>[] {
     return [
       {
-        key: 'email',
-        placeholder: 'Users.Form.User',
-        label: 'Users.Form.User',
+        key: 'user_name',
+        label: 'Users.Form.UserName',
         fieldType: 'Input',
         type: 'text',
-        id: 'email',
-        validations: [Validators.required, Validators.email],
-        validatorMessages: ['Users.FormValidator.User.Required', 'Users.FormValidator.User.Email'],
-        validationNames: ['required', 'email'],
+        id: 'user_name',
+        validations: [Validators.required],
+        validatorMessages: ['Users.FormValidator.User.Required'],
+        validationNames: ['required'],
+        cssClasses: 'col-6'
+      },
+      {
+        key: 'name',
+        label: 'Users.Form.Name',
+        fieldType: 'Input',
+        type: 'text',
+        id: 'name',
+        validations: [Validators.required],
+        validatorMessages: ['Users.FormValidator.User.Required'],
+        validationNames: ['required'],
         cssClasses: 'col-6'
       },
       {
@@ -31,38 +47,25 @@ export class LoginFormConfig {
         cssClasses: 'col-6'
       },
       {
-        label: 'Users.Form.Options',
-        options$: null,
-        key: 'majorGroup',
+        key: 'user_type',
         fieldType: 'Select',
-        id: 'majorGroup',
+        id: 'user_type',
+        cssClasses: 'col-6',
         validations: [Validators.required],
-        validatorMessages: ['Users.FormValidator.Options.Required'],
+        validatorMessages: ['FormValidator.RequiredSelected'],
         validationNames: ['required'],
-        placeholder: 'ProductSales.Filter.MajorGroupPlaceholder',
-        cssClasses: 'col-6'
+        label: 'Users.Form.UserType',
+        options$: this.store$.pipe(select(userState.selectUserType),
+          map((userType: string[]) => {
+            return userType.map(user => ({ label: user, value: user }));
+          }))
       },
       {
-        key: 'save-password',
-        label: 'Users.Form.Password',
+        key: 'state',
+        id: 'state',
+        label: 'Users.Form.State',
         fieldType: 'Checkbox',
         defautlValue: true,
-        cssClasses: 'pl-3'
-      },
-      {
-        key: 'radio1',
-        label: 'Users.Form.Radio1',
-        fieldType: 'Radio',
-        groupName: 'Options',
-        defautlValue: true,
-        cssClasses: 'pl-3'
-      },
-      {
-        key: 'radio2',
-        label: 'Users.Form.Radio2',
-        fieldType: 'Radio',
-        groupName: 'Options',
-        defautlValue: false,
         cssClasses: 'pl-3'
       },
     ];

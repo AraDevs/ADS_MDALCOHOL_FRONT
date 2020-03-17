@@ -1,89 +1,78 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { ErrorService, FactoryFormService, LoadingService } from '@core/services';
+import { ErrorService, FactoryFormService, LoadingService, SelectService } from '@core/services';
 import { InputControlConfig, ControlConfig, SelectControlConfig } from '@core/types';
-import { LoginFormConfig } from '@features/users/config/login-form-config';
+import {  } from '@features/users/config/login-form-config';
 import * as userState from '@features/users/state';
 import { select, Store } from '@ngrx/store';
 import { CustomErrorMessage, DataTableConfig } from '@shared/types';
-import { Observable } from 'rxjs';
-import { filter, map, tap } from 'rxjs/operators';
+import { Observable, combineLatest, of } from 'rxjs';
+import { filter, map, tap, switchMap } from 'rxjs/operators';
 import { PlainActionCreator } from '@core/types/effect-factory/action-types';
 import { AppState } from '@state/app-state';
+import { ModalFactoryService, SuccessService } from '@shared/services';
+import { FormComponent } from '../form/form.component';
+import { MODAL_INITIAL_EVENT } from '@shared/constants';
 
 @Component({
   selector: 'md-base',
   templateUrl: './base.component.html',
-  styleUrls: ['./base.component.scss'],
-  providers: [LoginFormConfig]
+  styleUrls: ['./base.component.scss']
 })
 export class BaseComponent implements OnInit {
-  users$ = this.store$.pipe(select(userState.selectUsers));
-  options$ = this.users$.pipe(
-    map(users => {
-      return users.map(user => ({ label: user.name }));
-    })
-  );
-
-  user$ = this.store$.pipe(
-    select(userState.selectUser),
-    filter(user => user != null)
-  );
-  loading$: Observable<boolean>;
-  error$: Observable<CustomErrorMessage>;
-
-  fields: ControlConfig[];
-  form: FormGroup;
+  dataUsers: Observable<any[]>;
 
   tableConfig: DataTableConfig = {
-    displayedColumns: ['name', 'username'],
+    displayedColumns: ['name', 'username', 'actions'],
     titles: {
       name: 'Users.Table.Titles.Name',
-      username: 'Users.Table.Titles.User'
-    }
-    // sortActiveColumn: 'name',
-    // sortDirection: 'asc'
+      username: 'Users.Table.Titles.User',
+      actions: 'Acciones'
+    },
+    keys: ['name', 'username', 'actions']
   };
 
   constructor(
     private store$: Store<AppState>,
-    private loading: LoadingService,
-    private error: ErrorService,
-    private formConfig: LoginFormConfig,
-    private FactoryFormService: FactoryFormService
+    private modalFactory: ModalFactoryService,
   ) {}
 
   ngOnInit(): void {
-    const actions = [
-      userState.LOAD_USERS,
-      userState.USERS_LOADED_SUCCESS,
-      userState.USERS_LOADED_FAIL
-    ] as PlainActionCreator[];
-
-    this.loading$ = this.loading.getLoading(actions);
-    this.error$ = this.error.getError(userState.USERS_LOADED_FAIL, 'Users.Errors.LoadUsersFail');
-
-    this.store$.dispatch(
-      userState.LOAD_USER({
-        payload: { metadata: { resource: { id: '2' } } }
-      })
-    );
-
-    // Config form
-    this.fields = this.formConfig.fields.map((field: ControlConfig) => {
-      if (field.fieldType === 'Select') {
-        const _field = field as SelectControlConfig;
-        return { ..._field, options$: this.options$ } as ControlConfig;
-      }
-      return field as ControlConfig;
-    });
-
-    this.form = this.FactoryFormService.createPlainForm(this.fields);
     this.store$.dispatch(userState.LOAD_USERS());
+    this.dataUsers = this.store$.pipe(select(userState.selectUsers));
   }
 
-  submit() {
-    console.log(this.form);
-    // this.store$.dispatch(userState.LoadUsers());
+  update(user: any)
+  {
+    this.modalFactory
+      .create({component: FormComponent})
+      .pipe(
+        switchMap(result => {
+          return combineLatest([of(result)]);
+        }),
+        map(([result]) => {
+          if (result.event !== MODAL_INITIAL_EVENT) {
+            return { result };
+          }
+          const data = { user };
+          return { data, result };
+        })
+      )
+      .subscribe(({ data, result }) => {
+        const component = result.modal.componentInstance.getRenderedComponent<FormComponent>();
+        component.execute({ event: result.event, data });
+      });
+  }
+
+  add(){
+    this.modalFactory
+    .create({ component: FormComponent })
+    .pipe(filter(result => result.event !== MODAL_INITIAL_EVENT))
+    .subscribe(result => {
+      const component = result.modal.
+      componentInstance.
+      getRenderedComponent<FormComponent>();
+      component.execute({ event: result.event});
+    });
   }
 }
