@@ -44,4 +44,22 @@ export class UsersEffects {
 
     return this.effectFactory.create(config);
   });
+
+  updateUsers$ = createEffect(() => {
+    const { UPDATE_USERS, UPDATE_USERS_SUCCESS, UPDATE_USERS_FAIL } = actions;
+
+    const effectReqConfig = new EffectRequestConfig(this.requestClient, 'update');
+    const actionsConfig = new EffectActionsConfig(
+      UPDATE_USERS,
+      UPDATE_USERS_SUCCESS,
+      UPDATE_USERS_FAIL
+    );
+    const config = new EffectConfigModel(
+      effectReqConfig,
+      actionsConfig,
+      `${environment.host}/users`
+    );
+
+    return this.effectFactory.create(config);
+  });
 }

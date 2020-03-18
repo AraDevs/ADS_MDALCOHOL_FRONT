@@ -21,7 +21,6 @@ import { UsersState } from '@features/users/state';
   providers: [LoginFormConfig, SuccessService, FormService]
 })
 export class FormComponent implements OnInit {
-  private subs = new SubSink();
   private update = false;
   private user: any = null;
   
@@ -46,10 +45,15 @@ export class FormComponent implements OnInit {
       this.store$.dispatch(UserState.LOAD_USERS());
       this.message.success('Messages.Add.Success').then(() => this.data.modalRef.close());
     });
+    this.successService.success(UserState.UPDATE_USERS_SUCCESS, () => {
+      this.store$.dispatch(UserState.LOAD_USERS());
+      this.message.success('Messages.Update.Success').then(() => this.data.modalRef.close());
+    });
   }
 
   save()
   {
+    //console.log(this.form.value);
     if(this.form.valid){
       const values = this.form.value;
       const data = this.formService.getUserDTO(values);
@@ -75,6 +79,9 @@ export class FormComponent implements OnInit {
       if (this.update) {        
         this.user = this.formService.getUser(data);
         this.form.patchValue(this.user);
+        //Aquí se elimina la password como algo necesario para el update
+        this.form.get('pass').disable();
+        this.form.get('pass').clearValidators();
       }
     }else if (event === MODAL_ACCEPT_EVENT) {
       this.formBtn.nativeElement.click();

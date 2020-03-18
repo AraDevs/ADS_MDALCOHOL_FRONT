@@ -13,19 +13,22 @@ export class FormService {
       id: user.id,
       username: user.username,
       name: user.name,
-      pass: user.pass,
-      user_type: user.userType,
-      state: user.state
+      pass: user.password,
+      usertype: {
+        label: user.user_type,
+        value: user.user_type
+      },
+      state: !!user.state
     }
   }
 
   getUserDTO(user: any)
   {
     return{
-      username: user.user_name,
+      username: user.username,
       name: user.name,
       pass: user.password,
-      user_type: user.user_type.value,
+      user_type: user.usertype.value,
       state: user.state ? 1 : 0
     }
   }

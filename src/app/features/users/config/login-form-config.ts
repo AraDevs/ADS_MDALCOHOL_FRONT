@@ -13,7 +13,7 @@ export class LoginFormConfig {
   getModel(): Partial<InputControlConfig | SelectControlConfig | RadioButtonConfig>[] {
     return [
       {
-        key: 'user_name',
+        key: 'username',
         label: 'Users.Form.UserName',
         fieldType: 'Input',
         type: 'text',
@@ -35,7 +35,7 @@ export class LoginFormConfig {
         cssClasses: 'col-6'
       },
       {
-        key: 'password',
+        key: 'pass',
         placeholder: 'Users.Form.Password',
         label: 'Users.Form.Password',
         fieldType: 'Input',
@@ -47,9 +47,9 @@ export class LoginFormConfig {
         cssClasses: 'col-6'
       },
       {
-        key: 'user_type',
+        key: 'usertype',
         fieldType: 'Select',
-        id: 'user_type',
+        id: 'usertype',
         cssClasses: 'col-6',
         validations: [Validators.required],
         validatorMessages: ['FormValidator.RequiredSelected'],
