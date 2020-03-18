@@ -18,7 +18,7 @@
         <td mat-cell *matCellDef="let row">
           <div class="actions d-flex justify-content-center align-items-center">
             <i class="material-icons" (click)="update.next(row)"> create </i>
-            <i class="material-icons" (click)="delete.next(row)"> delete </i>
+            <i class="material-icons" *ngIf="displayMoneyIcon" (click)="selectedRow.next(row)"> attach_money </i>
           </div>
         </td>
       </ng-container>

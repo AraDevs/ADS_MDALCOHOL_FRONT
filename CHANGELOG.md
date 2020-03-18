@@ -227,5 +227,12 @@ Merge client and forms branch to master
 ## [Update] 18-03-2020 17:41
 Finish CRUD of Production Orders
 
+
+## [Update] 18-03-2020 17:43
+Add Special Price actions
+
 ## [Update] 18-03-2020 17:46
 Merge client and special branch to master
+
+## [Update] 18-03-2020 17:49
+Merge forms branch to master
