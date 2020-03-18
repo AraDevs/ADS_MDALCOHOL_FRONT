@@ -190,3 +190,6 @@ Add module production orders
 
 ## [Update] 17-03-2020 23:08
 merge client to master
+
+## [Update] 18-03-2020 00:47
+Update form and methods of module Production Orders 

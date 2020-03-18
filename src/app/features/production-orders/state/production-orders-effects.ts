@@ -13,7 +13,7 @@ export class ProductionOrdersEffects {
     private requestClient: RequestClient
   ) {}
 
-  saveClients$ = createEffect(() => {
+  saveProductionOrder$ = createEffect(() => {
     const { SAVE_PRODUCTION_ORDERS, SAVE_PRODUCTION_ORDERS_SUCCESS, SAVE_PRODUCTION_FAIL } = actions;
 
     const effectReqConfig = new EffectRequestConfig(this.requestClient, 'save');
@@ -32,13 +32,13 @@ export class ProductionOrdersEffects {
   });
 
   updateProductionOrders$ = createEffect(() => {
-    const { SAVE_PRODUCTION_ORDERS, SAVE_PRODUCTION_ORDERS_SUCCESS, SAVE_PRODUCTION_FAIL } = actions;
+    const { UPDATE_PRODUCTION_ORDERS, UPDATE_PRODUCTION_SUCCESS, UPDATE_PRODUCTION_FAIL } = actions;
 
     const effectReqConfig = new EffectRequestConfig(this.requestClient, 'update');
     const actionsConfig = new EffectActionsConfig(
-      SAVE_PRODUCTION_ORDERS,
-      SAVE_PRODUCTION_ORDERS_SUCCESS,
-      SAVE_PRODUCTION_FAIL
+      UPDATE_PRODUCTION_ORDERS,
+      UPDATE_PRODUCTION_SUCCESS,
+      UPDATE_PRODUCTION_FAIL
     );
     const config = new EffectConfigModel(
       effectReqConfig,

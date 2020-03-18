@@ -1,6 +1,6 @@
 {
   "Form": {
-    "Name": "Nombre de Producto",
+    "Inventory": "Nombre de Producto",
     "Quantity": "Cantidad",
     "StartDate": "Fecha de Inicio",
     "EndDate": "Fecha de Finalización",

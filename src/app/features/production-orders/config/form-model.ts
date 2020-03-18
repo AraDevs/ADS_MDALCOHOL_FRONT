@@ -1,7 +1,9 @@
-import { Store } from '@ngrx/store';
+import { Store, select } from '@ngrx/store';
 import { Injectable } from '@angular/core';
 import { InputControlConfig, SelectControlConfig } from '@core/types';
 import { Validators } from '@angular/forms';
+import * as globalState from '@state/index';
+import { map } from 'rxjs/operators';
 
 @Injectable()
 export class FormModel {
@@ -10,15 +12,19 @@ export class FormModel {
   getModel(): Partial<InputControlConfig | SelectControlConfig>[] {
     return [
       {
-        key: 'inventoryName',
-        fieldType: 'Input',
-        type: 'text',
-        id: 'inventoryName',
+        key: 'inventory_Id',
+        fieldType: 'Select',
+        id: 'inventory_Id',
         cssClasses: '',
         validations: [Validators.required],
         validatorMessages: ['FormValidator.Required'],
         validationNames: ['required'],
-        label: 'ProductionOrders.Form.Name'
+        label: 'ProductionOrders.Form.Inventory',
+        options$: this.store$.pipe(
+          select(globalState.selectInventories),
+          map((inventories: any[]) => {
+            return inventories.map(obj => ({ ...obj, label: obj.name}));
+          }))
       },
       {
         key: 'quantity',
@@ -34,7 +40,7 @@ export class FormModel {
       {
         key: 'start_date',
         fieldType: 'Input',
-        type: 'text',
+        type: 'date',
         id: 'start_date',
         cssClasses: '',
         validations: [Validators.required],
@@ -45,7 +51,7 @@ export class FormModel {
       {
         key: 'end_date',
         fieldType: 'Input',
-        type: 'text',
+        type: 'date',
         id: 'end_date',
         cssClasses: '',
         validations: [Validators.required],
@@ -56,7 +62,7 @@ export class FormModel {
       {
         key: 'exp_date',
         fieldType: 'Input',
-        type: 'text',
+        type: 'date',
         id: 'exp_date',
         cssClasses: '',
         validations: [Validators.required],

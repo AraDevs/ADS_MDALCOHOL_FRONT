@@ -6,6 +6,9 @@ import { AppState } from '@state/app-state';
 import { ModalFactoryService } from '@shared/services';
 import { SelectService } from '@core/services';
 import * as globalState from '@state/index';
+import { FormComponent } from '@features/production-orders/components/form/form.component';
+import { filter } from 'rxjs/operators';
+import { MODAL_INITIAL_EVENT } from '../../../../shared/constants/index';
 
 @Component({
   selector: 'md-base',
@@ -15,6 +18,7 @@ import * as globalState from '@state/index';
 export class BaseComponent implements OnInit {
 
   dataOrders: Observable<any[]>;
+  dataInvetories: Observable<any[]>;
   tableConfig: DataTableConfig = {
     displayedColumns: ['inventoryName', 'quantity', 'start_date', 'end_date', 'exp_date', 'workers', 'actions'],
     titles: {
@@ -26,16 +30,30 @@ export class BaseComponent implements OnInit {
       workers: 'ProductionOrders.Table.Titles.Workers',
       actions: 'Acciones'
     },
-    keys: ['name', 'quantity', 'start_date', 'end_date', 'exp_date', 'workers', 'actions']
+    keys: ['inventory.name', 'quantity', 'start_date', 'end_date', 'exp_date', 'workers', 'actions']
   };
 
   constructor(
-    private store$: Store<AppState>
+    private store$: Store<AppState>,
+    private modalFactory: ModalFactoryService,
+    private selectData: SelectService
   ) { }
 
   ngOnInit(): void {
     this.store$.dispatch(globalState.LOAD_PRODUCTION_ORDERS());
+    this.store$.dispatch(globalState.LOAD_INVENTORIES());
+    this.dataInvetories = this.store$.pipe(select(globalState.selectInventories));
     this.dataOrders = this.store$.pipe(select(globalState.selectProductionOrders));
+  }
+
+  add() {
+    this.modalFactory
+      .create({ component: FormComponent })
+      .pipe(filter(result => result.event !== MODAL_INITIAL_EVENT))
+      .subscribe(result => {
+        const component = result.modal.componentInstance.getRenderedComponent<FormComponent>();
+        component.execute({ event: result.event });
+    });
   }
 
 }
