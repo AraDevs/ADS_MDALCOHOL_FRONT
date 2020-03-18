@@ -4,9 +4,12 @@ import { InputControlConfig, SelectControlConfig } from '@core/types';
 import { Validators } from '@angular/forms';
 import * as globalState from '@state/index';
 import { map } from 'rxjs/operators';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable()
 export class FormModel {
+  hideEndDate$ = new BehaviorSubject<boolean>(true);
+
   constructor(private store$: Store<any>) {}
 
   getModel(): Partial<InputControlConfig | SelectControlConfig>[] {
@@ -57,7 +60,8 @@ export class FormModel {
         validations: [Validators.required],
         validatorMessages: ['FormValidator.Required'],
         validationNames: ['required'],
-        label: 'ProductionOrders.Form.EndDate'
+        label: 'ProductionOrders.Form.EndDate',
+        hidden$: this.hideEndDate$.asObservable()
       },
       {
         key: 'exp_date',

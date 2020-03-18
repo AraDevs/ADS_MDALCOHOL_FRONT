@@ -1,8 +1,8 @@
 <h1>Órdenes</h1>
 
 <div class="p-4">
-    <button class="mb-2" mat-raised-button color="primary" (click)="add()" >Nuevo</button>
-    <md-data-table [dataSource$]="dataOrders" [config]="tableConfig">
+    <button class="mb-2" mat-raised-button color="primary" (click)="add()">Nuevo</button>
+    <md-data-table [dataSource$]="dataOrders" [config]="tableConfig" (update)="update($event)">
     </md-data-table>
 </div>
   

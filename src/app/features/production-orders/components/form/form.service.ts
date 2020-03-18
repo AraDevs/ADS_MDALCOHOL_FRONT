@@ -9,7 +9,7 @@ export class FormService {
     const { productionOrder } = data;
     return {
       id: productionOrder.id,
-      inventory_Id: productionOrder,
+      inventory_Id: productionOrder.inventory.name,
       quantity: productionOrder.quantity,
       start_date: productionOrder.start_date,
       end_date: productionOrder.end_date,

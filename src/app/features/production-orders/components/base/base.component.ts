@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, combineLatest, of } from 'rxjs';
 import { DataTableConfig } from '@shared/types';
 import { Store, select } from '@ngrx/store';
 import { AppState } from '@state/app-state';
@@ -7,7 +7,7 @@ import { ModalFactoryService } from '@shared/services';
 import { SelectService } from '@core/services';
 import * as globalState from '@state/index';
 import { FormComponent } from '@features/production-orders/components/form/form.component';
-import { filter } from 'rxjs/operators';
+import { filter, switchMap, map } from 'rxjs/operators';
 import { MODAL_INITIAL_EVENT } from '../../../../shared/constants/index';
 
 @Component({
@@ -44,6 +44,27 @@ export class BaseComponent implements OnInit {
     this.store$.dispatch(globalState.LOAD_INVENTORIES());
     this.dataInvetories = this.store$.pipe(select(globalState.selectInventories));
     this.dataOrders = this.store$.pipe(select(globalState.selectProductionOrders));
+  }
+
+  update(productionOrder: any) {
+    this.modalFactory
+      .create({ component: FormComponent })
+      .pipe(switchMap(result => {
+        return combineLatest([of(result)]);
+      }),
+      map(([result]) => {
+        if (result.event !== MODAL_INITIAL_EVENT) {
+          return { result };
+        }
+        const data = { productionOrder };
+        console.log(data);
+        return { data, result };
+      })
+      )
+      .subscribe(({ data, result }) => {
+        const component = result.modal.componentInstance.getRenderedComponent<FormComponent>();
+        component.execute({ event: result.event, data });
+      });
   }
 
   add() {

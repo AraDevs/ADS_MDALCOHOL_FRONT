@@ -41,6 +41,9 @@ export class FormComponent implements OnInit {
   ngOnInit(): void {
     this.fields = this.formModel.getModel();
     this.form = this.factoryForm.createPlainForm(this.fields as any);
+
+    this.hideProviderControl();
+
     this.successService.success(state.SAVE_PRODUCTION_ORDERS_SUCCESS, () => {
       this.store$.dispatch(globalState.LOAD_PRODUCTION_ORDERS());
       this.message.success('Messages.Add.Success').then(() => this.data.modalRef.close());
@@ -76,9 +79,38 @@ export class FormComponent implements OnInit {
       if (this.update) {
         this.productionOrder = this.formService.getProductionOrder(data);
         this.form.patchValue(this.productionOrder);
+        const { end_date } = this.productionOrder;
+        const hide = end_date;
+        this.hideProvider(hide);
+        this.formModel.hideEndDate$.next(false);
       }
     } else if (event === MODAL_ACCEPT_EVENT) {
       this.formBtn.nativeElement.click();
     }
+  }
+
+  private hideProviderControl() {
+    const typeControl = this.form.get('end_date');
+  }
+
+  private hideProvider(hide: boolean) {
+    const control = this.getProductionOrderControl();
+    const field = this.getProductionOrderField();
+    this.formModel.hideEndDate$.next(hide);
+
+    if (hide) {
+      control.setValue(null);
+      control.clearValidators();
+      return;
+    }
+    control.setValidators(field.validations as any);
+  }
+
+  private getProductionOrderControl() {
+    return this.form.get('end_date');
+  }
+
+  private getProductionOrderField() {
+    return this.formModel.getModel().find(obj => obj.key === 'end_date');
   }
 }
