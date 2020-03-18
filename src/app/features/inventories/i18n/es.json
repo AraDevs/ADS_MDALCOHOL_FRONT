@@ -5,6 +5,7 @@
     "Price": "Precio del Producto",
     "Stock": "Cantidad de Producto",
     "Type": "Tipo de Producto",
+    "Provider": "Proveedor",
     "State": "Activo"
   },
   "Table": {

@@ -4,8 +4,7 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class FormService {
-
-  constructor() { }
+  constructor() {}
 
   getInventory(data: any) {
     const { inventory } = data;
@@ -24,12 +23,20 @@ export class FormService {
   }
 
   getInventoryDTO(inventory: any) {
-    return {
+    console.log(inventory);
+
+    const dto: any = {
       name: inventory.name,
       description: inventory.description,
       price: inventory.price,
       stock: inventory.stock,
       state: inventory.state ? 1 : 0
     };
+
+    if (inventory.type !== null) {
+      dto.type = inventory.type.value;
+    }
+
+    return dto;
   }
 }

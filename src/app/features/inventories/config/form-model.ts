@@ -4,9 +4,12 @@ import * as globalState from '@state/index';
 import { map } from 'rxjs/operators';
 import { InputControlConfig, SelectControlConfig } from '@core/types';
 import { Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable()
 export class FormModel {
+  hideProviders$ = new BehaviorSubject<boolean>(true);
+  hideProducType$ = new BehaviorSubject<boolean>(false);
 
   constructor(private store$: Store<any>) {}
 
@@ -65,10 +68,33 @@ export class FormModel {
         validatorMessages: ['FormValidator.RequiredSelected'],
         validationNames: ['required'],
         label: 'Inventories.Form.Type',
-        options$: this.store$.pipe(select(globalState.selectTypeProduct),
+        options$: this.store$.pipe(
+          select(globalState.selectTypeProduct),
           map((typesProduct: string[]) => {
             return typesProduct.map(product => ({ label: product, value: product }));
-          }))
+          })
+        ),
+        hidden$: this.hideProducType$.asObservable()
+      },
+      {
+        key: 'provider',
+        fieldType: 'Select',
+        id: 'provider',
+        cssClasses: '',
+        validations: [Validators.required],
+        validatorMessages: ['FormValidator.RequiredSelected'],
+        validationNames: ['required'],
+        label: 'Inventories.Form.Provider',
+        options$: this.store$.pipe(
+          select(globalState.selectProviders),
+          map((providers: any[]) => {
+            return providers.map(provider => ({
+              label: provider.partner.name,
+              value: provider.id
+            }));
+          })
+        ),
+        hidden$: this.hideProviders$.asObservable()
       },
       {
         key: 'state',
