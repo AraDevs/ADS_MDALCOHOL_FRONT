@@ -7,43 +7,43 @@ import { environment } from '@environments/environment';
 import { Injectable } from '@angular/core';
 
 @Injectable()
-export class InventoriesEffects {
+export class ProductionOrdersEffects {
   constructor(
     private effectFactory: EffectsFactoryService,
     private requestClient: RequestClient
   ) {}
 
-  saveInventories$ = createEffect(() => {
-    const { SAVE_INVENTORIES, SAVE_INVENTORIES_SUCCESS, SAVE_INVENTORIES_FAIL} = actions;
+  saveClients$ = createEffect(() => {
+    const { SAVE_PRODUCTION_ORDERS, SAVE_PRODUCTION_ORDERS_SUCCESS, SAVE_PRODUCTION_FAIL } = actions;
 
     const effectReqConfig = new EffectRequestConfig(this.requestClient, 'save');
     const actionsConfig = new EffectActionsConfig(
-      SAVE_INVENTORIES,
-      SAVE_INVENTORIES_SUCCESS,
-      SAVE_INVENTORIES_FAIL
+      SAVE_PRODUCTION_ORDERS,
+      SAVE_PRODUCTION_ORDERS_SUCCESS,
+      SAVE_PRODUCTION_FAIL
     );
     const config = new EffectConfigModel(
       effectReqConfig,
       actionsConfig,
-      `${environment.host}/inventories`
+      `${environment.host}/production_orders`
     );
 
     return this.effectFactory.create(config);
   });
 
-  updateInventories$ = createEffect(() => {
-    const { UPDATE_INVENTORIES, UPDATE_INVENTORIES_SUCCESS, UPDATE_INVENTORIES_FAIL } = actions;
+  updateProductionOrders$ = createEffect(() => {
+    const { SAVE_PRODUCTION_ORDERS, SAVE_PRODUCTION_ORDERS_SUCCESS, SAVE_PRODUCTION_FAIL } = actions;
 
     const effectReqConfig = new EffectRequestConfig(this.requestClient, 'update');
     const actionsConfig = new EffectActionsConfig(
-      UPDATE_INVENTORIES,
-      UPDATE_INVENTORIES_SUCCESS,
-      UPDATE_INVENTORIES_FAIL
+      SAVE_PRODUCTION_ORDERS,
+      SAVE_PRODUCTION_ORDERS_SUCCESS,
+      SAVE_PRODUCTION_FAIL
     );
     const config = new EffectConfigModel(
       effectReqConfig,
       actionsConfig,
-      `${environment.host}/inventories`
+      `${environment.host}/production_orders`
     );
 
     return this.effectFactory.create(config);

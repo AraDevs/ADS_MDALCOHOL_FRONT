@@ -1,1 +1,5 @@
-<p>form works!</p>
+<form [formGroup]="form" #formReference="ngForm" (submit)="save()">
+  <md-form-generator [form]="form" [formReference]="formReference" [fields]="fields" [displayContainerCheckboxs]="true">
+  </md-form-generator>
+  <button #formBtn [hidden]="true" type="submit"></button>
+</form>

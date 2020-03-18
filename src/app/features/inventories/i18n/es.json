@@ -1,10 +1,19 @@
 {
-    "Form": {
-
-    },
-    "Table": {
-        "Title": {
-            
-        }
+  "Form": {
+    "Name": "Nombre del Producto",
+    "Description": "Descripción del Producto",
+    "Price": "Precio del Producto",
+    "Stock": "Cantidad de Producto",
+    "Type": "Tipo de Producto",
+    "State": "Activo"
+  },
+  "Table": {
+    "Title": {
+      "Name": "Nombre",
+      "Price": "Precio",
+      "Stock": "Cantidad",
+      "Type": "Tipo de Producto",
+      "Actions": "Acciones"
     }
+  }
 }

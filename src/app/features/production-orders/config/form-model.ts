@@ -1,85 +1,98 @@
-import { Store, select } from '@ngrx/store';
-import { Validators } from '@angular/forms';
-import * as globalState from '@state/index';
-import { map } from 'rxjs/operators';
-import { InputControlConfig, SelectControlConfig } from '@core/types';
+import { Store } from '@ngrx/store';
 import { Injectable } from '@angular/core';
+import { InputControlConfig, SelectControlConfig } from '@core/types';
+import { Validators } from '@angular/forms';
 
 @Injectable()
 export class FormModel {
-
   constructor(private store$: Store<any>) {}
 
   getModel(): Partial<InputControlConfig | SelectControlConfig>[] {
     return [
       {
-        key: 'name',
+        key: 'inventoryName',
         fieldType: 'Input',
         type: 'text',
-        id: 'name',
+        id: 'inventoryName',
         cssClasses: '',
         validations: [Validators.required],
         validatorMessages: ['FormValidator.Required'],
         validationNames: ['required'],
-        label: 'Inventories.Form.Name'
+        label: 'ProductionOrders.Form.Name'
       },
       {
-        key: 'description',
+        key: 'quantity',
         fieldType: 'Input',
         type: 'text',
-        id: 'description',
+        id: 'quantity',
         cssClasses: '',
         validations: [Validators.required],
         validatorMessages: ['FormValidator.Required'],
         validationNames: ['required'],
-        label: 'Inventories.Form.Description'
+        label: 'ProductionOrders.Form.Quantity'
       },
       {
-        key: 'price',
+        key: 'start_date',
         fieldType: 'Input',
         type: 'text',
-        id: 'price',
+        id: 'start_date',
         cssClasses: '',
         validations: [Validators.required],
         validatorMessages: ['FormValidator.Required'],
         validationNames: ['required'],
-        label: 'Inventories.Form.Price'
+        label: 'ProductionOrders.Form.StartDate'
       },
       {
-        key: 'stock',
+        key: 'end_date',
         fieldType: 'Input',
         type: 'text',
-        id: 'stock',
+        id: 'end_date',
         cssClasses: '',
         validations: [Validators.required],
         validatorMessages: ['FormValidator.Required'],
         validationNames: ['required'],
-        label: 'Inventories.Form.Stock'
+        label: 'ProductionOrders.Form.EndDate'
       },
       {
-        key: 'type',
-        fieldType: 'Select',
-        id: 'type',
+        key: 'exp_date',
+        fieldType: 'Input',
+        type: 'text',
+        id: 'exp_date',
         cssClasses: '',
         validations: [Validators.required],
-        validatorMessages: ['FormValidator.RequiredSelected'],
+        validatorMessages: ['FormValidator.Required'],
         validationNames: ['required'],
-        label: 'Inventories.Form.Type',
-        options$: this.store$.pipe(select(globalState.selectTypeProduct),
-          map((typesProduct: string[]) => {
-            return typesProduct.map(product => ({ label: product, value: product }));
-          }))
+        label: 'ProductionOrders.Form.ExpDate'
+      },
+      {
+        key: 'workers',
+        fieldType: 'Input',
+        type: 'text',
+        id: 'workers',
+        cssClasses: '',
+        validations: [Validators.required],
+        validatorMessages: ['FormValidator.Required'],
+        validationNames: ['required'],
+        label: 'ProductionOrders.Form.Workers'
+      },
+      {
+        key: 'hours',
+        fieldType: 'Input',
+        type: 'text',
+        id: 'hours',
+        cssClasses: '',
+        validations: [Validators.required],
+        validatorMessages: ['FormValidator.Required'],
+        validationNames: ['required'],
+        label: 'ProductionOrders.Form.Hours'
       },
       {
         key: 'state',
         fieldType: 'Checkbox',
         id: 'state',
-        cssClasses: '',
-        validations: [Validators.required],
-        validatorMessages: ['FormValidator.Required'],
-        validationNames: ['required'],
-        label: 'Inventories.Form.State',
-        defautlValue: true
+        label: 'ProductionOrders.Form.State',
+        defautlValue: true,
+        cssClasses: ''
       }
     ];
   }

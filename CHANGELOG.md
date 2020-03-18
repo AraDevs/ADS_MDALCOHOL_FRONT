@@ -181,3 +181,12 @@ Add List of error in providers form
 
 ## [Add] 17-03-2020 00:38
 Add unsubscribe in ErrorService
+## [Add] 17-03-2020 20:05
+Update module inventories
+Add form component and CRUD finalized, except update
+
+## [Add] 17-03-2020 23:04
+Add module production orders
+
+## [Update] 17-03-2020 23:08
+merge client to master

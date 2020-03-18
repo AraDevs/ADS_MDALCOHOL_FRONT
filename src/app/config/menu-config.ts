@@ -18,5 +18,9 @@ export const MENU = [
   {
     title: 'SideNav.Inventories',
     route: '/inventories'
+  },
+  {
+    title: 'SideNav.ProductionOrders',
+    route: '/production_orders'
   }
 ];
