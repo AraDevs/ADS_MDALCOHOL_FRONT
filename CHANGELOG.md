@@ -201,3 +201,6 @@ Update InputComponent
 
 ## [Update] 18-03-2020 00:51
 Merge client and form branch
+
+## [Update] 18-03-2020 01:33
+Add DatePicker component
