@@ -1,5 +1,5 @@
-import { InputControlConfig } from "@core/types";
-import { Injectable } from "@angular/core";
+import { InputControlConfig } from '@core/types';
+import { Injectable } from '@angular/core';
 import { SelectControlConfig } from '@core/types/forms/select-control-config';
 import { Observable, of } from 'rxjs';
 import { Store, select } from '@ngrx/store';

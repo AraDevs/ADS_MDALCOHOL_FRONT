@@ -93,4 +93,20 @@ export class LoadDataEffects {
 
     return this.effectFactory.create(config);
   });
+
+  loadInventories$ = createEffect(() => {
+    const effectReqConfig = new EffectRequestConfig(this.requestClient, 'get');
+    const actionsConfig = new EffectActionsConfig(
+      actions.LOAD_INVENTORIES,
+      actions.INVENTORIES_LOADED_SUCCESS,
+      actions.INVENTORIES_LOADED_FAIL
+    );
+    const config = new EffectConfigModel(
+      effectReqConfig,
+      actionsConfig,
+      `${environment.host}/inventories`
+    );
+
+    return this.effectFactory.create(config);
+  });
 }

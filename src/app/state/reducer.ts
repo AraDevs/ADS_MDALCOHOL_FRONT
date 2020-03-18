@@ -10,6 +10,8 @@ export interface State {
   providers: any[];
   filterMunicipalities: any[];
   typesPerson: string[];
+  inventories: any[];
+  productsType: string[];
 }
 
 const INITIAL_STATE: State = {
@@ -20,7 +22,9 @@ const INITIAL_STATE: State = {
   sellers: [],
   providers: [],
   filterMunicipalities: [],
-  typesPerson: ['Natural', 'Jurídica']
+  typesPerson: ['Natural', 'Jurídica'],
+  inventories: [],
+  productsType: ['Materia prima', 'Producto final']
 };
 
 const globalReducer = createReducer(
@@ -55,6 +59,12 @@ const globalReducer = createReducer(
   on(actions.PROVIDERS_LOADED_SUCCESS, (state, { payload }) => {
     const data = payload.map(obj => ({ ...obj, state: obj.state === 1 ? 'Activo' : 'Inactivo' }));
     return { ...state, providers: data };
+  }),
+  on(actions.INVENTORIES_LOADED_SUCCESS, (state, { payload }) => {
+    const data = payload.map(inventory => {
+      return { ...inventory, name: inventory.name };
+    });
+    return { ...state, inventories: data };
   })
 );
 

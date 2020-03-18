@@ -77,7 +77,7 @@ export class FormComponent implements OnInit {
   execute({ event, data }: any) {
     if (event === MODAL_INITIAL_EVENT) {
       this.update = !!data;
-      if (this.update) {        
+      if (this.update) {
         this.client = this.formService.getClient(data);
         this.form.patchValue(this.client);
       }

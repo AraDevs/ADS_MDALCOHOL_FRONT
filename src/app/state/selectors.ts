@@ -22,3 +22,8 @@ export const selectTypePerson = createSelector(selectData, (state: State) => sta
 export const selectProviders = createSelector(selectData, (state: State) => state.providers);
 export const selectProviderById = createSelector(selectData,
     (state: State, provider: number) => state.sellers.find((s) => s.id === provider));
+
+// Inventories
+export const selectInventories = createSelector(selectData, (state: State) => state.inventories);
+
+export const selectTypeProduct = createSelector(selectData, (state: State) => state.productsType);

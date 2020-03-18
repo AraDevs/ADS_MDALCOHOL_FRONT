@@ -61,3 +61,14 @@ export const PROVIDERS_LOADED_FAIL = createAction(
   'Providers Loaded Fail',
   props<{ payload: ErrorActionData }>()
 );
+
+// Inventories
+export const LOAD_INVENTORIES = createAction('Load Inventories');
+export const INVENTORIES_LOADED_SUCCESS = createAction(
+  'Inventories Loaded Success',
+  props<{ payload: any[] }>()
+);
+export const INVENTORIES_LOADED_FAIL = createAction(
+  'Inventories Loaded Fail',
+  props<{ payload: ErrorActionData }>()
+);
