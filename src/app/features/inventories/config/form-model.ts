@@ -4,7 +4,8 @@ import * as globalState from '@state/index';
 import { map } from 'rxjs/operators';
 import { InputControlConfig, SelectControlConfig } from '@core/types';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, from } from 'rxjs';
+import { minLength, maxLength } from '@shared/Validator';
 
 @Injectable()
 export class FormModel {
@@ -21,9 +22,9 @@ export class FormModel {
         type: 'text',
         id: 'name',
         cssClasses: '',
-        validations: [Validators.required],
-        validatorMessages: ['FormValidator.Required'],
-        validationNames: ['required'],
+        validations: [Validators.required, minLength(4), maxLength(100)],
+        validatorMessages: ['FormValidator.Required', 'Inventories.Validator.MinLength', 'Inventories.Validator.MaxLengthName'],
+        validationNames: ['required', 'min', 'max'],
         label: 'Inventories.Form.Name'
       },
       {
@@ -32,9 +33,9 @@ export class FormModel {
         type: 'text',
         id: 'description',
         cssClasses: '',
-        validations: [Validators.required],
-        validatorMessages: ['FormValidator.Required'],
-        validationNames: ['required'],
+        validations: [Validators.required, minLength(4), maxLength(500)],
+        validatorMessages: ['FormValidator.Required', 'Inventories.Validator.MinLength', 'Inventories.Validator.MaxLengthDescription'],
+        validationNames: ['required', 'min', 'max'],
         label: 'Inventories.Form.Description'
       },
       {
@@ -43,9 +44,9 @@ export class FormModel {
         type: 'text',
         id: 'price',
         cssClasses: '',
-        validations: [Validators.required],
-        validatorMessages: ['FormValidator.Required'],
-        validationNames: ['required'],
+        validations: [Validators.required, Validators.min(0), Validators.pattern('^\d*$')],
+        validatorMessages: ['FormValidator.Required', 'Inventories.Validator.MinValue', 'Inventories.Validator.IsNumeric'],
+        validationNames: ['required', 'min', 'pattern'],
         label: 'Inventories.Form.Price'
       },
       {
@@ -54,9 +55,9 @@ export class FormModel {
         type: 'text',
         id: 'stock',
         cssClasses: '',
-        validations: [Validators.required],
-        validatorMessages: ['FormValidator.Required'],
-        validationNames: ['required'],
+        validations: [Validators.required,  Validators.min(0), Validators.pattern('^\d*$')],
+        validatorMessages: ['FormValidator.Required', 'Inventories.Validator.MinValue', 'Inventories.Validator.IsNumeric'],
+        validationNames: ['required', 'min', 'pattern'],
         label: 'Inventories.Form.Stock'
       },
       {

@@ -65,6 +65,6 @@ export class BaseComponent implements OnInit {
   }
 
   private createFormModal() {
-    return this.modalFactory.create({ component: FormComponent, title: '' });
+    return this.modalFactory.create({ component: FormComponent, title: 'Registro de usuarios' });
   }
 }

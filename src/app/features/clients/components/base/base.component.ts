@@ -74,7 +74,7 @@ export class BaseComponent implements OnInit, OnDestroy {
     const seller$ = this.selectData.getSellerById(client.seller_id);
 
     this.modalFactory
-      .create({ component: FormComponent, title: '' })
+      .create({ component: FormComponent, title: 'Registro de clientes' })
       .pipe(
         switchMap(result => {
           return combineLatest([department$, municipality$, seller$, of(result)]);
@@ -95,7 +95,7 @@ export class BaseComponent implements OnInit, OnDestroy {
 
   add() {
     this.modalFactory
-      .create({ component: FormComponent, title: '' })
+      .create({ component: FormComponent, title: 'Registro de clientes' })
       .pipe(filter(result => result.event !== MODAL_INITIAL_EVENT))
       .subscribe(result => {
         const component = result.modal.componentInstance.getRenderedComponent<FormComponent>();

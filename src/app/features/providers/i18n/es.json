@@ -16,5 +16,13 @@
       "PartnerPhone": "Teléfono",
       "SellerPhone": "Teléfono de Vendedor"
     }
+  }, 
+  "Validator":{
+    "MinLength": "Debe tener minimo cuatro caracteres",
+    "MaxLengthName": "El campo no puede tener más de 100 caracteres",
+    "MaxLengthAddress": "El campo no puede tener más de 1000 caracteres",
+    "MinValue": "El valor del campo no puede ser menor que 0",
+    "IsNumeric": "El valor ingresado debe ser númerico",
+    "IsNit": "El formato ingresado no corresponde al nit"
   }
 }

@@ -5,6 +5,7 @@ import { Validators } from '@angular/forms';
 import * as globalState from '@state/index';
 import { map } from 'rxjs/operators';
 import { BehaviorSubject } from 'rxjs';
+import { minLength, maxLength } from '@shared/Validator';
 
 @Injectable()
 export class FormModel {

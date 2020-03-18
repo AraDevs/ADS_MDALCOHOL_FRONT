@@ -12,7 +12,7 @@
   },
   "FormValidator": {
     "User": {
-      "Required": "Correo requerido",
+      "Required": "Usuario requerido",
       "Email": "Introduzca un correo electrónico válido"
     },
     "Password": {
@@ -20,7 +20,10 @@
     },
     "Options": {
       "Required": "Contraseña requerida"
-    }
+    }, 
+    "Name": "Nombre completo requerido",
+    "MinLength": "El campo debe tener más de 4 caracteres",
+    "MaxLength": "El campo no puede tener más de 100 caracteres"
   },
   "Table": {
     "Titles": {

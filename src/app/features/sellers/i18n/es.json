@@ -16,10 +16,9 @@
         "Save": "Guardar"
     },
 
-    "FormValidator":{
-        "Seller":{
-            "Required": "Debe llenar este campo",
-            "MinLength": "El código debe tener al menos cuatro digitos"
-        }
+    "Validator": {
+        "Required": "Debe llenar este campo",
+        "MinLength": "El código debe tener al menos cuatro digitos",
+        "MaxLength": "El campo no puede tener más de 100 caracteres"
     }
 }

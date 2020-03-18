@@ -66,7 +66,7 @@ export class FormComponent implements OnInit {
       }
     }
     else{
-      this.message.error('Message.InvalidForm');
+      this.message.error('Messages.InvalidForm');
     }
   }
 

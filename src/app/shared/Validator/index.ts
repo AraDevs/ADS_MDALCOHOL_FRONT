@@ -1,1 +1,1 @@
-export {minLength} from './min-length';
+export {minLength, maxLength} from './length';

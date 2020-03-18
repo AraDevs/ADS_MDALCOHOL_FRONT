@@ -70,7 +70,7 @@ export class FormComponent implements OnInit {
         this.store$.dispatch(action);
       }
     } else {
-      this.message.error('Message.InvalidForm');
+      this.message.error('Messages.InvalidForm');
     }
   }
 

@@ -4,6 +4,7 @@ import { of } from 'rxjs';
 import { Store, select } from '@ngrx/store';
 import { Validators } from '@angular/forms';
 import * as globalState from '@state/index';
+import { minLength, maxLength } from '@shared/Validator';
 
 @Injectable()
 export class FormModel {
@@ -19,21 +20,21 @@ export class FormModel {
         type: 'text',
         id: 'name',
         cssClasses: '',
-        validations: [Validators.required],
-        validatorMessages: ['FormValidator.Required'],
-        validationNames: ['required'],
+        validations: [Validators.required, minLength(4), maxLength(100)],
+        validatorMessages: ['FormValidator.Required', 'Providers.Validator.MinLength', 'Providers.Validator.MaxLengthName'],
+        validationNames: ['required', 'min', 'max'],
         label: 'Providers.Form.Name'
       },
       {
         key: 'address',
-        fieldType: 'Input',
+        fieldType: 'Textarea',
         id: 'address',
         type: 'text',
         label: 'Providers.Form.Address',
         cssClasses: '',
-        validations: [Validators.required],
-        validatorMessages: ['FormValidator.Required'],
-        validationNames: ['required']
+        validations: [Validators.required, minLength(4), maxLength(1000)],
+        validatorMessages: ['FormValidator.Required', 'Providers.Validator.MinLength', 'Providers.Validator.MaxLengthAddress'],
+        validationNames: ['required', 'min', 'max']
       },
       {
         key: 'department',
@@ -64,9 +65,9 @@ export class FormModel {
         type: 'text',
         label: 'Providers.Form.Nit',
         cssClasses: '',
-        validations: [Validators.required],
-        validatorMessages: ['FormValidator.Required'],
-        validationNames: ['required']
+        validations: [Validators.required, Validators.pattern('^\d{4}-\d{6}-\d{3}-\d$')],
+        validatorMessages: ['FormValidator.Required', 'Providers.Validator.IsNit'],
+        validationNames: ['required', 'pattern']
       },
       {
         key: 'partner_phone',
@@ -75,9 +76,9 @@ export class FormModel {
         type: 'text',
         label: 'Providers.Form.PartnerPhone',
         cssClasses: '',
-        validations: [Validators.required],
-        validatorMessages: ['FormValidator.Required'],
-        validationNames: ['required']
+        validations: [Validators.required, minLength(8), Validators.pattern('^\d*$')],
+        validatorMessages: ['FormValidator.Required', 'Providers.Validator.MinLength', 'Providers.Validator.IsNumeric'],
+        validationNames: ['required', 'min', 'pattern']
       },
       {
         key: 'seller_phone',
@@ -86,9 +87,9 @@ export class FormModel {
         type: 'text',
         label: 'Providers.Form.SellerPhone',
         cssClasses: '',
-        validations: [Validators.required],
-        validatorMessages: ['FormValidator.Required'],
-        validationNames: ['required']
+        validations: [Validators.required, minLength(8), Validators.pattern('\d')],
+        validatorMessages: ['FormValidator.Required', 'Providers.Validator.MinLength', 'Providers.Validator.IsNumeric'],
+        validationNames: ['required', 'min', 'pattern']
       },
       {
         key: 'state',

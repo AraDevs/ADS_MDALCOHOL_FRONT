@@ -16,5 +16,12 @@
       "Type": "Tipo de Producto",
       "Actions": "Acciones"
     }
+  },
+  "Validator":{
+    "MinLength": "Debe tener minimo cuatro caracteres",
+    "MaxLengthName": "El campo no puede tener más de 100 caracteres",
+    "MaxLengthDescription": "El campo no puede tener más de 500 caracteres",
+    "MinValue": "El valor del campo no puede ser menor que 0",
+    "IsNumeric": "El valor ingresado debe ser númerico"
   }
 }

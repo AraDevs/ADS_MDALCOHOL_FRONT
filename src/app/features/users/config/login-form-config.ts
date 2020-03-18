@@ -5,6 +5,7 @@ import * as userState from '@features/users/state';
 import { Store, select } from '@ngrx/store';
 import { usersFeature } from '../state';
 import { map } from 'rxjs/operators';
+import { minLength, maxLength } from '@shared/Validator';
 
 @Injectable()
 export class LoginFormConfig {
@@ -18,9 +19,9 @@ export class LoginFormConfig {
         fieldType: 'Input',
         type: 'text',
         id: 'user_name',
-        validations: [Validators.required],
-        validatorMessages: ['Users.FormValidator.User.Required'],
-        validationNames: ['required'],
+        validations: [Validators.required, minLength(4), maxLength(100)],
+        validatorMessages: ['Users.FormValidator.User.Required', 'Users.FormValidator.MinLength', 'Users.FormValidator.MaxLength'],
+        validationNames: ['required', 'min', 'max'],
         cssClasses: 'col-6'
       },
       {
@@ -29,9 +30,9 @@ export class LoginFormConfig {
         fieldType: 'Input',
         type: 'text',
         id: 'name',
-        validations: [Validators.required],
-        validatorMessages: ['Users.FormValidator.User.Required'],
-        validationNames: ['required'],
+        validations: [Validators.required, minLength(4), maxLength(100)],
+        validatorMessages: ['Users.FormValidator.Name', 'Users.FormValidator.MinLength', 'Users.FormValidator.MaxLength'],
+        validationNames: ['required', 'min', 'max'],
         cssClasses: 'col-6'
       },
       {
@@ -41,9 +42,9 @@ export class LoginFormConfig {
         fieldType: 'Input',
         type: 'password',
         id: 'password',
-        validations: [Validators.required],
-        validatorMessages: ['Users.FormValidator.Password.Required'],
-        validationNames: ['required'],
+        validations: [Validators.required, minLength(4), maxLength(100)],
+        validatorMessages: ['Users.FormValidator.Password.Required', 'Users.FormValidator.MinLength', 'Users.FormValidator.MaxLength'],
+        validationNames: ['required', 'min', 'max'],
         cssClasses: 'col-6'
       },
       {

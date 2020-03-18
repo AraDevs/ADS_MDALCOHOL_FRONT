@@ -42,7 +42,7 @@ export class BaseComponent implements OnInit {
 
   update(seller: any) {
     this.modalFactory
-      .create({ component: FormComponent, title: '' })
+      .create({ component: FormComponent, title: 'Registro de vendedores' })
       .pipe(
         switchMap(result => {
           return combineLatest([of(result)]);
@@ -63,7 +63,7 @@ export class BaseComponent implements OnInit {
 
   add() {
     this.modalFactory
-      .create({ component: FormComponent, title: '' })
+      .create({ component: FormComponent, title: 'Registro de vendedores' })
       .pipe(filter(result => result.event !== MODAL_INITIAL_EVENT))
       .subscribe(result => {
         const component = result.modal.componentInstance.getRenderedComponent<FormComponent>();
