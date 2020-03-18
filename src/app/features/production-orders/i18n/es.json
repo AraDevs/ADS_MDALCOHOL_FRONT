@@ -18,5 +18,8 @@
       "ExpDate": "Fecha de Expiración",
       "Workers": "Trabajadores"
     }
+  },
+  "Modal": {
+    "Title": "Registro de Órden de Producción"
   }
 }

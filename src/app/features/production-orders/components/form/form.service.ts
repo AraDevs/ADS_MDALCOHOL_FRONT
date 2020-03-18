@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import * as moment from 'moment';
 
 @Injectable()
 export class FormService {
@@ -9,11 +10,15 @@ export class FormService {
     const { productionOrder } = data;
     return {
       id: productionOrder.id,
-      inventory_Id: productionOrder.inventory.name,
+      inventoryId: {
+        value: productionOrder.inventory.id,
+        label: productionOrder.inventory.name,
+      },
+      invetoryId: productionOrder.inventory.name,
       quantity: productionOrder.quantity,
-      start_date: productionOrder.start_date,
+      start_date: moment(productionOrder.start_date, 'DD/MM/YYYY').format('YYYY-MM-DD'),
       end_date: productionOrder.end_date,
-      exp_date: productionOrder.exp_date,
+      exp_date: moment(productionOrder.exp_date, 'DD/MM/YYYY').format('YYYY-MM-DD'),
       workers: productionOrder.workers,
       hours: productionOrder.hours,
       state: !!productionOrder.state
@@ -22,10 +27,10 @@ export class FormService {
 
   getProductionOrderDTO(productionOrder: any) {
     return {
-      inventory_id: productionOrder.inventory_Id.id,
+      inventory_id: productionOrder.inventoryId.value,
       quantity: productionOrder.quantity,
-      start_date: productionOrder.start_date,
-      exp_date: productionOrder.exp_date,
+      start_date: moment(productionOrder.start_date).format('DD/MM/YYYY'),
+      exp_date: moment(productionOrder.exp_date).format('DD/MM/YYYY'),
       workers: productionOrder.workers,
       hours: productionOrder.hours,
       state: productionOrder.state
