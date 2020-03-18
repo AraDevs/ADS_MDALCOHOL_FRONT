@@ -7,6 +7,8 @@ export class FormService {
   constructor() {}
 
   getInventory(data: any) {
+    console.log(data);
+
     const { inventory } = data;
     return {
       id: inventory.id,
