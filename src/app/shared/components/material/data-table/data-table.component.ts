@@ -1,4 +1,11 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Input,
+  Output,
+  EventEmitter,
+  ChangeDetectionStrategy
+} from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { DataTableConfig } from '@shared/types';
 import { ObjectPathService } from '@core/services/object-path.service';
@@ -6,7 +13,8 @@ import { ObjectPathService } from '@core/services/object-path.service';
 @Component({
   selector: 'md-data-table',
   templateUrl: './data-table.component.html',
-  styleUrls: ['./data-table.component.scss']
+  styleUrls: ['./data-table.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DataTableComponent implements OnInit {
   @Input() config: DataTableConfig = {
@@ -25,6 +33,8 @@ export class DataTableComponent implements OnInit {
   ngOnInit(): void {}
 
   getCellValue(row: string, key: string) {
-   return this.objPath.get(row, key);
+    return this.objPath.get(row, key);
   }
+
+
 }

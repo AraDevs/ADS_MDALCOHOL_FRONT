@@ -207,3 +207,19 @@ Update form and methods of module Production Orders
 
 ## [Update] 18-03-2020 14:18
 Meger client branch to master
+## [Update] 18-03-2020 01:33
+Add DatePicker component
+
+## [Update] 18-03-2020 11:59
+Move loading, error services to shared module
+Change look and field of inputs
+Add Textarea component
+
+## [Update] 18-03-2020 14:01
+Add title to Modal
+
+## [Update] 18-03-2020 14:16
+Start with providers
+
+## [Update] 18-03-2020 14:23
+Merge client and forms branch to master

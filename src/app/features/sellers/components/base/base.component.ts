@@ -17,7 +17,7 @@ import { filter, switchMap, map } from 'rxjs/operators';
 @Component({
   selector: 'md-base',
   templateUrl: './base.component.html',
-  styleUrls: ['./base.component.scss'],
+  styleUrls: ['./base.component.scss']
 })
 export class BaseComponent implements OnInit {
   dataSellers: Observable<any[]>;
@@ -33,20 +33,16 @@ export class BaseComponent implements OnInit {
     keys: ['name', 'seller_code', 'state', 'actions']
   };
 
-  constructor(
-    private store$: Store<AppState>,
-    private modalFactory: ModalFactoryService,
-  ) {}
+  constructor(private store$: Store<AppState>, private modalFactory: ModalFactoryService) {}
 
   ngOnInit(): void {
     this.store$.dispatch(globalState.LOAD_SELLERS());
     this.dataSellers = this.store$.pipe(select(globalState.selectSellers));
   }
 
-  update(seller: any)
-  {
+  update(seller: any) {
     this.modalFactory
-      .create({component: FormComponent})
+      .create({ component: FormComponent, title: '' })
       .pipe(
         switchMap(result => {
           return combineLatest([of(result)]);
@@ -62,18 +58,16 @@ export class BaseComponent implements OnInit {
       .subscribe(({ data, result }) => {
         const component = result.modal.componentInstance.getRenderedComponent<FormComponent>();
         component.execute({ event: result.event, data });
-      }); 
+      });
   }
 
-  add(){
+  add() {
     this.modalFactory
-    .create({ component: FormComponent })
-    .pipe(filter(result => result.event !== MODAL_INITIAL_EVENT))
-    .subscribe(result => {
-      const component = result.modal.
-      componentInstance.
-      getRenderedComponent<FormComponent>();
-      component.execute({ event: result.event});
-    });
+      .create({ component: FormComponent, title: '' })
+      .pipe(filter(result => result.event !== MODAL_INITIAL_EVENT))
+      .subscribe(result => {
+        const component = result.modal.componentInstance.getRenderedComponent<FormComponent>();
+        component.execute({ event: result.event });
+      });
   }
 }

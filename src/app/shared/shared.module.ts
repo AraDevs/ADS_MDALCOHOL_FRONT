@@ -12,6 +12,8 @@ import { RadioComponent } from './components/material/radio/radio.component';
 import { FormGeneratorComponent } from './components/material/form-generator/form-generator.component';
 import { ModalComponent } from './components';
 import { ModalAnchorDirective } from './directives';
+import { DatepickerComponent } from './components/material/datepicker/datepicker.component';
+import { TextareaComponent } from './components/material/textarea/textarea.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +25,9 @@ import { ModalAnchorDirective } from './directives';
     RadioComponent,
     FormGeneratorComponent,
     ModalComponent,
-    ModalAnchorDirective
+    ModalAnchorDirective,
+    DatepickerComponent,
+    TextareaComponent
   ],
   imports: [CommonModule, TranslocoModule, MaterialModule, FormsModule, ReactiveFormsModule],
   entryComponents: [ModalComponent],
@@ -42,7 +46,9 @@ import { ModalAnchorDirective } from './directives';
     RadioComponent,
     FormGeneratorComponent,
     ModalComponent,
-    ModalAnchorDirective
+    ModalAnchorDirective,
+    DatepickerComponent,
+    TextareaComponent
   ]
 })
 export class SharedModule {}

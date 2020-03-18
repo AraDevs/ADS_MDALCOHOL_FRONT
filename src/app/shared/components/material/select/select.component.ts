@@ -47,6 +47,6 @@ export class SelectComponent implements OnInit, OnDestroy {
   }
 
   compareFn(c1: any, c2: any): boolean {
-    return c1 && c2 ? c1.label === c2.label : c1 === c2;
+    return c1 && c2 ? c1.value === c2.value : c1 === c2;
   }
 }

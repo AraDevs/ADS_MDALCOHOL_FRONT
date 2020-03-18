@@ -30,7 +30,7 @@ export class BaseComponent implements OnInit, OnDestroy {
       seller_phone: 'Providers.Table.Titles.SellerPhone',
       actions: 'Acciones'
     },
-    keys: ['partner.name', 'partner.nit', 'partner.phone', 'seller_phone', 'actions'],
+    keys: ['partner.name', 'partner.nit', 'partner.phone', 'seller_phone', 'actions']
   };
 
   constructor(
@@ -58,7 +58,7 @@ export class BaseComponent implements OnInit, OnDestroy {
     const municipality$ = this.selectData.getMunicipalityById(provider.partner.municipality_id);
 
     this.modalFactory
-      .create({ component: FormComponent })
+      .create({ component: FormComponent, title: '' })
       .pipe(
         switchMap(result => {
           return combineLatest([department$, municipality$, of(result)]);
@@ -79,12 +79,11 @@ export class BaseComponent implements OnInit, OnDestroy {
 
   add() {
     this.modalFactory
-      .create({ component: FormComponent })
+      .create({ component: FormComponent, title: '' })
       .pipe(filter(result => result.event !== MODAL_INITIAL_EVENT))
       .subscribe(result => {
         const component = result.modal.componentInstance.getRenderedComponent<FormComponent>();
         component.execute({ event: result.event });
       });
   }
-
 }
