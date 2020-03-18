@@ -7,7 +7,7 @@ import { map, switchMap } from 'rxjs/operators';
 export class ModalFactoryService {
   constructor(private dialog: MatDialog) {}
 
-  create(data: { component: any; data?: any }) {
+  create(data: { title: string; component: any; data?: any }) {
     const modal = this.dialog.open(ModalComponent, {
       data,
       panelClass: ['p-0', 'md-modal']
@@ -15,7 +15,7 @@ export class ModalFactoryService {
 
     return modal.afterOpened().pipe(
       switchMap(() => modal.componentInstance.events$),
-      map((event) => ({ modal, event }))
+      map(event => ({ modal, event }))
     );
   }
 }

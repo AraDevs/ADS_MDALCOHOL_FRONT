@@ -1,9 +1,11 @@
-<div class="p-4 h-100">
+<div class="p-4 modal-header d-flex justify-content-center font-size-20x20">
+  {{data.title | transloco}}
+</div>
+<div class="p-4 modal-body">
   <ng-template mdModalAnchor></ng-template>
 </div>
-<div class="close-modal p-2 pb-4 d-flex justify-content-end">
+<div class="modal-footer  d-flex justify-content-end align-items-end">
   <button mat-button class="mr-1" (click)="cancel()">{{ 'Buttons.Cancel' | transloco}}</button>
-  <button mat-raised-button (click)="accept()"
-    color="primary">{{ 'Buttons.Save' | transloco}}
+  <button mat-raised-button (click)="accept()" color="primary">{{ 'Buttons.Save' | transloco}}
   </button>
 </div>

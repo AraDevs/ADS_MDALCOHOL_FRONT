@@ -48,7 +48,7 @@ export class BaseComponent implements OnInit {
 
   add() {
     this.modalFactory
-      .create({ component: FormComponent })
+      .create({ component: FormComponent, title: '' })
       .pipe(filter(result => result.event !== MODAL_INITIAL_EVENT))
       .subscribe(result => {
         const component = result.modal.componentInstance.getRenderedComponent<FormComponent>();

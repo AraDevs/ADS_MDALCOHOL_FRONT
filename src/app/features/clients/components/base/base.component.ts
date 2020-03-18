@@ -28,7 +28,14 @@ export class BaseComponent implements OnInit, OnDestroy {
   dataM: Observable<any[]>;
   dataClients: Observable<any[]>;
   tableConfig: DataTableConfig = {
-    displayedColumns: ['business_name', 'dui', 'registry_no', 'person_type', 'partnerName', 'actions'],
+    displayedColumns: [
+      'business_name',
+      'dui',
+      'registry_no',
+      'person_type',
+      'partnerName',
+      'actions'
+    ],
     titles: {
       business_name: 'Clients.Table.Titles.BusinessName',
       dui: 'Clients.Table.Titles.Dui',
@@ -44,7 +51,7 @@ export class BaseComponent implements OnInit, OnDestroy {
     private store$: Store<AppState>,
     private modalFactory: ModalFactoryService,
     private selectData: SelectService
-    ) { }
+  ) {}
 
   ngOnInit(): void {
     this.store$.dispatch(globalState.LOAD_DEPARTMENTS());
@@ -60,12 +67,14 @@ export class BaseComponent implements OnInit, OnDestroy {
   }
 
   update(client: any) {
-    const department$ = this.selectData.getDepartmentByMunicipalityId(client.partner.municipality_id);
+    const department$ = this.selectData.getDepartmentByMunicipalityId(
+      client.partner.municipality_id
+    );
     const municipality$ = this.selectData.getMunicipalityById(client.partner.municipality_id);
     const seller$ = this.selectData.getSellerById(client.seller_id);
 
     this.modalFactory
-      .create({ component: FormComponent })
+      .create({ component: FormComponent, title: '' })
       .pipe(
         switchMap(result => {
           return combineLatest([department$, municipality$, seller$, of(result)]);
@@ -86,13 +95,11 @@ export class BaseComponent implements OnInit, OnDestroy {
 
   add() {
     this.modalFactory
-    .create({ component: FormComponent })
-    .pipe(filter(result => result.event !== MODAL_INITIAL_EVENT))
-    .subscribe(result => {
-      const component = result.modal.
-      componentInstance.
-      getRenderedComponent<FormComponent>();
-      component.execute({ event: result.event});
-    });
+      .create({ component: FormComponent, title: '' })
+      .pipe(filter(result => result.event !== MODAL_INITIAL_EVENT))
+      .subscribe(result => {
+        const component = result.modal.componentInstance.getRenderedComponent<FormComponent>();
+        component.execute({ event: result.event });
+      });
   }
 }

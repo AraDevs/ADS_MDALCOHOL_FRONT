@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { } from '@features/users/config/login-form-config';
+import {} from '@features/users/config/login-form-config';
 import * as userState from '@features/users/state';
 import { select, Store } from '@ngrx/store';
 import { MODAL_INITIAL_EVENT } from '@shared/constants';
@@ -9,7 +9,6 @@ import { AppState } from '@state/app-state';
 import { combineLatest, Observable, of } from 'rxjs';
 import { filter, map, switchMap } from 'rxjs/operators';
 import { FormComponent } from '../form/form.component';
-
 
 @Component({
   selector: 'md-base',
@@ -37,8 +36,7 @@ export class BaseComponent implements OnInit {
   }
 
   update(user: any) {
-    this.modalFactory
-      .create({ component: FormComponent })
+    this.createFormModal()
       .pipe(
         switchMap(result => {
           return combineLatest([of(result)]);
@@ -58,12 +56,15 @@ export class BaseComponent implements OnInit {
   }
 
   add() {
-    this.modalFactory
-      .create({ component: FormComponent })
+    this.createFormModal()
       .pipe(filter(result => result.event !== MODAL_INITIAL_EVENT))
       .subscribe(result => {
         const component = result.modal.componentInstance.getRenderedComponent<FormComponent>();
         component.execute({ event: result.event });
       });
+  }
+
+  private createFormModal() {
+    return this.modalFactory.create({ component: FormComponent, title: '' });
   }
 }

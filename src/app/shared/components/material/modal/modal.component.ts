@@ -26,7 +26,7 @@ export class ModalComponent implements OnInit {
   events$ = this.events.asObservable();
 
   constructor(
-    @Inject(MAT_DIALOG_DATA) private data: ModalData,
+    @Inject(MAT_DIALOG_DATA) public data: ModalData,
     private componentFactory: ComponentFactoryResolver,
     private modalRef: MatDialogRef<ModalComponent>
   ) {}

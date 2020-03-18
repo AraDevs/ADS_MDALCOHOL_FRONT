@@ -209,3 +209,6 @@ Add DatePicker component
 Move loading, error services to shared module
 Change look and field of inputs
 Add Textarea component
+
+## [Update] 18-03-2020 14:01
+Add title to Modal
