@@ -24,7 +24,7 @@ export class FormComponent implements OnInit {
   private subs = new SubSink();
   private update = false;
   private client: any = null;
-  
+
   form: FormGroup;
   fields: Partial<InputControlConfig | SelectControlConfig>[];
 

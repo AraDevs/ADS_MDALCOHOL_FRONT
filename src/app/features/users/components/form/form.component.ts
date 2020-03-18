@@ -1,18 +1,16 @@
-import { Component, OnInit, ViewChild, ElementRef, Inject } from '@angular/core';
+import { Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { FactoryFormService } from '@core/services';
-import { InputControlConfig, SelectControlConfig } from '@core/types';
-import { LoginFormConfig } from '@features/users/config/login-form-config';
-import { Store } from '@ngrx/store';
-import { SuccessService } from '@shared/services';
-import { SubSink } from 'subsink';
-import * as UserState from '@features/users/state';
-import { MODAL_INITIAL_EVENT } from '@shared/constants';
-import { MODAL_ACCEPT_EVENT, DYNAMIC_MODAL_DATA } from '../../../../shared/constants/index';
-import { FormService } from '@features/users/components/form/form.service';
 import { MessageService } from '@core/services/message.service';
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+import { InputControlConfig, SelectControlConfig } from '@core/types';
+import { FormService } from '@features/users/components/form/form.service';
+import { LoginFormConfig } from '@features/users/config/login-form-config';
+import * as UserState from '@features/users/state';
 import { UsersState } from '@features/users/state';
+import { Store } from '@ngrx/store';
+import { MODAL_INITIAL_EVENT } from '@shared/constants';
+import { SuccessService } from '@shared/services';
+import { DYNAMIC_MODAL_DATA, MODAL_ACCEPT_EVENT } from '@shared/constants/index';
 
 @Component({
   selector: 'md-form',
@@ -23,7 +21,7 @@ import { UsersState } from '@features/users/state';
 export class FormComponent implements OnInit {
   private update = false;
   private user: any = null;
-  
+
   form: FormGroup;
   fields: Partial<InputControlConfig | SelectControlConfig>[];
 
@@ -37,7 +35,7 @@ export class FormComponent implements OnInit {
     private message: MessageService,
     @Inject(DYNAMIC_MODAL_DATA) private data: any
   ) { }
-  
+
   ngOnInit(): void {
     this.fields = this.loginFomConfig.getModel();
     this.form = this.factoryForm.createPlainForm(this.fields as any);
@@ -76,7 +74,7 @@ export class FormComponent implements OnInit {
   execute({ event, data }: any) {
     if (event === MODAL_INITIAL_EVENT) {
       this.update = !!data;
-      if (this.update) {        
+      if (this.update) {
         this.user = this.formService.getUser(data);
         this.form.patchValue(this.user);
         //Aquí se elimina la password como algo necesario para el update

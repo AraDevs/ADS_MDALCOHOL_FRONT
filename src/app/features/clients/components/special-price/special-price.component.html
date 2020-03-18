@@ -1,0 +1,8 @@
+<form [formGroup]="form" #formReference="ngForm" (submit)="save()">
+  <md-form-generator [form]="form" [formReference]="formReference" [fields]="fields" [displayContainerCheckboxs]="true"
+    [displayContainerRadios]="true" cssContainerRadiosClasses='d-flex'>
+  </md-form-generator>
+  <div class="d-flex justify-content-center">
+    <button mat-raised-button type="submit" color="primary">{{'Buttons.Add' | transloco}}</button>
+  </div>
+</form>

@@ -1,15 +1,13 @@
-import { InputControlConfig } from '@core/types';
 import { Injectable } from '@angular/core';
-import { SelectControlConfig } from '@core/types/forms/select-control-config';
-import { Observable, of } from 'rxjs';
-import { Store, select } from '@ngrx/store';
-import * as globalState from '@state/index';
 import { Validators } from '@angular/forms';
+import { InputControlConfig } from '@core/types';
+import { SelectControlConfig } from '@core/types/forms/select-control-config';
+import { select, Store } from '@ngrx/store';
+import * as globalState from '@state/index';
 import { map } from 'rxjs/operators';
 
 @Injectable()
 export class FormModel {
-
   constructor(private store$: Store<any>) {}
 
   getModel(): Partial<InputControlConfig | SelectControlConfig>[] {
@@ -57,10 +55,12 @@ export class FormModel {
         validatorMessages: ['FormValidator.RequiredSelected'],
         validationNames: ['required'],
         label: 'Clients.Form.PersonType',
-        options$: this.store$.pipe(select(globalState.selectTypePerson),
+        options$: this.store$.pipe(
+          select(globalState.selectTypePerson),
           map((typesPerson: string[]) => {
             return typesPerson.map(person => ({ label: person, value: person }));
-          }))
+          })
+        )
       },
       {
         key: 'seller',
@@ -74,8 +74,9 @@ export class FormModel {
         options$: this.store$.pipe(
           select(globalState.selectSellers),
           map((sellers: any[]) => {
-            return sellers.map(obj => ({ ...obj, label: obj.name}));
-        }))
+            return sellers.map(obj => ({ ...obj, label: obj.name, value: obj.id }));
+          })
+        )
       },
       // seller
       {

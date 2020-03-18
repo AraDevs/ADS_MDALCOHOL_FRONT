@@ -21,7 +21,7 @@ export class FormService {
         value: client.person_type
       },
       seller: {
-        ...seller, label: seller.name, value: seller.name
+        ...seller, label: seller.name, value: seller.id
       },
       sellerName: client.seller.name,
       address: client.partner.address,

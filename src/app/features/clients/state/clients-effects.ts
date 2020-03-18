@@ -45,4 +45,22 @@ export class ClientsEffects {
 
     return this.effectFactory.create(config);
   });
+
+  saveSpecialPrice$ = createEffect(() => {
+    const { SAVE_SPECIAL_PRICE, SAVE_SPECIAL_PRICE_SUCCESS, SAVE_SPECIAL_PRICE_FAIL } = actions;
+
+    const effectReqConfig = new EffectRequestConfig(this.requestClient, 'save');
+    const actionsConfig = new EffectActionsConfig(
+      SAVE_SPECIAL_PRICE,
+      SAVE_SPECIAL_PRICE_SUCCESS,
+      SAVE_SPECIAL_PRICE_FAIL
+    );
+    const config = new EffectConfigModel(
+      effectReqConfig,
+      actionsConfig,
+      `${environment.host}/special_prices`
+    );
+
+    return this.effectFactory.create(config);
+  });
 }

@@ -26,7 +26,9 @@ export class DataTableComponent implements OnInit {
   @Output() add = new EventEmitter<any>();
 
   @Output() update = new EventEmitter<any>();
-  @Output() delete = new EventEmitter<any>();
+  @Output() selectedRow = new EventEmitter<any>();
+
+  @Input() displayMoneyIcon = false;
 
   constructor(private objPath: ObjectPathService) {}
 
@@ -35,6 +37,4 @@ export class DataTableComponent implements OnInit {
   getCellValue(row: string, key: string) {
     return this.objPath.get(row, key);
   }
-
-
 }

@@ -15,6 +15,11 @@
     "Phone": "Ingrese un número teléfonico",
     "State": "Activo"
   },
+  "PriceForm": {
+    "Inventory": "Seleccione un inventario",
+    "Price": "Precio especial",
+    "State": "Activo"
+  },
   "Table": {
     "Titles": {
       "BusinessName": "Empresa",
