@@ -26,6 +26,10 @@ const routes: Routes = [
   {
     path: 'inventories',
     loadChildren: () => import('./features/inventories/inventories.module').then(m => m.InventoriesModule)
+  },
+  {
+    path: 'production_orders',
+    loadChildren: () => import('./features/production-orders/production-orders.module').then(m => m.ProductionOrdersModule)
   }
 ];
 

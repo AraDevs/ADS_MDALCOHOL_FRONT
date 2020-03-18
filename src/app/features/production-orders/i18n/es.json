@@ -1,0 +1,22 @@
+{
+  "Form": {
+    "Name": "Nombre de Producto",
+    "Quantity": "Cantidad",
+    "StartDate": "Fecha de Inicio",
+    "EndDate": "Fecha de Finalización",
+    "ExpDate": "Fecha de Expiración",
+    "Workers": "Trabajadores",
+    "Hours": "Horas",
+    "State": "Activo"
+  },
+  "Table": {
+    "Titles": {
+      "Name": "Nombre de Producto",
+      "Quantity": "Cantidad",
+      "StartDate": "Fecha de Inicio",
+      "EndDate": "Fecha de Finalización",
+      "ExpDate": "Fecha de Expiración",
+      "Workers": "Trabajadores"
+    }
+  }
+}

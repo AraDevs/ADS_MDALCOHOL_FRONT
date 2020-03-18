@@ -5,7 +5,8 @@
     "Providers": "Proveedores",
     "Clients": "Clients",
     "Sellers": "Vendedores",
-    "Inventories": "Inventarios"
+    "Inventories": "Inventarios",
+    "ProductionOrders": "Órdenes de Producción"
   },
   "FormValidator": {
     "Required": "Debe llenar este campo",

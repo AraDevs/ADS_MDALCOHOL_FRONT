@@ -27,3 +27,7 @@ export const selectProviderById = createSelector(selectData,
 export const selectInventories = createSelector(selectData, (state: State) => state.inventories);
 
 export const selectTypeProduct = createSelector(selectData, (state: State) => state.productsType);
+
+// Production Orders
+export const selectProductionOrders = createSelector(selectData, (state: State) => state.productionOrders);
+

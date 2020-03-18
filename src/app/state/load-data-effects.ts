@@ -5,7 +5,6 @@ import { RequestClient } from '@core/client';
 import { createEffect } from '@ngrx/effects';
 import * as actions from './actions';
 import { EffectRequestConfig, EffectActionsConfig, EffectConfigModel } from '@core/types';
-import { CLIENTS_LOADED_FAIL } from './actions';
 
 /**
  * Load al the data that is shared between lazy modules
@@ -105,6 +104,22 @@ export class LoadDataEffects {
       effectReqConfig,
       actionsConfig,
       `${environment.host}/inventories`
+    );
+
+    return this.effectFactory.create(config);
+  });
+
+  loadProductionOrders$ = createEffect(() => {
+    const effectReqConfig = new EffectRequestConfig(this.requestClient, 'get');
+    const actionsConfig = new EffectActionsConfig(
+      actions.LOAD_PRODUCTION_ORDERS,
+      actions.PRODUCTION_ORDERS_LOADED_SUCCESS,
+      actions.PRODUCTION_ORDERS_LOADED_FAIL
+    );
+    const config = new EffectConfigModel(
+      effectReqConfig,
+      actionsConfig,
+      `${environment.host}/production_orders`
     );
 
     return this.effectFactory.create(config);

@@ -178,3 +178,6 @@ Merge client and Alejandro branch to master
 ## [Add] 17-03-2020 20:05
 Update module inventories
 Add form component and CRUD finalized, except update
+
+## [Add] 17-03-2020 23:04
+Add module production orders
