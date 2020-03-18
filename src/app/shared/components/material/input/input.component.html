@@ -1,4 +1,4 @@
-<mat-form-field>
+<mat-form-field [hidden]=" field.hidden$ | async">
   <mat-label>{{field.label | transloco}}</mat-label>
   <input matInput [type]="field.type" [id]="field.id" [formControl]="control">
   <mat-error *ngIf="error$ | async as error">{{ error | transloco}}</mat-error>

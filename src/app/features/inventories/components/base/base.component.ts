@@ -16,7 +16,6 @@ import { FormComponent } from '../form/form.component';
   styleUrls: ['./base.component.scss']
 })
 export class BaseComponent implements OnInit {
-
   dataInventories: Observable<any[]>;
   tableConfig: DataTableConfig = {
     displayedColumns: ['name', 'price', 'stock', 'type', 'actions'],
@@ -34,31 +33,34 @@ export class BaseComponent implements OnInit {
     private store$: Store<AppState>,
     private modalFactory: ModalFactoryService,
     private selectData: SelectService
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.store$.dispatch(globalState.LOAD_INVENTORIES());
+    this.store$.dispatch(globalState.LOAD_PROVIDERS());
+
     this.dataInventories = this.store$.pipe(select(globalState.selectInventories));
   }
 
   update(inventory: any) {
     this.modalFactory
       .create({ component: FormComponent })
-      .pipe(switchMap(result => {
-        return combineLatest([of(result)]);
-      }),
-      map(([result]) => {
-        if (result.event !== MODAL_INITIAL_EVENT) {
-          return { result };
-        }
-        const data = { inventory };
-        return { data, result };
-      })
-    )
-    .subscribe(({ data, result }) => {
-      const component = result.modal.componentInstance.getRenderedComponent<FormComponent>();
-      component.execute({ event: result.event, data });
-    });
+      .pipe(
+        switchMap(result => {
+          return combineLatest([of(result)]);
+        }),
+        map(([result]) => {
+          if (result.event !== MODAL_INITIAL_EVENT) {
+            return { result };
+          }
+          const data = { inventory };
+          return { data, result };
+        })
+      )
+      .subscribe(({ data, result }) => {
+        const component = result.modal.componentInstance.getRenderedComponent<FormComponent>();
+        component.execute({ event: result.event, data });
+      });
   }
 
   add() {

@@ -193,3 +193,11 @@ merge client to master
 
 ## [Update] 18-03-2020 00:47
 Update form and methods of module Production Orders 
+
+## [Update] 18-03-2020 00:37
+Add hidden property in control config
+Update SelectComponent
+Update InputComponent
+
+## [Update] 18-03-2020 00:51
+Merge client and form branch
