@@ -16,9 +16,9 @@ export class FormModel {
   getModel(): Partial<InputControlConfig | SelectControlConfig>[] {
     return [
       {
-        key: 'inventory_Id',
+        key: 'inventoryId',
         fieldType: 'Select',
-        id: 'inventory_Id',
+        id: 'inventoryId',
         cssClasses: '',
         validations: [Validators.required],
         validatorMessages: ['FormValidator.Required'],
@@ -27,7 +27,7 @@ export class FormModel {
         options$: this.store$.pipe(
           select(globalState.selectInventories),
           map((inventories: any[]) => {
-            return inventories.map(obj => ({ ...obj, label: obj.name}));
+            return inventories.map(obj => ({ ...obj, label: obj.name, value: obj.id}));
           }))
       },
       {
@@ -43,8 +43,7 @@ export class FormModel {
       },
       {
         key: 'start_date',
-        fieldType: 'Input',
-        type: 'date',
+        fieldType: 'Datepicker',
         id: 'start_date',
         cssClasses: '',
         validations: [Validators.required],
@@ -54,20 +53,18 @@ export class FormModel {
       },
       {
         key: 'end_date',
-        fieldType: 'Input',
-        type: 'date',
+        fieldType: 'Datepicker',
         id: 'end_date',
         cssClasses: '',
-        validations: [Validators.required],
-        validatorMessages: ['FormValidator.Required'],
-        validationNames: ['required'],
+        // validations: [Validators.required],
+        // validatorMessages: ['FormValidator.Required'],
+        // validationNames: ['required'],
         label: 'ProductionOrders.Form.EndDate',
         hidden$: this.hideEndDate$.asObservable()
       },
       {
         key: 'exp_date',
-        fieldType: 'Input',
-        type: 'date',
+        fieldType: 'Datepicker',
         id: 'exp_date',
         cssClasses: '',
         validations: [Validators.required],

@@ -13,6 +13,7 @@ import * as state from '@features/production-orders/state';
 import * as globalState from '@state/index';
 import { MessageService } from '@core/services/message.service';
 import { DYNAMIC_MODAL_DATA } from '@shared/constants';
+import * as moment from 'moment';
 
 @Component({
   selector: 'md-form',
@@ -42,7 +43,7 @@ export class FormComponent implements OnInit {
     this.fields = this.formModel.getModel();
     this.form = this.factoryForm.createPlainForm(this.fields as any);
 
-    this.hideProviderControl();
+    this.hideProductionControl();
 
     this.successService.success(state.SAVE_PRODUCTION_ORDERS_SUCCESS, () => {
       this.store$.dispatch(globalState.LOAD_PRODUCTION_ORDERS());
@@ -57,7 +58,6 @@ export class FormComponent implements OnInit {
   save() {
     if (this.form.valid) {
       const values = this.form.value;
-      console.log(values);
       const data = this.formService.getProductionOrderDTO(values);
       if (this.update) {
         const action = state.UPDATE_PRODUCTION_ORDERS({
@@ -69,7 +69,7 @@ export class FormComponent implements OnInit {
         this.store$.dispatch(action);
       }
     } else {
-      this.message.error('Message.InvalidForm');
+      this.message.error('Messages.InvalidForm');
     }
   }
 
@@ -81,19 +81,19 @@ export class FormComponent implements OnInit {
         this.form.patchValue(this.productionOrder);
         const { end_date } = this.productionOrder;
         const hide = end_date;
-        this.hideProvider(hide);
-        this.formModel.hideEndDate$.next(false);
+        this.hideProduction(hide);
+        this.formModel.hideEndDate$.next(true);
       }
     } else if (event === MODAL_ACCEPT_EVENT) {
       this.formBtn.nativeElement.click();
     }
   }
 
-  private hideProviderControl() {
+  private hideProductionControl() {
     const typeControl = this.form.get('end_date');
   }
 
-  private hideProvider(hide: boolean) {
+  private hideProduction(hide: boolean) {
     const control = this.getProductionOrderControl();
     const field = this.getProductionOrderField();
     this.formModel.hideEndDate$.next(hide);

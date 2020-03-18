@@ -47,8 +47,7 @@ export class BaseComponent implements OnInit {
   }
 
   update(productionOrder: any) {
-    this.modalFactory
-      .create({ component: FormComponent, title: '' })
+    this.createFormModal()
       .pipe(switchMap(result => {
         return combineLatest([of(result)]);
       }),
@@ -57,7 +56,6 @@ export class BaseComponent implements OnInit {
           return { result };
         }
         const data = { productionOrder };
-        console.log(data);
         return { data, result };
       })
       )
@@ -68,8 +66,7 @@ export class BaseComponent implements OnInit {
   }
 
   add() {
-    this.modalFactory
-      .create({ component: FormComponent, title: '' })
+    this.createFormModal()
       .pipe(filter(result => result.event !== MODAL_INITIAL_EVENT))
       .subscribe(result => {
         const component = result.modal.componentInstance.getRenderedComponent<FormComponent>();
@@ -77,4 +74,7 @@ export class BaseComponent implements OnInit {
     });
   }
 
+  private createFormModal() {
+    return this.modalFactory.create({ component: FormComponent, title: 'ProductionOrders.Modal.Title' });
+  }
 }
