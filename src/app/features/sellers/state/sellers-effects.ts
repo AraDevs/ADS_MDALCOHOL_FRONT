@@ -27,4 +27,22 @@ export class SellersEffects {
 
     return this.effectFactory.create(config);
   });
+
+  updateSellers$ = createEffect(() => {
+    const { UPDATE_SELLERS, UPDATE_SELLERS_SUCCESS, UPDATE_SELLERS_FAIL } = actions;
+
+    const effectReqConfig = new EffectRequestConfig(this.requestClient, 'update');
+    const actionsConfig = new EffectActionsConfig(
+      UPDATE_SELLERS,
+      UPDATE_SELLERS_SUCCESS,
+      UPDATE_SELLERS_FAIL
+    );
+    const config = new EffectConfigModel(
+      effectReqConfig,
+      actionsConfig,
+      `${environment.host}/sellers`
+    );
+
+    return this.effectFactory.create(config);
+  });
 }

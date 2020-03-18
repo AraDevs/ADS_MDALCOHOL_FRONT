@@ -34,3 +34,8 @@ export const UPDATE_USERS = createAction(
   '[Users] Update Users',
   props<{ payload: PayloadAction }>()
 );
+export const UPDATE_USERS_SUCCESS = createAction('[Users] Update Users Success');
+export const UPDATE_USERS_FAIL = createAction(
+    '[Users] Update Users Fail',
+    props<{ payload: ErrorActionData }>()
+);
