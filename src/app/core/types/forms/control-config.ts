@@ -3,7 +3,7 @@ import { Observable } from 'rxjs';
 
 export interface ControlConfig {
   key: string;
-  fieldType: 'Input' | 'Select' | 'Checkbox' | 'Radio' | 'Datepicker';
+  fieldType: 'Input' | 'Select' | 'Checkbox' | 'Radio' | 'Datepicker' | 'Textarea';
   name?: string;
   label?: string;
   placeholder?: string;

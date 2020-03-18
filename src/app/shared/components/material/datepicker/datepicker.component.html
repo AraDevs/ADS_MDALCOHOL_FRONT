@@ -1,4 +1,4 @@
-<mat-form-field [hidden]=" field.hidden$ | async">
+<mat-form-field [hidden]=" field.hidden$ | async" appearance="outline">
   <mat-label>{{field.label | transloco}}</mat-label>
   <input matInput [matDatepicker]="picker" disabled>
   <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>

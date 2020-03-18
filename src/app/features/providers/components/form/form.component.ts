@@ -1,6 +1,6 @@
 import { Component, ElementRef, OnInit, ViewChild, Inject } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { FactoryFormService, ErrorService } from '@core/services';
+import { ErrorService } from '@shared/services';
 import { InputControlConfig, SelectControlConfig } from '@core/types';
 import { FormModel } from '@features/providers/config/form-model';
 import * as state from '@features/providers/state';
@@ -14,6 +14,7 @@ import { SubSink } from 'subsink';
 import { FormService } from './form.service';
 import { MessageService } from '@core/services/message.service';
 import { Subject } from 'rxjs';
+import { FactoryFormService } from '@core/services';
 
 @Component({
   selector: 'md-form',

@@ -1,22 +1,26 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Observable, combineLatest, of } from 'rxjs';
-import { DataTableConfig } from '@shared/types';
-import { Store, select } from '@ngrx/store';
-import { AppState } from '@state/app-state';
-import { ModalFactoryService } from '@shared/services';
-import { SelectService } from '@core/services';
-import * as globalState from '@state/index';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { LoadingService } from '@shared/services';
+import { select, Store } from '@ngrx/store';
 import { MODAL_INITIAL_EVENT } from '@shared/constants';
-import { filter, switchMap, map } from 'rxjs/operators';
+import { ModalFactoryService } from '@shared/services';
+import { DataTableConfig } from '@shared/types';
+import { AppState } from '@state/app-state';
+import * as globalState from '@state/index';
+import { combineLatest, Observable, of } from 'rxjs';
+import { filter, map, switchMap } from 'rxjs/operators';
 import { FormComponent } from '../form/form.component';
 
 @Component({
   selector: 'md-base',
   templateUrl: './base.component.html',
-  styleUrls: ['./base.component.scss']
+  styleUrls: ['./base.component.scss'],
+  providers: [LoadingService],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class BaseComponent implements OnInit {
-  dataInventories: Observable<any[]>;
+  dataInventories$: Observable<any[]>;
+  loadingInventories$: Observable<boolean>;
+
   tableConfig: DataTableConfig = {
     displayedColumns: ['name', 'price', 'stock', 'type', 'actions'],
     titles: {
@@ -32,14 +36,19 @@ export class BaseComponent implements OnInit {
   constructor(
     private store$: Store<AppState>,
     private modalFactory: ModalFactoryService,
-    private selectData: SelectService
+    private loading: LoadingService
   ) {}
 
   ngOnInit(): void {
+    this.dataInventories$ = this.store$.pipe(select(globalState.selectInventories));
+    this.loadingInventories$ = this.loading.getLoading([
+      globalState.LOAD_INVENTORIES,
+      globalState.INVENTORIES_LOADED_SUCCESS,
+      globalState.INVENTORIES_LOADED_FAIL
+    ]);
+
     this.store$.dispatch(globalState.LOAD_INVENTORIES());
     this.store$.dispatch(globalState.LOAD_PROVIDERS());
-
-    this.dataInventories = this.store$.pipe(select(globalState.selectInventories));
   }
 
   update(inventory: any) {

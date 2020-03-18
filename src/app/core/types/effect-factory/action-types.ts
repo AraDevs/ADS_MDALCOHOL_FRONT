@@ -12,3 +12,5 @@ export type ErrorActionCreator = ActionCreator<
   string,
   (props: { payload: ErrorActionData }) => { payload: ErrorActionData } & TypedAction<string>
 >;
+
+export type LoadingAction = PlainActionCreator | DataActionCreator | ErrorActionCreator;

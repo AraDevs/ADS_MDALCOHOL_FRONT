@@ -1,6 +1,8 @@
 <ng-container [ngSwitch]="field.fieldType">
   <md-input *ngSwitchCase="'Input'" [field]="field" [form]="form" [formReference]="formReference">
   </md-input>
+  <md-textarea *ngSwitchCase="'Textarea'" [field]="field" [form]="form" [formReference]="formReference">
+  </md-textarea>
   <md-datepicker *ngSwitchCase="'Datepicker'" [field]="field" [form]="form" [formReference]="formReference">
   </md-datepicker>
   <md-select *ngSwitchCase="'Select'" [field]="field" [form]="form" [formReference]="formReference"></md-select>

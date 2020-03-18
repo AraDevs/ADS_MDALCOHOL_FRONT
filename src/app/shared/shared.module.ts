@@ -13,6 +13,7 @@ import { FormGeneratorComponent } from './components/material/form-generator/for
 import { ModalComponent } from './components';
 import { ModalAnchorDirective } from './directives';
 import { DatepickerComponent } from './components/material/datepicker/datepicker.component';
+import { TextareaComponent } from './components/material/textarea/textarea.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { DatepickerComponent } from './components/material/datepicker/datepicker
     FormGeneratorComponent,
     ModalComponent,
     ModalAnchorDirective,
-    DatepickerComponent
+    DatepickerComponent,
+    TextareaComponent
   ],
   imports: [CommonModule, TranslocoModule, MaterialModule, FormsModule, ReactiveFormsModule],
   entryComponents: [ModalComponent],
@@ -45,7 +47,8 @@ import { DatepickerComponent } from './components/material/datepicker/datepicker
     FormGeneratorComponent,
     ModalComponent,
     ModalAnchorDirective,
-    DatepickerComponent
+    DatepickerComponent,
+    TextareaComponent
   ]
 })
 export class SharedModule {}

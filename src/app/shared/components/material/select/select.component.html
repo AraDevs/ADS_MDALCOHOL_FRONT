@@ -1,4 +1,4 @@
-<mat-form-field [hidden]=" field.hidden$ | async">
+<mat-form-field [hidden]=" field.hidden$ | async" appearance="outline">
   <mat-label>{{field.label | transloco}}</mat-label>
   <mat-select [formControl]="control" [compareWith]="compareFn">
     <!-- <mat-option>Clear</mat-option> -->

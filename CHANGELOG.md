@@ -204,3 +204,8 @@ Merge client and form branch
 
 ## [Update] 18-03-2020 01:33
 Add DatePicker component
+
+## [Update] 18-03-2020 11:59
+Move loading, error services to shared module
+Change look and field of inputs
+Add Textarea component
