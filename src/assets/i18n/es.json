@@ -18,7 +18,8 @@
     "Save": "Guardar",
     "Cancel": "Cancelar",
     "Add": "Agregar",
-    "New": "Nuevo"
+    "New": "Nuevo",
+    "Ok": "Aceptar"
   },
   "Messages": {
     "Update": {
@@ -29,7 +30,8 @@
       "Success": "Registro agregado",
       "Error": "Error al agregar registro"
     },
-    "InvalidForm": "Formulario Inválido"
+    "InvalidForm": "Formulario Inválido",
+    "AreYouSure": "¿Estás seguro?"
   },
   "Table": {
     "Actions": "Acciones"

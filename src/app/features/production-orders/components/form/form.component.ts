@@ -14,7 +14,8 @@ import * as globalState from '@state/index';
 import { MessageService } from '@core/services/message.service';
 import { DYNAMIC_MODAL_DATA } from '@shared/constants';
 import * as moment from 'moment';
-import { Subject } from 'rxjs';
+import { Subject, BehaviorSubject } from 'rxjs';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'md-form',
@@ -26,6 +27,7 @@ export class FormComponent implements OnInit {
   private update = false;
   private errors = new Subject<string[]>();
   private productionOrder: any = null;
+  hidden$ = new BehaviorSubject(true);
 
   form: FormGroup;
   fields: Partial<InputControlConfig | SelectControlConfig>[];
@@ -58,11 +60,20 @@ export class FormComponent implements OnInit {
       this.message.success('Messages.Update.Success').then(() => this.data.modalRef.close());
     });
 
+    this.successService.success(state.FINISH_PRODUCTION_SUCCESS, () => {
+      this.store$.dispatch(globalState.LOAD_PRODUCTION_ORDERS());
+      this.message.success('Messages.Update.Success').then(() => this.data.modalRef.close());
+    });
+
     this.errorService.error(state.SAVE_PRODUCTION_FAIL, (payload: any) => {
       const { customErrorsServer } = payload;
       this.errors.next(customErrorsServer);
     });
     this.errorService.error(state.UPDATE_PRODUCTION_FAIL, (payload: any) => {
+      const { customErrorsServer } = payload;
+      this.errors.next(customErrorsServer);
+    });
+    this.errorService.error(state.FINISH_PRODUCTION_FAIL, (payload: any) => {
       const { customErrorsServer } = payload;
       this.errors.next(customErrorsServer);
     });
@@ -95,6 +106,7 @@ export class FormComponent implements OnInit {
         const { end_date } = this.productionOrder;
         const hide = end_date;
         this.hideProduction(hide);
+        this.hidden$.next(false);
         this.formModel.hideEndDate$.next(true);
       }
     } else if (event === MODAL_ACCEPT_EVENT) {
@@ -125,5 +137,15 @@ export class FormComponent implements OnInit {
 
   private getProductionOrderField() {
     return this.formModel.getModel().find(obj => obj.key === 'end_date');
+  }
+
+  updateFinishProduction() {
+    this.message.messageWarning()
+      .then((result) => {
+        if (result.dismiss !== Swal.DismissReason.cancel) {
+          const { id } = this.productionOrder;
+          this.store$.dispatch(state.FINISH_PRODUCTION_ORDERS({ payload: { data: {id} }}));
+        }
+      });
   }
 }

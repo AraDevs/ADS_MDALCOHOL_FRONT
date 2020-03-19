@@ -48,4 +48,22 @@ export class ProductionOrdersEffects {
 
     return this.effectFactory.create(config);
   });
+
+  finishProductionOrders$ = createEffect(() => {
+    const { FINISH_PRODUCTION_ORDERS, FINISH_PRODUCTION_SUCCESS, FINISH_PRODUCTION_FAIL } = actions;
+
+    const effectReqConfig = new EffectRequestConfig(this.requestClient, 'update');
+    const actionsConfig = new EffectActionsConfig(
+      FINISH_PRODUCTION_ORDERS,
+      FINISH_PRODUCTION_SUCCESS,
+      FINISH_PRODUCTION_FAIL
+    );
+    const config = new EffectConfigModel(
+      effectReqConfig,
+      actionsConfig,
+      `${environment.host}/production_orders/finish`
+    );
+
+    return this.effectFactory.create(config);
+  });
 }
