@@ -6,8 +6,12 @@ table {
   width: 100%;
 }
 .actions {
-  i {
+  mat-icon {
     cursor: pointer;
     user-select: none;
   }
+}
+
+.icon-teal {
+  color: teal;
 }

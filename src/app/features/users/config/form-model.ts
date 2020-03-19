@@ -1,16 +1,15 @@
 import { Injectable } from '@angular/core';
 import { Validators } from '@angular/forms';
-import { InputControlConfig, SelectControlConfig, RadioButtonConfig } from '@core/types';
+import { InputControlConfig, RadioButtonConfig, SelectControlConfig } from '@core/types';
 import * as userState from '@features/users/state';
-import { Store, select } from '@ngrx/store';
-import { usersFeature } from '../state';
+import { select, Store } from '@ngrx/store';
+import { maxLength, minLength } from '@shared/Validator';
 import { map } from 'rxjs/operators';
-import { minLength, maxLength } from '@shared/Validator';
 
 @Injectable()
 export class LoginFormConfig {
   constructor(private store$: Store<any>) {}
-  
+
   getModel(): Partial<InputControlConfig | SelectControlConfig | RadioButtonConfig>[] {
     return [
       {
@@ -22,7 +21,7 @@ export class LoginFormConfig {
         validations: [Validators.required, minLength(4), maxLength(100)],
         validatorMessages: ['Users.FormValidator.User.Required', 'Users.FormValidator.MinLength', 'Users.FormValidator.MaxLength'],
         validationNames: ['required', 'min', 'max'],
-        cssClasses: 'col-6'
+        cssClasses: ''
       },
       {
         key: 'name',
@@ -33,7 +32,7 @@ export class LoginFormConfig {
         validations: [Validators.required, minLength(4), maxLength(100)],
         validatorMessages: ['Users.FormValidator.Name', 'Users.FormValidator.MinLength', 'Users.FormValidator.MaxLength'],
         validationNames: ['required', 'min', 'max'],
-        cssClasses: 'col-6'
+        cssClasses: ''
       },
       {
         key: 'password',
@@ -45,13 +44,13 @@ export class LoginFormConfig {
         validations: [Validators.required, minLength(4), maxLength(100)],
         validatorMessages: ['Users.FormValidator.Password.Required', 'Users.FormValidator.MinLength', 'Users.FormValidator.MaxLength'],
         validationNames: ['required', 'min', 'max'],
-        cssClasses: 'col-6'
+        cssClasses: ''
       },
       {
         key: 'usertype',
         fieldType: 'Select',
         id: 'usertype',
-        cssClasses: 'col-6',
+        cssClasses: '',
         validations: [Validators.required],
         validatorMessages: ['FormValidator.RequiredSelected'],
         validationNames: ['required'],

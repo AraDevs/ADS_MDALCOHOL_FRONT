@@ -15,7 +15,8 @@
   "Buttons": {
     "Save": "Guardar",
     "Cancel": "Cancelar",
-    "Add": "Agregar"
+    "Add": "Agregar",
+    "New": "Nuevo"
   },
   "Messages": {
     "Update": {
