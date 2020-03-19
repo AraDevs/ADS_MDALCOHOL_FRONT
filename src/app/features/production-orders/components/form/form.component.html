@@ -10,3 +10,12 @@
     </md-form-generator>
     <button #formBtn [hidden]="true" type="submit"></button>
 </form>
+<ng-container *ngIf="!(hidden$|async)">
+  <hr>
+  <div class="d-flex flex-column align-items-center mt-4">
+    <p>¿Desea dar por finalizada la órden de producción?</p>
+    <div>
+      <button mat-raised-button color="warn" (click)="updateFinishProduction()">{{ 'Buttons.Ok' | transloco }}</button>
+    </div>
+  </div>
+</ng-container>

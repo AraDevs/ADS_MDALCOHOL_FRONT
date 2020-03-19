@@ -20,3 +20,13 @@ export const UPDATE_PRODUCTION_FAIL = createAction(
     '[Production Orders] Update Production Orders Fail',
     props<{ payload: ErrorActionData }>()
 );
+
+export const FINISH_PRODUCTION_ORDERS = createAction(
+    '[Production Orders] Finish Production Orders',
+    props<{ payload: PayloadAction }>()
+);
+export const FINISH_PRODUCTION_SUCCESS = createAction('[Production Orders] Finish Production Orders Sucess');
+export const FINISH_PRODUCTION_FAIL = createAction(
+    '[Production Orders] Finish Production Orders Fail',
+    props<{ payload: ErrorActionData }>()
+);
