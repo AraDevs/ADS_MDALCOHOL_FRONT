@@ -30,7 +30,7 @@ export class BaseComponent implements OnInit {
       type: 'Inventories.Table.Title.Type',
       actions: 'Inventories.Table.Title.Actions'
     },
-    keys: ['name', 'price', 'stock', 'type', 'actions']
+    keys: ['name', 'price', 'stock', 'type', 'Tabla.Actions']
   };
 
   constructor(

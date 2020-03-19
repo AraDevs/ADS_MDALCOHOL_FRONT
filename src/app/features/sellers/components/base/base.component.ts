@@ -27,7 +27,7 @@ export class BaseComponent implements OnInit {
       state: 'Sellers.Table.State',
       actions: 'Sellers.Table.Actions'
     },
-    keys: ['name', 'seller_code', 'state', 'actions']
+    keys: ['name', 'seller_code', 'state', 'Tabla.Actions']
   };
 
   constructor(

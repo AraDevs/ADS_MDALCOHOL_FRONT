@@ -65,7 +65,7 @@ export class FormModel {
         type: 'text',
         label: 'Providers.Form.Nit',
         cssClasses: '',
-        validations: [Validators.required, Validators.pattern('^\d{4}-\d{6}-\d{3}-\d$')],
+        validations: [Validators.required, Validators.pattern('^[0-9]{4}-[0-9]{6}-[0-9]{3}-[0-9]$')],
         validatorMessages: ['FormValidator.Required', 'Providers.Validator.IsNit'],
         validationNames: ['required', 'pattern']
       },
@@ -76,7 +76,7 @@ export class FormModel {
         type: 'text',
         label: 'Providers.Form.PartnerPhone',
         cssClasses: '',
-        validations: [Validators.required, minLength(8), Validators.pattern('^\d*$')],
+        validations: [Validators.required, minLength(8), Validators.pattern('^[0-9]{8}$')],
         validatorMessages: ['FormValidator.Required', 'Providers.Validator.MinLength', 'Providers.Validator.IsNumeric'],
         validationNames: ['required', 'min', 'pattern']
       },
@@ -87,7 +87,7 @@ export class FormModel {
         type: 'text',
         label: 'Providers.Form.SellerPhone',
         cssClasses: '',
-        validations: [Validators.required, minLength(8), Validators.pattern('\d')],
+        validations: [Validators.required, minLength(8), Validators.pattern('^[0-9]{8}$')],
         validatorMessages: ['FormValidator.Required', 'Providers.Validator.MinLength', 'Providers.Validator.IsNumeric'],
         validationNames: ['required', 'min', 'pattern']
       },
