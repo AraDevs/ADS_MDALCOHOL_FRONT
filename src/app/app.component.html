@@ -4,7 +4,25 @@
     <mat-toolbar>{{'AppName' | transloco}}</mat-toolbar>
     <mat-nav-list>
 
-      <a mat-list-item *ngFor="let item of menu" [routerLink]="item.route">
+      <h2 matSubheader> {{ 'Production' | transloco }} </h2>
+
+      <a mat-list-item
+        *ngFor="let item of menu"
+        [routerLink]="item.route"
+        routerLinkActive="active-list-item">
+        <mat-icon matListIcon> {{ item.icon }} </mat-icon>
+        {{item.title | transloco}}
+      </a>
+
+      <mat-divider></mat-divider>
+
+      <h2 matSubheader> {{ 'Catalogs' | transloco }} </h2>
+
+      <a mat-list-item
+        *ngFor="let item of catalogs"
+        [routerLink]="item.route"
+        routerLinkActive="active-list-item">
+        <mat-icon matListIcon> {{ item.icon }} </mat-icon>
         {{item.title | transloco}}
       </a>
  

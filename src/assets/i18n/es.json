@@ -1,5 +1,7 @@
 {
   "AppName": "MD Alcohol",
+  "Production": "Producción",
+  "Catalogs": "Catálogos ",
   "SideNav": {
     "Users": "Usuarios",
     "Providers": "Proveedores",

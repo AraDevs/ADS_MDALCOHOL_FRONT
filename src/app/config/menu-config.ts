@@ -1,26 +1,35 @@
 export const MENU = [
   {
-    title: 'SideNav.Providers',
-    route: '/providers'
-  },
-  {
-    title: 'SideNav.Users',
-    route: '/users'
-  },
-  {
-    title: 'SideNav.Clients',
-    route: '/clients'
-  },
-  {
-    title: 'SideNav.Sellers',
-    route: '/sellers'
-  },
-  {
     title: 'SideNav.Inventories',
-    route: '/inventories'
+    route: '/inventories',
+    icon: 'assignment'
   },
   {
     title: 'SideNav.ProductionOrders',
-    route: '/production_orders'
+    route: '/production_orders',
+    icon: 'assignment_turned_in'
+  }
+];
+
+export const CATALOGS = [
+  {
+    title: 'SideNav.Providers',
+    route: '/providers',
+    icon: 'home'
+  },
+  {
+    title: 'SideNav.Users',
+    route: '/users',
+    icon: 'account_circle'
+  },
+  {
+    title: 'SideNav.Clients',
+    route: '/clients',
+    icon: 'group'
+  },
+  {
+    title: 'SideNav.Sellers',
+    route: '/sellers',
+    icon: 'store'
   }
 ];

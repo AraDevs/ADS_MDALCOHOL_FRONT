@@ -247,3 +247,6 @@ Add Special price crud
 
 ## [Update] 18-03-2020 20:59
 Merge forms branch to master
+
+## [Update] 18-03-2020 22:00
+Update SideNav, adding icons
