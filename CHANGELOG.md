@@ -239,3 +239,6 @@ Merge forms branch to master
 
 ## [Update] 18-03-2020 20:41
 Adding errors messages from server
+
+## [Update] 18-03-2020 20:50
+Merge client to master
