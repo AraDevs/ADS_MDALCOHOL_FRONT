@@ -1,8 +1,6 @@
-<h1>Órdenes</h1>
-
 <div class="p-4">
-    <button class="mb-2" mat-raised-button color="primary" (click)="add()">Nuevo</button>
-    <md-data-table [dataSource$]="dataOrders" [config]="tableConfig" [loading$]="loadingProductions$" (update)="update($event)">
-    </md-data-table>
+  <md-section-bar title="SideNav.ProductionOrders" (buttonEvent)="add()"></md-section-bar>
+  <md-data-table [dataSource$]="dataOrders" [config]="tableConfig" [loading$]="loadingProductions$"
+    (update)="update($event)">
+  </md-data-table>
 </div>
-  

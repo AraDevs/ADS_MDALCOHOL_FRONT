@@ -14,6 +14,7 @@ import { ModalComponent } from './components';
 import { ModalAnchorDirective } from './directives';
 import { DatepickerComponent } from './components/material/datepicker/datepicker.component';
 import { TextareaComponent } from './components/material/textarea/textarea.component';
+import { SectionBarComponent } from './components/section-bar/section-bar.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { TextareaComponent } from './components/material/textarea/textarea.compo
     ModalComponent,
     ModalAnchorDirective,
     DatepickerComponent,
-    TextareaComponent
+    TextareaComponent,
+    SectionBarComponent
   ],
   imports: [CommonModule, TranslocoModule, MaterialModule, FormsModule, ReactiveFormsModule],
   entryComponents: [ModalComponent],
@@ -48,7 +50,8 @@ import { TextareaComponent } from './components/material/textarea/textarea.compo
     ModalComponent,
     ModalAnchorDirective,
     DatepickerComponent,
-    TextareaComponent
+    TextareaComponent,
+    SectionBarComponent
   ]
 })
 export class SharedModule {}

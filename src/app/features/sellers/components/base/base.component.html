@@ -1,6 +1,6 @@
-<h1>Vendedores</h1>
 <div class="p-4">
-  <button class="mb-2" mat-raised-button color="primary" (click)="add()">Nuevo</button>
-  <md-data-table [dataSource$]="dataSellers" [config]="tableConfig" [loading$]="loadingSellers$" (update)="update($event)">
+  <md-section-bar title="SideNav.Sellers" (buttonEvent)="add()"></md-section-bar>
+  <md-data-table [dataSource$]="dataSellers" [config]="tableConfig" [loading$]="loadingSellers$"
+    (update)="update($event)">
   </md-data-table>
 </div>

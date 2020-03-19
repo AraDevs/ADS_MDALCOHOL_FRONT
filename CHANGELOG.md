@@ -250,3 +250,8 @@ Merge forms branch to master
 
 ## [Update] 18-03-2020 22:00
 Update SideNav, adding icons
+## [Update] 18-03-2020 21:52
+Add SectionBarComponent
+
+## [Update] 18-03-2020 22:02
+Meger client and forms branch to master

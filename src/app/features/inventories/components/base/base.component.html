@@ -1,6 +1,5 @@
-<h1>Inventario</h1>
 <div class="p-4">
-  <button class="mb-2" mat-raised-button color="primary" (click)="add()">Nuevo</button>
+  <md-section-bar title="SideNav.Inventories" (buttonEvent)="add()"></md-section-bar>
   <md-data-table [dataSource$]="dataInventories$" [loading$]="loadingInventories$" [config]="tableConfig"
     (update)="update($event)">
   </md-data-table>

@@ -1,7 +1,5 @@
-<h1>Usuarios</h1>
-
 <div class="p-4">
-  <button class="mb-2" mat-raised-button color="primary" (click)="add()" >Nuevo</button>
+  <md-section-bar title="SideNav.Users" (buttonEvent)="add()"></md-section-bar>
   <md-data-table [dataSource$]="dataUsers" [config]="tableConfig" (update)="update($event)" [loading$]="loadingUsers$">
   </md-data-table>
 </div>
