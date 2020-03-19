@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef, Inject, OnDestroy } from '@angular/core';
 import { FormModel } from '@features/inventories/config/form-model';
-import { SuccessService } from '@shared/services';
+import { SuccessService, ErrorService } from '@shared/services';
 import { FormService } from '@features/inventories/components/form/form.service';
 import { FormGroup, AbstractControl } from '@angular/forms';
 import { InputControlConfig, SelectControlConfig } from '@core/types';
@@ -13,20 +13,23 @@ import * as state from '@features/inventories/state';
 import * as globalState from '@state/index';
 import { DYNAMIC_MODAL_DATA } from '@shared/constants/index';
 import { SubSink } from 'subsink';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'md-form',
   templateUrl: './form.component.html',
   styleUrls: ['./form.component.scss'],
-  providers: [FormModel, SuccessService, FormService]
+  providers: [FormModel, SuccessService, FormService, ErrorService]
 })
 export class FormComponent implements OnInit, OnDestroy {
   private subs = new SubSink();
+  private errors = new Subject<string[]>();
   private update = false;
   private inventory: any = null;
 
   form: FormGroup;
   fields: Partial<InputControlConfig | SelectControlConfig>[];
+  errors$ = this.errors.asObservable();
 
   @ViewChild('formBtn') formBtn: ElementRef<HTMLButtonElement>;
   constructor(
@@ -34,6 +37,7 @@ export class FormComponent implements OnInit, OnDestroy {
     private factoryForm: FactoryFormService,
     private store$: Store<AppState>,
     private successService: SuccessService,
+    private errorService: ErrorService,
     private formService: FormService,
     private message: MessageService,
     @Inject(DYNAMIC_MODAL_DATA) private data: any
@@ -52,6 +56,14 @@ export class FormComponent implements OnInit, OnDestroy {
     this.successService.success(state.UPDATE_INVENTORIES_SUCCESS, () => {
       this.store$.dispatch(globalState.LOAD_INVENTORIES());
       this.message.success('Messages.Update.Success').then(() => this.data.modalRef.close());
+    });
+    this.errorService.error(state.SAVE_INVENTORIES_FAIL, (payload: any) => {
+      const { customErrorsServer } = payload;
+      this.errors.next(customErrorsServer);
+    });
+    this.errorService.error(state.UPDATE_INVENTORIES_FAIL, (payload: any) => {
+      const { customErrorsServer } = payload;
+      this.errors.next(customErrorsServer);
     });
   }
 

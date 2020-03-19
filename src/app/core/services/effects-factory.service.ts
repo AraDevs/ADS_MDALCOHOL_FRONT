@@ -53,7 +53,6 @@ export class EffectsFactoryService {
       if (success) {
         return successAction({ payload: data });
       }
-      console.log(error);
 
       return failAction({ payload: { error } });
     };

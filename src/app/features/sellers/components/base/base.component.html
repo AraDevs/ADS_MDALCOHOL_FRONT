@@ -1,23 +1,6 @@
 <h1>Vendedores</h1>
 <div class="p-4">
   <button class="mb-2" mat-raised-button color="primary" (click)="add()">Nuevo</button>
-  <md-data-table [dataSource$]="dataSellers" [config]="tableConfig" (update)="update($event)">
+  <md-data-table [dataSource$]="dataSellers" [config]="tableConfig" [loading$]="loadingSellers$" (update)="update($event)">
   </md-data-table>
 </div>
-
-<!--div class="container">
-  <h1>Sellers</h1>
-  <form [formGroup]="form" #formReference="ngForm" (submit)="save()">
-    <md-form-generator [form]="form" [formReference]="formReference" [fields]="fields"
-      [displayContainerCheckboxs]="true">
-
-    </md-form-generator>
-    <button class="mat-focus-indicator mat-raised-button mat-button-primary" mat-raised-button="" color="primary">{{ 'Sellers.Button.Save' | transloco}}</button>
-  </form>
-</div>
-
-<div *ngFor="let item of data | async" >{{item.name}}</div>
-<div class="p-4">
-  <md-data-table [dataSource$]="data" [config]="tableConfig" (update)="selectedRow($event)">
-  </md-data-table>
-</div>-->

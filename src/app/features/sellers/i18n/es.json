@@ -1,24 +1,27 @@
 {
-    "Form" :{
-        "Name": "Ingrese el nombre y apellidos del vendedor",
-        "SellerCode": "Ingrese el código del vendedor",
-        "State": "Activo"
-    },
+  "Form": {
+    "Name": "Ingrese el nombre y apellidos del vendedor",
+    "SellerCode": "Ingrese el código del vendedor",
+    "State": "Activo"
+  },
 
-    "Table":{
-        "Name": "Nombre de Vendedor",
-        "SellerCode": "Código",
-        "State": "Estado",
-        "Actions": "Accions"
-    },
+  "Table": {
+    "Name": "Nombre de Vendedor",
+    "SellerCode": "Código",
+    "State": "Estado",
+    "Actions": "Accions"
+  },
 
-    "Button":{
-        "Save": "Guardar"
-    },
+  "Button": {
+    "Save": "Guardar"
+  },
 
-    "Validator": {
-        "Required": "Debe llenar este campo",
-        "MinLength": "El código debe tener al menos cuatro digitos",
-        "MaxLength": "El campo no puede tener más de 100 caracteres"
-    }
+  "Validator": {
+    "Required": "Debe llenar este campo",
+    "MinLength": "El código debe tener al menos cuatro digitos",
+    "MaxLength": "El campo no puede tener más de 100 caracteres"
+  },
+  "Modal": {
+    "Title": "Registro de Vendedor"
+  }
 }

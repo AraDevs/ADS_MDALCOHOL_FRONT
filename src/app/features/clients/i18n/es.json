@@ -28,5 +28,11 @@
       "PersonType": "Tipo",
       "SellerId": "Vendedor"
     }
+  },
+  "Modal": {
+    "Titles": {
+      "SpecialPrice": "Registro de Precio Especial",
+      "FormModal": "Registro de Clientes"
+    }
   }
 }

@@ -3,7 +3,7 @@ import { Observable, combineLatest, of } from 'rxjs';
 import { DataTableConfig } from '@shared/types';
 import { Store, select } from '@ngrx/store';
 import { AppState } from '@state/app-state';
-import { ModalFactoryService } from '@shared/services';
+import { ModalFactoryService, LoadingService } from '@shared/services';
 import { SelectService } from '@core/services';
 import * as globalState from '@state/index';
 import { FormComponent } from '@features/production-orders/components/form/form.component';
@@ -13,12 +13,15 @@ import { MODAL_INITIAL_EVENT } from '../../../../shared/constants/index';
 @Component({
   selector: 'md-base',
   templateUrl: './base.component.html',
-  styleUrls: ['./base.component.scss']
+  styleUrls: ['./base.component.scss'],
+  providers: [LoadingService]
 })
 export class BaseComponent implements OnInit {
 
   dataOrders: Observable<any[]>;
   dataInvetories: Observable<any[]>;
+  loadingProductions$: Observable<boolean>;
+
   tableConfig: DataTableConfig = {
     displayedColumns: ['inventoryName', 'quantity', 'start_date', 'end_date', 'exp_date', 'workers', 'actions'],
     titles: {
@@ -36,10 +39,16 @@ export class BaseComponent implements OnInit {
   constructor(
     private store$: Store<AppState>,
     private modalFactory: ModalFactoryService,
-    private selectData: SelectService
+    private loading: LoadingService
   ) { }
 
   ngOnInit(): void {
+    this.loadingProductions$ = this.loading.getLoading([
+      globalState.LOAD_PRODUCTION_ORDERS,
+      globalState.PRODUCTION_ORDERS_LOADED_SUCCESS,
+      globalState.PRODUCTION_ORDERS_LOADED_FAIL
+    ]);
+
     this.store$.dispatch(globalState.LOAD_PRODUCTION_ORDERS());
     this.store$.dispatch(globalState.LOAD_INVENTORIES());
     this.dataInvetories = this.store$.pipe(select(globalState.selectInventories));

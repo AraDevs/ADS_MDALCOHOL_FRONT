@@ -1,14 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import {} from '@features/users/config/login-form-config';
+import {} from '@features/users/config/form-model';
 import * as userState from '@features/users/state';
 import { select, Store } from '@ngrx/store';
 import { MODAL_INITIAL_EVENT } from '@shared/constants';
-import { ModalFactoryService } from '@shared/services';
+import { ModalFactoryService, LoadingService } from '@shared/services';
 import { DataTableConfig } from '@shared/types';
 import { AppState } from '@state/app-state';
 import { combineLatest, Observable, of } from 'rxjs';
 import { filter, map, switchMap } from 'rxjs/operators';
 import { FormComponent } from '../form/form.component';
+import * as UserState from '@features/users/state';
 
 @Component({
   selector: 'md-base',
@@ -17,6 +18,7 @@ import { FormComponent } from '../form/form.component';
 })
 export class BaseComponent implements OnInit {
   dataUsers: Observable<any[]>;
+  loadingUsers$: Observable<boolean>;
 
   tableConfig: DataTableConfig = {
     displayedColumns: ['name', 'username', 'actions'],
@@ -28,9 +30,19 @@ export class BaseComponent implements OnInit {
     keys: ['name', 'username', 'actions']
   };
 
-  constructor(private store$: Store<AppState>, private modalFactory: ModalFactoryService) {}
+  constructor(
+    private store$: Store<AppState>,
+    private modalFactory: ModalFactoryService,
+    private loading: LoadingService
+  ) {}
 
   ngOnInit(): void {
+    this.loadingUsers$ = this.loading.getLoading([
+      UserState.LOAD_USER,
+      UserState.USERS_LOADED_SUCCESS,
+      UserState.USER_LOADED_FAIL
+    ]);
+
     this.store$.dispatch(userState.LOAD_USERS());
     this.dataUsers = this.store$.pipe(select(userState.selectUsers));
   }
@@ -65,6 +77,6 @@ export class BaseComponent implements OnInit {
   }
 
   private createFormModal() {
-    return this.modalFactory.create({ component: FormComponent, title: 'Registro de usuarios' });
+    return this.modalFactory.create({ component: FormComponent, title: 'Users.Modal.Title' });
   }
 }

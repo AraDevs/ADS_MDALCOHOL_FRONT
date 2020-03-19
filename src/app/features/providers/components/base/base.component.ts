@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { SelectService } from '@core/services';
 import { select, Store } from '@ngrx/store';
 import { MODAL_INITIAL_EVENT } from '@shared/constants';
-import { ModalFactoryService } from '@shared/services';
+import { ModalFactoryService, LoadingService, ErrorService } from '@shared/services';
 import { DataTableConfig } from '@shared/types';
 import { AppState } from '@state/app-state';
 import * as globalState from '@state/index';
@@ -14,13 +14,16 @@ import { FormComponent } from '../form/form.component';
 @Component({
   selector: 'md-base',
   templateUrl: './base.component.html',
-  styleUrls: ['./base.component.scss']
+  styleUrls: ['./base.component.scss'],
+  providers: [LoadingService]
 })
 export class BaseComponent implements OnInit, OnDestroy {
   private subs = new SubSink();
 
   dataDepartments: Observable<any[]>;
   dataProviders: Observable<any[]>;
+  loadingProviders$: Observable<boolean>;
+
   tableConfig: DataTableConfig = {
     displayedColumns: ['name', 'nit', 'phone', 'seller_phone', 'actions'],
     titles: {
@@ -36,10 +39,17 @@ export class BaseComponent implements OnInit, OnDestroy {
   constructor(
     private store$: Store<AppState>,
     private modalFactory: ModalFactoryService,
-    private selectData: SelectService
+    private selectData: SelectService,
+    private loading: LoadingService
   ) {}
 
   ngOnInit(): void {
+    this.loadingProviders$ = this.loading.getLoading([
+      globalState.LOAD_PROVIDERS,
+      globalState.PROVIDERS_LOADED_SUCCESS,
+      globalState.PROVIDERS_LOADED_FAIL
+    ]);
+
     this.store$.dispatch(globalState.LOAD_PROVIDERS());
     this.store$.dispatch(globalState.LOAD_DEPARTMENTS());
     this.store$.dispatch(globalState.LOAD_MUNICIPALITIES());
@@ -57,8 +67,7 @@ export class BaseComponent implements OnInit, OnDestroy {
     );
     const municipality$ = this.selectData.getMunicipalityById(provider.partner.municipality_id);
 
-    this.modalFactory
-      .create({ component: FormComponent, title: 'Registro de proveedores' })
+    this.createModalForm()
       .pipe(
         switchMap(result => {
           return combineLatest([department$, municipality$, of(result)]);
@@ -78,12 +87,16 @@ export class BaseComponent implements OnInit, OnDestroy {
   }
 
   add() {
-    this.modalFactory
-      .create({ component: FormComponent, title: 'Registro de proveedores' })
+    this.createModalForm()
       .pipe(filter(result => result.event !== MODAL_INITIAL_EVENT))
       .subscribe(result => {
         const component = result.modal.componentInstance.getRenderedComponent<FormComponent>();
         component.execute({ event: result.event });
       });
   }
+
+  private createModalForm() {
+    return this.modalFactory.create({ component: FormComponent, title: 'Providers.Modal.Title' });
+  }
+
 }

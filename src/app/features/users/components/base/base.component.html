@@ -1,44 +1,7 @@
-<!--<ng-container *ngIf="loading$ | async ">
-  Loading ...
-</ng-container>
-<ul>
-  <li *ngFor="let user of users$ | async">
-    {{user.username}}
-  </li>
-</ul>
-<ng-container *ngIf="user$ | async as user">
-  <h1>{{user.name | uppercase}}</h1>
-</ng-container>
-<ng-container *ngIf="error$ | async as result">
-  <div *ngIf="result.translate">{{ result.message | transloco }}</div>
-  <div *ngIf="!result.translate">{{ result.message }}</div>
-</ng-container>-->
-
 <h1>Usuarios</h1>
 
 <div class="p-4">
   <button class="mb-2" mat-raised-button color="primary" (click)="add()" >Nuevo</button>
-  <md-data-table [dataSource$]="dataUsers" [config]="tableConfig" (update)="update($event)">
+  <md-data-table [dataSource$]="dataUsers" [config]="tableConfig" (update)="update($event)" [loadings$]="loadingUsers$">
   </md-data-table>
 </div>
-<!--<div class="container">
-  <div class="row justify-content-center">
-    <div class="col-10">
-      <form [formGroup]="form" (submit)="save()" #formReference="ngForm">
-        <md-form-generator [form]="form" [formReference]="formReference" [fields]="fields" cssContainerClasses='row'
-          [displayContainerCheckboxs]="true" [displayContainerRadios]="true" cssContainerRadiosClasses='d-flex'>
-        </md-form-generator>
-        <div class="d-flex justify-content-center">
-          <button mat-raised-button color="primary">Aceptar</button>
-        </div>
-      </form>
-    </div>
-  </div>
-</div>
-<br>
-<br>
-
-<div class="p-4">
-  <md-data-table [dataSource$]="dataUsers" [config]="tableConfig" (update)="update($event)">
-  </md-data-table>
-</div>-->

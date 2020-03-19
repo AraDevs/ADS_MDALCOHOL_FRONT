@@ -24,5 +24,8 @@
     "MinValue": "El valor del campo no puede ser menor que 0",
     "IsNumeric": "El valor ingresado debe ser númerico",
     "IsNit": "El formato ingresado no corresponde al nit"
+  },
+  "Modal": {
+    "Title": "Registro de Proveedor"
   }
 }

@@ -36,7 +36,7 @@ export class LoginFormConfig {
         cssClasses: 'col-6'
       },
       {
-        key: 'pass',
+        key: 'password',
         placeholder: 'Users.Form.Password',
         label: 'Users.Form.Password',
         fieldType: 'Input',

@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { SelectService } from '@core/services';
 import { select, Store } from '@ngrx/store';
 import { MODAL_INITIAL_EVENT } from '@shared/constants';
-import { ModalFactoryService } from '@shared/services';
+import { ModalFactoryService, LoadingService } from '@shared/services';
 import { DataTableConfig } from '@shared/types';
 import { AppState } from '@state/app-state';
 import * as globalState from '@state/index';
@@ -15,7 +15,8 @@ import { SpecialPriceComponent } from '../special-price/special-price.component'
 @Component({
   selector: 'md-base',
   templateUrl: './base.component.html',
-  styleUrls: ['./base.component.scss']
+  styleUrls: ['./base.component.scss'],
+  providers: [LoadingService]
 })
 export class BaseComponent implements OnInit, OnDestroy {
   private subs = new SubSink();
@@ -23,6 +24,7 @@ export class BaseComponent implements OnInit, OnDestroy {
   data: Observable<any[]>;
   dataM: Observable<any[]>;
   dataClients: Observable<any[]>;
+  loadingClients$: Observable<boolean>;
   tableConfig: DataTableConfig = {
     displayedColumns: [
       'business_name',
@@ -46,10 +48,17 @@ export class BaseComponent implements OnInit, OnDestroy {
   constructor(
     private store$: Store<AppState>,
     private modalFactory: ModalFactoryService,
-    private selectData: SelectService
+    private selectData: SelectService,
+    private loading: LoadingService
   ) {}
 
   ngOnInit(): void {
+    this.loadingClients$ = this.loading.getLoading([
+      globalState.LOAD_CLIENTS,
+      globalState.CLIENTS_LOADED_SUCCESS,
+      globalState.CLIENTS_LOADED_FAIL
+    ]);
+
     this.store$.dispatch(globalState.LOAD_DEPARTMENTS());
     this.store$.dispatch(globalState.LOAD_MUNICIPALITIES());
     this.store$.dispatch(globalState.LOAD_CLIENTS());
@@ -109,10 +118,10 @@ export class BaseComponent implements OnInit, OnDestroy {
   }
 
   private createModalForm() {
-    return this.modalFactory.create({ component: FormComponent, title: '' });
+    return this.modalFactory.create({ component: FormComponent, title: 'Clients.Modal.Titles.FormModal' });
   }
 
   private createModalPrice() {
-    return this.modalFactory.create({ component: SpecialPriceComponent, title: '' });
+    return this.modalFactory.create({ component: SpecialPriceComponent, title: 'Clients.Modal.Titles.SpecialPrice' });
   }
 }

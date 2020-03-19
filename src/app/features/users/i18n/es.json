@@ -30,5 +30,8 @@
       "Name": "Nombre",
       "User": "Usuario"
     }
+  },
+  "Modal": {
+    "Title": "Registro de Usuario"
   }
 }

@@ -5,7 +5,7 @@ import { SelectControlConfig } from '../../../../core/types/forms/select-control
 import { FormModel } from '@features/production-orders/config/form-model';
 import { FactoryFormService } from '@core/services';
 import { MODAL_INITIAL_EVENT, MODAL_ACCEPT_EVENT } from '../../../../shared/constants/index';
-import { SuccessService } from '@shared/services';
+import { SuccessService, ErrorService } from '@shared/services';
 import { FormService } from './form.service';
 import { Store } from '@ngrx/store';
 import { AppState } from '@state/app-state';
@@ -14,19 +14,22 @@ import * as globalState from '@state/index';
 import { MessageService } from '@core/services/message.service';
 import { DYNAMIC_MODAL_DATA } from '@shared/constants';
 import * as moment from 'moment';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'md-form',
   templateUrl: './form.component.html',
   styleUrls: ['./form.component.scss'],
-  providers: [FormModel, SuccessService, FormService]
+  providers: [FormModel, SuccessService, FormService, ErrorService]
 })
 export class FormComponent implements OnInit {
   private update = false;
+  private errors = new Subject<string[]>();
   private productionOrder: any = null;
 
   form: FormGroup;
   fields: Partial<InputControlConfig | SelectControlConfig>[];
+  errors$ = this.errors.asObservable();
 
   @ViewChild('formBtn') formBtn: ElementRef<HTMLButtonElement>;
   constructor(
@@ -35,6 +38,7 @@ export class FormComponent implements OnInit {
     private formService: FormService,
     private store$: Store<AppState>,
     private successService: SuccessService,
+    private errorService: ErrorService,
     private message: MessageService,
     @Inject(DYNAMIC_MODAL_DATA) private data: any
   ) { }
@@ -52,6 +56,15 @@ export class FormComponent implements OnInit {
     this.successService.success(state.UPDATE_PRODUCTION_SUCCESS, () => {
       this.store$.dispatch(globalState.LOAD_PRODUCTION_ORDERS());
       this.message.success('Messages.Update.Success').then(() => this.data.modalRef.close());
+    });
+
+    this.errorService.error(state.SAVE_PRODUCTION_FAIL, (payload: any) => {
+      const { customErrorsServer } = payload;
+      this.errors.next(customErrorsServer);
+    });
+    this.errorService.error(state.UPDATE_PRODUCTION_FAIL, (payload: any) => {
+      const { customErrorsServer } = payload;
+      this.errors.next(customErrorsServer);
     });
   }
 

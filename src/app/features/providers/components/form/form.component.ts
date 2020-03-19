@@ -71,6 +71,10 @@ export class FormComponent implements OnInit {
       const { customErrorsServer } = payload;
       this.errors.next(customErrorsServer);
     });
+    this.errorService.error(state.UPDATE_PROVIDERS_FAIL, (payload: any) => {
+      const { customErrorsServer } = payload;
+      this.errors.next(customErrorsServer);
+    });
   }
 
   save() {

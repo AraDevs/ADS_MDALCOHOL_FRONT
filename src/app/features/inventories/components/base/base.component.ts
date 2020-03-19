@@ -52,8 +52,7 @@ export class BaseComponent implements OnInit {
   }
 
   update(inventory: any) {
-    this.modalFactory
-      .create({ component: FormComponent, title: 'Registro de inventario' })
+    this.createModalForm()
       .pipe(
         switchMap(result => {
           return combineLatest([of(result)]);
@@ -73,12 +72,15 @@ export class BaseComponent implements OnInit {
   }
 
   add() {
-    this.modalFactory
-      .create({ component: FormComponent, title: 'Registro de inventario' })
+    this.createModalForm()
       .pipe(filter(result => result.event !== MODAL_INITIAL_EVENT))
       .subscribe(result => {
         const component = result.modal.componentInstance.getRenderedComponent<FormComponent>();
         component.execute({ event: result.event });
       });
+  }
+
+  private createModalForm() {
+    return this.modalFactory.create({ component: FormComponent, title: 'Inventories.Modal.Title' });
   }
 }

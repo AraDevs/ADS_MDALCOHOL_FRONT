@@ -1,15 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup } from '@angular/forms';
-import { FactoryFormService } from '@core/services';
-import { InputControlConfig } from '@core/types';
-import { FormModel } from '@features/sellers/config/form-model';
 import * as globalState from '@state/index';
-import * as sellerState from '@features/sellers/state';
 import { select, Store } from '@ngrx/store';
 import { DataTableConfig } from '@shared/types';
 import { Observable, combineLatest, of } from 'rxjs';
 import { AppState } from '@state/app-state';
-import { SuccessService, ModalFactoryService } from '@shared/services';
+import { ModalFactoryService, LoadingService } from '@shared/services';
 import { FormComponent } from '../form/form.component';
 import { MODAL_INITIAL_EVENT } from '@shared/constants';
 import { filter, switchMap, map } from 'rxjs/operators';
@@ -17,10 +12,12 @@ import { filter, switchMap, map } from 'rxjs/operators';
 @Component({
   selector: 'md-base',
   templateUrl: './base.component.html',
-  styleUrls: ['./base.component.scss']
+  styleUrls: ['./base.component.scss'],
+  providers: [LoadingService]
 })
 export class BaseComponent implements OnInit {
   dataSellers: Observable<any[]>;
+  loadingSellers$: Observable<boolean>;
 
   tableConfig: DataTableConfig = {
     displayedColumns: ['name', 'seller_code', 'state', 'actions'],
@@ -33,16 +30,25 @@ export class BaseComponent implements OnInit {
     keys: ['name', 'seller_code', 'state', 'actions']
   };
 
-  constructor(private store$: Store<AppState>, private modalFactory: ModalFactoryService) {}
+  constructor(
+    private store$: Store<AppState>,
+    private modalFactory: ModalFactoryService,
+    private loading: LoadingService
+  ) {}
 
   ngOnInit(): void {
+    this.loadingSellers$ = this.loading.getLoading([
+      globalState.LOAD_SELLERS,
+      globalState.SELLERS_LOADED_SUCCESS,
+      globalState.SELLERS_LOADED_FAIL
+    ]);
+
     this.store$.dispatch(globalState.LOAD_SELLERS());
     this.dataSellers = this.store$.pipe(select(globalState.selectSellers));
   }
 
   update(seller: any) {
-    this.modalFactory
-      .create({ component: FormComponent, title: 'Registro de vendedores' })
+    this.createModalForm()
       .pipe(
         switchMap(result => {
           return combineLatest([of(result)]);
@@ -62,12 +68,15 @@ export class BaseComponent implements OnInit {
   }
 
   add() {
-    this.modalFactory
-      .create({ component: FormComponent, title: 'Registro de vendedores' })
+    this.createModalForm()
       .pipe(filter(result => result.event !== MODAL_INITIAL_EVENT))
       .subscribe(result => {
         const component = result.modal.componentInstance.getRenderedComponent<FormComponent>();
         component.execute({ event: result.event });
       });
+  }
+
+  private createModalForm() {
+    return this.modalFactory.create({ component: FormComponent, title: 'Sellers.Modal.Title' });
   }
 }

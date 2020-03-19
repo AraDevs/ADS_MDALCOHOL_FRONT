@@ -1,8 +1,8 @@
-<h1>Clients</h1>
+<h1>Clientes</h1>
 
 <div class="p-4">
     <button class="mb-2" mat-raised-button color="primary" (click)="add()" >Nuevo</button>
-    <md-data-table [dataSource$]="dataClients" [displayMoneyIcon]="true" [config]="tableConfig"
+    <md-data-table [dataSource$]="dataClients" [displayMoneyIcon]="true" [config]="tableConfig" [loading$]="loadingClients$"
     (update)="update($event)" (delete)="update($event)" (selectedRow)="specialPrice($event)">
     </md-data-table>
 </div>

@@ -7,8 +7,6 @@ export class FormService {
   constructor() {}
 
   getInventory(data: any) {
-    console.log(data);
-
     const { inventory } = data;
     return {
       id: inventory.id,
@@ -25,8 +23,6 @@ export class FormService {
   }
 
   getInventoryDTO(inventory: any) {
-    console.log(inventory);
-
     const dto: any = {
       name: inventory.name,
       description: inventory.description,

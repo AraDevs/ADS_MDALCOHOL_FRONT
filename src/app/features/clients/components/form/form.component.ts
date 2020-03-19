@@ -5,7 +5,7 @@ import { InputControlConfig, SelectControlConfig } from '@core/types';
 import { FormModel } from '@features/clients/config/form-model';
 import { Store } from '@ngrx/store';
 import { AppState } from '@state/app-state';
-import { SuccessService } from '@shared/services';
+import { SuccessService, ErrorService } from '@shared/services';
 import { SubSink } from 'subsink';
 import * as state from '@features/clients/state';
 import * as globalState from '@state/index';
@@ -13,20 +13,23 @@ import { MODAL_INITIAL_EVENT } from '@shared/constants';
 import { MODAL_ACCEPT_EVENT, DYNAMIC_MODAL_DATA } from '../../../../shared/constants/index';
 import { FormService } from '@features/clients/components/form/form.service';
 import { MessageService } from '@core/services/message.service';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'md-form',
   templateUrl: './form.component.html',
   styleUrls: ['./form.component.scss'],
-  providers: [FormModel, SuccessService, FormService]
+  providers: [FormModel, SuccessService, FormService, ErrorService]
 })
 export class FormComponent implements OnInit {
   private subs = new SubSink();
+  private errors = new Subject<string[]>();
   private update = false;
   private client: any = null;
 
   form: FormGroup;
   fields: Partial<InputControlConfig | SelectControlConfig>[];
+  errors$ = this.errors.asObservable();
 
   @ViewChild('formBtn') formBtn: ElementRef<HTMLButtonElement>;
   constructor(
@@ -34,6 +37,7 @@ export class FormComponent implements OnInit {
     private factoryForm: FactoryFormService,
     private store$: Store<AppState>,
     private successService: SuccessService,
+    private errorService: ErrorService,
     private formService: FormService,
     private message: MessageService,
     @Inject(DYNAMIC_MODAL_DATA) private data: any
@@ -53,6 +57,14 @@ export class FormComponent implements OnInit {
     this.successService.success(state.UPDATE_CLIENTS_SUCCESS, () => {
       this.store$.dispatch(globalState.LOAD_CLIENTS());
       this.message.success('Messages.Update.Success').then(() => this.data.modalRef.close());
+    });
+    this.errorService.error(state.SAVE_CLIENTS_FAIL, (payload: any) => {
+      const { customErrorsServer } = payload;
+      this.errors.next(customErrorsServer);
+    });
+    this.errorService.error(state.UPDATE_CLIENTS_FAIL, (payload: any) => {
+      const { customErrorsServer } = payload;
+      this.errors.next(customErrorsServer);
     });
   }
 
