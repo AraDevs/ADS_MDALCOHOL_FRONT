@@ -21,5 +21,11 @@
   },
   "Modal": {
     "Title": "Registro de Órden de Producción"
+  },
+  "Validator": {
+    "IsNumeric": "El valor debe ser numerico entero",
+    "IsHours": "El formato de hora no es correcto",
+    "MinLength": "Debe tener minimo cuatro caracteres",
+    "MaxLength": "El campo no puede tener más de 100 caracteres"
   }
 }

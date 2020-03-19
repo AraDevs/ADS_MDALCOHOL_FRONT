@@ -55,9 +55,9 @@ export class FormModel {
         type: 'text',
         id: 'stock',
         cssClasses: '',
-        validations: [Validators.required,  Validators.min(0), Validators.pattern('^[0-9]*$')],
-        validatorMessages: ['FormValidator.Required', 'Inventories.Validator.MinValue', 'Inventories.Validator.IsNumeric'],
-        validationNames: ['required', 'min', 'pattern'],
+        validations: [Validators.required,  Validators.pattern('^[0-9]*$')],
+        validatorMessages: ['FormValidator.Required', 'Inventories.Validator.IsNumeric'],
+        validationNames: ['required', 'pattern'],
         label: 'Inventories.Form.Stock'
       },
       {

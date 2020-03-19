@@ -42,9 +42,9 @@ export class FormModel {
         type: 'text',
         id: 'registry',
         cssClasses: '',
-        validations: [Validators.required],
-        validatorMessages: ['FormValidator.Required'],
-        validationNames: ['required'],
+        validations: [Validators.required, Validators.pattern('^[0-9]{8}$')],
+        validatorMessages: ['FormValidator.Required', 'Clients.Validator.Registro'],
+        validationNames: ['required', 'pattern'],
         label: 'Clients.Form.Registry'
       },
       {

@@ -44,6 +44,7 @@
   "Validator": {
     "Dui": "El formato del dui no es valido",
     "Nit": "El formato del nit no es valido",
+    "Registro": "El formato de registro no es valido",
     "IsPhone": "El formato del télefono no es valido",
     "MinLength": "Debe tener minimo 4 caracteres",
     "MaxLength": "El campo no puede tener más de 100 caracteres",
