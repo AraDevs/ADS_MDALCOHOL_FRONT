@@ -100,12 +100,11 @@ export class BaseComponent implements OnInit, OnDestroy {
   }
 
   specialPrice(client: any) {
-    this.createModalPrice()
-      .subscribe(result => {
-        const { componentInstance } = result.modal;
-        const component = componentInstance.getRenderedComponent<SpecialPriceComponent>();
-        component.execute({ event: result.event, data: client });
-      });
+    this.createModalPrice().subscribe(result => {
+      const { componentInstance } = result.modal;
+      const component = componentInstance.getRenderedComponent<SpecialPriceComponent>();
+      component.execute({ event: result.event, data: client });
+    });
   }
 
   private createModalForm() {
@@ -113,6 +112,10 @@ export class BaseComponent implements OnInit, OnDestroy {
   }
 
   private createModalPrice() {
-    return this.modalFactory.create({ component: SpecialPriceComponent, title: '' });
+    return this.modalFactory.create({
+      component: SpecialPriceComponent,
+      title: '',
+      displayAcceptButton: false
+    });
   }
 }

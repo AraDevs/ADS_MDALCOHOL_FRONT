@@ -6,6 +6,6 @@
 </div>
 <div class="modal-footer  d-flex justify-content-end align-items-end">
   <button mat-button class="mr-1" (click)="cancel()">{{ 'Buttons.Cancel' | transloco}}</button>
-  <button mat-raised-button (click)="accept()" color="primary">{{ 'Buttons.Save' | transloco}}
+  <button mat-raised-button (click)="accept()" color="primary" *ngIf="data.displayAcceptButton">{{ 'Buttons.Save' | transloco}}
   </button>
 </div>

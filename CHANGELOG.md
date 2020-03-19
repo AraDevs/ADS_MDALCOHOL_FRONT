@@ -236,3 +236,6 @@ Merge client and special branch to master
 
 ## [Update] 18-03-2020 17:49
 Merge forms branch to master
+
+## [Update] 18-03-2020 20:42
+Add Special price crud

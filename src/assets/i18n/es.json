@@ -27,5 +27,8 @@
       "Error": "Error al agregar registro"
     },
     "InvalidForm": "Formulario Inválido"
+  },
+  "Table": {
+    "Actions": "Acciones"
   }
 }

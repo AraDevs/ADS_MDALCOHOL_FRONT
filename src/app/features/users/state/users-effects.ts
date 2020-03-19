@@ -2,10 +2,9 @@ import { Injectable } from '@angular/core';
 import { RequestClient } from '@core/client';
 import { EffectsFactoryService } from '@core/services';
 import { EffectActionsConfig, EffectConfigModel, EffectRequestConfig } from '@core/types';
+import { environment } from '@environments/environment';
 import { createEffect } from '@ngrx/effects';
 import * as actions from './actions';
-import { RestResourceFactory } from '@core/utils';
-import { environment } from '@environments/environment';
 
 @Injectable()
 export class UsersEffects {

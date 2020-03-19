@@ -15,18 +15,24 @@
     "Phone": "Ingrese un número teléfonico",
     "State": "Activo"
   },
-  "PriceForm": {
-    "Inventory": "Seleccione un inventario",
-    "Price": "Precio especial",
-    "State": "Activo"
-  },
+
   "Table": {
     "Titles": {
-      "BusinessName": "Empresa",
+      "BusinessName": "Nombre del negocio",
       "Dui": "DUI",
       "Registry": "# de Registro",
       "PersonType": "Tipo",
       "SellerId": "Vendedor"
     }
+  },
+  "PriceForm": {
+    "Inventory": "Seleccione un inventario",
+    "Price": "Precio especial",
+    "State": "Activo"
+  },
+  "SpecialTable": {
+    "Inventory": "Inventario",
+    "Price": "Precio especial",
+    "State": "Estado"
   }
 }

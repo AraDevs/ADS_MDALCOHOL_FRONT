@@ -5,6 +5,7 @@ import { createEffect } from '@ngrx/effects';
 import * as actions from './actions';
 import { EffectRequestConfig, EffectActionsConfig, EffectConfigModel } from '@core/types';
 import { environment } from '@environments/environment';
+import { RestResourceFactory } from '@core/utils';
 
 @Injectable()
 export class ClientsEffects {
@@ -60,6 +61,23 @@ export class ClientsEffects {
       actionsConfig,
       `${environment.host}/special_prices`
     );
+
+    return this.effectFactory.create(config);
+  });
+
+  loadSpecialPrices$ = createEffect(() => {
+    const { LOAD_SPECIAL_PRICE, SPECIAL_PRICE_LOADED_SUCCESS, SPECIAL_PRICE_LOADED_FAIL } = actions;
+
+    const effectReqConfig = new EffectRequestConfig(this.requestClient, 'get');
+    const actionsConfig = new EffectActionsConfig(
+      LOAD_SPECIAL_PRICE,
+      SPECIAL_PRICE_LOADED_SUCCESS,
+      SPECIAL_PRICE_LOADED_FAIL
+    );
+    const config = new EffectConfigModel(effectReqConfig, actionsConfig);
+
+    const template = `${environment.host}/special_prices/clients/$$0`;
+    config.resourceFactory = new RestResourceFactory(template, ['id']);
 
     return this.effectFactory.create(config);
   });

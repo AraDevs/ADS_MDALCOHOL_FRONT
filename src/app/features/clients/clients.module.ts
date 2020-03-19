@@ -1,3 +1,4 @@
+import { FEATURE_KEY, reducer } from '@features/clients/state';
 import { NgModule } from '@angular/core';
 import * as state from '@features/clients/state';
 import { TRANSLOCO_SCOPE } from '@ngneat/transloco';
@@ -8,12 +9,17 @@ import { ClientsRoutingModule } from './clients-routing.module';
 import { BaseComponent } from './components/base/base.component';
 import { FormComponent } from './components/form/form.component';
 import { SpecialPriceComponent } from './components/special-price/special-price.component';
+import { StoreModule } from '@ngrx/store';
 
 const loader = LoadI18nFile((lang: string) => () => import(`./i18n/${lang}.json`));
 
 @NgModule({
   declarations: [BaseComponent, FormComponent, SpecialPriceComponent],
-  imports: [SharedModule, ClientsRoutingModule, EffectsModule.forFeature([state.ClientsEffects])],
+  imports: [
+    SharedModule,
+    ClientsRoutingModule,
+    StoreModule.forFeature(FEATURE_KEY, reducer),
+    EffectsModule.forFeature([state.ClientsEffects])],
   providers: [
     {
       provide: TRANSLOCO_SCOPE,
