@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild, ElementRef, Inject, OnDestroy } from '@an
 import { FormModel } from '@features/inventories/config/form-model';
 import { SuccessService, ErrorService } from '@shared/services';
 import { FormService } from '@features/inventories/components/form/form.service';
-import { FormGroup, AbstractControl } from '@angular/forms';
+import { FormGroup, AbstractControl, FormGroupDirective } from '@angular/forms';
 import { InputControlConfig, SelectControlConfig } from '@core/types';
 import { FactoryFormService } from '@core/services';
 import { Store } from '@ngrx/store';
@@ -22,6 +22,7 @@ import { Subject } from 'rxjs';
   providers: [FormModel, SuccessService, FormService, ErrorService]
 })
 export class FormComponent implements OnInit, OnDestroy {
+  @ViewChild(FormGroupDirective, { static: true }) formDirective: FormGroupDirective;
   private subs = new SubSink();
   private errors = new Subject<string[]>();
   private update = false;
@@ -120,6 +121,7 @@ export class FormComponent implements OnInit, OnDestroy {
     if (hide) {
       control.setValue(null);
       control.clearValidators();
+      control.updateValueAndValidity();
       return;
     }
     control.setValidators(field.validations as any);

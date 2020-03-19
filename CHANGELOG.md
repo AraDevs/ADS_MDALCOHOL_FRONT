@@ -258,3 +258,6 @@ Meger client and forms branch to master
 
 ## [Update] 18-03-2020 23:05
 Meger validator branch to master
+
+## [Update] 18-03-2020 23:28
+Fix inventory bug
