@@ -14,7 +14,8 @@ import * as UserState from '@features/users/state';
 @Component({
   selector: 'md-base',
   templateUrl: './base.component.html',
-  styleUrls: ['./base.component.scss']
+  styleUrls: ['./base.component.scss'],
+  providers: [LoadingService]
 })
 export class BaseComponent implements OnInit {
   dataUsers: Observable<any[]>;
@@ -37,11 +38,13 @@ export class BaseComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+
     this.loadingUsers$ = this.loading.getLoading([
-      UserState.LOAD_USER,
+      UserState.LOAD_USERS,
       UserState.USERS_LOADED_SUCCESS,
       UserState.USER_LOADED_FAIL
     ]);
+
 
     this.store$.dispatch(userState.LOAD_USERS());
     this.dataUsers = this.store$.pipe(select(userState.selectUsers));

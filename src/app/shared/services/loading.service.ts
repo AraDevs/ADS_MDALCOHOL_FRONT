@@ -1,4 +1,4 @@
-import { OnDestroy } from '@angular/core';
+import { OnDestroy, Injectable } from '@angular/core';
 import { LoadingAction } from '@core/types/effect-factory/action-types';
 import { ofType } from '@ngrx/effects';
 import { ActionsSubject } from '@ngrx/store';
@@ -6,6 +6,7 @@ import { BehaviorSubject, combineLatest, merge } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { SubSink } from 'subsink';
 
+@Injectable()
 export class LoadingService implements OnDestroy {
   private subs = new SubSink();
   private loading = new BehaviorSubject(true);
