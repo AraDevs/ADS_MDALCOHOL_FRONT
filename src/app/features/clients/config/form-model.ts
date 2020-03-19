@@ -5,6 +5,7 @@ import { SelectControlConfig } from '@core/types/forms/select-control-config';
 import { select, Store } from '@ngrx/store';
 import * as globalState from '@state/index';
 import { map } from 'rxjs/operators';
+import { minLength, maxLength } from '@shared/Validator';
 
 @Injectable()
 export class FormModel {
@@ -19,9 +20,9 @@ export class FormModel {
         type: 'text',
         id: 'businessName',
         cssClasses: '',
-        validations: [Validators.required],
-        validatorMessages: ['FormValidator.Required'],
-        validationNames: ['required'],
+        validations: [Validators.required,  minLength(4), maxLength(100)],
+        validatorMessages: ['FormValidator.Required', 'Clients.Validator.MinLength', 'Clients.Validator.MaxLength'],
+        validationNames: ['required', 'min', 'max'],
         label: 'Clients.Form.BusinessName'
       },
       {
@@ -30,9 +31,9 @@ export class FormModel {
         type: 'text',
         id: 'dui',
         cssClasses: '',
-        validations: [Validators.required],
-        validatorMessages: ['FormValidator.RequiredSelected'],
-        validationNames: ['required'],
+        validations: [Validators.required, Validators.pattern('^[0-9]{8}-[0-9]$')],
+        validatorMessages: ['FormValidator.RequiredSelected', 'Clients.Validator.Dui'],
+        validationNames: ['required', 'pattern'],
         label: 'Clients.Form.Dui'
       },
       {
@@ -85,9 +86,9 @@ export class FormModel {
         type: 'text',
         id: 'sellerName',
         cssClasses: '',
-        validations: [Validators.required],
-        validatorMessages: ['FormValidator.Required'],
-        validationNames: ['required'],
+        validations: [Validators.required, minLength(4), maxLength(100)],
+        validatorMessages: ['FormValidator.Required', 'Clients.Validator.MinLength', 'Clients.Validator.MaxLength'],
+        validationNames: ['required', 'min', 'max'],
         label: 'Clients.Form.Name'
       },
       {
@@ -96,8 +97,8 @@ export class FormModel {
         type: 'text',
         id: 'address',
         cssClasses: '',
-        validations: [Validators.required],
-        validatorMessages: ['FormValidator.Required'],
+        validations: [Validators.required, minLength(4), maxLength(100)],
+        validatorMessages: ['FormValidator.Required', 'Clients.Validator.MinLength', 'Clients.Validator.MaxLengthAddress'],
         validationNames: ['required'],
         label: 'Clients.Form.Address'
       },
@@ -129,8 +130,8 @@ export class FormModel {
         type: 'text',
         id: 'nit',
         cssClasses: '',
-        validations: [Validators.required],
-        validatorMessages: ['FormValidator.Required'],
+        validations: [Validators.required, Validators.pattern('^[0-9]{4}-[0-9]{6}-[0-9]{3}-[0-9]$')],
+        validatorMessages: ['FormValidator.Required', 'Clients.Validator.Nit'],
         validationNames: ['required'],
         label: 'Clients.Form.Nit'
       },
@@ -140,9 +141,9 @@ export class FormModel {
         type: 'text',
         id: 'phone',
         cssClasses: '',
-        validations: [Validators.required],
-        validatorMessages: ['FormValidator.Required'],
-        validationNames: ['required'],
+        validations: [Validators.required, Validators.pattern('^[0-9]{8}$')],
+        validatorMessages: ['FormValidator.Required', 'Providers.Validator.IsPhone'],
+        validationNames: ['required', 'pattern'],
         label: 'Clients.Form.Phone'
       },
       {

@@ -42,7 +42,7 @@ export class BaseComponent implements OnInit, OnDestroy {
       partnerName: 'Clients.Table.Titles.SellerId',
       actions: 'Acciones'
     },
-    keys: ['business_name', 'dui', 'registry_no', 'person_type', 'partnerName', 'actions']
+    keys: ['business_name', 'dui', 'registry_no', 'person_type', 'partnerName', 'Tabla.Actions']
   };
 
   constructor(

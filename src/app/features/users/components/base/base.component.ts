@@ -28,7 +28,7 @@ export class BaseComponent implements OnInit {
       username: 'Users.Table.Titles.User',
       actions: 'Acciones'
     },
-    keys: ['name', 'username', 'actions']
+    keys: ['name', 'username', 'Tabla.Actions']
   };
 
   constructor(

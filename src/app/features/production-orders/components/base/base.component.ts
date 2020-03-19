@@ -33,7 +33,7 @@ export class BaseComponent implements OnInit {
       workers: 'ProductionOrders.Table.Titles.Workers',
       actions: 'Acciones'
     },
-    keys: ['inventory.name', 'quantity', 'start_date', 'end_date', 'exp_date', 'workers', 'actions']
+    keys: ['inventory.name', 'quantity', 'start_date', 'end_date', 'exp_date', 'workers', 'Tabla.Actions']
   };
 
   constructor(

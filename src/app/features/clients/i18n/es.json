@@ -40,5 +40,13 @@
     "Inventory": "Inventario",
     "Price": "Precio especial",
     "State": "Estado"
+  },
+  "Validator": {
+    "Dui": "El formato del dui no es valido",
+    "Nit": "El formato del nit no es valido",
+    "IsPhone": "El formato del télefono no es valido",
+    "MinLength": "Debe tener minimo 4 caracteres",
+    "MaxLength": "El campo no puede tener más de 100 caracteres",
+    "MaxLengthAddress": "El campo no puede tener más de 1000 caracteres"
   }
 }
