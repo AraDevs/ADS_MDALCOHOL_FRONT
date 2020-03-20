@@ -31,4 +31,11 @@ export class SelectService {
       take(1)
     );
   }
+
+  getProviderById(id: any) {
+    return this.store$.pipe(
+      select(globalState.selectProviderById, id),
+      take(1)
+    );
+  }
 }
