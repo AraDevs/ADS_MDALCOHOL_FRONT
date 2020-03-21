@@ -78,7 +78,7 @@ export class FormModel {
         type: 'text',
         id: 'workers',
         cssClasses: '',
-        validations: [Validators.required, Validators.pattern("^[1-9]*$")],
+        validations: [Validators.required, Validators.pattern("^[1-9][0-9]*$")],
         validatorMessages: ['FormValidator.Required','ProductionOrders.Validator.IsNumeric0'],
         validationNames: ['required', 'pattern'],
         label: 'ProductionOrders.Form.Workers'
@@ -89,7 +89,7 @@ export class FormModel {
         type: 'text',
         id: 'hours',
         cssClasses: '',
-        validations: [Validators.required, Validators.pattern("^[1-9]*$")],
+        validations: [Validators.required, Validators.pattern("^[1-9][0-9]*$")],
         validatorMessages: ['FormValidator.Required', 'ProductionOrders.Validator.IsNumeric0'],
         validationNames: ['required', 'pattern'],
         label: 'ProductionOrders.Form.Hours'
