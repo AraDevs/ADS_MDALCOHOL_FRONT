@@ -24,6 +24,7 @@
   },
   "Validator": {
     "IsNumeric": "El valor debe ser numerico entero",
+    "IsNumeric0": "El valor debe ser numerico entero y mayor que cero",
     "IsHours": "El formato de hora no es correcto",
     "MinLength": "Debe tener minimo cuatro caracteres",
     "MaxLength": "El campo no puede tener más de 100 caracteres"
