@@ -12,7 +12,7 @@ export const MENU = [
   {
     title: 'SideNav.Bill',
     route: '/bills',
-    icon: 'attach_money'
+    icon: 'monetization_on'
   }
 ];
 
