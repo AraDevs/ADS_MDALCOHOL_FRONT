@@ -5,11 +5,12 @@ import { BaseComponent } from './components/base/base.component';
 import { FormComponent } from './components/form/form.component';
 import { LoadI18nFile } from '@shared/helpers';
 import { TRANSLOCO_SCOPE } from '@ngneat/transloco';
+import { BillTableComponent } from './components/bill-table/bill-table.component';
 
 const loader = LoadI18nFile((lang: string) => () => import(`./i18n/${lang}.json`));
 
 @NgModule({
-  declarations: [BaseComponent, FormComponent],
+  declarations: [BaseComponent, FormComponent, BillTableComponent],
   imports: [SharedModule, BillRoutingModule],
   providers: [
     {

@@ -1,0 +1,11 @@
+.data-table-container {
+  height: 400px;
+  overflow: auto;
+}
+
+.actions {
+  mat-icon {
+    cursor: pointer;
+    user-select: none;
+  }
+}

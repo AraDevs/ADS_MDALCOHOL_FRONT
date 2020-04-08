@@ -3,5 +3,12 @@
     "Titles": {
       "FormModal": "Registro de facturas"
     }
+  },
+  "FormTable": {
+    "Product": "Producto",
+    "Quantity": "Cantidad",
+    "Price": "Precio unitario",
+    "Total": "Total",
+    "Actions": "Acciones"
   }
 }
