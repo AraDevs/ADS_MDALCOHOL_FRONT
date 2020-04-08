@@ -9,6 +9,7 @@ import * as globalState from '@state/index';
 import { combineLatest, Observable, of } from 'rxjs';
 import { filter, map, switchMap } from 'rxjs/operators';
 import { FormComponent } from '../form/form.component';
+import { SelectService } from '@core/services';
 
 @Component({
   selector: 'md-base',
@@ -36,6 +37,7 @@ export class BaseComponent implements OnInit {
   constructor(
     private store$: Store<AppState>,
     private modalFactory: ModalFactoryService,
+    private selectData: SelectService,
     private loading: LoadingService
   ) {}
 
@@ -52,16 +54,18 @@ export class BaseComponent implements OnInit {
   }
 
   update(inventory: any) {
+    let provider$ = inventory.raw_material !== null ? this.selectData.getProviderById(inventory.raw_material.provider.id) : of({});
+
     this.createModalForm()
       .pipe(
         switchMap(result => {
-          return combineLatest([of(result)]);
+          return combineLatest([provider$, of(result)]);
         }),
-        map(([result]) => {
+        map(([provider, result]) => {
           if (result.event !== MODAL_INITIAL_EVENT) {
             return { result };
           }
-          const data = { inventory };
+          const data = { inventory, provider };
           return { data, result };
         })
       )

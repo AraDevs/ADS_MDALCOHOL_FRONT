@@ -267,3 +267,6 @@ Update module Production Order, production orders finish
 
 ## [Update] 18-03-2020 23:32
 Merge client and forms branch to master
+
+## [Update] 19-03-2020 23:48
+Fix method add and update of inventories

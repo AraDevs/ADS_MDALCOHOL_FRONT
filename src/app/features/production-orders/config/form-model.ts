@@ -74,13 +74,13 @@ export class FormModel {
       },
       {
         key: 'workers',
-        fieldType: 'Textarea',
+        fieldType: 'Input',
         type: 'text',
         id: 'workers',
         cssClasses: '',
-        validations: [Validators.required, minLength(4), maxLength(100)],
-        validatorMessages: ['FormValidator.Required', 'ProductionOrders.Validator.MinLength', 'ProductionOrders.Validator.MaxLength'],
-        validationNames: ['required', 'min', 'max'],
+        validations: [Validators.required, Validators.pattern("^[1-9][0-9]*$")],
+        validatorMessages: ['FormValidator.Required','ProductionOrders.Validator.IsNumeric0'],
+        validationNames: ['required', 'pattern'],
         label: 'ProductionOrders.Form.Workers'
       },
       {
@@ -89,8 +89,8 @@ export class FormModel {
         type: 'text',
         id: 'hours',
         cssClasses: '',
-        validations: [Validators.required, Validators.pattern('^[0-9]{1,2}[:][0-5][0-9]$')],
-        validatorMessages: ['FormValidator.Required', 'ProductionOrders.Validator.IsHours'],
+        validations: [Validators.required, Validators.pattern("^[1-9][0-9]*$")],
+        validatorMessages: ['FormValidator.Required', 'ProductionOrders.Validator.IsNumeric0'],
         validationNames: ['required', 'pattern'],
         label: 'ProductionOrders.Form.Hours'
       },

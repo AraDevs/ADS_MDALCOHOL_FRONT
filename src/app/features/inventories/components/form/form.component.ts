@@ -71,13 +71,14 @@ export class FormComponent implements OnInit, OnDestroy {
   save() {
     if (this.form.valid) {
       const values = this.form.value;
-      const data = this.formService.getInventoryDTO(values);
       if (this.update) {
+        const data = this.formService.getInventoryDTO({...values, type: null});
         const action = state.UPDATE_INVENTORIES({
-          payload: { data: { ...data, id: this.inventory.id, type: null } }
+          payload: { data: { ...data, id: this.inventory.id } }
         });
         this.store$.dispatch(action);
       } else {
+        const data = this.formService.getInventoryDTO(values);
         const action = state.SAVE_INVENTORIES({ payload: { data } });
         this.store$.dispatch(action);
       }
