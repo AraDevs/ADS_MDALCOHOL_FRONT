@@ -6,8 +6,13 @@ export const MENU = [
   },
   {
     title: 'SideNav.ProductionOrders',
-    route: '/production_orders',
+    route: '/production-orders',
     icon: 'assignment_turned_in'
+  },
+  {
+    title: 'SideNav.Bill',
+    route: '/bills',
+    icon: 'attach_money'
   }
 ];
 
