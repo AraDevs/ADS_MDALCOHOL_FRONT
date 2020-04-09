@@ -1,13 +1,5 @@
-<!-- <div class="data-table-container position-relative">
-   <div
-    [ngStyle]="{ 'max-height': '400px', position: 'relative' }"
-    class="mat-table__wrapper mat-table__wrapper--dashboard"
-  >
-  </div>
-
-</div> -->
 <div class="position-relative">
-  <mat-table [dataSource]="source$ | async">
+  <mat-table [dataSource]="records$ | async">
     <ng-container *ngFor="let column of config.displayedColumns" [matColumnDef]="column">
       <ng-container *ngIf="column !== 'actions'">
         <mat-header-cell *matHeaderCellDef>
@@ -21,15 +13,20 @@
               *ngSwitchCase="'Select'"
               appearance="outline"
             >
-              <mat-select [formControl]="data[column]" (valueChange)="updateDataSource($event, i, column)">
+              <mat-select [formControl]="data[column]" (valueChange)="getSelectedProduct($event, i)">
                 <mat-option *ngFor="let option of options" [value]="option"
                   >{{ option.label }}
                 </mat-option>
               </mat-select>
             </mat-form-field>
 
-            <mat-form-field class="bill-control" *ngSwitchCase="'Input'" appearance="outline"  >
-              <input matInput [formControl]="data[column]" autocomplete="off" (keyup)="computeTotal($event, i, column)" />
+            <mat-form-field class="bill-control" *ngSwitchCase="'Input'" appearance="outline">
+              <input
+                matInput
+                [formControl]="data[column]"
+                autocomplete="off"
+                (keyup)="computeTotal(i, column)"
+              />
             </mat-form-field>
 
             <p *ngSwitchDefault>
