@@ -8,28 +8,26 @@
 </div> -->
 <div class="position-relative">
   <mat-table [dataSource]="source$ | async">
-    <ng-container
-      *ngFor="let column of config.displayedColumns; let i = index"
-      [matColumnDef]="column"
-    >
+    <ng-container *ngFor="let column of config.displayedColumns" [matColumnDef]="column">
       <ng-container *ngIf="column !== 'actions'">
         <mat-header-cell *matHeaderCellDef>
           {{ config.titles[column] | transloco }}
         </mat-header-cell>
 
-        <mat-cell *matCellDef="let data">
+        <mat-cell *matCellDef="let data; let i = index">
           <div [ngSwitch]="config.controls[column]">
             <mat-form-field
               class="bill-select-control"
               *ngSwitchCase="'Select'"
               appearance="outline"
             >
-              <mat-select [formControl]="data[column]">
+              <mat-select [formControl]="data[column]" (valueChange)="getInventory($event, i)">
                 <mat-option *ngFor="let option of options" [value]="option"
-                  >{{ option }}
+                  >{{ option.label }}
                 </mat-option>
               </mat-select>
             </mat-form-field>
+
             <mat-form-field class="bill-control" *ngSwitchCase="'Input'" appearance="outline">
               <input matInput [formControl]="data[column]" autocomplete="off" />
               <!-- <mat-error *ngIf="error$ | async as error">{{ error | transloco}}</mat-error> -->
@@ -80,12 +78,12 @@
       </ng-container>
     </ng-container>
 
-    <mat-header-row *matHeaderRowDef="config.displayedColumns;"></mat-header-row>
+    <mat-header-row *matHeaderRowDef="config.displayedColumns"></mat-header-row>
 
     <mat-row *matRowDef="let row; columns: config.displayedColumns"></mat-row>
     <mat-footer-row
       class="py-2 border-0"
-      *matFooterRowDef="config.displayedColumns;"
+      *matFooterRowDef="config.displayedColumns"
     ></mat-footer-row>
   </mat-table>
 </div>
