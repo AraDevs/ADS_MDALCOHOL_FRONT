@@ -1,37 +1,30 @@
 import { Component, OnInit } from '@angular/core';
-import { DataTableConfig } from '@shared/types';
+import { FormBuilder, FormControl } from '@angular/forms';
+import { ControlDataTableConfig } from '@shared/types';
 import { BehaviorSubject } from 'rxjs';
-import { FieldType } from '@core/types/forms/control-config';
-
-interface ControlDataTableConfig extends DataTableConfig {
-  controls: { [column: string]: FieldType | 'Text' };
-}
+import { BillTableConfiguration } from './bill-table-configuration';
 
 @Component({
   selector: 'md-bill-table',
   templateUrl: './bill-table.component.html',
   styleUrls: ['./bill-table.component.scss'],
+  providers: [BillTableConfiguration],
 })
 export class BillTableComponent implements OnInit {
-  source$ = new BehaviorSubject([{ product: {}, quantity: 20, price: 20, total: 20 }]);
-
-  config: ControlDataTableConfig = {
-    displayedColumns: ['product', 'quantity', 'price', 'total', 'actions'],
-    titles: {
-      product: 'Bill.FormTable.Product',
-      quantiry: 'Bill.FormTable.Quantity',
-      price: 'Bill.FormTable.Price',
-      total: 'Bill.FormTable.Total',
-      actions: 'Bill.FormTable.Actions',
-    },
-    controls: {
-      product: 'Select',
-      quantiry: 'Input',
-      price: 'Input',
-      total: 'Text',
-    },
-  };
-  constructor() {}
+  source$ = new BehaviorSubject([]);
+  options = [1, 2, 3];
+  config = this.tableConfig.getConfiguration();
+  constructor(private fb: FormBuilder, private tableConfig: BillTableConfiguration) {}
 
   ngOnInit(): void {}
+
+  add() {
+    const product = new FormControl();
+    const quantity = new FormControl();
+    const price = new FormControl();
+
+    const row = { product, quantity, price, total: 0 };
+    const rows = this.source$.value;
+    this.source$.next([...rows, row]);
+  }
 }

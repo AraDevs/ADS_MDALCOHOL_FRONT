@@ -1,5 +1,5 @@
 .data-table-container {
-  height: 400px;
+  height: 600px;
   overflow: auto;
 }
 
@@ -8,4 +8,21 @@
     cursor: pointer;
     user-select: none;
   }
+}
+
+.footer-text {
+  color: #3f51b5;
+}
+
+.mat-column-product {
+  flex: 0 0 250px;
+}
+
+button:focus {
+  outline: none;
+}
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
 }

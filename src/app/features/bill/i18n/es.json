@@ -7,8 +7,8 @@
   "FormTable": {
     "Product": "Producto",
     "Quantity": "Cantidad",
-    "Price": "Precio unitario",
-    "Total": "Total",
+    "Price": "Precio ($)",
+    "Total": "Total ($)",
     "Actions": "Acciones"
   }
 }

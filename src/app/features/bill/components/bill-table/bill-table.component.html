@@ -1,52 +1,91 @@
-<div class="data-table-container position-relative">
-  <div
+<!-- <div class="data-table-container position-relative">
+   <div
     [ngStyle]="{ 'max-height': '400px', position: 'relative' }"
-    class="mat-table__wrapper mat-table__wrapper--dashboard mb-4 px-4"
+    class="mat-table__wrapper mat-table__wrapper--dashboard"
   >
-    <mat-table class="mb-4" [dataSource]="source$ | async">
-      <ng-container *ngFor="let column of config.displayedColumns" [matColumnDef]="column">
-        <ng-container *ngIf="column !== 'actions'">
-          <mat-header-cell *matHeaderCellDef>
-            {{ config.titles[column] | transloco }}
-          </mat-header-cell>
-
-          <mat-cell *matCellDef="let data">
-            <div [ngSwitch]="config.controls[column]">
-              <p *ngSwitchCase="'Select'">
-                Select
-              </p>
-              <p *ngSwitchCase="'Input'">
-                Input
-              </p>
-              <p *ngSwitchDefault>
-                {{ data[column] }}
-              </p>
-            </div>
-          </mat-cell>
-
-          <mat-footer-cell *matFooterCellDef> </mat-footer-cell>
-        </ng-container>
-        <ng-container *ngIf="column === 'actions'">
-          <mat-header-cell *matHeaderCellDef>
-            {{ config.titles[column] | transloco }}
-          </mat-header-cell>
-
-          <mat-cell *matCellDef="let data">
-            <div class="actions d-flex justify-content-center align-items-center">
-              <mat-icon color="warn">
-                delete
-              </mat-icon>
-            </div>
-          </mat-cell>
-
-          <mat-footer-cell *matFooterCellDef> </mat-footer-cell>
-        </ng-container>
-      </ng-container>
-
-      <mat-header-row *matHeaderRowDef="config.displayedColumns; sticky: true"></mat-header-row>
-
-      <mat-row *matRowDef="let row; columns: config.displayedColumns"></mat-row>
-      <mat-footer-row *matFooterRowDef="config.displayedColumns; sticky: true"></mat-footer-row>
-    </mat-table>
   </div>
+
+</div> -->
+<div class="position-relative">
+  <mat-table [dataSource]="source$ | async">
+    <ng-container
+      *ngFor="let column of config.displayedColumns; let i = index"
+      [matColumnDef]="column"
+    >
+      <ng-container *ngIf="column !== 'actions'">
+        <mat-header-cell *matHeaderCellDef>
+          {{ config.titles[column] | transloco }}
+        </mat-header-cell>
+
+        <mat-cell *matCellDef="let data">
+          <div [ngSwitch]="config.controls[column]">
+            <mat-form-field
+              class="bill-select-control"
+              *ngSwitchCase="'Select'"
+              appearance="outline"
+            >
+              <mat-select [formControl]="data[column]">
+                <mat-option *ngFor="let option of options" [value]="option"
+                  >{{ option }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field class="bill-control" *ngSwitchCase="'Input'" appearance="outline">
+              <input matInput [formControl]="data[column]" autocomplete="off" />
+              <!-- <mat-error *ngIf="error$ | async as error">{{ error | transloco}}</mat-error> -->
+            </mat-form-field>
+
+            <p *ngSwitchDefault>
+              {{ data[column] }}
+            </p>
+          </div>
+        </mat-cell>
+
+        <mat-footer-cell *matFooterCellDef>
+          <div *ngIf="column === 'product'">
+            <button color="primary" mat-icon-button (click)="add()">
+              <mat-icon>add</mat-icon>
+            </button>
+          </div>
+          <div *ngIf="column === 'price'">
+            <ul>
+              <li>Subtotal</li>
+              <li>Percepción</li>
+              <li>IVA</li>
+              <li>Total</li>
+            </ul>
+          </div>
+          <div *ngIf="column === 'total'">
+            <ul>
+              <li class="footer-text">$50</li>
+              <li class="footer-text">$30</li>
+              <li class="footer-text">$50</li>
+              <li class="footer-text">$20</li>
+            </ul>
+          </div>
+        </mat-footer-cell>
+      </ng-container>
+      <ng-container *ngIf="column === 'actions'">
+        <mat-header-cell *matHeaderCellDef>
+          {{ config.titles[column] | transloco }}
+        </mat-header-cell>
+
+        <mat-cell *matCellDef="let data">
+          <mat-icon color="warn">
+            delete
+          </mat-icon>
+        </mat-cell>
+
+        <mat-footer-cell *matFooterCellDef> </mat-footer-cell>
+      </ng-container>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="config.displayedColumns;"></mat-header-row>
+
+    <mat-row *matRowDef="let row; columns: config.displayedColumns"></mat-row>
+    <mat-footer-row
+      class="py-2 border-0"
+      *matFooterRowDef="config.displayedColumns;"
+    ></mat-footer-row>
+  </mat-table>
 </div>

@@ -12,3 +12,20 @@ body {
 @import 'bootstrap';
 @import 'components/modal';
 
+.bill-control {
+  .mat-form-field-wrapper {
+    padding: 0;
+  }
+  .mat-form-field-infix {
+    width: auto !important;
+    input {
+      width: 40px;
+    }
+  }
+}
+
+.bill-select-control {
+  .mat-form-field-wrapper {
+    padding: 0;
+  }
+}
