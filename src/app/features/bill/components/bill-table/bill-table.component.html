@@ -21,16 +21,15 @@
               *ngSwitchCase="'Select'"
               appearance="outline"
             >
-              <mat-select [formControl]="data[column]" (valueChange)="getInventory($event, i)">
+              <mat-select [formControl]="data[column]" (valueChange)="updateDataSource($event, i, column)">
                 <mat-option *ngFor="let option of options" [value]="option"
                   >{{ option.label }}
                 </mat-option>
               </mat-select>
             </mat-form-field>
 
-            <mat-form-field class="bill-control" *ngSwitchCase="'Input'" appearance="outline">
-              <input matInput [formControl]="data[column]" autocomplete="off" />
-              <!-- <mat-error *ngIf="error$ | async as error">{{ error | transloco}}</mat-error> -->
+            <mat-form-field class="bill-control" *ngSwitchCase="'Input'" appearance="outline"  >
+              <input matInput [formControl]="data[column]" autocomplete="off" (keyup)="computeTotal($event, i, column)" />
             </mat-form-field>
 
             <p *ngSwitchDefault>
