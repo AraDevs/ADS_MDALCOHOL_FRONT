@@ -1,9 +1,11 @@
 import { ValidatorFn } from '@angular/forms';
 import { Observable } from 'rxjs';
 
+export type FieldType = 'Input' | 'Select' | 'Checkbox' | 'Radio' | 'Datepicker' | 'Textarea';
+
 export interface ControlConfig {
   key: string;
-  fieldType: 'Input' | 'Select' | 'Checkbox' | 'Radio' | 'Datepicker' | 'Textarea';
+  fieldType: FieldType;
   name?: string;
   label?: string;
   placeholder?: string;
@@ -16,4 +18,3 @@ export interface ControlConfig {
   cssClasses: string;
   hidden$?: Observable<boolean>;
 }
-

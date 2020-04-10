@@ -7,11 +7,12 @@ import { LoadI18nFile } from '@shared/helpers';
 import { TRANSLOCO_SCOPE } from '@ngneat/transloco';
 import { EffectsModule } from '@ngrx/effects';
 import * as state from '@features/bill/state';
+import { BillTableComponent } from './components/bill-table/bill-table.component';
 
 const loader = LoadI18nFile((lang: string) => () => import(`./i18n/${lang}.json`));
 
 @NgModule({
-  declarations: [BaseComponent, FormComponent],
+  declarations: [BaseComponent, FormComponent, BillTableComponent],
   imports: [
     SharedModule,
     BillRoutingModule,
