@@ -27,7 +27,7 @@ export class BillTableComponent implements OnInit {
 
   @Input() products$: Observable<any[]>;
   records$ = new BehaviorSubject([]);
-
+  totals$ = new BehaviorSubject({ subTotal: 0, perception: 0, iva: 0, total: 0 });
   constructor(
     private total: TotalBillService,
     private tableConfig: BillTableConfiguration,

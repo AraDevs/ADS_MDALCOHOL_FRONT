@@ -46,22 +46,9 @@
                 <mat-icon>add</mat-icon>
               </button>
             </div>
-            <div *ngIf="column === 'price'">
-              <ul>
-                <li>Subtotal</li>
-                <li>Percepción</li>
-                <li>IVA</li>
-                <li>Total</li>
-              </ul>
-            </div>
-            <div *ngIf="column === 'total'">
-              <ul>
-                <li class="footer-text">$50</li>
-                <li class="footer-text">$30</li>
-                <li class="footer-text">$50</li>
-                <li class="footer-text">$20</li>
-              </ul>
-            </div>
+
+            <md-total-titles-list *ngIf="column === 'price'"></md-total-titles-list>
+            <md-total-list *ngIf="column === 'total'" [totals$]="totals$"></md-total-list>
           </mat-footer-cell>
         </ng-container>
         <ng-container *ngIf="column === 'actions'">
