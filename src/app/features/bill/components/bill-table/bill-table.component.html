@@ -9,30 +9,21 @@
 
           <mat-cell *matCellDef="let data; let i = index" class="align-items-center">
             <div [ngSwitch]="config.controls[column]">
-              <mat-form-field
-                class="bill-select-control"
+              <md-table-select
                 *ngSwitchCase="'Select'"
-                appearance="outline"
-              >
-                <mat-select
-                  [formControlName]="getControlKey(data, column)"
-                  (valueChange)="getSelectedProduct($event, i)"
-                  [compareWith]="compareFn"
-                >
-                  <mat-option *ngFor="let option of products$ | async" [value]="option"
-                    >{{ option.label }}
-                  </mat-option>
-                </mat-select>
-              </mat-form-field>
+                [form]="form"
+                [products$]="products$"
+                [controlName]="getControlKey(data, column)"
+                (valueChange)="getSelectedProduct($event, i)"
+              ></md-table-select>
 
-              <mat-form-field class="bill-control" *ngSwitchCase="'Input'" appearance="outline">
-                <input
-                  matInput
-                  [formControlName]="getControlKey(data, column)"
-                  autocomplete="off"
-                  (keyup)="computeTotal(i, column)"
-                />
-              </mat-form-field>
+              <md-table-input
+                *ngSwitchCase="'Input'"
+                [form]="form"
+                (keyup)="computeTotal(i, column)"
+                [controlName]="getControlKey(data, column)"
+              >
+              </md-table-input>
 
               <ng-container *ngSwitchDefault>
                 {{ data[column] }}
@@ -41,22 +32,21 @@
           </mat-cell>
 
           <mat-footer-cell *matFooterCellDef>
-            <div *ngIf="column === 'product'">
-              <button color="primary" mat-icon-button (click)="addRow()">
-                <mat-icon>add</mat-icon>
-              </button>
-            </div>
+            <button *ngIf="column === 'product'" color="primary" mat-icon-button (click)="addRow()">
+              <mat-icon>add</mat-icon>
+            </button>
 
             <md-total-titles-list *ngIf="column === 'price'"></md-total-titles-list>
             <md-total-list *ngIf="column === 'total'" [totals$]="totals$"></md-total-list>
           </mat-footer-cell>
         </ng-container>
+
         <ng-container *ngIf="column === 'actions'">
           <mat-header-cell *matHeaderCellDef>
             {{ config.titles[column] | transloco }}
           </mat-header-cell>
 
-          <mat-cell *matCellDef="let data; let i = index">
+          <mat-cell class="actions" *matCellDef="let data; let i = index">
             <mat-icon color="warn" (click)="deleteRow(i)">
               delete
             </mat-icon>
@@ -67,7 +57,6 @@
       </ng-container>
 
       <mat-header-row *matHeaderRowDef="config.displayedColumns"></mat-header-row>
-
       <mat-row *matRowDef="let row; columns: config.displayedColumns"></mat-row>
       <mat-footer-row
         class="py-2 border-0"
