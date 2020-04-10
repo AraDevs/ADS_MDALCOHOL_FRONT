@@ -8,9 +8,12 @@
   },
   "Table": {
     "Titles": {
-      "Client": "Cliente",
+      "Num": "#",
+      "BusinessName": "Cliente/Empresa",
       "BillDate": "Fecha de Factura",
-      "PaymentType": "Tipo de Pago"
+      "PaymentType": "Tipo de Pago",
+      "BillType": "Tipo de Facturación",
+      "Actions": "Acciones"
     }
   },
   "Modal": {

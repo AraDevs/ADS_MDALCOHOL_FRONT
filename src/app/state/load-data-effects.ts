@@ -126,6 +126,22 @@ export class LoadDataEffects {
     return this.effectFactory.create(config);
   });
 
+  loadBills$ = createEffect(() => {
+    const effectReqConfig = new EffectRequestConfig(this.requestClient, 'get');
+    const actionsConfig = new EffectActionsConfig(
+      actions.LOAD_BILLS,
+      actions.BILLS_LOADED_SUCCESS,
+      actions.BILLS_LOADED_FAIL
+    );
+    const config = new EffectConfigModel(
+      effectReqConfig,
+      actionsConfig,
+      `${environment.host}/bills`
+    );
+
+    return this.effectFactory.create(config);
+  });
+
   loadInventoriesByClient$ = createEffect(() => {
     const { LOAD_INVENTORY_BY_CLIENT, INVENTORY_BY_CLIENT_LOADED_SUCCESS, INVENTORY_BY_CLIENT_LOADED_FAIL } = actions;
 

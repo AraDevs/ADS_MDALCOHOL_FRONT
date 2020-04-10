@@ -1,3 +1,6 @@
 <div class="p-4">
   <md-section-bar title="SideNav.Bill" (buttonEvent)="add()"></md-section-bar>
+  <md-data-table [dataSource$]="dataBills" [config]="tableConfig"
+    [loading$]="loadingBills$">
+  </md-data-table>
 </div>

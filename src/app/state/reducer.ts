@@ -15,6 +15,7 @@ export interface State {
   inventoriesActive: any[];
   productsType: string[];
   productionOrders: any[];
+  bills: any[];
   paymentType: string[];
   billType: string[];
 }
@@ -33,6 +34,7 @@ const INITIAL_STATE: State = {
   inventoriesActive: [],
   productsType: ['Materia prima', 'Producto final'],
   productionOrders: [],
+  bills: [],
   paymentType: ['Contado', 'Credito'],
   billType: ['Consumidor final', 'Crédito Fiscal', 'Notas de Crédito', 'Notas de Débito']
 };
@@ -93,6 +95,9 @@ const globalReducer = createReducer(
       return { ...productionOrder, inventoryName: productionOrder.inventory.name };
     });
     return { ...state, productionOrders: data };
+  }),
+  on(actions.BILLS_LOADED_SUCCESS, (state, { payload }) => {
+    return { ...state, bills: payload };
   })
 );
 
