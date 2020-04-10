@@ -18,14 +18,13 @@ import { SubSink } from 'subsink';
   selector: 'md-form',
   templateUrl: './form.component.html',
   styleUrls: ['./form.component.scss'],
-  providers: [FormModel, FormService, SuccessService, ErrorService]
+  providers: [FormModel, FormService, SuccessService, ErrorService],
 })
 export class FormComponent implements OnInit {
   private subs = new SubSink();
   private errors = new Subject<string[]>();
   private update = false;
   private bill: any;
-  private clientId: any;
 
   form: FormGroup;
   fields: Partial<InputControlConfig | SelectControlConfig>[];
@@ -41,14 +40,14 @@ export class FormComponent implements OnInit {
     private formService: FormService,
     private message: MessageService,
     @Inject(DYNAMIC_MODAL_DATA) private data: any
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.fields = this.formModel.getModel();
     this.form = this.factoryForm.createPlainForm(this.fields as any);
 
-    this.subs.sink = this.form.get('clientId').valueChanges.subscribe(client => {
-      this.clientId = this.loadInventoriesByClient(client);
+    this.subs.sink = this.form.get('clientId').valueChanges.subscribe((client) => {
+      this.loadInventoriesByClient(client);
     });
 
     this.successService.success(state.SAVE_BILLS_SUCCESS, () => {
@@ -68,7 +67,7 @@ export class FormComponent implements OnInit {
       const data = this.formService.getBillDTO(values);
       if (this.update) {
         const action = state.UPDATE_BILLS({
-          payload: { data: { ...data, id: this.bill.id }}
+          payload: { data: { ...data, id: this.bill.id } },
         });
         this.store$.dispatch(action);
       } else {
@@ -95,6 +94,6 @@ export class FormComponent implements OnInit {
 
   private loadInventoriesByClient(client) {
     const metadata = { resource: { id: client.id } };
-    this.store$.dispatch(state.LOAD_INVENTORY_BY_CLIENT({ payload: { metadata }}));
+    this.store$.dispatch(state.LOAD_INVENTORY_BY_CLIENT({ payload: { metadata } }));
   }
 }
