@@ -5,6 +5,7 @@ import { RequestClient } from '@core/client';
 import { createEffect } from '@ngrx/effects';
 import * as actions from './actions';
 import { EffectRequestConfig, EffectActionsConfig, EffectConfigModel } from '@core/types';
+import { RestResourceFactory } from '@core/utils';
 
 /**
  * Load al the data that is shared between lazy modules
@@ -121,6 +122,23 @@ export class LoadDataEffects {
       actionsConfig,
       `${environment.host}/inventories`
     );
+
+    return this.effectFactory.create(config);
+  });
+
+  loadInventoriesByClient$ = createEffect(() => {
+    const { LOAD_INVENTORY_BY_CLIENT, INVENTORY_BY_CLIENT_LOADED_SUCCESS, INVENTORY_BY_CLIENT_LOADED_FAIL } = actions;
+
+    const effectReqConfig = new EffectRequestConfig(this.requestClient, 'get');
+    const actionsConfig = new EffectActionsConfig(
+      LOAD_INVENTORY_BY_CLIENT,
+      INVENTORY_BY_CLIENT_LOADED_SUCCESS,
+      INVENTORY_BY_CLIENT_LOADED_FAIL
+    );
+    const config = new EffectConfigModel(effectReqConfig, actionsConfig);
+
+    const template = `${environment.host}/inventories/client/$$0`;
+    config.resourceFactory = new RestResourceFactory(template, ['id']);
 
     return this.effectFactory.create(config);
   });

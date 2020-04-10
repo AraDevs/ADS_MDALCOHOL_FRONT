@@ -3,16 +3,17 @@ import { FormModel } from '@features/bill/config/form-model';
 import { FormGroup } from '@angular/forms';
 import { InputControlConfig, SelectControlConfig } from '@core/types';
 import { FactoryFormService } from '@core/services';
-import { Store } from '@ngrx/store';
+import { Store, select } from '@ngrx/store';
 import { AppState } from '@state/app-state';
 import { SuccessService, ErrorService } from '@shared/services';
 import { FormService } from '@features/bill/components/form/form.service';
-import { Subject } from 'rxjs';
+import { Subject, Observable } from 'rxjs';
 import { MessageService } from '@core/services/message.service';
 import { DYNAMIC_MODAL_DATA, MODAL_ACCEPT_EVENT, MODAL_INITIAL_EVENT } from '@shared/constants';
 import * as state from '@features/bill/state';
 import * as globalState from '@state/index';
 import { SubSink } from 'subsink';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'md-form',
@@ -29,6 +30,7 @@ export class FormComponent implements OnInit {
   form: FormGroup;
   fields: Partial<InputControlConfig | SelectControlConfig>[];
   errors$ = this.errors.asObservable();
+  products$: Observable<any[]>;
 
   @ViewChild('formBtn') formBtn: ElementRef<HTMLButtonElement>;
   constructor(
@@ -45,7 +47,12 @@ export class FormComponent implements OnInit {
   ngOnInit(): void {
     this.fields = this.formModel.getModel();
     this.form = this.factoryForm.createPlainForm(this.fields as any);
-
+    this.products$ = this.store$.pipe(
+      select(globalState.selectInventoriesActive),
+      map(products => {
+        return products.map(product => ({ ...product, label: product.name, value: product.price }));
+      })
+    );
     this.subs.sink = this.form.get('clientId').valueChanges.subscribe((client) => {
       this.loadInventoriesByClient(client);
     });
@@ -94,6 +101,6 @@ export class FormComponent implements OnInit {
 
   private loadInventoriesByClient(client) {
     const metadata = { resource: { id: client.id } };
-    this.store$.dispatch(state.LOAD_INVENTORY_BY_CLIENT({ payload: { metadata } }));
+    this.store$.dispatch(globalState.LOAD_INVENTORY_BY_CLIENT({ payload: { metadata } }));
   }
 }

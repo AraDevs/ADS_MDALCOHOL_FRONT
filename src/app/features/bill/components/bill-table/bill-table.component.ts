@@ -25,7 +25,7 @@ export class BillTableComponent implements OnInit {
   records$ = new BehaviorSubject([]);
 
   @Input()
-  set products(products$: Observable<any[]>) {
+  set products$(products$: Observable<any[]>) {
     this.options$ = products$;
   }
 

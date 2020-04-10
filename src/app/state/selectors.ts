@@ -26,7 +26,7 @@ export const selectProviderById = createSelector(selectData,
 
 // Inventories
 export const selectInventories = createSelector(selectData, (state: State) => state.inventories);
-
+export const selectInventoriesActive = createSelector(selectData, (state: State) => state.inventoriesActive);
 export const selectTypeProduct = createSelector(selectData, (state: State) => state.productsType);
 
 // Production Orders
