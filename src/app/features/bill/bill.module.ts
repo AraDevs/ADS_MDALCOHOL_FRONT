@@ -8,11 +8,15 @@ import { TRANSLOCO_SCOPE } from '@ngneat/transloco';
 import { EffectsModule } from '@ngrx/effects';
 import * as state from '@features/bill/state';
 import { BillTableComponent } from './components/bill-table/bill-table.component';
+import { TotalListComponent } from './components/bill-table/components/total-list/total-list.component';
+import { TotalTitlesListComponent } from './components/bill-table/components/total-titles-list/total-titles-list.component';
+import { TableSelectComponent } from './components/bill-table/components/table-select/table-select.component';
+import { TableInputComponent } from './components/bill-table/components/table-input/table-input.component';
 
 const loader = LoadI18nFile((lang: string) => () => import(`./i18n/${lang}.json`));
 
 @NgModule({
-  declarations: [BaseComponent, FormComponent, BillTableComponent],
+  declarations: [BaseComponent, FormComponent, BillTableComponent, TotalListComponent, TotalTitlesListComponent, TableSelectComponent, TableInputComponent],
   imports: [
     SharedModule,
     BillRoutingModule,

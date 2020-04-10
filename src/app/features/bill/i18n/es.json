@@ -26,6 +26,12 @@
     "Quantity": "Cantidad",
     "Price": "Precio ($)",
     "Total": "Total ($)",
-    "Actions": "Acciones"
+    "Actions": "Acciones",
+    "Footer": {
+      "SubTotal": "Sub total:",
+      "Perception": "Percepción:",
+      "IVA": "IVA:",
+      "Total": "Total:"
+    }
   }
 }

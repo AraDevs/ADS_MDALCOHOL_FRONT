@@ -1,89 +1,67 @@
 <div class="position-relative">
-  <mat-table [dataSource]="records$ | async">
-    <ng-container *ngFor="let column of config.displayedColumns" [matColumnDef]="column">
-      <ng-container *ngIf="column !== 'actions'">
-        <mat-header-cell *matHeaderCellDef>
-          {{ config.titles[column] | transloco }}
-        </mat-header-cell>
+  <form [formGroup]="form">
+    <mat-table [dataSource]="records$ | async">
+      <ng-container *ngFor="let column of config.displayedColumns" [matColumnDef]="column">
+        <ng-container *ngIf="column !== 'actions'">
+          <mat-header-cell *matHeaderCellDef>
+            {{ config.titles[column] | transloco }}
+          </mat-header-cell>
 
-        <mat-cell *matCellDef="let data; let i = index">
-          <div [ngSwitch]="config.controls[column]">
-            <mat-form-field
-              class="bill-select-control"
-              *ngSwitchCase="'Select'"
-              appearance="outline"
-            >
-              <mat-select
-                [formControl]="data[column]"
+          <mat-cell *matCellDef="let data; let i = index" class="align-items-center">
+            <div [ngSwitch]="config.controls[column]">
+              <md-table-select
+                *ngSwitchCase="'Select'"
+                [form]="form"
+                [products$]="products$"
+                [controlName]="getControlKey(data, column)"
                 (valueChange)="getSelectedProduct($event, i)"
-                [compareWith]="compareFn"
-              >
-                <mat-option *ngFor="let option of options$ | async" [value]="option"
-                  >{{ option.label }}
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
+              ></md-table-select>
 
-            <mat-form-field class="bill-control" *ngSwitchCase="'Input'" appearance="outline">
-              <input
-                matInput
-                [formControl]="data[column]"
-                autocomplete="off"
+              <md-table-input
+                *ngSwitchCase="'Input'"
+                [form]="form"
                 (keyup)="computeTotal(i, column)"
-              />
-            </mat-form-field>
+                [controlName]="getControlKey(data, column)"
+              >
+              </md-table-input>
 
-            <p *ngSwitchDefault>
-              {{ data[column] }}
-            </p>
-          </div>
-        </mat-cell>
+              <ng-container *ngSwitchDefault>
+                {{ data[column] }}
+              </ng-container>
+            </div>
+          </mat-cell>
 
-        <mat-footer-cell *matFooterCellDef>
-          <div *ngIf="column === 'product'">
-            <button color="primary" mat-icon-button (click)="addRow()">
+          <mat-footer-cell *matFooterCellDef>
+            <button *ngIf="column === 'product'" color="primary" mat-icon-button (click)="addRow()">
               <mat-icon>add</mat-icon>
             </button>
-          </div>
-          <div *ngIf="column === 'price'">
-            <ul>
-              <li>Subtotal</li>
-              <li>Percepción</li>
-              <li>IVA</li>
-              <li>Total</li>
-            </ul>
-          </div>
-          <div *ngIf="column === 'total'">
-            <ul>
-              <li class="footer-text">$50</li>
-              <li class="footer-text">$30</li>
-              <li class="footer-text">$50</li>
-              <li class="footer-text">$20</li>
-            </ul>
-          </div>
-        </mat-footer-cell>
+
+            <md-total-titles-list *ngIf="column === 'price'"></md-total-titles-list>
+            <md-total-list *ngIf="column === 'total'" [totals$]="totals$"></md-total-list>
+          </mat-footer-cell>
+        </ng-container>
+
+        <ng-container *ngIf="column === 'actions'">
+          <mat-header-cell *matHeaderCellDef>
+            {{ config.titles[column] | transloco }}
+          </mat-header-cell>
+
+          <mat-cell class="actions" *matCellDef="let data; let i = index">
+            <mat-icon color="warn" (click)="deleteRow(i)">
+              delete
+            </mat-icon>
+          </mat-cell>
+
+          <mat-footer-cell *matFooterCellDef> </mat-footer-cell>
+        </ng-container>
       </ng-container>
-      <ng-container *ngIf="column === 'actions'">
-        <mat-header-cell *matHeaderCellDef>
-          {{ config.titles[column] | transloco }}
-        </mat-header-cell>
 
-        <mat-cell *matCellDef="let data; let i = index">
-          <mat-icon color="warn" (click)="deleteRow(i)">
-            delete
-          </mat-icon>
-        </mat-cell>
-
-        <mat-footer-cell *matFooterCellDef> </mat-footer-cell>
-      </ng-container>
-    </ng-container>
-
-    <mat-header-row *matHeaderRowDef="config.displayedColumns"></mat-header-row>
-
-    <mat-row *matRowDef="let row; columns: config.displayedColumns"></mat-row>
-    <mat-footer-row
-      class="py-2 border-0"
-      *matFooterRowDef="config.displayedColumns"
-    ></mat-footer-row>
-  </mat-table>
+      <mat-header-row *matHeaderRowDef="config.displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: config.displayedColumns"></mat-row>
+      <mat-footer-row
+        class="py-2 border-0"
+        *matFooterRowDef="config.displayedColumns"
+      ></mat-footer-row>
+    </mat-table>
+  </form>
 </div>
