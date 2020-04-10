@@ -22,6 +22,16 @@ export const CLIENTS_LOADED_FAIL = createAction(
   props<{ payload: ErrorActionData }>()
 );
 
+export const LOAD_CLIENTS_ACTIVE = createAction('Load Clients Active');
+export const CLIENTS_ACTIVE_LOADED_SUCCESS = createAction(
+  'Clients Active Loaded Success',
+  props<{ payload: any[] }>()
+);
+export const CLIENTS_ACTIVE_LOADED_FAIL = createAction(
+  'Clients Active Loaded Fail',
+  props<{ payload: ErrorActionData }>()
+);
+
 // Departments
 export const LOAD_DEPARTMENTS = createAction('Load Departments');
 export const DEPARTMENTS_LOADED_SUCCESS = createAction(
@@ -81,5 +91,16 @@ export const PRODUCTION_ORDERS_LOADED_SUCCESS = createAction(
 );
 export const PRODUCTION_ORDERS_LOADED_FAIL = createAction(
   'Production Orders Loaded Fail',
+  props<{ payload: ErrorActionData }>()
+);
+
+// Bills
+export const LOAD_BILLS = createAction('Load Bills');
+export const BILLS_LOADED_SUCCESS = createAction(
+  'Bills Loaded Success',
+  props<{ payload: any[] }>()
+);
+export const BILLS_LOADED_FAIL = createAction(
+  'Bills Loaded Fail',
   props<{ payload: ErrorActionData }>()
 );

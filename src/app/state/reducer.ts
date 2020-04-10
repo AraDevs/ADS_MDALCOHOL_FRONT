@@ -5,6 +5,7 @@ export interface State {
   departments: any[];
   municipalities: any[];
   clients: any[];
+  clientsActive: any[];
   products: any[];
   sellers: any[];
   providers: any[];
@@ -13,12 +14,15 @@ export interface State {
   inventories: any[];
   productsType: string[];
   productionOrders: any[];
+  paymentType: string[];
+  billType: string[];
 }
 
 const INITIAL_STATE: State = {
   departments: [],
   municipalities: [],
   clients: [],
+  clientsActive: [],
   products: [],
   sellers: [],
   providers: [],
@@ -26,7 +30,9 @@ const INITIAL_STATE: State = {
   typesPerson: ['Natural', 'Jurídica'],
   inventories: [],
   productsType: ['Materia prima', 'Producto final'],
-  productionOrders: []
+  productionOrders: [],
+  paymentType: ['Contado', 'Credito'],
+  billType: ['Consumidor final', 'Crédito Fiscal', 'Notas de Crédito', 'Notas de Débito']
 };
 
 const globalReducer = createReducer(
@@ -52,6 +58,12 @@ const globalReducer = createReducer(
       return { ...client, partnerName: client.seller.name };
     });
     return { ...state, clients: data };
+  }),
+  on(actions.CLIENTS_ACTIVE_LOADED_SUCCESS, (state, { payload }) => {
+    const data = payload.map(client => {
+      return { ...client, partnerName: client.seller.name };
+    });
+    return { ...state, clientsActive: data };
   }),
   on(actions.FILTER_MUNICIPALITIES, (state, { payload }) => {
     const { id } = payload;

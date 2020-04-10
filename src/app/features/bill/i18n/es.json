@@ -1,4 +1,18 @@
 {
+  "Form": {
+    "Client": "Cliente",
+    "BillDate": "Fecha",
+    "PaymentType": "Tipo de Pago",
+    "BillType": "Tipo de Facturación",
+    "Perception": "Percepción"
+  },
+  "Table": {
+    "Titles": {
+      "Client": "Cliente",
+      "BillDate": "Fecha de Factura",
+      "PaymentType": "Tipo de Pago"
+    }
+  },
   "Modal": {
     "Titles": {
       "FormModal": "Registro de facturas"

@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { filter } from 'rxjs/operators';
 import { FormComponent } from '../form/form.component';
-import { Store } from '@ngrx/store';
+import { Store, select } from '@ngrx/store';
 import { AppState } from '@state/app-state';
 import { ModalFactoryService } from '@shared/services';
 import { MODAL_INITIAL_EVENT } from '@shared/constants';
+import * as globalState from '@state/index';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'md-base',
@@ -12,16 +14,23 @@ import { MODAL_INITIAL_EVENT } from '@shared/constants';
   styleUrls: ['./base.component.scss'],
 })
 export class BaseComponent implements OnInit {
-  constructor(private store$: Store<AppState>, private modalFactory: ModalFactoryService) {}
+  dataClients: Observable<any[]>;
 
-  ngOnInit(): void {}
+  constructor(
+    private store$: Store<AppState>,
+    private modalFactory: ModalFactoryService
+  ) {}
+
+  ngOnInit(): void {
+    this.store$.dispatch(globalState.LOAD_CLIENTS_ACTIVE());
+  }
 
   add() {
     this.createModalForm()
       .pipe(filter((result) => result.event !== MODAL_INITIAL_EVENT))
       .subscribe((result) => {
         const component = result.modal.componentInstance.getRenderedComponent<FormComponent>();
-        // component.execute({ event: result.event });
+        component.execute({ event: result.event });
       });
   }
 
