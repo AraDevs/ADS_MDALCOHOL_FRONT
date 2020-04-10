@@ -1,10 +1,11 @@
 import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
+import { FormControl, Validators, FormGroup } from '@angular/forms';
 import { MessageService } from '@core/services/message.service';
 import { BehaviorSubject, merge, Observable, Subject } from 'rxjs';
-import { debounceTime, filter, map } from 'rxjs/operators';
+import { debounceTime, filter, map, skip } from 'rxjs/operators';
 import { BillTableConfiguration } from './bill-table-configuration';
 import { TotalBillService } from './total.service';
+import { v4 as uuidv4 } from 'uuid';
 
 type Key = number;
 type Row = number;
@@ -21,15 +22,11 @@ export class BillTableComponent implements OnInit {
   private selectedRows = new Map<Row, Key>();
   private updateTotal$ = new Subject<any>();
 
-  options$: Observable<any[]>;
-  records$ = new BehaviorSubject([]);
-
-  @Input()
-  set products$(products$: Observable<any[]>) {
-    this.options$ = products$;
-  }
-
+  form: FormGroup = new FormGroup({});
   config = this.tableConfig.getConfiguration();
+
+  @Input() products$: Observable<any[]>;
+  records$ = new BehaviorSubject([]);
 
   constructor(
     private total: TotalBillService,
@@ -41,12 +38,47 @@ export class BillTableComponent implements OnInit {
     const quantity$ = this.getUpdateTotalObservable('quantity');
     const price$ = this.getUpdateTotalObservable('price');
     merge(quantity$, price$).subscribe((records) => this.records$.next(records));
+
+    this.products$
+      .pipe(
+        skip(1),
+        map((products) => {
+          return products.reduce(
+            (obj: any, product: any) => ({ ...obj, [product.id]: product.price }),
+            {}
+          );
+        }),
+        map((productsObj) => {
+          const records = this.records$.value.slice();
+          return records.map((record) => {
+            const product = record.product as FormControl;
+            const price = record.price as FormControl;
+            const quantity = record.quantity as FormControl;
+            const newPrice = parseFloat(productsObj[product.value.id]);
+            const total = quantity.valid ? quantity.value * newPrice : 0;
+            // Update values when the products$ change
+            price.setValue(newPrice);
+            record.total = total;
+
+            return record;
+          });
+        })
+      )
+      .subscribe((records) => {
+        this.records$.next(records);
+      });
   }
 
   addRow() {
     if (this.canAddMore()) {
       const controls = this.getRowControls();
-      const newRow = { ...controls, total: 0 };
+      const ids = this.getControlsKey();
+
+      this.form.addControl(ids.productKey, controls.product);
+      this.form.addControl(ids.quantityKey, controls.quantity);
+      this.form.addControl(ids.priceKey, controls.price);
+
+      const newRow = { ...controls, ...ids, total: 0 };
       const rows = this.records$.value;
       this.records$.next([...rows, newRow]);
     } else {
@@ -97,6 +129,20 @@ export class BillTableComponent implements OnInit {
     return records;
   }
 
+  updatePrices() {
+    const records = this.records$.value;
+    console.log(records);
+
+    records.map((r) => {
+      console.log(r.product.value);
+      return r;
+    });
+  }
+
+  getControlKey(data: any, column: string) {
+    return data[column + 'Key'];
+  }
+
   private getUpdateTotalObservable(column: string) {
     return this.updateTotal$.pipe(
       filter((result) => result.column === column),
@@ -109,16 +155,6 @@ export class BillTableComponent implements OnInit {
         return records;
       })
     );
-  }
-
-  updatePrices() {
-    const records = this.records$.value;
-    console.log(records);
-
-    records.map((r) => {
-      console.log(r.product.value);
-      return r;
-    });
   }
 
   private cachingProduct(product: any, row: number) {
@@ -158,6 +194,10 @@ export class BillTableComponent implements OnInit {
     ]);
 
     return { product, quantity, price };
+  }
+
+  private getControlsKey() {
+    return { productKey: uuidv4(), quantityKey: uuidv4(), priceKey: uuidv4() };
   }
 
   compareFn(c1: any, c2: any): boolean {
