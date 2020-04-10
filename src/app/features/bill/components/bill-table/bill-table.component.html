@@ -13,8 +13,12 @@
               *ngSwitchCase="'Select'"
               appearance="outline"
             >
-              <mat-select [formControl]="data[column]" (valueChange)="getSelectedProduct($event, i)">
-                <mat-option *ngFor="let option of options" [value]="option"
+              <mat-select
+                [formControl]="data[column]"
+                (valueChange)="getSelectedProduct($event, i)"
+                [compareWith]="compareFn"
+              >
+                <mat-option *ngFor="let option of options$ | async" [value]="option"
                   >{{ option.label }}
                 </mat-option>
               </mat-select>
@@ -37,7 +41,7 @@
 
         <mat-footer-cell *matFooterCellDef>
           <div *ngIf="column === 'product'">
-            <button color="primary" mat-icon-button (click)="add()">
+            <button color="primary" mat-icon-button (click)="addRow()">
               <mat-icon>add</mat-icon>
             </button>
           </div>
@@ -64,8 +68,8 @@
           {{ config.titles[column] | transloco }}
         </mat-header-cell>
 
-        <mat-cell *matCellDef="let data">
-          <mat-icon color="warn">
+        <mat-cell *matCellDef="let data; let i = index">
+          <mat-icon color="warn" (click)="deleteRow(i)">
             delete
           </mat-icon>
         </mat-cell>
