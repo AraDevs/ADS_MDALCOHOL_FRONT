@@ -48,10 +48,15 @@ export class BillTableComponent implements OnInit {
 
     const changes$ = merge(quantityChange$, priceChange$, productsChange$);
 
-    this.subs.sink = changes$.subscribe(({ rows, total }) => {
+    this.subs.sink = changes$.subscribe(({ rows, subTotal }) => {
       const totals = this.totals$.value;
+      const { iva: _iva, perception: _perception } = totals;
+      const iva = _iva === 0 ? 0 : subTotal * 0.13;
+      const perception = _perception === 0 ? 0 : subTotal * 0.1;
+      const total = subTotal + iva + perception;
+
       this.rows$.next(rows);
-      this.totals$.next({ ...totals, subTotal: total });
+      this.totals$.next({ ...totals, subTotal, total, iva, perception });
     });
 
     this.subs.sink = merge(
@@ -95,10 +100,10 @@ export class BillTableComponent implements OnInit {
     this.removeCachedProduct(row);
 
     const totals = this.totals$.value;
-    const total = this.total.getTotal(newrows);
+    const subTotal = this.total.getSubTotal(rows);
 
     this.rows$.next(newrows);
-    this.totals$.next({ ...totals, total });
+    this.totals$.next({ ...totals, subTotal });
   }
 
   computeSubTotal(row: number, column: string) {
@@ -156,7 +161,7 @@ export class BillTableComponent implements OnInit {
         return rows;
       }),
       map((rows) => ({
-        total: this.total.getTotal(rows),
+        subTotal: this.total.getSubTotal(rows),
         rows,
       }))
     );

@@ -16,7 +16,7 @@ export class TotalBillService {
     }
   }
 
-  public getTotal(rows: BillRow[]) {
+  public getSubTotal(rows: BillRow[]) {
     return rows.reduce((total: number, row: any) => {
       return (total += row.total);
     }, 0);
@@ -39,10 +39,10 @@ export class TotalBillService {
         }
 
         obj.rows = [...obj.rows, record];
-        obj.total = obj.total + subTotal;
+        obj.subTotal = obj.subTotal + subTotal;
         return obj;
       },
-      { rows: [], total: 0 }
+      { rows: [], subTotal: 0 }
     );
   }
 }
