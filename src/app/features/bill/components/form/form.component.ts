@@ -13,7 +13,7 @@ import { DYNAMIC_MODAL_DATA, MODAL_ACCEPT_EVENT, MODAL_INITIAL_EVENT } from '@sh
 import * as state from '@features/bill/state';
 import * as globalState from '@state/index';
 import { SubSink } from 'subsink';
-import { map } from 'rxjs/operators';
+import { map, startWith, shareReplay } from 'rxjs/operators';
 
 @Component({
   selector: 'md-form',
@@ -65,10 +65,14 @@ export class FormComponent implements OnInit {
       this.loadInventoriesByClient(client);
     });
 
-    this.computePerception$ = this.form.get('perception').valueChanges;
-    this.computeIVA$ = this.form
-      .get('bill_type')
-      .valueChanges.pipe(map(({ label }) => label === 'Crédito Fiscal'));
+    this.computePerception$ = this.form
+      .get('perception')
+      .valueChanges.pipe(startWith(false), shareReplay(1));
+    this.computeIVA$ = this.form.get('bill_type').valueChanges.pipe(
+      startWith(false),
+      map(({ label }) => label === 'Crédito Fiscal'),
+      shareReplay(1)
+    );
 
     this.successService.success(state.SAVE_BILLS_SUCCESS, () => {
       this.store$.dispatch(globalState.LOAD_BILLS());

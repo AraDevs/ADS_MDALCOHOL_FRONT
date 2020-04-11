@@ -3,6 +3,13 @@ import { BillRow } from './types/bill-row';
 
 @Injectable()
 export class TotalBillService {
+  public getTotals(subTotal: number, computeIva: boolean, computePerception: boolean) {
+    const iva = computeIva ? subTotal * 0.13 : 0;
+    const perception = computePerception ? subTotal * 0.1 : 0;
+    const total = subTotal + iva + perception;
+    return { subTotal, iva, perception, total };
+  }
+
   public getSubTotalByRow(obj: { row: number; column: string; rows: BillRow[] }) {
     const { row, column, rows } = obj;
     const control = rows[row][column];

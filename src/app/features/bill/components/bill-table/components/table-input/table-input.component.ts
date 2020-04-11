@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
+import { ErrorStateMatcher } from '@angular/material/core';
 
 @Component({
   selector: 'md-table-input',
@@ -16,6 +17,7 @@ import { FormGroup } from '@angular/forms';
     </div>
   `,
   styles: [],
+  providers: [ErrorStateMatcher],
 })
 export class TableInputComponent {
   @Input() form: FormGroup;

@@ -1,14 +1,14 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Observable } from 'rxjs';
 
 @Component({
   selector: 'md-total-list',
   template: `
     <ul *ngIf="totals$ | async as totals">
-      <li class="footer-text">$ {{ totals.subTotal }}</li>
-      <li class="footer-text">$ {{ totals.perception }}</li>
-      <li class="footer-text">$ {{ totals.iva }}</li>
-      <li class="footer-text">$ {{ totals.total }}</li>
+      <li class="footer-text">$ {{ totals.subTotal.toFixed(2) }}</li>
+      <li class="footer-text">$ {{ totals.perception.toFixed(2) }}</li>
+      <li class="footer-text">$ {{ totals.iva.toFixed(2) }}</li>
+      <li class="footer-text">$ {{ totals.total.toFixed(2) }}</li>
     </ul>
   `,
   styles: [

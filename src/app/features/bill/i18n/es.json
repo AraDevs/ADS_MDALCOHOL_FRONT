@@ -32,6 +32,10 @@
       "Perception": "Percepción:",
       "IVA": "IVA:",
       "Total": "Total:"
+    },
+    "Messages": {
+      "SelectedProduct": "El producto ya esta seleccionado",
+      "AddMore": "Hay valores incorrectos en la tabla o tienes un registro pendiente"
     }
   }
 }

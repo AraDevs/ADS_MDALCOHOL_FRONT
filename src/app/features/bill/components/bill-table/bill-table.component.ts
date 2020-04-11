@@ -1,22 +1,20 @@
 import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { MessageService } from '@core/services/message.service';
-import { BehaviorSubject, merge, Observable, Subject } from 'rxjs';
-import { debounceTime, filter, map, skip, startWith } from 'rxjs/operators';
+import { BehaviorSubject, combineLatest, merge, Observable, of, Subject } from 'rxjs';
+import { debounceTime, filter, map, skip, switchMap } from 'rxjs/operators';
 import { SubSink } from 'subsink';
 import { BillTableConfiguration } from './bill-table-configuration';
 import { BillTableService } from './bill-table.service';
+import { billTableProviders } from './providers';
 import { TotalBillService } from './total.service';
-import { BillRow } from './types/bill-row';
-
-type Key = number;
-type Row = number;
+import { BillRow, Key, Row } from './types';
 
 @Component({
   selector: 'md-bill-table',
   templateUrl: './bill-table.component.html',
   styleUrls: ['./bill-table.component.scss'],
-  providers: [BillTableConfiguration, TotalBillService, BillTableService],
+  providers: [...billTableProviders],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BillTableComponent implements OnInit {
@@ -34,6 +32,8 @@ export class BillTableComponent implements OnInit {
 
   rows$ = new BehaviorSubject<BillRow[]>([]);
   totals$ = new BehaviorSubject({ subTotal: 0, perception: 0, iva: 0, total: 0 });
+  deleteRow$ = new Subject<{ rows: BillRow[]; subTotal: number }>();
+
   constructor(
     private total: TotalBillService,
     private tableConfig: BillTableConfiguration,
@@ -46,34 +46,18 @@ export class BillTableComponent implements OnInit {
     const priceChange$ = this.computeSubTotalWhenColumnChange('price');
     const productsChange$ = this.updateRowTotalsWhenProductsChange();
 
-    const changes$ = merge(quantityChange$, priceChange$, productsChange$);
+    const changes$ = merge(this.deleteRow$, quantityChange$, priceChange$, productsChange$).pipe(
+      switchMap((obj) => {
+        return combineLatest([this.computeIVA$, this.computePerception$, of(obj)]);
+      })
+    );
 
-    this.subs.sink = changes$.subscribe(({ rows, subTotal }) => {
-      const totals = this.totals$.value;
-      const { iva: _iva, perception: _perception } = totals;
-      const iva = _iva === 0 ? 0 : subTotal * 0.13;
-      const perception = _perception === 0 ? 0 : subTotal * 0.1;
-      const total = subTotal + iva + perception;
+    this.subs.sink = changes$.subscribe((result) => {
+      const [computeIva, computePerception, { subTotal, rows }] = result;
+      const totals = this.total.getTotals(subTotal, computeIva, computePerception);
 
       this.rows$.next(rows);
-      this.totals$.next({ ...totals, subTotal, total, iva, perception });
-    });
-
-    this.subs.sink = merge(
-      this.computePerception$.pipe(
-        map((compute) => ({ compute, value: 0.1, key: 'perception', key2: 'iva' }))
-      ),
-      this.computeIVA$.pipe(
-        map((compute) => ({ compute, value: 0.13, key: 'iva', key2: 'perception' }))
-      )
-    ).subscribe((res) => {
-      const { compute, value, key, key2 } = res;
-      const totals = this.totals$.value;
-      const { subTotal } = totals;
-      const result = compute ? subTotal * value : 0;
-
-      const total = subTotal + result + totals[key2];
-      this.totals$.next({ ...totals, [key]: result, total });
+      this.totals$.next(totals);
     });
   }
 
@@ -81,36 +65,29 @@ export class BillTableComponent implements OnInit {
     if (this.form.valid) {
       const controls = this.billTableService.getRowControls();
       const ids = this.billTableService.getControlsKey();
+      this.addControls(ids, controls);
 
-      this.form.addControl(ids.productKey, controls.product);
-      this.form.addControl(ids.quantityKey, controls.quantity);
-      this.form.addControl(ids.priceKey, controls.price);
-
-      const newRow = { ...controls, ...ids, total: 0 };
       const rows = this.rows$.value;
+      const newRow = { ...controls, ...ids, total: 0 };
       this.rows$.next([...rows, newRow]);
     } else {
-      this.message.error('');
+      this.message.error('Bill.FormTable.Messages.AddMore');
     }
   }
 
   deleteRow(row: number) {
     const rows = this.getRows();
-    const newrows = rows.filter((record, i) => i !== row);
+    const billRow = rows[row];
+
+    const newRows = rows.filter((r) => r.productKey !== billRow.productKey);
+    const subTotal = this.total.getSubTotal(newRows);
+
     this.removeCachedProduct(row);
-
-    const totals = this.totals$.value;
-    const subTotal = this.total.getSubTotal(rows);
-
-    this.rows$.next(newrows);
-    this.totals$.next({ ...totals, subTotal });
+    this.deleteControls(billRow);
+    this.deleteRow$.next({ rows: newRows, subTotal });
   }
 
-  computeSubTotal(row: number, column: string) {
-    this.computeSubTotal$.next({ row, column });
-  }
-
-  getSelectedProduct(product: any, row: number) {
+  selectedProduct(product: any, row: number) {
     const { id } = product;
     const rowHasProduct = this.selectedProducts.get(id) !== undefined;
     if (!rowHasProduct) {
@@ -120,9 +97,14 @@ export class BillTableComponent implements OnInit {
       this.cachingProduct(product, row);
       this.computeSubTotal(row, 'price');
     } else {
+      this.message.error('Bill.FormTable.Messages.SelectedProduct');
       const rows = this.unselectProduct(row);
       this.rows$.next(rows);
     }
+  }
+
+  computeSubTotal(row: number, column: string) {
+    this.computeSubTotal$.next({ row, column });
   }
 
   /**
@@ -180,10 +162,12 @@ export class BillTableComponent implements OnInit {
 
   private cachingProduct(product: any, row: number) {
     const { id } = product;
-    const rowHasProduct = this.selectedRows.has(row);
-    if (rowHasProduct) {
-      this.removeCachedProduct(row);
+    const prevProductId = this.selectedRows.get(row);
+
+    if (prevProductId) {
+      this.selectedProducts.delete(prevProductId);
     }
+
     this.selectedProducts.set(id, row);
     this.selectedRows.set(row, id);
   }
@@ -194,6 +178,18 @@ export class BillTableComponent implements OnInit {
 
     this.selectedProducts.delete(product);
     this.selectedRows.delete(rowToDelete);
+  }
+
+  private addControls(ids: any, controls: any) {
+    this.form.addControl(ids.productKey, controls.product);
+    this.form.addControl(ids.quantityKey, controls.quantity);
+    this.form.addControl(ids.priceKey, controls.price);
+  }
+
+  private deleteControls(row: BillRow) {
+    this.form.removeControl(row.productKey);
+    this.form.removeControl(row.quantityKey);
+    this.form.removeControl(row.priceKey);
   }
 
   private getRows() {

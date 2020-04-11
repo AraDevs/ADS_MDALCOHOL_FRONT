@@ -14,7 +14,7 @@
                 [form]="form"
                 [products$]="products$"
                 [controlName]="getControlKey(data, column)"
-                (valueChange)="getSelectedProduct($event, i)"
+                (valueChange)="selectedProduct($event, i)"
               ></md-table-select>
 
               <md-table-input
@@ -26,7 +26,7 @@
               </md-table-input>
 
               <ng-container *ngSwitchDefault>
-                {{ data[column] }}
+                {{ data[column].toFixed(2) }}
               </ng-container>
             </div>
           </mat-cell>

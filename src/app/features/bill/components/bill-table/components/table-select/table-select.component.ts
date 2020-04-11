@@ -1,6 +1,7 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Observable } from 'rxjs';
 import { FormGroup } from '@angular/forms';
+import { ErrorStateMatcher } from '@angular/material/core';
 
 @Component({
   selector: 'md-table-select',
@@ -20,6 +21,7 @@ import { FormGroup } from '@angular/forms';
     </div>
   `,
   styles: [],
+  providers: [ErrorStateMatcher],
 })
 export class TableSelectComponent {
   @Input() products$: Observable<any[]>;
