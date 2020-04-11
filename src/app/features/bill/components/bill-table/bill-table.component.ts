@@ -1,3 +1,5 @@
+import { BillRow } from './types/bill-row';
+import { SubSink } from 'subsink';
 import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
 import { FormControl, Validators, FormGroup } from '@angular/forms';
 import { MessageService } from '@core/services/message.service';
@@ -22,6 +24,7 @@ export class BillTableComponent implements OnInit {
   @Input() computePerception$: Observable<boolean>;
   @Input() computeIVA$: Observable<boolean>;
 
+  private subs = new SubSink();
   private selectedProducts = new Map<Key, Row>();
   private selectedRows = new Map<Row, Key>();
   private updateTotal$ = new Subject<any>();
@@ -29,7 +32,7 @@ export class BillTableComponent implements OnInit {
   form: FormGroup = new FormGroup({});
   config = this.tableConfig.getConfiguration();
 
-  records$ = new BehaviorSubject([]);
+  rows$ = new BehaviorSubject<BillRow[]>([]);
   totals$ = new BehaviorSubject({ subTotal: 0, perception: 0, iva: 0, total: 0 });
   constructor(
     private total: TotalBillService,
@@ -38,52 +41,17 @@ export class BillTableComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    const quantity$ = this.updateTotalWhenChange('quantity');
-    const price$ = this.updateTotalWhenChange('price');
-    merge(quantity$, price$).subscribe(({ records, total }) => {
+    const quantityChange$ = this.updateTotalWhenChange('quantity');
+    const priceChange$ = this.updateTotalWhenChange('price');
+    const productsChange$ = this.updateWhenProductsChange();
+
+    const changes$ = merge(quantityChange$, priceChange$, productsChange$);
+
+    this.subs.sink = changes$.subscribe(({ rows, total }) => {
       console.log(total);
-      this.records$.next(records);
+      console.log(rows);
+      this.rows$.next(rows);
     });
-
-    this.products$
-      .pipe(
-        skip(1),
-        map((products) => {
-          return products.reduce(
-            (obj: any, product: any) => ({ ...obj, [product.id]: product.price }),
-            {}
-          );
-        }),
-        map((productsObj) => {
-          const records = this.records$.value.slice();
-
-          return records.reduce(
-            (obj: any, record) => {
-              const product = record.product as FormControl;
-              const quantity = record.quantity as FormControl;
-              let subTotal = 0;
-
-              if (product.valid && quantity.valid) {
-                const price = record.price as FormControl;
-                const newPrice = parseFloat(productsObj[product.value.id]);
-
-                price.setValue(newPrice);
-                subTotal = parseInt(quantity.value, 10) * newPrice;
-                record.total = subTotal;
-              }
-
-              obj.records = [...obj.records, record];
-              obj.total = obj.total + subTotal;
-              return obj;
-            },
-            { records: [], total: 0 }
-          );
-        })
-      )
-      .subscribe(({ records, total }) => {
-        console.log(total);
-        this.records$.next(records);
-      });
   }
 
   addRow() {
@@ -96,18 +64,18 @@ export class BillTableComponent implements OnInit {
       this.form.addControl(ids.priceKey, controls.price);
 
       const newRow = { ...controls, ...ids, total: 0 };
-      const rows = this.records$.value;
-      this.records$.next([...rows, newRow]);
+      const rows = this.rows$.value;
+      this.rows$.next([...rows, newRow]);
     } else {
       this.message.error('');
     }
   }
 
   deleteRow(row: number) {
-    const records = this.records$.value.slice();
-    const newRecords = records.filter((record, i) => i !== row);
+    const rows = this.rows$.value.slice();
+    const newrows = rows.filter((record, i) => i !== row);
     this.removeCachedProduct(row);
-    this.records$.next(newRecords);
+    this.rows$.next(newrows);
   }
 
   computeTotal(row: number, column: string) {
@@ -118,14 +86,14 @@ export class BillTableComponent implements OnInit {
     const { id } = product;
     const rowHasProduct = this.selectedProducts.get(id) !== undefined;
     if (!rowHasProduct) {
-      const priceControl = this.records$.value[row].price as FormControl;
+      const priceControl = this.rows$.value[row].price as FormControl;
       priceControl.setValue(product.value);
 
       this.cachingProduct(product, row);
       this.computeTotal(row, 'price');
     } else {
-      const records = this.unselectProduct(row);
-      this.records$.next(records);
+      const rows = this.unselectProduct(row);
+      this.rows$.next(rows);
     }
   }
 
@@ -136,25 +104,17 @@ export class BillTableComponent implements OnInit {
   unselectProduct(row: number) {
     this.removeCachedProduct(row);
 
-    const records = this.records$.value.slice();
-    const product = records[row].product as FormControl;
-    const price = records[row].price as FormControl;
+    const rows = this.rows$.value.slice();
+    const product = rows[row].product as FormControl;
+    const price = rows[row].price as FormControl;
 
     product.setValue(null, { emitEvent: false });
     price.setValue(0);
 
-    return records;
+    return rows;
   }
 
-  updatePrices() {
-    const records = this.records$.value;
-    console.log(records);
 
-    records.map((r) => {
-      console.log(r.product.value);
-      return r;
-    });
-  }
 
   getControlKey(data: any, column: string) {
     return data[column + 'Key'];
@@ -165,25 +125,36 @@ export class BillTableComponent implements OnInit {
       filter((result) => result.column === col),
       debounceTime(500),
       map((res) => {
-        const records = this.records$.value.slice();
-        return { ...res, records };
+        const rows = this.rows$.value.slice();
+        return { ...res, rows };
       }),
       map((res) => {
-        const { records, column, row } = res;
-        const obj = { column, row, records };
+        const { rows, column, row } = res;
+        const obj = { column, row, rows };
         const subTotal = this.total.getSubTotal(obj);
-        return { subTotal, records, row };
+        return { subTotal, rows, row };
       }),
       map((res) => {
-        const { subTotal, records, row } = res;
-        records[row].total = subTotal;
-        return records;
+        const { subTotal, rows, row } = res;
+        rows[row].total = subTotal;
+        return rows;
       }),
-      map((records) => {
-        const total = records.reduce((t: number, record: any) => {
+      map((rows) => {
+        const total = rows.reduce((t: number, record: any) => {
           return (t += record.total);
         }, 0);
-        return { total, records };
+        return { total, rows };
+      })
+    );
+  }
+
+  private updateWhenProductsChange() {
+    return this.products$.pipe(
+      skip(1),
+      map((products) => this.getTotalsObj(products)),
+      map((productsObj) => {
+        const rows = this.rows$.value.slice();
+        return this.total.updateSubTotals(rows, productsObj);
       })
     );
   }
@@ -207,11 +178,13 @@ export class BillTableComponent implements OnInit {
   }
 
   private canAddMore() {
-    const records = this.records$.value;
-    if (records.length === 0) {
+    const rows = this.rows$.value;
+    console.log(rows);
+
+    if (rows.length === 0) {
       return true;
     }
-    const last = records[records.length - 1];
+    const last = rows[rows.length - 1];
     return last.product.valid && last.quantity.valid && last.price.valid;
   }
 
@@ -225,6 +198,13 @@ export class BillTableComponent implements OnInit {
     ]);
 
     return { product, quantity, price };
+  }
+
+  private getTotalsObj(products: any[]) {
+    return products.reduce(
+      (obj: any, product: any) => ({ ...obj, [product.id]: product.price }),
+      {}
+    );
   }
 
   private getControlsKey() {

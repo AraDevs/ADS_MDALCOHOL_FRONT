@@ -1,6 +1,6 @@
 <div class="position-relative">
   <form [formGroup]="form">
-    <mat-table [dataSource]="records$ | async">
+    <mat-table [dataSource]="rows$ | async">
       <ng-container *ngFor="let column of config.displayedColumns" [matColumnDef]="column">
         <ng-container *ngIf="column !== 'actions'">
           <mat-header-cell *matHeaderCellDef>
