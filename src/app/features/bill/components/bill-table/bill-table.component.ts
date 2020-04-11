@@ -18,6 +18,10 @@ type Row = number;
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BillTableComponent implements OnInit {
+  @Input() products$: Observable<any[]>;
+  @Input() computePerception$: Observable<boolean>;
+  @Input() computeIVA$: Observable<boolean>;
+
   private selectedProducts = new Map<Key, Row>();
   private selectedRows = new Map<Row, Key>();
   private updateTotal$ = new Subject<any>();
@@ -25,7 +29,6 @@ export class BillTableComponent implements OnInit {
   form: FormGroup = new FormGroup({});
   config = this.tableConfig.getConfiguration();
 
-  @Input() products$: Observable<any[]>;
   records$ = new BehaviorSubject([]);
   totals$ = new BehaviorSubject({ subTotal: 0, perception: 0, iva: 0, total: 0 });
   constructor(
@@ -35,9 +38,12 @@ export class BillTableComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    const quantity$ = this.getUpdateTotalObservable('quantity');
-    const price$ = this.getUpdateTotalObservable('price');
-    merge(quantity$, price$).subscribe((records) => this.records$.next(records));
+    const quantity$ = this.updateTotalWhenChange('quantity');
+    const price$ = this.updateTotalWhenChange('price');
+    merge(quantity$, price$).subscribe(({ records, total }) => {
+      console.log(total);
+      this.records$.next(records);
+    });
 
     this.products$
       .pipe(
@@ -50,21 +56,32 @@ export class BillTableComponent implements OnInit {
         }),
         map((productsObj) => {
           const records = this.records$.value.slice();
-          return records.map((record) => {
-            const product = record.product as FormControl;
-            const price = record.price as FormControl;
-            const quantity = record.quantity as FormControl;
-            const newPrice = parseFloat(productsObj[product.value.id]);
-            const total = quantity.valid ? quantity.value * newPrice : 0;
-            // Update values when the products$ change
-            price.setValue(newPrice);
-            record.total = total;
 
-            return record;
-          });
+          return records.reduce(
+            (obj: any, record) => {
+              const product = record.product as FormControl;
+              const quantity = record.quantity as FormControl;
+              let subTotal = 0;
+
+              if (product.valid && quantity.valid) {
+                const price = record.price as FormControl;
+                const newPrice = parseFloat(productsObj[product.value.id]);
+
+                price.setValue(newPrice);
+                subTotal = parseInt(quantity.value, 10) * newPrice;
+                record.total = subTotal;
+              }
+
+              obj.records = [...obj.records, record];
+              obj.total = obj.total + subTotal;
+              return obj;
+            },
+            { records: [], total: 0 }
+          );
         })
       )
-      .subscribe((records) => {
+      .subscribe(({ records, total }) => {
+        console.log(total);
         this.records$.next(records);
       });
   }
@@ -143,16 +160,30 @@ export class BillTableComponent implements OnInit {
     return data[column + 'Key'];
   }
 
-  private getUpdateTotalObservable(column: string) {
+  private updateTotalWhenChange(col: string) {
     return this.updateTotal$.pipe(
-      filter((result) => result.column === column),
-      debounceTime(700),
+      filter((result) => result.column === col),
+      debounceTime(500),
       map((res) => {
         const records = this.records$.value.slice();
-        const obj = { column: res.column, row: res.row, records };
-        const total = this.total.getTotal(obj);
-        records[res.row].total = total.toFixed(2);
+        return { ...res, records };
+      }),
+      map((res) => {
+        const { records, column, row } = res;
+        const obj = { column, row, records };
+        const subTotal = this.total.getSubTotal(obj);
+        return { subTotal, records, row };
+      }),
+      map((res) => {
+        const { subTotal, records, row } = res;
+        records[row].total = subTotal;
         return records;
+      }),
+      map((records) => {
+        const total = records.reduce((t: number, record: any) => {
+          return (t += record.total);
+        }, 0);
+        return { total, records };
       })
     );
   }
@@ -199,6 +230,4 @@ export class BillTableComponent implements OnInit {
   private getControlsKey() {
     return { productKey: uuidv4(), quantityKey: uuidv4(), priceKey: uuidv4() };
   }
-
-
 }

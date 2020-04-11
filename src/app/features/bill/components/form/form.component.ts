@@ -32,6 +32,9 @@ export class FormComponent implements OnInit {
   errors$ = this.errors.asObservable();
   products$: Observable<any[]>;
 
+  computePerception$: Observable<boolean>;
+  computeIVA$: Observable<boolean>;
+
   @ViewChild('formBtn') formBtn: ElementRef<HTMLButtonElement>;
   constructor(
     private formModel: FormModel,
@@ -49,13 +52,23 @@ export class FormComponent implements OnInit {
     this.form = this.factoryForm.createPlainForm(this.fields as any);
     this.products$ = this.store$.pipe(
       select(globalState.selectInventoriesActive),
-      map(products => {
-        return products.map(product => ({ ...product, label: product.name, value: product.price }));
+      map((products) => {
+        return products.map((product) => ({
+          ...product,
+          label: product.name,
+          value: product.price,
+        }));
       })
     );
+
     this.subs.sink = this.form.get('clientId').valueChanges.subscribe((client) => {
       this.loadInventoriesByClient(client);
     });
+
+    this.computePerception$ = this.form.get('perception').valueChanges;
+    this.computeIVA$ = this.form
+      .get('bill_type')
+      .valueChanges.pipe(map(({ value }) => value === 'Crédito Fiscal'));
 
     this.successService.success(state.SAVE_BILLS_SUCCESS, () => {
       this.store$.dispatch(globalState.LOAD_BILLS());
