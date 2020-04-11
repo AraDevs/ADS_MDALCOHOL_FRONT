@@ -1,12 +1,11 @@
-import { BillRow } from './types/bill-row';
 import { Injectable } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { BillRow } from './types/bill-row';
 
 @Injectable()
 export class TotalBillService {
-  public getSubTotal(obj: any) {
+  public getSubTotalByRow(obj: { row: number; column: string; rows: BillRow[] }) {
     const { row, column, rows } = obj;
-    const control = rows[row][column] as FormControl;
+    const control = rows[row][column];
     if (control.valid) {
       const isPrice = column === 'price';
       const quantity = isPrice ? rows[row].quantity.value : control.value;
@@ -15,6 +14,12 @@ export class TotalBillService {
     } else {
       return 0;
     }
+  }
+
+  public getTotal(rows: BillRow[]) {
+    return rows.reduce((total: number, row: any) => {
+      return (total += row.total);
+    }, 0);
   }
 
   public updateSubTotals(rows: BillRow[], productsObj: { [id: string]: number }) {

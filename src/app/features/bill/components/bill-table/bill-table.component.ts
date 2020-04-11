@@ -41,8 +41,8 @@ export class BillTableComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    const quantityChange$ = this.updateTotalWhenChange('quantity');
-    const priceChange$ = this.updateTotalWhenChange('price');
+    const quantityChange$ = this.subTotalWhenColumnChange('quantity');
+    const priceChange$ = this.subTotalWhenColumnChange('price');
     const productsChange$ = this.updateWhenProductsChange();
 
     const changes$ = merge(quantityChange$, priceChange$, productsChange$);
@@ -72,7 +72,7 @@ export class BillTableComponent implements OnInit {
   }
 
   deleteRow(row: number) {
-    const rows = this.rows$.value.slice();
+    const rows = this.getRows();
     const newrows = rows.filter((record, i) => i !== row);
     this.removeCachedProduct(row);
     this.rows$.next(newrows);
@@ -86,7 +86,7 @@ export class BillTableComponent implements OnInit {
     const { id } = product;
     const rowHasProduct = this.selectedProducts.get(id) !== undefined;
     if (!rowHasProduct) {
-      const priceControl = this.rows$.value[row].price as FormControl;
+      const priceControl = this.rows$.value[row].price;
       priceControl.setValue(product.value);
 
       this.cachingProduct(product, row);
@@ -104,9 +104,9 @@ export class BillTableComponent implements OnInit {
   unselectProduct(row: number) {
     this.removeCachedProduct(row);
 
-    const rows = this.rows$.value.slice();
-    const product = rows[row].product as FormControl;
-    const price = rows[row].price as FormControl;
+    const rows = this.getRows();
+    const product = rows[row].product;
+    const price = rows[row].price;
 
     product.setValue(null, { emitEvent: false });
     price.setValue(0);
@@ -114,37 +114,28 @@ export class BillTableComponent implements OnInit {
     return rows;
   }
 
-
-
   getControlKey(data: any, column: string) {
     return data[column + 'Key'];
   }
 
-  private updateTotalWhenChange(col: string) {
+  private subTotalWhenColumnChange(col: string) {
     return this.updateTotal$.pipe(
       filter((result) => result.column === col),
       debounceTime(500),
+      map((res) => ({ ...res, rows: this.getRows() })),
       map((res) => {
-        const rows = this.rows$.value.slice();
-        return { ...res, rows };
-      }),
-      map((res) => {
-        const { rows, column, row } = res;
-        const obj = { column, row, rows };
-        const subTotal = this.total.getSubTotal(obj);
-        return { subTotal, rows, row };
+        const subTotal = this.total.getSubTotalByRow(res);
+        return { subTotal, rows: res.rows, row: res.row };
       }),
       map((res) => {
         const { subTotal, rows, row } = res;
         rows[row].total = subTotal;
         return rows;
       }),
-      map((rows) => {
-        const total = rows.reduce((t: number, record: any) => {
-          return (t += record.total);
-        }, 0);
-        return { total, rows };
-      })
+      map((rows) => ({
+        total: this.total.getTotal(rows),
+        rows,
+      }))
     );
   }
 
@@ -153,7 +144,7 @@ export class BillTableComponent implements OnInit {
       skip(1),
       map((products) => this.getTotalsObj(products)),
       map((productsObj) => {
-        const rows = this.rows$.value.slice();
+        const rows = this.getRows();
         return this.total.updateSubTotals(rows, productsObj);
       })
     );
@@ -179,8 +170,6 @@ export class BillTableComponent implements OnInit {
 
   private canAddMore() {
     const rows = this.rows$.value;
-    console.log(rows);
-
     if (rows.length === 0) {
       return true;
     }
@@ -209,5 +198,9 @@ export class BillTableComponent implements OnInit {
 
   private getControlsKey() {
     return { productKey: uuidv4(), quantityKey: uuidv4(), priceKey: uuidv4() };
+  }
+
+  private getRows() {
+    return this.rows$.value.slice();
   }
 }
