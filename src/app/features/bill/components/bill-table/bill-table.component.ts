@@ -1,13 +1,13 @@
-import { BillRow } from './types/bill-row';
-import { SubSink } from 'subsink';
 import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
-import { FormControl, Validators, FormGroup } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { MessageService } from '@core/services/message.service';
 import { BehaviorSubject, merge, Observable, Subject } from 'rxjs';
-import { debounceTime, filter, map, skip } from 'rxjs/operators';
+import { debounceTime, filter, map, skip, startWith } from 'rxjs/operators';
+import { SubSink } from 'subsink';
 import { BillTableConfiguration } from './bill-table-configuration';
+import { BillTableService } from './bill-table.service';
 import { TotalBillService } from './total.service';
-import { v4 as uuidv4 } from 'uuid';
+import { BillRow } from './types/bill-row';
 
 type Key = number;
 type Row = number;
@@ -16,7 +16,7 @@ type Row = number;
   selector: 'md-bill-table',
   templateUrl: './bill-table.component.html',
   styleUrls: ['./bill-table.component.scss'],
-  providers: [BillTableConfiguration, TotalBillService],
+  providers: [BillTableConfiguration, TotalBillService, BillTableService],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BillTableComponent implements OnInit {
@@ -27,7 +27,7 @@ export class BillTableComponent implements OnInit {
   private subs = new SubSink();
   private selectedProducts = new Map<Key, Row>();
   private selectedRows = new Map<Row, Key>();
-  private updateTotal$ = new Subject<any>();
+  private computeSubTotal$ = new Subject<any>();
 
   form: FormGroup = new FormGroup({});
   config = this.tableConfig.getConfiguration();
@@ -37,27 +37,45 @@ export class BillTableComponent implements OnInit {
   constructor(
     private total: TotalBillService,
     private tableConfig: BillTableConfiguration,
-    private message: MessageService
+    private message: MessageService,
+    private billTableService: BillTableService
   ) {}
 
   ngOnInit(): void {
-    const quantityChange$ = this.subTotalWhenColumnChange('quantity');
-    const priceChange$ = this.subTotalWhenColumnChange('price');
-    const productsChange$ = this.updateWhenProductsChange();
+    const quantityChange$ = this.computeSubTotalWhenColumnChange('quantity');
+    const priceChange$ = this.computeSubTotalWhenColumnChange('price');
+    const productsChange$ = this.updateRowTotalsWhenProductsChange();
 
     const changes$ = merge(quantityChange$, priceChange$, productsChange$);
 
     this.subs.sink = changes$.subscribe(({ rows, total }) => {
-      console.log(total);
-      console.log(rows);
+      const totals = this.totals$.value;
       this.rows$.next(rows);
+      this.totals$.next({ ...totals, subTotal: total });
+    });
+
+    this.subs.sink = merge(
+      this.computePerception$.pipe(
+        map((compute) => ({ compute, value: 0.1, key: 'perception', key2: 'iva' }))
+      ),
+      this.computeIVA$.pipe(
+        map((compute) => ({ compute, value: 0.13, key: 'iva', key2: 'perception' }))
+      )
+    ).subscribe((res) => {
+      const { compute, value, key, key2 } = res;
+      const totals = this.totals$.value;
+      const { subTotal } = totals;
+      const result = compute ? subTotal * value : 0;
+
+      const total = subTotal + result + totals[key2];
+      this.totals$.next({ ...totals, [key]: result, total });
     });
   }
 
   addRow() {
-    if (this.canAddMore()) {
-      const controls = this.getRowControls();
-      const ids = this.getControlsKey();
+    if (this.form.valid) {
+      const controls = this.billTableService.getRowControls();
+      const ids = this.billTableService.getControlsKey();
 
       this.form.addControl(ids.productKey, controls.product);
       this.form.addControl(ids.quantityKey, controls.quantity);
@@ -75,11 +93,16 @@ export class BillTableComponent implements OnInit {
     const rows = this.getRows();
     const newrows = rows.filter((record, i) => i !== row);
     this.removeCachedProduct(row);
+
+    const totals = this.totals$.value;
+    const total = this.total.getTotal(newrows);
+
     this.rows$.next(newrows);
+    this.totals$.next({ ...totals, total });
   }
 
-  computeTotal(row: number, column: string) {
-    this.updateTotal$.next({ row, column });
+  computeSubTotal(row: number, column: string) {
+    this.computeSubTotal$.next({ row, column });
   }
 
   getSelectedProduct(product: any, row: number) {
@@ -90,7 +113,7 @@ export class BillTableComponent implements OnInit {
       priceControl.setValue(product.value);
 
       this.cachingProduct(product, row);
-      this.computeTotal(row, 'price');
+      this.computeSubTotal(row, 'price');
     } else {
       const rows = this.unselectProduct(row);
       this.rows$.next(rows);
@@ -118,8 +141,8 @@ export class BillTableComponent implements OnInit {
     return data[column + 'Key'];
   }
 
-  private subTotalWhenColumnChange(col: string) {
-    return this.updateTotal$.pipe(
+  private computeSubTotalWhenColumnChange(col: string) {
+    return this.computeSubTotal$.pipe(
       filter((result) => result.column === col),
       debounceTime(500),
       map((res) => ({ ...res, rows: this.getRows() })),
@@ -139,10 +162,10 @@ export class BillTableComponent implements OnInit {
     );
   }
 
-  private updateWhenProductsChange() {
+  private updateRowTotalsWhenProductsChange() {
     return this.products$.pipe(
       skip(1),
-      map((products) => this.getTotalsObj(products)),
+      map((products) => this.billTableService.getTotalsObj(products)),
       map((productsObj) => {
         const rows = this.getRows();
         return this.total.updateSubTotals(rows, productsObj);
@@ -166,38 +189,6 @@ export class BillTableComponent implements OnInit {
 
     this.selectedProducts.delete(product);
     this.selectedRows.delete(rowToDelete);
-  }
-
-  private canAddMore() {
-    const rows = this.rows$.value;
-    if (rows.length === 0) {
-      return true;
-    }
-    const last = rows[rows.length - 1];
-    return last.product.valid && last.quantity.valid && last.price.valid;
-  }
-
-  private getRowControls() {
-    const product = new FormControl(null, [Validators.required]);
-    const quantity = new FormControl(1, [Validators.required, Validators.pattern(/^[0-9]+$/)]);
-    const price = new FormControl(0, [
-      Validators.required,
-      Validators.pattern(/^[0-9]+(\.[0-9]{1,4})?$/),
-      Validators.min(0.1),
-    ]);
-
-    return { product, quantity, price };
-  }
-
-  private getTotalsObj(products: any[]) {
-    return products.reduce(
-      (obj: any, product: any) => ({ ...obj, [product.id]: product.price }),
-      {}
-    );
-  }
-
-  private getControlsKey() {
-    return { productKey: uuidv4(), quantityKey: uuidv4(), priceKey: uuidv4() };
   }
 
   private getRows() {

@@ -68,7 +68,7 @@ export class FormComponent implements OnInit {
     this.computePerception$ = this.form.get('perception').valueChanges;
     this.computeIVA$ = this.form
       .get('bill_type')
-      .valueChanges.pipe(map(({ value }) => value === 'Crédito Fiscal'));
+      .valueChanges.pipe(map(({ label }) => label === 'Crédito Fiscal'));
 
     this.successService.success(state.SAVE_BILLS_SUCCESS, () => {
       this.store$.dispatch(globalState.LOAD_BILLS());

@@ -1,13 +1,22 @@
 <div class="alert alert-danger mb-4" *ngIf="errors$ | async as errors">
-    <ul>
-      <li *ngFor="let error of errors">
-        {{error}}
-      </li>
-    </ul>
+  <ul>
+    <li *ngFor="let error of errors">
+      {{ error }}
+    </li>
+  </ul>
 </div>
 <form [formGroup]="form" #formReference="ngForm" (submit)="save()">
-    <md-form-generator [form]="form" [formReference]="formReference" [fields]="fields" [displayContainerCheckboxs]="true">
-    </md-form-generator>
-    <button #formBtn [hidden]="true" type="submit"></button>
+  <md-form-generator
+    [form]="form"
+    [formReference]="formReference"
+    [fields]="fields"
+    [displayContainerCheckboxs]="true"
+  >
+  </md-form-generator>
+  <button #formBtn [hidden]="true" type="submit"></button>
 </form>
-<md-bill-table [products$]="products$"></md-bill-table>
+<md-bill-table
+  [products$]="products$"
+  [computeIVA$]="computeIVA$"
+  [computePerception$]="computePerception$"
+></md-bill-table>

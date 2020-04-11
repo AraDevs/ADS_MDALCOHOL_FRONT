@@ -20,7 +20,7 @@
               <md-table-input
                 *ngSwitchCase="'Input'"
                 [form]="form"
-                (keyup)="computeTotal(i, column)"
+                (keyup)="computeSubTotal(i, column)"
                 [controlName]="getControlKey(data, column)"
               >
               </md-table-input>
