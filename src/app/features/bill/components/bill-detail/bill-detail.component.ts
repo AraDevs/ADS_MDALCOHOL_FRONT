@@ -4,27 +4,50 @@ import * as state from '@features/bill/state';
 import { select, Store } from '@ngrx/store';
 import { LoadingService } from '@shared/services';
 import { AppState } from '@state/app-state';
-import { Observable } from 'rxjs';
+import { Observable, pipe } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
 
 @Component({
   selector: 'md-bill-detail',
   template: `
+    <mat-list *ngIf="details$ | async as details" class="mb-4">
+      <ng-container *ngFor="let detail of details">
+        <mat-list-item>
+          <div class="d-flex justify-content-between w-100">
+            <span class="title">{{ detail.title | transloco }}</span>
+            {{ detail.value }}
+          </div>
+        </mat-list-item>
+        <mat-divider></mat-divider>
+      </ng-container>
+    </mat-list>
+
     <md-data-table
       [config]="tableConfig"
       [displayUpdateIcon]="false"
-      [loading$]="loadingDetail$"
+      [loading$]="loading$"
       [dataSource$]="items$ | async"
     >
     </md-data-table>
   `,
   providers: [LoadingService, BillDetailTableConfig],
-  styles: [],
+  styles: [
+    `
+      .title {
+        color: #3f51b5;
+      }
+
+      .total {
+        font-size: 24px;
+        color: #3f51b5;
+      }
+    `,
+  ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BillDetailComponent implements OnInit {
-  billDetail$: Observable<any>;
-  loadingDetail$: Observable<boolean>;
+  details$: Observable<any>;
+  loading$: Observable<boolean>;
   items$: Observable<any[]>;
   tableConfig = this.tableC.getConfiguration();
 
@@ -35,9 +58,11 @@ export class BillDetailComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.billDetail$ = this.getBillDetail();
-    this.loadingDetail$ = this.getLoadingDetail();
-    this.items$ = this.billDetail$.pipe(map((detail) => detail.items$));
+    const detail$ = this.getBillDetail();
+
+    this.details$ = detail$.pipe(pipe(map((result) => result.details)));
+    this.items$ = detail$.pipe(map((result) => result.items$));
+    this.loading$ = this.getLoadingDetail();
   }
 
   execute(billId: number) {

@@ -40,5 +40,15 @@
       "Save": "Hay valores incorrectos en la tabla o no cuenta con registros"
     }
   },
+  "BillDetail": {
+    "Num": "Factura #:",
+    "BusinessName": "Cliente/Empresa: ",
+    "BillDate": "Fecha de Factura: ",
+    "PaymentType": "Tipo de Pago: ",
+    "BillType": "Tipo de Facturación: ",
+    "Total": "Total ($): ",
+    "Perception": "Percepción: ",
+    "Iva": "IVA: "
+  },
   "SelectClient": "Selecciona un client para agregar productos a la factura"
 }

@@ -4,6 +4,7 @@ export class BillDetailTableConfig {
   getConfiguration(): DataTableConfig {
     return {
       displayedColumns: ['product', 'quantity', 'price', 'total'],
+
       titles: {
         product: 'Bill.FormTable.Product',
         price: 'Bill.FormTable.Price',
