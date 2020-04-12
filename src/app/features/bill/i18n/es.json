@@ -18,7 +18,8 @@
   },
   "Modal": {
     "Titles": {
-      "FormModal": "Registro de facturas"
+      "FormModal": "Registro de facturas",
+      "BillDetail": "Detalle de factura"
     }
   },
   "FormTable": {

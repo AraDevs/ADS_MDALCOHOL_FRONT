@@ -4,7 +4,7 @@ export interface ActionMetadata {
     /**
      * @description value used for ResourceFactory class to create a custom url (resource)
      */
-    resource?: { [key: string]: string };
+    resource?: { [key: string]: string | number };
   };
 }
 

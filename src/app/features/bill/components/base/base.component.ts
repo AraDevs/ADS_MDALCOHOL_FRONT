@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { filter } from 'rxjs/operators';
+import { filter, map } from 'rxjs/operators';
 import { FormComponent } from '../form/form.component';
 import { Store, select } from '@ngrx/store';
 import { AppState } from '@state/app-state';
@@ -8,8 +8,9 @@ import { MODAL_INITIAL_EVENT } from '@shared/constants';
 import * as globalState from '@state/index';
 import * as state from '@features/bill/state';
 
-import { Observable } from 'rxjs';
-import { DataTableConfig } from '@shared/types';
+import { Observable, of } from 'rxjs';
+import { DataTableConfig, ModalData } from '@shared/types';
+import { BillDetailComponent } from '../bill-detail/bill-detail.component';
 
 @Component({
   selector: 'md-base',
@@ -21,6 +22,7 @@ export class BaseComponent implements OnInit {
   dataClients: Observable<any[]>;
   dataBills: Observable<any[]>;
   loadingBills$: Observable<boolean>;
+
   tableConfig: DataTableConfig = {
     displayedColumns: ['id', 'business_name', 'bill_date', 'payment_type', 'bill_type', 'actions'],
     titles: {
@@ -49,14 +51,11 @@ export class BaseComponent implements OnInit {
     this.store$.dispatch(globalState.LOAD_CLIENTS_ACTIVE());
     this.store$.dispatch(globalState.LOAD_BILLS());
     this.dataBills = this.store$.pipe(select(globalState.selectBills));
-
-    this.store$.pipe(select(state.selectBillDetail)).subscribe((res) => {
-      console.log(res, 'DETAIL');
-    });
   }
 
   add() {
-    this.createModalForm()
+    const title = 'Bill.Modal.Titles.FormModal';
+    this.createModalForm(FormComponent, title)
       .pipe(filter((result) => result.event !== MODAL_INITIAL_EVENT))
       .subscribe((result) => {
         const component = result.modal.componentInstance.getRenderedComponent<FormComponent>();
@@ -69,14 +68,18 @@ export class BaseComponent implements OnInit {
   }
 
   detail(row: any) {
-    const metadata = { resource: { id: row.id } };
-    this.store$.dispatch(state.LOAD_BILL_DETAIL({ payload: { metadata } }));
+    const title = 'Bill.Modal.Titles.BillDetail';
+    this.createModalForm(BillDetailComponent, title, false).subscribe((result) => {
+      const component = result.modal.componentInstance.getRenderedComponent<BillDetailComponent>();
+      component.execute(row.id);
+    });
   }
 
-  private createModalForm() {
+  private createModalForm(component: any, title: string, displayAcceptButton = true) {
     return this.modalFactory.create({
-      component: FormComponent,
-      title: 'Bill.Modal.Titles.FormModal',
+      component,
+      title,
+      displayAcceptButton,
     });
   }
 }

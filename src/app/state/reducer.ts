@@ -35,8 +35,8 @@ const INITIAL_STATE: State = {
   productsType: ['Materia prima', 'Producto final'],
   productionOrders: [],
   bills: [],
-  paymentType: ['Contado', 'Credito'],
-  billType: ['Consumidor final', 'Crédito Fiscal', 'Notas de Crédito', 'Notas de Débito']
+  paymentType: ['Contado', 'Crédito'],
+  billType: ['Consumidor final', 'Crédito fiscal', 'Notas de crédito', 'Notas de débito']
 };
 
 const globalReducer = createReducer(

@@ -8,7 +8,7 @@ export interface BillState {
 }
 
 const INITIAL_STATE: BillState = {
-  detailBill: {},
+  detailBill: null,
 };
 
 const billReducer = createReducer(

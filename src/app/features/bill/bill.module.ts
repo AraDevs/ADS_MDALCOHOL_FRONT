@@ -14,6 +14,7 @@ import { TableSelectComponent } from './components/bill-table/components/table-s
 import { TableInputComponent } from './components/bill-table/components/table-input/table-input.component';
 import { FEATURE_KEY, reducer } from '@features/bill/state';
 import { StoreModule } from '@ngrx/store';
+import { BillDetailComponent } from './components/bill-detail/bill-detail.component';
 
 const loader = LoadI18nFile((lang: string) => () => import(`./i18n/${lang}.json`));
 
@@ -26,6 +27,7 @@ const loader = LoadI18nFile((lang: string) => () => import(`./i18n/${lang}.json`
     TotalTitlesListComponent,
     TableSelectComponent,
     TableInputComponent,
+    BillDetailComponent,
   ],
   imports: [
     SharedModule,
