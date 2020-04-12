@@ -1,6 +1,14 @@
 <div class="p-4">
   <md-section-bar title="SideNav.Bill" (buttonEvent)="add()"></md-section-bar>
-  <md-data-table [dataSource$]="dataBills" [config]="tableConfig"
-    [loading$]="loadingBills$">
+  <md-data-table
+    [displayUpdateIcon]="false"
+    [displayDeleteIcon]="true"
+    [displayDetailIcon]="true"
+    [dataSource$]="dataBills"
+    [config]="tableConfig"
+    [loading$]="loadingBills$"
+    (delete)="delete($event)"
+    (detail)="detail($event)"
+  >
   </md-data-table>
 </div>

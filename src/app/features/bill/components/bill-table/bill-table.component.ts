@@ -128,6 +128,22 @@ export class BillTableComponent implements OnInit {
     return data[column + 'Key'];
   }
 
+  getValues() {
+    const rows = this.rows$.value;
+
+    if (this.form.valid && rows.length > 0) {
+      return rows.map((row) => {
+        const productId = row.product.value.id;
+        const quantity = row.quantity.value;
+        const price = parseFloat(row.price.value);
+        return { inventory_id: productId, price, quantity };
+      });
+    } else {
+      this.message.error('Bill.FormTable.Messages.Save');
+      return [];
+    }
+  }
+
   private computeSubTotalWhenColumnChange(col: string) {
     return this.computeSubTotal$.pipe(
       filter((result) => result.column === col),

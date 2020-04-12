@@ -1,6 +1,6 @@
 <mat-form-field [hidden]=" field.hidden$ | async" appearance="outline">
   <mat-label>{{field.label | transloco}}</mat-label>
-  <input matInput [matDatepicker]="picker" [formControl]="control">
+  <input matInput [matDatepicker]="picker" readonly [formControl]="control">
   <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
   <mat-datepicker #picker ></mat-datepicker>
   <mat-error *ngIf="error$ | async as error">{{ error | transloco}}</mat-error>

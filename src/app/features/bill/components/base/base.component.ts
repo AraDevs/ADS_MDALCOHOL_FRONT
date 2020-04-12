@@ -13,31 +13,23 @@ import { DataTableConfig } from '@shared/types';
   selector: 'md-base',
   templateUrl: './base.component.html',
   styleUrls: ['./base.component.scss'],
-  providers: [LoadingService]
+  providers: [LoadingService],
 })
 export class BaseComponent implements OnInit {
-
   dataClients: Observable<any[]>;
   dataBills: Observable<any[]>;
   loadingBills$: Observable<boolean>;
   tableConfig: DataTableConfig = {
-    displayedColumns: [
-      'id',
-      'business_name',
-      'bill_date',
-      'payment_type',
-      'bill_type',
-      'actions'
-    ],
+    displayedColumns: ['id', 'business_name', 'bill_date', 'payment_type', 'bill_type', 'actions'],
     titles: {
       id: 'Bill.Table.Titles.Num',
       business_name: 'Bill.Table.Titles.BusinessName',
       bill_date: 'Bill.Table.Titles.BillDate',
       payment_type: 'Bill.Table.Titles.PaymentType',
       bill_type: 'Bill.Table.Titles.BillType',
-      actions: 'Acciones'
+      actions: 'Acciones',
     },
-    keys: ['id', 'client.business_name', 'bill_date', 'payment_type', 'bill_type', 'Tabla.Actions']
+    keys: ['id', 'client.business_name', 'bill_date', 'payment_type', 'bill_type', 'Tabla.Actions'],
   };
 
   constructor(
@@ -50,7 +42,7 @@ export class BaseComponent implements OnInit {
     this.loadingBills$ = this.loading.getLoading([
       globalState.LOAD_BILLS,
       globalState.BILLS_LOADED_SUCCESS,
-      globalState.BILLS_LOADED_FAIL
+      globalState.BILLS_LOADED_FAIL,
     ]);
     this.store$.dispatch(globalState.LOAD_CLIENTS_ACTIVE());
     this.store$.dispatch(globalState.LOAD_BILLS());
@@ -64,6 +56,14 @@ export class BaseComponent implements OnInit {
         const component = result.modal.componentInstance.getRenderedComponent<FormComponent>();
         component.execute({ event: result.event });
       });
+  }
+
+  delete(row: any) {
+    console.log(row);
+  }
+
+  detail(row: any) {
+    console.log(row);
   }
 
   private createModalForm() {

@@ -14,6 +14,7 @@ import * as state from '@features/bill/state';
 import * as globalState from '@state/index';
 import { SubSink } from 'subsink';
 import { map, startWith, shareReplay } from 'rxjs/operators';
+import { BillTableComponent } from '../bill-table/bill-table.component';
 
 @Component({
   selector: 'md-form',
@@ -36,6 +37,8 @@ export class FormComponent implements OnInit {
   computeIVA$: Observable<boolean>;
 
   @ViewChild('formBtn') formBtn: ElementRef<HTMLButtonElement>;
+  @ViewChild(BillTableComponent) billTable: BillTableComponent;
+
   constructor(
     private formModel: FormModel,
     private factoryForm: FactoryFormService,
@@ -95,9 +98,11 @@ export class FormComponent implements OnInit {
         });
         this.store$.dispatch(action);
       } else {
-        console.log(data.client_id);
-        // const action = state.SAVE_BILLS({ payload: { data } });
-        // this.store$.dispatch(action);
+        const items = this.billTable.getValues();
+        if (items.length > 0) {
+          const action = state.SAVE_BILLS({ payload: { data: { ...data, bill_item: items } } });
+          this.store$.dispatch(action);
+        }
       }
     } else {
       this.message.error('Messages.InvalidForm');
