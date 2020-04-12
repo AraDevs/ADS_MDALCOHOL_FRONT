@@ -18,4 +18,15 @@ export const UPDATE_BILLS_FAIL = createAction(
   props<{ payload: ErrorActionData }>()
 );
 
-
+export const LOAD_BILL_DETAIL = createAction(
+  'Load Bill Detail',
+  props<{ payload: ActionMetadata }>()
+);
+export const BILL_DETAIL_LOADED_SUCCESS = createAction(
+  'Bill Detail Loaded Success',
+  props<{ payload: any[] }>()
+);
+export const BILL_DETAIL_LOADED_FAIL = createAction(
+  'Bill Detail Loaded Fail',
+  props<{ payload: ErrorActionData }>()
+);

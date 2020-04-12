@@ -12,15 +12,26 @@ import { TotalListComponent } from './components/bill-table/components/total-lis
 import { TotalTitlesListComponent } from './components/bill-table/components/total-titles-list/total-titles-list.component';
 import { TableSelectComponent } from './components/bill-table/components/table-select/table-select.component';
 import { TableInputComponent } from './components/bill-table/components/table-input/table-input.component';
+import { FEATURE_KEY, reducer } from '@features/bill/state';
+import { StoreModule } from '@ngrx/store';
 
 const loader = LoadI18nFile((lang: string) => () => import(`./i18n/${lang}.json`));
 
 @NgModule({
-  declarations: [BaseComponent, FormComponent, BillTableComponent, TotalListComponent, TotalTitlesListComponent, TableSelectComponent, TableInputComponent],
+  declarations: [
+    BaseComponent,
+    FormComponent,
+    BillTableComponent,
+    TotalListComponent,
+    TotalTitlesListComponent,
+    TableSelectComponent,
+    TableInputComponent,
+  ],
   imports: [
     SharedModule,
     BillRoutingModule,
-    EffectsModule.forFeature([state.BillsEffects])
+    StoreModule.forFeature(FEATURE_KEY, reducer),
+    EffectsModule.forFeature([state.BillsEffects]),
   ],
   providers: [
     {

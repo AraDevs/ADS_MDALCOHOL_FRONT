@@ -6,6 +6,8 @@ import { AppState } from '@state/app-state';
 import { ModalFactoryService, LoadingService } from '@shared/services';
 import { MODAL_INITIAL_EVENT } from '@shared/constants';
 import * as globalState from '@state/index';
+import * as state from '@features/bill/state';
+
 import { Observable } from 'rxjs';
 import { DataTableConfig } from '@shared/types';
 
@@ -47,6 +49,10 @@ export class BaseComponent implements OnInit {
     this.store$.dispatch(globalState.LOAD_CLIENTS_ACTIVE());
     this.store$.dispatch(globalState.LOAD_BILLS());
     this.dataBills = this.store$.pipe(select(globalState.selectBills));
+
+    this.store$.pipe(select(state.selectBillDetail)).subscribe((res) => {
+      console.log(res, 'DETAIL');
+    });
   }
 
   add() {
@@ -63,7 +69,8 @@ export class BaseComponent implements OnInit {
   }
 
   detail(row: any) {
-    console.log(row);
+    const metadata = { resource: { id: row.id } };
+    this.store$.dispatch(state.LOAD_BILL_DETAIL({ payload: { metadata } }));
   }
 
   private createModalForm() {

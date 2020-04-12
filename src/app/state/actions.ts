@@ -56,9 +56,11 @@ export const MUNICIPALITIES_LOADED_FAIL = createAction(
 
 export const FILTER_MUNICIPALITIES = createAction(
   'Filter Municipalities',
-  props<{ payload: {
-    id: number
-  } }>()
+  props<{
+    payload: {
+      id: number;
+    };
+  }>()
 );
 
 // Providers
@@ -117,3 +119,4 @@ export const INVENTORY_BY_CLIENT_LOADED_FAIL = createAction(
   'Inventory By Client Loaded Fail',
   props<{ payload: ErrorActionData }>()
 );
+

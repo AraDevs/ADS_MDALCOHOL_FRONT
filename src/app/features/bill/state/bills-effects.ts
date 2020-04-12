@@ -9,20 +9,13 @@ import { RestResourceFactory } from '@core/utils';
 
 @Injectable()
 export class BillsEffects {
-  constructor(
-    private effectFactory: EffectsFactoryService,
-    private requestClient: RequestClient
-  ) {}
+  constructor(private effectFactory: EffectsFactoryService, private requestClient: RequestClient) {}
 
   saveBills$ = createEffect(() => {
     const { SAVE_BILLS, SAVE_BILLS_SUCCESS, SAVE_BILLS_FAIL } = actions;
 
     const effectReqConfig = new EffectRequestConfig(this.requestClient, 'save');
-    const actionsConfig = new EffectActionsConfig(
-      SAVE_BILLS,
-      SAVE_BILLS_SUCCESS,
-      SAVE_BILLS_FAIL
-    );
+    const actionsConfig = new EffectActionsConfig(SAVE_BILLS, SAVE_BILLS_SUCCESS, SAVE_BILLS_FAIL);
     const config = new EffectConfigModel(
       effectReqConfig,
       actionsConfig,
@@ -46,6 +39,23 @@ export class BillsEffects {
       actionsConfig,
       `${environment.host}/bills`
     );
+
+    return this.effectFactory.create(config);
+  });
+
+  loadDetailBillt$ = createEffect(() => {
+    const { LOAD_BILL_DETAIL, BILL_DETAIL_LOADED_SUCCESS, BILL_DETAIL_LOADED_FAIL } = actions;
+
+    const effectReqConfig = new EffectRequestConfig(this.requestClient, 'get');
+    const actionsConfig = new EffectActionsConfig(
+      LOAD_BILL_DETAIL,
+      BILL_DETAIL_LOADED_SUCCESS,
+      BILL_DETAIL_LOADED_FAIL
+    );
+    const config = new EffectConfigModel(effectReqConfig, actionsConfig);
+
+    const template = `${environment.host}/bills/$$0`;
+    config.resourceFactory = new RestResourceFactory(template, ['id']);
 
     return this.effectFactory.create(config);
   });
