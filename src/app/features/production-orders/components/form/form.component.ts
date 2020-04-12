@@ -69,7 +69,7 @@ export class FormComponent implements OnInit {
       const { customErrorsServer } = payload;
       this.errors.next(customErrorsServer);
     });
-    this.errorService.error(state.UPDATE_PRODUCTION_FAIL, (payload: any) => {
+    this.errorService.error(state.SAVE_PRODUCTION_FAIL, (payload: any) => {
       const { customErrorsServer } = payload;
       this.errors.next(customErrorsServer);
     });
@@ -140,7 +140,7 @@ export class FormComponent implements OnInit {
   }
 
   updateFinishProduction() {
-    this.message.messageWarning()
+    this.message.messageWarning('Messages.FinishOrder')
       .then((result) => {
         if (result.dismiss !== Swal.DismissReason.cancel) {
           const { id } = this.productionOrder;

@@ -3,21 +3,25 @@ import { filter } from 'rxjs/operators';
 import { FormComponent } from '../form/form.component';
 import { Store, select } from '@ngrx/store';
 import { AppState } from '@state/app-state';
-import { ModalFactoryService, LoadingService } from '@shared/services';
+import { ModalFactoryService, LoadingService, SuccessService, ErrorService } from '@shared/services';
 import { MODAL_INITIAL_EVENT } from '@shared/constants';
 import * as globalState from '@state/index';
 import * as state from '@features/bill/state';
 
 import { Observable } from 'rxjs';
 import { DataTableConfig } from '@shared/types';
+import { MessageService } from '@core/services/message.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'md-base',
   templateUrl: './base.component.html',
   styleUrls: ['./base.component.scss'],
-  providers: [LoadingService],
+  providers: [LoadingService, SuccessService, ErrorService],
 })
 export class BaseComponent implements OnInit {
+  private bill: any = null;
+
   dataClients: Observable<any[]>;
   dataBills: Observable<any[]>;
   loadingBills$: Observable<boolean>;
@@ -37,7 +41,10 @@ export class BaseComponent implements OnInit {
   constructor(
     private store$: Store<AppState>,
     private modalFactory: ModalFactoryService,
-    private loading: LoadingService
+    private loading: LoadingService,
+    private message: MessageService,
+    private successService: SuccessService,
+    private errorService: ErrorService
   ) {}
 
   ngOnInit(): void {
@@ -53,6 +60,15 @@ export class BaseComponent implements OnInit {
     this.store$.pipe(select(state.selectBillDetail)).subscribe((res) => {
       console.log(res, 'DETAIL');
     });
+
+    // bill is deleted
+    this.successService.success(state.UPDATE_BILLS_SUCCESS, () => {
+      this.store$.dispatch(globalState.LOAD_BILLS());
+      this.message.success('Messages.Update.Success');
+    });
+    this.errorService.error(state.UPDATE_BILLS_FAIL, () => {
+      this.message.error('Messages.ErrorDeleteBill', 'Error al eliminar factura');
+    });
   }
 
   add() {
@@ -66,6 +82,13 @@ export class BaseComponent implements OnInit {
 
   delete(row: any) {
     console.log(row);
+    this.message.messageWarning('Messages.DeleteBill').then((result) => {
+      const id = { id: row.id };
+      console.log(id);
+      if (result.dismiss !== Swal.DismissReason.cancel) {
+        this.store$.dispatch(state.UPDATE_BILLS({ payload: { data: id }}));
+      }
+    });
   }
 
   detail(row: any) {
