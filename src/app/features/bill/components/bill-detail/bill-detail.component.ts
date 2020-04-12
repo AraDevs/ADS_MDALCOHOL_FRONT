@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
 import { BillDetailTableConfig } from '@features/bill/config/bill-detail-table-config';
 import * as state from '@features/bill/state';
 import { select, Store } from '@ngrx/store';
@@ -45,7 +45,7 @@ import { filter, map } from 'rxjs/operators';
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class BillDetailComponent implements OnInit {
+export class BillDetailComponent implements OnInit, OnDestroy {
   details$: Observable<any>;
   loading$: Observable<boolean>;
   items$: Observable<any[]>;
@@ -68,6 +68,9 @@ export class BillDetailComponent implements OnInit {
   execute(billId: number) {
     const metadata = { resource: { id: billId } };
     this.store$.dispatch(state.LOAD_BILL_DETAIL({ payload: { metadata } }));
+  }
+  ngOnDestroy() {
+    this.store$.dispatch(state.CLEAR_BILL_DETAIL());
   }
 
   private getLoadingDetail() {

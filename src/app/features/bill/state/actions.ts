@@ -30,3 +30,5 @@ export const BILL_DETAIL_LOADED_FAIL = createAction(
   'Bill Detail Loaded Fail',
   props<{ payload: ErrorActionData }>()
 );
+
+export const CLEAR_BILL_DETAIL = createAction('[Bills] Clear Bill Detail');
