@@ -1,6 +1,9 @@
 .data-table-container {
-  height: 600px;
-  overflow: auto;
+  overflow-x: auto;
+}
+
+.form-width {
+  min-width: 600px;
 }
 
 .actions {
@@ -10,7 +13,6 @@
   }
 }
 
-
 .mat-column-product {
   flex: 0 0 250px;
 }
@@ -18,4 +20,3 @@
 button:focus {
   outline: none;
 }
-

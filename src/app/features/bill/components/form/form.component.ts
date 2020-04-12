@@ -1,4 +1,4 @@
-import { Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, Inject, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { FactoryFormService } from '@core/services';
 import { MessageService } from '@core/services/message.service';
@@ -22,7 +22,7 @@ import { BillTableComponent } from '../bill-table/bill-table.component';
   styleUrls: ['./form.component.scss'],
   providers: [FormModel, FormService, SuccessService, ErrorService],
 })
-export class FormComponent implements OnInit {
+export class FormComponent implements OnInit, OnDestroy {
   private subs = new SubSink();
   private errors = new Subject<string[]>();
   private update = false;
@@ -115,6 +115,10 @@ export class FormComponent implements OnInit {
     } else if (event === MODAL_ACCEPT_EVENT) {
       this.formBtn.nativeElement.click();
     }
+  }
+
+  ngOnDestroy() {
+    this.store$.dispatch(globalState.CLEAR_INVENTORY_BY_CLIENT());
   }
 
   private loadInventoriesByClient(client) {

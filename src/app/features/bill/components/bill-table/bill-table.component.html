@@ -1,5 +1,5 @@
-<div class="position-relative">
-  <form [formGroup]="form">
+<div class="position-relative data-table-container">
+  <form class="form-width" [formGroup]="form">
     <mat-table [dataSource]="rows$ | async">
       <ng-container *ngFor="let column of config.displayedColumns" [matColumnDef]="column">
         <ng-container *ngIf="column !== 'actions'">
