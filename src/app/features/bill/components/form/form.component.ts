@@ -1,19 +1,19 @@
-import { Component, OnInit, ViewChild, Inject, ElementRef } from '@angular/core';
-import { FormModel } from '@features/bill/config/form-model';
+import { Component, ElementRef, Inject, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { InputControlConfig, SelectControlConfig } from '@core/types';
 import { FactoryFormService } from '@core/services';
-import { Store, select } from '@ngrx/store';
-import { AppState } from '@state/app-state';
-import { SuccessService, ErrorService } from '@shared/services';
-import { FormService } from '@features/bill/components/form/form.service';
-import { Subject, Observable } from 'rxjs';
 import { MessageService } from '@core/services/message.service';
-import { DYNAMIC_MODAL_DATA, MODAL_ACCEPT_EVENT, MODAL_INITIAL_EVENT } from '@shared/constants';
+import { InputControlConfig, SelectControlConfig } from '@core/types';
+import { FormService } from '@features/bill/components/form/form.service';
+import { FormModel } from '@features/bill/config/form-model';
 import * as state from '@features/bill/state';
+import { select, Store } from '@ngrx/store';
+import { DYNAMIC_MODAL_DATA, MODAL_ACCEPT_EVENT, MODAL_INITIAL_EVENT } from '@shared/constants';
+import { ErrorService, SuccessService } from '@shared/services';
+import { AppState } from '@state/app-state';
 import * as globalState from '@state/index';
+import { BehaviorSubject, merge, Observable, Subject } from 'rxjs';
+import { map, tap } from 'rxjs/operators';
 import { SubSink } from 'subsink';
-import { map, startWith, shareReplay } from 'rxjs/operators';
 import { BillTableComponent } from '../bill-table/bill-table.component';
 
 @Component({
@@ -22,19 +22,22 @@ import { BillTableComponent } from '../bill-table/bill-table.component';
   styleUrls: ['./form.component.scss'],
   providers: [FormModel, FormService, SuccessService, ErrorService],
 })
-export class FormComponent implements OnInit {
+export class FormComponent implements OnInit, OnDestroy {
   private subs = new SubSink();
   private errors = new Subject<string[]>();
   private update = false;
   private bill: any;
+
+  private _computePerception$ = new BehaviorSubject(false);
+  private _computeIVA$ = new BehaviorSubject(false);
 
   form: FormGroup;
   fields: Partial<InputControlConfig | SelectControlConfig>[];
   errors$ = this.errors.asObservable();
   products$: Observable<any[]>;
 
-  computePerception$: Observable<boolean>;
-  computeIVA$: Observable<boolean>;
+  computePerception$ = this._computePerception$.asObservable();
+  computeIVA$ = this._computeIVA$.asObservable();
 
   @ViewChild('formBtn') formBtn: ElementRef<HTMLButtonElement>;
   @ViewChild(BillTableComponent) billTable: BillTableComponent;
@@ -64,18 +67,11 @@ export class FormComponent implements OnInit {
       })
     );
 
+    this.computeValues();
+
     this.subs.sink = this.form.get('clientId').valueChanges.subscribe((client) => {
       this.loadInventoriesByClient(client);
     });
-
-    this.computePerception$ = this.form
-      .get('perception')
-      .valueChanges.pipe(startWith(false), shareReplay(1));
-    this.computeIVA$ = this.form.get('bill_type').valueChanges.pipe(
-      startWith(false),
-      map(({ label }) => label === 'Crédito Fiscal'),
-      shareReplay(1)
-    );
 
     this.successService.success(state.SAVE_BILLS_SUCCESS, () => {
       this.store$.dispatch(globalState.LOAD_BILLS());
@@ -121,8 +117,24 @@ export class FormComponent implements OnInit {
     }
   }
 
+  ngOnDestroy() {
+    this.store$.dispatch(globalState.CLEAR_INVENTORY_BY_CLIENT());
+  }
+
   private loadInventoriesByClient(client) {
     const metadata = { resource: { id: client.id } };
     this.store$.dispatch(globalState.LOAD_INVENTORY_BY_CLIENT({ payload: { metadata } }));
+  }
+
+  private computeValues() {
+    const computePerception$ = this.form
+      .get('perception')
+      .valueChanges.pipe(tap((compute) => this._computePerception$.next(compute)));
+    const computeIVA$ = this.form.get('bill_type').valueChanges.pipe(
+      map(({ label }) => label === 'Crédito fiscal'),
+      tap((compute) => this._computeIVA$.next(compute))
+    );
+
+    this.subs.sink = merge(computeIVA$, computePerception$).subscribe();
   }
 }

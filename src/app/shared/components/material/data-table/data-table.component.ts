@@ -23,6 +23,13 @@ export class DataTableComponent implements OnInit {
   };
   @Input() dataSource$: Observable<any[]> = of([]);
   @Input() loading$: Observable<boolean>;
+
+  @Input() displayUpdateIcon = true;
+  @Input() displayMoneyIcon = false;
+  @Input() displayDeleteIcon = false;
+  @Input() displayDetailIcon = false;
+
+
   @Output() add = new EventEmitter<any>();
 
   @Output() update = new EventEmitter<any>();
@@ -31,10 +38,6 @@ export class DataTableComponent implements OnInit {
 
   @Output() selectedRow = new EventEmitter<any>();
 
-  @Input() displayUpdateIcon = true;
-  @Input() displayMoneyIcon = false;
-  @Input() displayDeleteIcon = false;
-  @Input() displayDetailIcon = false;
 
   constructor(private objPath: ObjectPathService) {}
 

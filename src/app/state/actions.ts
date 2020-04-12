@@ -120,3 +120,4 @@ export const INVENTORY_BY_CLIENT_LOADED_FAIL = createAction(
   props<{ payload: ErrorActionData }>()
 );
 
+export const CLEAR_INVENTORY_BY_CLIENT = createAction('Clear Inventory By Client');

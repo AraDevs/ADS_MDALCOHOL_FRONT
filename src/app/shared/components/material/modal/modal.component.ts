@@ -4,7 +4,8 @@ import {
   Inject,
   Injector,
   OnInit,
-  ViewChild
+  ViewChild,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { DYNAMIC_MODAL_DATA, MODAL_ACCEPT_EVENT, MODAL_INITIAL_EVENT } from '@shared/constants';
@@ -15,7 +16,8 @@ import { BehaviorSubject } from 'rxjs';
 @Component({
   selector: 'md-modal',
   templateUrl: './modal.component.html',
-  styleUrls: ['./modal.component.scss']
+  styleUrls: ['./modal.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ModalComponent implements OnInit {
   @ViewChild(ModalAnchorDirective, { static: true }) ref: ModalAnchorDirective;
