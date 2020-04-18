@@ -2,12 +2,11 @@ import { Injectable } from '@angular/core';
 import { PurchaseRow } from './types/purchase-row';
 
 @Injectable()
-export class TotalBillService {
-  public getTotals(subTotal: number, computeIva: boolean, computePerception: boolean) {
-    const iva = computeIva ? subTotal * 0.13 : 0;
+export class TotalPurchaseService {
+  public getTotals(subTotal: number, computePerception: boolean) {
     const perception = computePerception ? subTotal * 0.1 : 0;
-    const total = subTotal + iva + perception;
-    return { subTotal, iva, perception, total };
+    const total = subTotal + perception;
+    return { subTotal, perception, total };
   }
 
   public getSubTotalByRow(obj: { row: number; column: string; rows: PurchaseRow[] }) {

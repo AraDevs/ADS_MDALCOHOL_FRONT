@@ -1,9 +1,9 @@
 import { PurchaseTableConfiguration } from './purchase-table-configuration';
-import { TotalBillService } from './total.service';
+import { TotalPurchaseService } from './total.service';
 import { PurchaseTableService } from './purchase-table.service';
 
-export const billTableProviders = [
+export const PURCHASE_TABLE_PROVIDERS = [
   PurchaseTableConfiguration,
-  TotalBillService,
+  TotalPurchaseService,
   PurchaseTableService,
 ];
