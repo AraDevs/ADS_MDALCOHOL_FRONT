@@ -16,7 +16,8 @@ import {
   TotalTitlesListComponent,
   TableSelectComponent,
   TableInputComponent,
-  BasicFilterComponent
+  BasicFilterComponent,
+  InvoiceDetailComponent,
 } from './components';
 import { ModalAnchorDirective } from './directives';
 import { DatepickerComponent } from './components/material/datepicker/datepicker.component';
@@ -41,6 +42,7 @@ import { SectionBarComponent } from './components/section-bar/section-bar.compon
     TableSelectComponent,
     TableInputComponent,
     BasicFilterComponent,
+    InvoiceDetailComponent,
   ],
   imports: [CommonModule, TranslocoModule, MaterialModule, FormsModule, ReactiveFormsModule],
   entryComponents: [ModalComponent],
@@ -66,7 +68,8 @@ import { SectionBarComponent } from './components/section-bar/section-bar.compon
     TotalTitlesListComponent,
     TableSelectComponent,
     TableInputComponent,
-    BasicFilterComponent
+    BasicFilterComponent,
+    InvoiceDetailComponent,
   ],
 })
 export class SharedModule {}

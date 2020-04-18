@@ -10,7 +10,7 @@ import { filter, map } from 'rxjs/operators';
 @Component({
   selector: 'md-bill-detail',
   template: `
-    <md-list [details$]="details$"></md-list>
+    <md-invoice-detail [details$]="details$"></md-invoice-detail>
 
     <md-data-table
       class="my-2"
@@ -22,7 +22,7 @@ import { filter, map } from 'rxjs/operators';
     >
     </md-data-table>
 
-    <md-list [details$]="totals$"></md-list>
+    <md-invoice-detail [details$]="totals$"></md-invoice-detail>
   `,
   providers: [LoadingService, BillDetailTableConfig],
   styles: [],

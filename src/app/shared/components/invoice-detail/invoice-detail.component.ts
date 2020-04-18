@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Observable } from 'rxjs';
 
 @Component({
-  selector: 'md-list',
+  selector: 'md-invoice-detail',
   template: `
     <mat-list *ngIf="details$ | async as details" class="mb-4">
       <ng-container *ngFor="let detail of details">
@@ -29,6 +29,6 @@ import { Observable } from 'rxjs';
     `,
   ],
 })
-export class ListComponent {
+export class InvoiceDetailComponent {
   @Input() details$: Observable<any[]>;
 }
