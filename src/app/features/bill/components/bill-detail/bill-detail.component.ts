@@ -25,10 +25,23 @@ import { filter, map } from 'rxjs/operators';
     <md-data-table
       [config]="tableConfig"
       [displayUpdateIcon]="false"
+      [heightAuto]="true"
       [loading$]="loading$"
       [dataSource$]="items$ | async"
     >
     </md-data-table>
+
+    <mat-list *ngIf="totals$ | async as totals" class="mb-4">
+      <ng-container *ngFor="let detail of totals">
+        <mat-list-item>
+          <div class="d-flex justify-content-between w-100">
+            <span class="title">{{ detail.title | transloco }}</span>
+            {{ detail.value }}
+          </div>
+        </mat-list-item>
+        <mat-divider></mat-divider>
+      </ng-container>
+    </mat-list>
   `,
   providers: [LoadingService, BillDetailTableConfig],
   styles: [
@@ -47,6 +60,7 @@ import { filter, map } from 'rxjs/operators';
 })
 export class BillDetailComponent implements OnInit, OnDestroy {
   details$: Observable<any>;
+  totals$: Observable<any>;
   loading$: Observable<boolean>;
   items$: Observable<any[]>;
   tableConfig = this.tableC.getConfiguration();
@@ -61,6 +75,10 @@ export class BillDetailComponent implements OnInit, OnDestroy {
     const detail$ = this.getBillDetail();
 
     this.details$ = detail$.pipe(pipe(map((result) => result.details)));
+    this.totals$ = detail$.pipe(pipe(map((result) => result.totals)));
+
+    this.details$ = detail$.pipe(pipe(map((result) => result.details)));
+
     this.items$ = detail$.pipe(map((result) => result.items$));
     this.loading$ = this.getLoadingDetail();
   }
@@ -69,6 +87,7 @@ export class BillDetailComponent implements OnInit, OnDestroy {
     const metadata = { resource: { id: billId } };
     this.store$.dispatch(state.LOAD_BILL_DETAIL({ payload: { metadata } }));
   }
+
   ngOnDestroy() {
     this.store$.dispatch(state.CLEAR_BILL_DETAIL());
   }

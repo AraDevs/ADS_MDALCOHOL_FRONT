@@ -13,36 +13,33 @@ export const selectBillDetail = createSelector(billFeature, (bill: BillState) =>
       return { ...item, total };
     });
 
-    const titles = [
-      'Bill.BillDetail.Num',
-      'Bill.BillDetail.BusinessName',
-      'Bill.BillDetail.Perception',
-      'Bill.BillDetail.Iva',
-      'Bill.BillDetail.BillType',
-      'Bill.BillDetail.PaymentType',
-      'Bill.BillDetail.BillDate',
-      'Bill.BillDetail.Total',
-
+    const detailsConfig = [
+      { title: 'Bill.BillDetail.Num', key: 'id' },
+      { title: 'Bill.BillDetail.BusinessName', key: 'client.business_name' },
+      { title: 'Bill.BillDetail.BillType', key: 'bill_type' },
+      { title: 'Bill.BillDetail.PaymentType', key: 'payment_type' },
+      { title: 'Bill.BillDetail.BillDate', key: 'bill_date' },
     ];
 
-    const keys = [
-      'id',
-      'client.business_name',
-      'perception_value',
-      'iva',
-      'bill_type',
-      'payment_type',
-      'bill_date',
-      'total'
+    const totalsConf = [
+      { title: 'Bill.BillDetail.Perception', key: 'perception_value' },
+      { title: 'Bill.BillDetail.Iva', key: 'iva' },
+      { title: 'Bill.BillDetail.Total', key: 'total' },
     ];
 
-    const details = keys.map((key, i) => {
-      const value = objectPath.get(detail, key);
-      return { title: titles[i], value };
+    const details = detailsConfig.map((config) => {
+      const value = objectPath.get(detail, config.key);
+      return { title: config.title, value };
+    });
+
+    const totals = totalsConf.map((config) => {
+      const value = objectPath.get(detail, config.key);
+      return { title: config.title, value };
     });
 
     return {
       details,
+      totals,
       items$: of(items),
     };
   }

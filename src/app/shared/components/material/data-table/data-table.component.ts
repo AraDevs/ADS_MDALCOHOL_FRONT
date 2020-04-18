@@ -16,6 +16,7 @@ export class DataTableComponent {
   };
   @Input() dataSource$: Observable<any[]> = of([]);
   @Input() loading$: Observable<boolean>;
+  @Input() heightAuto = false;
 
   @Input() displayUpdateIcon = true;
   @Input() displayMoneyIcon = false;
@@ -26,7 +27,6 @@ export class DataTableComponent {
   @Input() hideDeleteIconCondition: (row: any) => boolean = null;
 
   @Output() add = new EventEmitter<any>();
-
   @Output() update = new EventEmitter<any>();
   @Output() delete = new EventEmitter<any>();
   @Output() detail = new EventEmitter<any>();

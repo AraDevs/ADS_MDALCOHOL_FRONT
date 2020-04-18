@@ -7,6 +7,13 @@ table {
   overflow: auto;
 }
 
+.height-auto {
+  min-height: 100px;
+  height: auto;
+  overflow: none;
+}
+
+
 .actions {
   mat-icon {
     cursor: pointer;
