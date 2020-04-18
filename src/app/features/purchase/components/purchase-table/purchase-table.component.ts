@@ -37,6 +37,12 @@ export class PurchaseTableComponent implements OnInit {
 
   rows$ = new BehaviorSubject<PurchaseRow[]>([]);
   totals$ = new BehaviorSubject({ subTotal: 0, perception: 0, total: 0 });
+  totalsValue$ = this.totals$.pipe(
+    map((totals) => {
+      const keys = ['subTotal', 'perception', 'total'];
+      return keys.map((key) => totals[key]);
+    })
+  );
   deleteRow$ = new Subject<{ rows: PurchaseRow[]; subTotal: number }>();
 
   constructor(

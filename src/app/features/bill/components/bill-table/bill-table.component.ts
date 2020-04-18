@@ -34,6 +34,13 @@ export class BillTableComponent implements OnInit {
 
   rows$ = new BehaviorSubject<BillRow[]>([]);
   totals$ = new BehaviorSubject({ subTotal: 0, perception: 0, iva: 0, total: 0 });
+  totalsValue$ = this.totals$.pipe(
+    map((totals) => {
+      const keys = ['subTotal', 'perception', 'iva', 'total'];
+      return keys.map((key) => totals[key]);
+    })
+  );
+
   deleteRow$ = new Subject<{ rows: BillRow[]; subTotal: number }>();
 
   constructor(
