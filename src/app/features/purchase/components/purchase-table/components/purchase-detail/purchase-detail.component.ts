@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
-import { PurchaseDetailTableConfig } from '@features/purchase/config/purchase-detail-table-config';
+import { BillDetailTableConfig } from '@features/bill/config/bill-detail-table-config';
 import * as state from '@features/bill/state';
 import { select, Store } from '@ngrx/store';
 import { LoadingService } from '@shared/services';
@@ -8,7 +8,7 @@ import { Observable, pipe } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
 
 @Component({
-  selector: 'md-purchase-detail',
+  selector: 'md-bill-detail',
   template: `
     <md-invoice-detail [details$]="details$"></md-invoice-detail>
 
@@ -24,7 +24,7 @@ import { filter, map } from 'rxjs/operators';
 
     <md-invoice-detail [details$]="totals$"></md-invoice-detail>
   `,
-  providers: [LoadingService, PurchaseDetailTableConfig],
+  providers: [LoadingService, BillDetailTableConfig],
   styles: [],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -38,7 +38,7 @@ export class BillDetailComponent implements OnInit, OnDestroy {
   constructor(
     private store$: Store<AppState>,
     private loading: LoadingService,
-    private tableC: PurchaseDetailTableConfig
+    private tableC: BillDetailTableConfig
   ) {}
 
   ngOnInit(): void {
