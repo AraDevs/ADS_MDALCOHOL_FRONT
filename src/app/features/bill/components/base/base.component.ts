@@ -1,23 +1,24 @@
 import { Component, OnInit } from '@angular/core';
-import { filter, map } from 'rxjs/operators';
-import { FormComponent } from '../form/form.component';
-import { Store, select } from '@ngrx/store';
-import { AppState } from '@state/app-state';
-import {
-  ModalFactoryService,
-  LoadingService,
-  SuccessService,
-  ErrorService,
-} from '@shared/services';
-import { MODAL_INITIAL_EVENT } from '@shared/constants';
-import * as globalState from '@state/index';
-import * as state from '@features/bill/state';
-
-import { Observable } from 'rxjs';
 import { MessageService } from '@core/services/message.service';
+import * as state from '@features/bill/state';
+import { select, Store } from '@ngrx/store';
+import { MODAL_INITIAL_EVENT } from '@shared/constants';
+import {
+  ErrorService,
+  LoadingService,
+  ModalFactoryService,
+  SuccessService,
+} from '@shared/services';
+import { DataTableConfig } from '@shared/types';
+import { AppState } from '@state/app-state';
+import * as globalState from '@state/index';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { filter, switchMap, tap, startWith } from 'rxjs/operators';
 import Swal from 'sweetalert2';
-import { DataTableConfig, ModalData } from '@shared/types';
 import { BillDetailComponent } from '../bill-detail/bill-detail.component';
+import { FormComponent } from '../form/form.component';
+import { LoaddBillsService } from '@features/bill/services/load-bills.service';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'md-base',
@@ -27,9 +28,12 @@ import { BillDetailComponent } from '../bill-detail/bill-detail.component';
 })
 export class BaseComponent implements OnInit {
   private bill: any = null;
+  private billState$ = new BehaviorSubject<'' | 'active' | 'deleted'>('deleted');
 
   dataClients: Observable<any[]>;
-  dataBills: Observable<any[]>;
+  bills$: Observable<any[]>;
+  filter = new FormControl();
+
   loadingBills$: Observable<boolean>;
 
   tableConfig: DataTableConfig = {
@@ -56,6 +60,7 @@ export class BaseComponent implements OnInit {
 
   constructor(
     private store$: Store<AppState>,
+    private loadBills: LoaddBillsService,
     private modalFactory: ModalFactoryService,
     private loading: LoadingService,
     private message: MessageService,
@@ -69,14 +74,15 @@ export class BaseComponent implements OnInit {
       globalState.BILLS_LOADED_SUCCESS,
       globalState.BILLS_LOADED_FAIL,
     ]);
+
     this.store$.dispatch(globalState.LOAD_CLIENTS_ACTIVE());
-    this.store$.dispatch(globalState.LOAD_BILLS());
-    this.dataBills = this.store$.pipe(select(globalState.selectBills));
+
+    this.bills$ = this.loadBills.getBills(this.filter.valueChanges.pipe(startWith('')));
 
     // bill is deleted
     this.successService.success(state.UPDATE_BILLS_SUCCESS, () => {
-      this.store$.dispatch(globalState.LOAD_BILLS());
-      this.message.success('Messages.Update.Success');
+      this.billState$.next(this.billState$.value);
+      this.bill.this.message.success('Messages.Update.Success');
     });
     this.errorService.error(state.UPDATE_BILLS_FAIL, () => {
       this.message.error('Messages.ErrorDeleteBill', 'Error al eliminar factura');
@@ -94,10 +100,8 @@ export class BaseComponent implements OnInit {
   }
 
   delete(row: any) {
-    console.log(row);
     this.message.messageWarning('Messages.DeleteBill').then((result) => {
       const id = { id: row.id };
-      console.log(id);
       if (result.dismiss !== Swal.DismissReason.cancel) {
         this.store$.dispatch(state.UPDATE_BILLS({ payload: { data: id } }));
       }

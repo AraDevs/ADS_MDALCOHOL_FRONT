@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { ErrorActionData, ActionMetadata } from '@shared/types';
+import { ActionMetadata, ErrorActionData } from '@shared/types';
 
 export const LOAD_SELLERS = createAction('Load Sellers');
 export const SELLERS_LOADED_SUCCESS = createAction(
@@ -97,7 +97,7 @@ export const PRODUCTION_ORDERS_LOADED_FAIL = createAction(
 );
 
 // Bills
-export const LOAD_BILLS = createAction('Load Bills');
+export const LOAD_BILLS = createAction('Load Bills', props<{ payload: ActionMetadata }>());
 export const BILLS_LOADED_SUCCESS = createAction(
   'Bills Loaded Success',
   props<{ payload: any[] }>()
