@@ -13,14 +13,16 @@ export class MessageService {
     return Swal.fire(message.title, message.message, icon);
   }
 
-  public messageWarning() {
+  public messageWarning(message: string) {
     return Swal.fire({
       title: '¿Estás seguro?',
-      text: 'Si acepta, da por finalizada la orden',
+      text: this.transalate.translate(message),
       icon: 'warning',
       showCancelButton: true,
       confirmButtonText: 'Si, finalizar',
       cancelButtonText: 'No, cancelar',
+      allowEscapeKey : false,
+      allowOutsideClick: false
     });
   }
 

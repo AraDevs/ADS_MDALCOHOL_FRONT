@@ -33,7 +33,10 @@
       "Error": "Error al agregar registro"
     },
     "InvalidForm": "Formulario Inválido",
-    "AreYouSure": "¿Estás seguro?"
+    "AreYouSure": "¿Estás seguro?",
+    "FinishOrder": "Si acepta, da por finalizada la orden",
+    "DeleteBill": "Si acepta la factura será eliminada y pasará a estar inactiva",
+    "ErrorDeleteBill": "Error al eliminar la factura, probablemente ya ha sido eliminada"
   },
   "Table": {
     "Actions": "Acciones"
