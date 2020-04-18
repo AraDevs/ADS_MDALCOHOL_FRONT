@@ -34,13 +34,13 @@
               <ng-container>
                 <mat-icon
                   color="warn"
-                  *ngIf="displayDetailIcon && hideIconByCondition(row)"
+                  *ngIf="displayDeleteIcon && hideIconByCondition(row)"
                   (click)="getDelete().next(row)"
                 >
                   delete
                 </mat-icon>
                 <mat-icon
-                  *ngIf="!(displayDetailIcon && hideIconByCondition(row))"
+                  *ngIf="displayDeleteIcon && !hideIconByCondition(row)"
                   class="disable-icon"
                 >
                   delete
