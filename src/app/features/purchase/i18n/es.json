@@ -1,0 +1,21 @@
+{
+  "FormTable": {
+    "Provider": "Proveedor",
+    "Product": "Producto",
+    "Quantity": "Cantidad",
+    "Price": "Precio ($)",
+    "Total": "Total ($)",
+    "Actions": "Acciones",
+    "Footer": {
+      "SubTotal": "Sub total:",
+      "Perception": "Percepción:",
+      "IVA": "IVA:",
+      "Total": "Total:"
+    },
+    "Messages": {
+      "SelectedProduct": "El producto ya esta seleccionado",
+      "AddMore": "Hay valores incorrectos en la tabla o tienes un registro pendiente",
+      "Save": "Hay valores incorrectos en la tabla o no cuenta con registros"
+    }
+  }
+}

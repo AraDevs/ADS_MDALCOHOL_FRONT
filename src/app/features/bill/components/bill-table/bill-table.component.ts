@@ -8,7 +8,8 @@ import { BillTableConfiguration } from './bill-table-configuration';
 import { BillTableService } from './bill-table.service';
 import { billTableProviders } from './providers';
 import { TotalBillService } from './total.service';
-import { BillRow, Key, Row } from './types';
+import { BillRow } from './types';
+import { Key, Row } from '@shared/types';
 
 @Component({
   selector: 'md-bill-table',
