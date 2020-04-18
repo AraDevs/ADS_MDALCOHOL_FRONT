@@ -30,6 +30,7 @@ export class BillTableComponent implements OnInit {
 
   form: FormGroup = new FormGroup({});
   config = this.tableConfig.getConfiguration();
+  totalTitles = this.billTableService.getTotalTitles();
 
   rows$ = new BehaviorSubject<BillRow[]>([]);
   totals$ = new BehaviorSubject({ subTotal: 0, perception: 0, iva: 0, total: 0 });

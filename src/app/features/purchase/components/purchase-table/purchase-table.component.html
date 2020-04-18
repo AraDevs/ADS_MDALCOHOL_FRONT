@@ -36,7 +36,10 @@
               <mat-icon>add</mat-icon>
             </button>
 
-            <md-total-titles-list *ngIf="column === 'price'"></md-total-titles-list>
+            <md-total-titles-list
+              *ngIf="column === 'price'"
+              [titles]="totalTitles"
+            ></md-total-titles-list>
             <md-total-list *ngIf="column === 'total'" [totals$]="totals$"></md-total-list>
           </mat-footer-cell>
         </ng-container>

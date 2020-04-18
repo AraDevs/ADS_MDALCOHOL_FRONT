@@ -4,7 +4,14 @@ import { v4 as uuidv4 } from 'uuid';
 
 @Injectable()
 export class BillTableService {
-
+  getTotalTitles() {
+    return [
+      'Bill.FormTable.Footer.SubTotal',
+      'Bill.FormTable.Footer.Perception',
+      'Bill.FormTable.Footer.IVA',
+      'Bill.FormTable.Footer.Total',
+    ];
+  }
 
   getRowControls() {
     const product = new FormControl(null, [Validators.required]);

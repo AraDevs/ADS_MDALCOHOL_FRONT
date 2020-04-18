@@ -33,6 +33,7 @@ export class PurchaseTableComponent implements OnInit {
 
   form: FormGroup = new FormGroup({});
   config = this.tableConfig.getConfiguration();
+  totalTitles = this.purchaseTableService.getTotalTitles();
 
   rows$ = new BehaviorSubject<PurchaseRow[]>([]);
   totals$ = new BehaviorSubject({ subTotal: 0, perception: 0, total: 0 });
