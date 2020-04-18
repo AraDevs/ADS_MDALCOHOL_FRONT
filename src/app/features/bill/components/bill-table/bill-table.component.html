@@ -12,7 +12,7 @@
               <md-table-select
                 *ngSwitchCase="'Select'"
                 [form]="form"
-                [products$]="products$"
+                [data$]="products$"
                 [controlName]="getControlKey(data, column)"
                 (valueChange)="selectedProduct($event, i)"
               ></md-table-select>

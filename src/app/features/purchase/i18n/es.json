@@ -14,6 +14,7 @@
     },
     "Messages": {
       "SelectedProduct": "El producto ya esta seleccionado",
+      "SelectedProvider": "El proveedor ya esta seleccionado",
       "AddMore": "Hay valores incorrectos en la tabla o tienes un registro pendiente",
       "Save": "Hay valores incorrectos en la tabla o no cuenta con registros"
     }

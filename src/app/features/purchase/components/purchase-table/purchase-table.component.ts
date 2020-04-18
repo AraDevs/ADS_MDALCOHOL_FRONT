@@ -20,12 +20,16 @@ import { PurchaseRow } from './types';
 })
 export class PurchaseTableComponent implements OnInit {
   @Input() products$: Observable<any[]>;
+  @Input() providers$: Observable<any[]>;
   @Input() computePerception$: Observable<boolean>;
 
   private subs = new SubSink();
-  private selectedProducts = new Map<Key, Row>();
-  private selectedRows = new Map<Row, Key>();
   private computeSubTotal$ = new Subject<any>();
+  // Relationship using for caching
+  private productByRow = new Map<Key, Row>();
+  private rowByProduct = new Map<Row, Key>();
+  private providerByRow = new Map<Key, Row>();
+  private rowByProvider = new Map<Row, Key>();
 
   form: FormGroup = new FormGroup({});
   config = this.tableConfig.getConfiguration();
@@ -70,7 +74,7 @@ export class PurchaseTableComponent implements OnInit {
       const newRow = { ...controls, ...ids, total: 0 };
       this.rows$.next([...rows, newRow]);
     } else {
-      this.message.error('Bill.FormTable.Messages.AddMore');
+      this.message.error('Purchase.FormTable.Messages.AddMore');
     }
   }
 
@@ -86,18 +90,24 @@ export class PurchaseTableComponent implements OnInit {
     this.deleteRow$.next({ rows: newRows, subTotal });
   }
 
-  selectedProduct(product: any, row: number) {
-    const { id } = product;
-    const rowHasProduct = this.selectedProducts.get(id) !== undefined;
-    if (!rowHasProduct) {
-      const priceControl = this.rows$.value[row].price;
-      priceControl.setValue(product.value);
+  selectedValue(value: any, row: number, column: string) {
+    const { id } = value;
+    const valueByRow = this.getValueByRow(column);
 
-      this.cachingProduct(product, row);
-      this.computeSubTotal(row, 'price');
+    const rowHasValue = valueByRow.get(id) !== undefined;
+    if (!rowHasValue) {
+      if (this.isProviderColumn(column)) {
+        const priceControl = this.rows$.value[row].price;
+        priceControl.setValue(value.value);
+        this.computeSubTotal(row, 'price');
+      }
+      this.cachingValue(value, row, column);
     } else {
-      this.message.error('Bill.FormTable.Messages.SelectedProduct');
-      const rows = this.unselectProduct(row);
+      const message = `Purchase.FormTable.Messages.Selected${
+        this.isProviderColumn(column) ? 'Provider' : 'Product'
+      }`;
+      this.message.error(message);
+      const rows = this.unselectValue(row, column);
       this.rows$.next(rows);
     }
   }
@@ -107,24 +117,33 @@ export class PurchaseTableComponent implements OnInit {
   }
 
   /**
-   * @description If the product was selected per other row in the table, the current
+   * @description If the value was selected per other row in the table, the current
    * selected product not will be selected for the user
    */
-  unselectProduct(row: number) {
+  unselectValue(row: number, column: string) {
     this.removeCachedProduct(row);
 
     const rows = this.getRows();
-    const product = rows[row].product;
-    const price = rows[row].price;
+    const selectControl = rows[row][column];
+    selectControl.setValue(null, { emitEvent: false });
 
-    product.setValue(null, { emitEvent: false });
-    price.setValue(0);
+    if (!this.isProviderColumn(column)) {
+      const price = rows[row].price;
+      price.setValue(0);
+    }
 
     return rows;
   }
 
   getControlKey(data: any, column: string) {
     return data[column + 'Key'];
+  }
+
+  getSelectData(column: string) {
+    if (column === 'provider') {
+      return this.providers$;
+    }
+    return this.products$;
   }
 
   getValues() {
@@ -138,7 +157,7 @@ export class PurchaseTableComponent implements OnInit {
         return { inventory_id: productId, price, quantity };
       });
     } else {
-      this.message.error('Bill.FormTable.Messages.Save');
+      this.message.error('Purchase.FormTable.Messages.Save');
       return [];
     }
   }
@@ -164,24 +183,27 @@ export class PurchaseTableComponent implements OnInit {
     );
   }
 
-  private cachingProduct(product: any, row: number) {
-    const { id } = product;
-    const prevProductId = this.selectedRows.get(row);
+  private cachingValue(value: any, row: number, column: string) {
+    const { id } = value;
+    const valueByRow = this.getValueByRow(column);
+    const rowByValue = this.getRowByValue(column);
 
-    if (prevProductId) {
-      this.selectedProducts.delete(prevProductId);
+    const prevValueId = valueByRow.get(row);
+
+    if (prevValueId) {
+      this.productByRow.delete(prevValueId);
     }
 
-    this.selectedProducts.set(id, row);
-    this.selectedRows.set(row, id);
+    valueByRow.set(id, row);
+    rowByValue.set(row, id);
   }
 
   private removeCachedProduct(row: number) {
-    const product = this.selectedRows.get(row);
-    const rowToDelete = this.selectedProducts.get(product);
+    const product = this.rowByProduct.get(row);
+    const rowToDelete = this.productByRow.get(product);
 
-    this.selectedProducts.delete(product);
-    this.selectedRows.delete(rowToDelete);
+    this.productByRow.delete(product);
+    this.rowByProduct.delete(rowToDelete);
   }
 
   private addControls(ids: any, controls: any) {
@@ -196,6 +218,18 @@ export class PurchaseTableComponent implements OnInit {
     this.form.removeControl(row.quantityKey);
     this.form.removeControl(row.priceKey);
     this.form.removeControl(row.providerKey);
+  }
+
+  private isProviderColumn(column: string) {
+    return column === 'provider';
+  }
+
+  private getValueByRow(column: string) {
+    return this.isProviderColumn(column) ? this.providerByRow : this.productByRow;
+  }
+
+  private getRowByValue(column: string) {
+    return this.isProviderColumn(column) ? this.rowByProvider : this.rowByProduct;
   }
 
   private getRows() {
