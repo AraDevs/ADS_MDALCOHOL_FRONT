@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { MessageService } from '@core/services/message.service';
+import { LoaddBillsService } from '@features/bill/services/load-bills.service';
 import * as state from '@features/bill/state';
-import { select, Store } from '@ngrx/store';
+import { Store } from '@ngrx/store';
 import { MODAL_INITIAL_EVENT } from '@shared/constants';
 import {
   ErrorService,
@@ -13,12 +14,10 @@ import { DataTableConfig } from '@shared/types';
 import { AppState } from '@state/app-state';
 import * as globalState from '@state/index';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { filter, switchMap, tap, startWith } from 'rxjs/operators';
+import { filter } from 'rxjs/operators';
 import Swal from 'sweetalert2';
 import { BillDetailComponent } from '../bill-detail/bill-detail.component';
 import { FormComponent } from '../form/form.component';
-import { LoaddBillsService } from '@features/bill/services/load-bills.service';
-import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'md-base',
@@ -32,8 +31,6 @@ export class BaseComponent implements OnInit {
 
   dataClients: Observable<any[]>;
   bills$: Observable<any[]>;
-  filter = new FormControl();
-
   loadingBills$: Observable<boolean>;
 
   tableConfig: DataTableConfig = {
@@ -60,7 +57,7 @@ export class BaseComponent implements OnInit {
 
   constructor(
     private store$: Store<AppState>,
-    private loadBills: LoaddBillsService,
+    private loadBillsService: LoaddBillsService,
     private modalFactory: ModalFactoryService,
     private loading: LoadingService,
     private message: MessageService,
@@ -74,10 +71,9 @@ export class BaseComponent implements OnInit {
       globalState.BILLS_LOADED_SUCCESS,
       globalState.BILLS_LOADED_FAIL,
     ]);
-
     this.store$.dispatch(globalState.LOAD_CLIENTS_ACTIVE());
 
-    this.bills$ = this.loadBills.getBills(this.filter.valueChanges.pipe(startWith('')));
+    this.bills$ = this.loadBillsService.getBills();
 
     // bill is deleted
     this.successService.success(state.UPDATE_BILLS_SUCCESS, () => {
@@ -114,6 +110,10 @@ export class BaseComponent implements OnInit {
       const component = result.modal.componentInstance.getRenderedComponent<BillDetailComponent>();
       component.execute(row.id);
     });
+  }
+
+  loadBills(filterValue: string) {
+    this.loadBillsService.loadBills(filterValue as any);
   }
 
   hideDeleteIcon(row: any) {

@@ -12,13 +12,8 @@ export class LoaddBillsService {
   constructor(private store$: Store<AppState>) {}
   private billState$ = new BehaviorSubject<BillState>('');
 
-  getBills(obs: Observable<BillState>) {
-    const emitter$ = obs.pipe(
-      tap((state) => this.billState$.next(state)),
-      switchMap(() => this.billState$.asObservable())
-    );
-
-    return emitter$.pipe(
+  getBills() {
+   return this.billState$.pipe(
       tap((billState) => {
         this.store$.dispatch(
           globalState.LOAD_BILLS({ payload: { metadata: { resource: { state: billState } } } })
