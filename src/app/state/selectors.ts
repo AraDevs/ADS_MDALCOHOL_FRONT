@@ -37,3 +37,6 @@ export const selectBills = createSelector(selectData, (state: State) => state.bi
 export const selectPaymentType = createSelector(selectData, (state: State) => state.paymentType);
 
 export const selectBillType = createSelector(selectData, (state: State) => state.billType);
+
+// Purchases
+export const selectPurchases = createSelector(selectData, (state: State) => state.purchases);

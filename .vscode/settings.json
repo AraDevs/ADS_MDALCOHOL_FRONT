@@ -1,8 +1,22 @@
 {
     "prettier.singleQuote": true,
     "workbench.colorCustomizations": {
-        "activityBar.background": "#580646",
-        "titleBar.activeBackground": "#7B0862",
-        "titleBar.activeForeground": "#FFFAFE"
-    }
+        "activityBar.background": "#570746",
+        "titleBar.activeBackground": "#280320",
+        "titleBar.activeForeground": "#e7e7e7",
+        "activityBar.activeBackground": "#570746",
+        "activityBar.activeBorder": "#5f7609",
+        "activityBar.foreground": "#e7e7e7",
+        "activityBar.inactiveForeground": "#e7e7e799",
+        "activityBarBadge.background": "#5f7609",
+        "activityBarBadge.foreground": "#e7e7e7",
+        "statusBar.background": "#280320",
+        "statusBar.border": "#280320",
+        "statusBar.foreground": "#e7e7e7",
+        "statusBarItem.hoverBackground": "#570746",
+        "titleBar.border": "#280320",
+        "titleBar.inactiveBackground": "#28032099",
+        "titleBar.inactiveForeground": "#e7e7e799"
+    },
+    "peacock.color": "#280320"
 }

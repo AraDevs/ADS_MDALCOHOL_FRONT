@@ -1,4 +1,20 @@
 {
+  "Form": {
+    "PurchaseDate": "Fecha de Compra",
+    "PaymentType": "Tipo de Pago",
+    "Perception": "Percepción"
+  },
+  "Table": {
+    "Id": "#",
+    "PurchaseDate": "Fecha de Compra",
+    "PaymentType": "Tipo de Pago",
+    "Perception": "Percepción"
+  },
+  "Modal": {
+    "Titles": {
+      "FormModal": "Registro de Compras"
+    }
+  },
   "FormTable": {
     "Provider": "Proveedor",
     "Product": "Producto",

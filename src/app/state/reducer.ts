@@ -18,6 +18,7 @@ export interface State {
   bills: any[];
   paymentType: string[];
   billType: string[];
+  purchases: any[];
 }
 
 const INITIAL_STATE: State = {
@@ -37,6 +38,7 @@ const INITIAL_STATE: State = {
   bills: [],
   paymentType: ['Contado', 'Crédito'],
   billType: ['Consumidor final', 'Crédito fiscal', 'Notas de crédito', 'Notas de débito'],
+  purchases: []
 };
 
 const globalReducer = createReducer(
@@ -102,6 +104,9 @@ const globalReducer = createReducer(
   }),
   on(actions.BILLS_LOADED_SUCCESS, (state, { payload }) => {
     return { ...state, bills: payload };
+  }),
+  on(actions.PURCHASE_LOADED_SUCCESS, (state, { payload }) => {
+    return { ...state, purchases: payload }
   })
 );
 

@@ -5,12 +5,13 @@ import { PurchaseRoutingModule } from './purchase-routing.module';
 import { PurchaseTableComponent } from './components/purchase-table/purchase-table.component';
 import { LoadI18nFile } from '@shared/helpers';
 import { TRANSLOCO_SCOPE } from '@ngneat/transloco';
+import { FormComponent } from './components/form/form.component';
 
 const loader = LoadI18nFile((lang: string) => () => import(`./i18n/${lang}.json`));
 
 
 @NgModule({
-  declarations: [BaseComponent, PurchaseTableComponent],
+  declarations: [BaseComponent, PurchaseTableComponent, FormComponent],
   imports: [
     SharedModule,
     PurchaseRoutingModule

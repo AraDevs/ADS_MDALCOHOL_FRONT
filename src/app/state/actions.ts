@@ -121,3 +121,14 @@ export const INVENTORY_BY_CLIENT_LOADED_FAIL = createAction(
 );
 
 export const CLEAR_INVENTORY_BY_CLIENT = createAction('Clear Inventory By Client');
+
+// Purchases
+export const LOAD_PURCHASE = createAction('Load Purchase');
+export const PURCHASE_LOADED_SUCCESS = createAction(
+  'Purchase Loaded Success',
+  props<{ payload: any[] }>()
+);
+export const PURCHASE_LOADED_FAIL = createAction(
+  'Purchase Loaded Fail',
+  props<{ payload: ErrorActionData }>()
+);
