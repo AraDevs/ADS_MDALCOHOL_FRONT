@@ -34,6 +34,10 @@ const routes: Routes = [
   {
     path: 'bills',
     loadChildren: () => import('./features/bill/bill.module').then(m => m.BillModule)
+  },
+  {
+    path: 'purchases',
+    loadChildren: () => import('./features/purchase/purchase.module').then(m => m.PurchaseModule)
   }
 ];
 

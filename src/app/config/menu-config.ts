@@ -13,6 +13,11 @@ export const MENU = [
     title: 'SideNav.Bill',
     route: '/bills',
     icon: 'monetization_on'
+  },
+  {
+    title: 'SideNav.Purchase',
+    route: '/purchases',
+    icon: 'payments'
   }
 ];
 

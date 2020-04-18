@@ -9,8 +9,8 @@
     "Sellers": "Vendedores",
     "Inventories": "Inventarios",
     "ProductionOrders": "Órdenes de Producción",
-    "Bill": "Facturas"
-
+    "Bill": "Facturas",
+    "Purchase": "Compras"
   },
   "FormValidator": {
     "Required": "Debe llenar este campo",
