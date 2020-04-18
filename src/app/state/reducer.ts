@@ -101,7 +101,13 @@ const globalReducer = createReducer(
     return { ...state, productionOrders: data };
   }),
   on(actions.BILLS_LOADED_SUCCESS, (state, { payload }) => {
-    return { ...state, bills: payload };
+    return {
+      ...state,
+      bills: payload.map((bill) => ({
+        ...bill,
+        customState: bill.state === 1 ? 'Activo' : 'Eliminado',
+      })),
+    };
   })
 );
 

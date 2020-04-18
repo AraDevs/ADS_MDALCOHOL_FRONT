@@ -29,9 +29,20 @@
             <mat-icon class="icon-teal" *ngIf="displayMoneyIcon" (click)="selectedRow.next(row)">
               attach_money
             </mat-icon>
-            <mat-icon color="warn" *ngIf="displayDetailIcon" (click)="getDelete().next(row)">
-              delete
-            </mat-icon>
+
+            <ng-container>
+              <mat-icon
+                color="warn"
+                *ngIf="displayDetailIcon && hideIconByCondition(row)"
+                (click)="getDelete().next(row)"
+              >
+                delete
+              </mat-icon>
+              <mat-icon *ngIf="!(displayDetailIcon && hideIconByCondition(row))" class="disable-icon">
+                delete
+              </mat-icon>
+            </ng-container>
+
             <mat-icon color="primary" *ngIf="displayDetailIcon" (click)="detail.next(row)">
               visibility
             </mat-icon>

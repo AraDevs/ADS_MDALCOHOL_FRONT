@@ -1,14 +1,7 @@
-import {
-  Component,
-  OnInit,
-  Input,
-  Output,
-  EventEmitter,
-  ChangeDetectionStrategy,
-} from '@angular/core';
-import { Observable, of } from 'rxjs';
-import { DataTableConfig } from '@shared/types';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { ObjectPathService } from '@core/services/object-path.service';
+import { DataTableConfig } from '@shared/types';
+import { Observable, of } from 'rxjs';
 
 @Component({
   selector: 'md-data-table',
@@ -16,7 +9,7 @@ import { ObjectPathService } from '@core/services/object-path.service';
   styleUrls: ['./data-table.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class DataTableComponent implements OnInit {
+export class DataTableComponent {
   @Input() config: DataTableConfig = {
     displayedColumns: [],
     titles: {},
@@ -29,6 +22,8 @@ export class DataTableComponent implements OnInit {
   @Input() displayDeleteIcon = false;
   @Input() displayDetailIcon = false;
 
+  @Input() hideDeleteIconByCondition = false;
+  @Input() hideDeleteIconCondition: (row: any) => boolean = null;
 
   @Output() add = new EventEmitter<any>();
 
@@ -38,10 +33,7 @@ export class DataTableComponent implements OnInit {
 
   @Output() selectedRow = new EventEmitter<any>();
 
-
   constructor(private objPath: ObjectPathService) {}
-
-  ngOnInit(): void {}
 
   getCellValue(row: string, key: string) {
     return this.objPath.get(row, key);
@@ -49,5 +41,12 @@ export class DataTableComponent implements OnInit {
 
   getDelete() {
     return this.delete;
+  }
+
+  hideIconByCondition(row: any) {
+    if (this.hideDeleteIconByCondition && this.hideDeleteIconCondition !== null) {
+      return !this.hideDeleteIconCondition(row);
+    }
+    return true;
   }
 }

@@ -13,6 +13,7 @@
       "BillDate": "Fecha de Factura",
       "PaymentType": "Tipo de Pago",
       "BillType": "Tipo de Facturación",
+      "State": "Estado",
       "Actions": "Acciones"
     }
   },

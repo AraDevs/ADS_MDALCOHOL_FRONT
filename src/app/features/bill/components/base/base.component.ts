@@ -3,7 +3,12 @@ import { filter, map } from 'rxjs/operators';
 import { FormComponent } from '../form/form.component';
 import { Store, select } from '@ngrx/store';
 import { AppState } from '@state/app-state';
-import { ModalFactoryService, LoadingService, SuccessService, ErrorService } from '@shared/services';
+import {
+  ModalFactoryService,
+  LoadingService,
+  SuccessService,
+  ErrorService,
+} from '@shared/services';
 import { MODAL_INITIAL_EVENT } from '@shared/constants';
 import * as globalState from '@state/index';
 import * as state from '@features/bill/state';
@@ -28,16 +33,25 @@ export class BaseComponent implements OnInit {
   loadingBills$: Observable<boolean>;
 
   tableConfig: DataTableConfig = {
-    displayedColumns: ['id', 'business_name', 'bill_date', 'payment_type', 'bill_type', 'actions'],
+    displayedColumns: [
+      'id',
+      'business_name',
+      'bill_date',
+      'payment_type',
+      'bill_type',
+      'state',
+      'actions',
+    ],
     titles: {
       id: 'Bill.Table.Titles.Num',
       business_name: 'Bill.Table.Titles.BusinessName',
       bill_date: 'Bill.Table.Titles.BillDate',
       payment_type: 'Bill.Table.Titles.PaymentType',
       bill_type: 'Bill.Table.Titles.BillType',
-      actions: 'Acciones',
+      state: 'Bill.Table.Titles.State',
+      actions: 'Bill.Table.Titles.Actions',
     },
-    keys: ['id', 'client.business_name', 'bill_date', 'payment_type', 'bill_type', 'Tabla.Actions'],
+    keys: ['id', 'client.business_name', 'bill_date', 'payment_type', 'bill_type', 'customState'],
   };
 
   constructor(
@@ -58,10 +72,6 @@ export class BaseComponent implements OnInit {
     this.store$.dispatch(globalState.LOAD_CLIENTS_ACTIVE());
     this.store$.dispatch(globalState.LOAD_BILLS());
     this.dataBills = this.store$.pipe(select(globalState.selectBills));
-
-    this.store$.pipe(select(state.selectBillDetail)).subscribe((res) => {
-      console.log(res, 'DETAIL');
-    });
 
     // bill is deleted
     this.successService.success(state.UPDATE_BILLS_SUCCESS, () => {
@@ -89,7 +99,7 @@ export class BaseComponent implements OnInit {
       const id = { id: row.id };
       console.log(id);
       if (result.dismiss !== Swal.DismissReason.cancel) {
-        this.store$.dispatch(state.UPDATE_BILLS({ payload: { data: id }}));
+        this.store$.dispatch(state.UPDATE_BILLS({ payload: { data: id } }));
       }
     });
   }
@@ -100,6 +110,10 @@ export class BaseComponent implements OnInit {
       const component = result.modal.componentInstance.getRenderedComponent<BillDetailComponent>();
       component.execute(row.id);
     });
+  }
+
+  hideDeleteIcon(row: any) {
+    return row.state === 0;
   }
 
   private createModalForm(component: any, title: string, displayAcceptButton = true) {
