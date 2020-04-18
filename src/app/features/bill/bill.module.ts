@@ -12,11 +12,12 @@ import { BillTableComponent } from './components/bill-table/bill-table.component
 import { FEATURE_KEY, reducer } from '@features/bill/state';
 import { StoreModule } from '@ngrx/store';
 import { BillDetailComponent } from './components/bill-detail/bill-detail.component';
+import { ListComponent } from './components/bill-detail/list.component';
 
 const loader = LoadI18nFile((lang: string) => () => import(`./i18n/${lang}.json`));
 
 @NgModule({
-  declarations: [BaseComponent, FormComponent, BillTableComponent, BillDetailComponent],
+  declarations: [BaseComponent, FormComponent, BillTableComponent, BillDetailComponent, ListComponent],
   imports: [
     SharedModule,
     BillRoutingModule,

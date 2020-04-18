@@ -15,10 +15,10 @@ export const selectBillDetail = createSelector(billFeature, (bill: BillState) =>
 
     const detailsConfig = [
       { title: 'Bill.BillDetail.Num', key: 'id' },
+      { title: 'Bill.BillDetail.BillDate', key: 'bill_date' },
       { title: 'Bill.BillDetail.BusinessName', key: 'client.business_name' },
       { title: 'Bill.BillDetail.BillType', key: 'bill_type' },
       { title: 'Bill.BillDetail.PaymentType', key: 'payment_type' },
-      { title: 'Bill.BillDetail.BillDate', key: 'bill_date' },
     ];
 
     const totalsConf = [

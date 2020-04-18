@@ -10,19 +10,10 @@ import { filter, map } from 'rxjs/operators';
 @Component({
   selector: 'md-bill-detail',
   template: `
-    <mat-list *ngIf="details$ | async as details" class="mb-4">
-      <ng-container *ngFor="let detail of details">
-        <mat-list-item>
-          <div class="d-flex justify-content-between w-100">
-            <span class="title">{{ detail.title | transloco }}</span>
-            {{ detail.value }}
-          </div>
-        </mat-list-item>
-        <mat-divider></mat-divider>
-      </ng-container>
-    </mat-list>
+    <md-list [details$]="details$"></md-list>
 
     <md-data-table
+      class="my-2"
       [config]="tableConfig"
       [displayUpdateIcon]="false"
       [heightAuto]="true"
@@ -31,31 +22,10 @@ import { filter, map } from 'rxjs/operators';
     >
     </md-data-table>
 
-    <mat-list *ngIf="totals$ | async as totals" class="mb-4">
-      <ng-container *ngFor="let detail of totals">
-        <mat-list-item>
-          <div class="d-flex justify-content-between w-100">
-            <span class="title">{{ detail.title | transloco }}</span>
-            {{ detail.value }}
-          </div>
-        </mat-list-item>
-        <mat-divider></mat-divider>
-      </ng-container>
-    </mat-list>
+    <md-list [details$]="totals$"></md-list>
   `,
   providers: [LoadingService, BillDetailTableConfig],
-  styles: [
-    `
-      .title {
-        color: #3f51b5;
-      }
-
-      .total {
-        font-size: 24px;
-        color: #3f51b5;
-      }
-    `,
-  ],
+  styles: [],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BillDetailComponent implements OnInit, OnDestroy {
