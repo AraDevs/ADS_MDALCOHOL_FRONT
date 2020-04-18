@@ -19,6 +19,7 @@ import { PurchaseRow } from './types';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PurchaseTableComponent implements OnInit {
+  @Input() products$: Observable<any[]>;
   @Input() computePerception$: Observable<boolean>;
 
   private subs = new SubSink();
