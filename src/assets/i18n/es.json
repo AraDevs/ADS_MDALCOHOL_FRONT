@@ -40,5 +40,9 @@
   },
   "Table": {
     "Actions": "Acciones"
+  },
+  "BasicFilter": {
+    "Active": "Activo",
+    "Deleted": "Eliminado"
   }
 }

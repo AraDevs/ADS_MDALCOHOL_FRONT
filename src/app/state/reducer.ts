@@ -1,5 +1,6 @@
 import { Action, createReducer, on } from '@ngrx/store';
 import * as actions from './actions';
+import * as moment from 'moment';
 
 export interface State {
   departments: any[];
@@ -103,10 +104,14 @@ const globalReducer = createReducer(
     return { ...state, productionOrders: data };
   }),
   on(actions.BILLS_LOADED_SUCCESS, (state, { payload }) => {
-    return { ...state, bills: payload };
-  }),
-  on(actions.PURCHASE_LOADED_SUCCESS, (state, { payload }) => {
-    return { ...state, purchases: payload }
+    return {
+      ...state,
+      bills: payload.map((bill) => ({
+        ...bill,
+        customState: bill.state === 1 ? 'Activo' : 'Eliminado',
+        bill_date: moment(bill.bill_date).format('DD-MM-YYYY')
+      })),
+    };
   })
 );
 

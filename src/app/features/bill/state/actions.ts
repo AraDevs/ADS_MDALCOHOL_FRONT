@@ -24,7 +24,7 @@ export const LOAD_BILL_DETAIL = createAction(
 );
 export const BILL_DETAIL_LOADED_SUCCESS = createAction(
   'Bill Detail Loaded Success',
-  props<{ payload: any[] }>()
+  props<{ payload: any }>()
 );
 export const BILL_DETAIL_LOADED_FAIL = createAction(
   'Bill Detail Loaded Fail',

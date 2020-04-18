@@ -1,1 +1,70 @@
-<p>purchase-table works!</p>
+<div class="position-relative data-table-container">
+  <form class="form-width" [formGroup]="form">
+    <mat-table [dataSource]="rows$ | async">
+      <ng-container *ngFor="let column of config.displayedColumns" [matColumnDef]="column">
+        <ng-container *ngIf="column !== 'actions'">
+          <mat-header-cell *matHeaderCellDef>
+            {{ config.titles[column] | transloco }}
+          </mat-header-cell>
+
+          <mat-cell *matCellDef="let data; let i = index" class="align-items-center">
+            <div [ngSwitch]="config.controls[column]">
+              <md-table-select
+                *ngSwitchCase="'Select'"
+                [form]="form"
+                [data$]="getSelectData(column)"
+                [controlName]="getControlKey(data, column)"
+                (valueChange)="selectedValue($event, i, column)"
+              ></md-table-select>
+
+              <md-table-input
+                *ngSwitchCase="'Input'"
+                [form]="form"
+                (keyup)="computeSubTotal(i, column)"
+                [controlName]="getControlKey(data, column)"
+              >
+              </md-table-input>
+
+              <ng-container *ngSwitchDefault>
+                {{ data[column].toFixed(2) }}
+              </ng-container>
+            </div>
+          </mat-cell>
+
+          <mat-footer-cell *matFooterCellDef>
+            <button *ngIf="column === 'product'" color="primary" mat-icon-button (click)="addRow()">
+              <mat-icon>add</mat-icon>
+            </button>
+
+            <md-total-titles-list
+              *ngIf="column === 'price'"
+              [titles]="totalTitles"
+            ></md-total-titles-list>
+            <md-total-list *ngIf="column === 'total'" [totals$]="totalsValue$"></md-total-list>
+          </mat-footer-cell>
+        </ng-container>
+
+        <ng-container *ngIf="column === 'actions'">
+          <mat-header-cell *matHeaderCellDef>
+            {{ config.titles[column] | transloco }}
+          </mat-header-cell>
+
+          <mat-cell class="actions" *matCellDef="let data; let i = index">
+            <mat-icon color="warn" (click)="deleteRow(i)">
+              delete
+            </mat-icon>
+          </mat-cell>
+
+          <mat-footer-cell *matFooterCellDef> </mat-footer-cell>
+        </ng-container>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="config.displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: config.displayedColumns"></mat-row>
+      <mat-footer-row
+        class="py-2 border-0"
+        *matFooterRowDef="config.displayedColumns"
+      ></mat-footer-row>
+    </mat-table>
+  </form>
+</div>

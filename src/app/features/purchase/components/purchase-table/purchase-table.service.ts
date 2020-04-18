@@ -4,6 +4,15 @@ import { v4 as uuidv4 } from 'uuid';
 
 @Injectable()
 export class PurchaseTableService {
+
+  getTotalTitles() {
+    return [
+      'Purchase.FormTable.Footer.SubTotal',
+      'Purchase.FormTable.Footer.Perception',
+      'Purchase.FormTable.Footer.Total',
+    ];
+  }
+
   getRowControls() {
     const product = new FormControl(null, [Validators.required]);
     const provider = new FormControl(null, [Validators.required]);

@@ -10,12 +10,19 @@ import { DataTableComponent } from './components/material/data-table/data-table.
 import { CheckboxComponent } from './components/material/checkbox/checkbox.component';
 import { RadioComponent } from './components/material/radio/radio.component';
 import { FormGeneratorComponent } from './components/material/form-generator/form-generator.component';
-import { ModalComponent } from './components';
+import {
+  ModalComponent,
+  TotalListComponent,
+  TotalTitlesListComponent,
+  TableSelectComponent,
+  TableInputComponent,
+  BasicFilterComponent,
+  InvoiceDetailComponent,
+} from './components';
 import { ModalAnchorDirective } from './directives';
 import { DatepickerComponent } from './components/material/datepicker/datepicker.component';
 import { TextareaComponent } from './components/material/textarea/textarea.component';
 import { SectionBarComponent } from './components/section-bar/section-bar.component';
-
 @NgModule({
   declarations: [
     InputComponent,
@@ -29,7 +36,13 @@ import { SectionBarComponent } from './components/section-bar/section-bar.compon
     ModalAnchorDirective,
     DatepickerComponent,
     TextareaComponent,
-    SectionBarComponent
+    SectionBarComponent,
+    TotalListComponent,
+    TotalTitlesListComponent,
+    TableSelectComponent,
+    TableInputComponent,
+    BasicFilterComponent,
+    InvoiceDetailComponent,
   ],
   imports: [CommonModule, TranslocoModule, MaterialModule, FormsModule, ReactiveFormsModule],
   entryComponents: [ModalComponent],
@@ -43,7 +56,6 @@ import { SectionBarComponent } from './components/section-bar/section-bar.compon
     ControlGeneratorComponent,
     SelectComponent,
     DataTableComponent,
-    DataTableComponent,
     CheckboxComponent,
     RadioComponent,
     FormGeneratorComponent,
@@ -51,7 +63,13 @@ import { SectionBarComponent } from './components/section-bar/section-bar.compon
     ModalAnchorDirective,
     DatepickerComponent,
     TextareaComponent,
-    SectionBarComponent
-  ]
+    SectionBarComponent,
+    TotalListComponent,
+    TotalTitlesListComponent,
+    TableSelectComponent,
+    TableInputComponent,
+    BasicFilterComponent,
+    InvoiceDetailComponent,
+  ],
 })
 export class SharedModule {}

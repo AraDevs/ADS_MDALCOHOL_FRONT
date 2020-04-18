@@ -13,6 +13,7 @@
       "BillDate": "Fecha de Factura",
       "PaymentType": "Tipo de Pago",
       "BillType": "Tipo de Facturación",
+      "State": "Estado",
       "Actions": "Acciones"
     }
   },
@@ -47,8 +48,8 @@
     "PaymentType": "Tipo de Pago: ",
     "BillType": "Tipo de Facturación: ",
     "Total": "Total ($): ",
-    "Perception": "Percepción: ",
-    "Iva": "IVA: "
+    "Perception": "Percepción ($): ",
+    "Iva": "IVA ($): "
   },
   "SelectClient": "Selecciona un client para agregar productos a la factura"
 }

@@ -13,8 +13,8 @@ import { ErrorStateMatcher } from '@angular/material/core';
           (valueChange)="valueChange.emit($event)"
           [compareWith]="compareFn"
         >
-          <mat-option *ngFor="let product of products$ | async" [value]="product"
-            >{{ product.label }}
+          <mat-option *ngFor="let item of data$ | async" [value]="item"
+            >{{ item.label }}
           </mat-option>
         </mat-select>
       </mat-form-field>
@@ -24,7 +24,7 @@ import { ErrorStateMatcher } from '@angular/material/core';
   providers: [ErrorStateMatcher],
 })
 export class TableSelectComponent {
-  @Input() products$: Observable<any[]>;
+  @Input() data$: Observable<any[]>;
   @Input() form: FormGroup;
   @Input() controlName: string;
   @Output() valueChange = new EventEmitter();

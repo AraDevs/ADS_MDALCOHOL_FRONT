@@ -1,21 +1,21 @@
 import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { MessageService } from '@core/services/message.service';
+import { Key, Row } from '@shared/types';
 import { BehaviorSubject, combineLatest, merge, Observable, of, Subject } from 'rxjs';
 import { debounceTime, filter, map, skip, switchMap } from 'rxjs/operators';
 import { SubSink } from 'subsink';
 import { BillTableConfiguration } from './bill-table-configuration';
 import { BillTableService } from './bill-table.service';
-import { billTableProviders } from './providers';
+import { BILL_TABLE_PROVIDERS } from './providers';
 import { TotalBillService } from './total.service';
 import { BillRow } from './types';
-import { Key, Row } from '@shared/types';
 
 @Component({
   selector: 'md-bill-table',
   templateUrl: './bill-table.component.html',
   styleUrls: ['./bill-table.component.scss'],
-  providers: [...billTableProviders],
+  providers: [...BILL_TABLE_PROVIDERS],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BillTableComponent implements OnInit {
@@ -30,9 +30,17 @@ export class BillTableComponent implements OnInit {
 
   form: FormGroup = new FormGroup({});
   config = this.tableConfig.getConfiguration();
+  totalTitles = this.billTableService.getTotalTitles();
 
   rows$ = new BehaviorSubject<BillRow[]>([]);
   totals$ = new BehaviorSubject({ subTotal: 0, perception: 0, iva: 0, total: 0 });
+  totalsValue$ = this.totals$.pipe(
+    map((totals) => {
+      const keys = ['subTotal', 'perception', 'iva', 'total'];
+      return keys.map((key) => totals[key]);
+    })
+  );
+
   deleteRow$ = new Subject<{ rows: BillRow[]; subTotal: number }>();
 
   constructor(

@@ -7,6 +7,11 @@ table {
   overflow: auto;
 }
 
+.height-auto {
+  min-height: 100px;
+  height: auto;
+  overflow: none;
+}
 
 
 .actions {
@@ -18,4 +23,8 @@ table {
 
 .icon-teal {
   color: teal;
+}
+
+.disable-icon {
+  color: #1d1c1c25;
 }

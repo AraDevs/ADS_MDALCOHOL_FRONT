@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'md-total-titles-list',
@@ -20,10 +20,5 @@ import { Component } from '@angular/core';
   ],
 })
 export class TotalTitlesListComponent {
-  titles = [
-    'Bill.FormTable.Footer.SubTotal',
-    'Bill.FormTable.Footer.Perception',
-    'Bill.FormTable.Footer.IVA',
-    'Bill.FormTable.Footer.Total',
-  ];
+  @Input() titles = [];
 }

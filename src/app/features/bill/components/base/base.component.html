@@ -1,12 +1,22 @@
 <div class="p-4">
   <md-section-bar title="SideNav.Bill" (buttonEvent)="add()"></md-section-bar>
+  <md-basic-filter
+    labelA="BasicFilter.Active"
+    labelB="BasicFilter.Deleted"
+    keyA="active"
+    keyB="deleted"
+    (filterValue)="loadBills($event)"
+  >
+  </md-basic-filter>
   <md-data-table
     [displayUpdateIcon]="false"
     [displayDeleteIcon]="true"
     [displayDetailIcon]="true"
-    [dataSource$]="dataBills"
+    [dataSource$]="bills$"
     [config]="tableConfig"
     [loading$]="loadingBills$"
+    [hideDeleteIconByCondition]="true"
+    [hideDeleteIconCondition]="hideDeleteIcon"
     (delete)="delete($event)"
     (detail)="detail($event)"
   >

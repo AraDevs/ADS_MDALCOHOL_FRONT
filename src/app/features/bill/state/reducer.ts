@@ -1,5 +1,6 @@
 import { createReducer, Action, on } from '@ngrx/store';
 import * as actions from './actions';
+import * as moment from 'moment';
 
 export const FEATURE_KEY = 'bill';
 
@@ -15,7 +16,7 @@ const billReducer = createReducer(
   INITIAL_STATE,
   on(actions.BILL_DETAIL_LOADED_SUCCESS, (state, { payload }) => ({
     ...state,
-    detailBill: payload,
+    detailBill: {...payload, bill_date: moment(payload.bill_date).format('DD-MM-YYYY')},
   })),
   on(actions.CLEAR_BILL_DETAIL, (state) => ({
     ...state,
