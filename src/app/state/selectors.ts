@@ -21,6 +21,7 @@ export const selectClientsActive = createSelector(selectData, (state: State) => 
 export const selectTypePerson = createSelector(selectData, (state: State) => state.typesPerson);
 
 export const selectProviders = createSelector(selectData, (state: State) => state.providers);
+// export const selectProvidersActive = createSelector(selectData, (state: State) => state.providersActive);
 export const selectProviderById = createSelector(selectData,
     (state: State, provider: number) => state.providers.find((s) => s.id === provider));
 
@@ -28,6 +29,7 @@ export const selectProviderById = createSelector(selectData,
 export const selectInventories = createSelector(selectData, (state: State) => state.inventories);
 export const selectInventoriesActive = createSelector(selectData, (state: State) => state.inventoriesActive);
 export const selectTypeProduct = createSelector(selectData, (state: State) => state.productsType);
+export const selectRawMaterials = createSelector(selectData, (state: State) => state.rawMaterials);
 
 // Production Orders
 export const selectProductionOrders = createSelector(selectData, (state: State) => state.productionOrders);

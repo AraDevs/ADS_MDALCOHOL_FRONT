@@ -120,6 +120,7 @@ export class FormComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
+    this.subs.unsubscribe();
     this.store$.dispatch(globalState.CLEAR_INVENTORY_BY_CLIENT());
   }
 

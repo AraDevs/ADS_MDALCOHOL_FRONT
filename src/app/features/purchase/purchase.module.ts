@@ -6,6 +6,8 @@ import { PurchaseTableComponent } from './components/purchase-table/purchase-tab
 import { LoadI18nFile } from '@shared/helpers';
 import { TRANSLOCO_SCOPE } from '@ngneat/transloco';
 import { FormComponent } from './components/form/form.component';
+import { EffectsModule } from '@ngrx/effects';
+import * as state from '@features/purchase/state';
 
 const loader = LoadI18nFile((lang: string) => () => import(`./i18n/${lang}.json`));
 
@@ -14,7 +16,8 @@ const loader = LoadI18nFile((lang: string) => () => import(`./i18n/${lang}.json`
   declarations: [BaseComponent, PurchaseTableComponent, FormComponent],
   imports: [
     SharedModule,
-    PurchaseRoutingModule
+    PurchaseRoutingModule,
+    EffectsModule.forFeature([state.PurchasesEffects])
   ],
   providers: [
     {

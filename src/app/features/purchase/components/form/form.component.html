@@ -15,3 +15,13 @@
   </md-form-generator>
   <button #formBtn [hidden]="true" type="submit"></button>
 </form>
+
+<div *ngIf="(providers$ | async).length === 0" class="alert alert-info">
+  {{ 'Bill.SelectClient' | transloco }}
+</div>
+<md-purchase-table
+  *ngIf="(products$ | async).length > 0"
+  [products$]="products$"
+  [providers$]="providers$"
+  [computePerception$]="computePerception$"
+></md-purchase-table>

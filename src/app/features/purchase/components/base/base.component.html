@@ -1,6 +1,7 @@
 <div class="p-4">
   <md-section-bar title="SideNav.Purchase" (buttonEvent)="add()"></md-section-bar>
   <md-data-table [dataSource$]="dataPurchases" [config]="tableConfig" [loading$]="loadingPurchases$"
-    (update)="update($event)">
+    [displayDeleteIcon]="true"
+    (delete)="delete($event)">
   </md-data-table>
 </div>

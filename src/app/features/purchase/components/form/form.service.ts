@@ -24,7 +24,14 @@ export class FormService {
     return {
       purchase_date: moment(purchase.purchase_date).format('DD/MM/YYYY'),
       payment_type: purchase.payment_type.value,
-      perception: purchase.perception ? 1 : 0
+      perception: purchase.perception ? 1 : 0,
+      purchase_item: [
+        {
+          inventory_id: 27,
+          price: 0.99,
+          quantity: 5
+        }
+      ]
     };
   }
 }

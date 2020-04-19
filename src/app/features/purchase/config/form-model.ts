@@ -3,7 +3,9 @@ import { Validators } from '@angular/forms';
 import { Store, select } from '@ngrx/store';
 import * as globalState from '@state/index';
 import { map } from 'rxjs/operators';
+import { Injectable } from '@angular/core';
 
+@Injectable()
 export class FormModel {
   constructor(private store$: Store<any>) {}
 
@@ -17,7 +19,7 @@ export class FormModel {
         validations: [Validators.required],
         validatorMessages: ['FormValidator.Required'],
         validationNames: ['required'],
-        label: 'Purchase.Form'
+        label: 'Purchase.Form.PurchaseDate'
       },
       {
         key: 'payment_type',
@@ -27,7 +29,7 @@ export class FormModel {
         validations: [Validators.required],
         validatorMessages: ['FormValidator.RequiredSelected'],
         validationNames: ['required'],
-        label: 'Bill.Form.PaymentType',
+        label: 'Purchase.Form.PaymentType',
         options$: this.store$.pipe(
           select(globalState.selectPaymentType),
           map((paymentType: string[]) => {
@@ -43,7 +45,7 @@ export class FormModel {
         validations: [Validators.required],
         validatorMessages: ['FormValidator.Required'],
         validationNames: ['required'],
-        label: 'Bill.Form.Perception',
+        label: 'Purchase.Form.Perception',
         defautlValue: false
       }
     ];

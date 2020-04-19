@@ -58,8 +58,8 @@ export class BaseComponent implements OnInit {
       });
   }
 
-  update(row: any) {
-    console.log(row);
+  delete(row: any) {
+    
   }
 
   private createModalForm(component: any, title: string, displayAcceptButton = true) {

@@ -8,6 +8,7 @@ export interface State {
   clients: any[];
   clientsActive: any[];
   products: any[];
+  rawMaterials: any[];
   sellers: any[];
   providers: any[];
   filterMunicipalities: any[];
@@ -28,6 +29,7 @@ const INITIAL_STATE: State = {
   clients: [],
   clientsActive: [],
   products: [],
+  rawMaterials: [],
   sellers: [],
   providers: [],
   filterMunicipalities: [],
@@ -78,7 +80,7 @@ const globalReducer = createReducer(
     return { ...state, filterMunicipalities: data };
   }),
   on(actions.PROVIDERS_LOADED_SUCCESS, (state, { payload }) => {
-    const data = payload.map((obj) => ({ ...obj, state: obj.state === 1 ? 'Activo' : 'Inactivo' }));
+    const data = payload.map((obj) => ({ ...obj, state: obj.partner.state === 1 ? 'Activo' : 'Inactivo' }));
     return { ...state, providers: data };
   }),
   on(actions.INVENTORIES_LOADED_SUCCESS, (state, { payload }) => {
@@ -86,6 +88,12 @@ const globalReducer = createReducer(
       return { ...inventory, name: inventory.name };
     });
     return { ...state, inventories: data };
+  }),
+  on(actions.RAW_MATERIALS_LOADED_SUCCESS, (state, { payload }) => {
+    const data = payload.map((inventory) => {
+      return { ...inventory, name: inventory.name };
+    });
+    return { ...state, rawMaterials: data };
   }),
   on(actions.INVENTORY_BY_CLIENT_LOADED_SUCCESS, (state, { payload }) => {
     const data = payload.map((inventory) => {
@@ -110,6 +118,17 @@ const globalReducer = createReducer(
         ...bill,
         customState: bill.state === 1 ? 'Activo' : 'Eliminado',
         bill_date: moment(bill.bill_date).format('DD-MM-YYYY')
+      })),
+    };
+  }),
+  on(actions.PURCHASE_LOADED_SUCCESS, (state, { payload }) => {
+    return {
+      ...state,
+      purchases: payload.map((purchase) => ({
+        ...purchase,
+        customState: purchase.state === 1 ? 'Activo' : 'Eliminado',
+        perception: purchase.perception === 1 ? 'Con Percepción' : 'Sin Percepción',
+        purchase_date: moment(purchase.purchase_date).format('DD-MM-YYYY')
       })),
     };
   })

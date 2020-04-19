@@ -126,6 +126,22 @@ export class LoadDataEffects {
     return this.effectFactory.create(config);
   });
 
+  loadRawMaterials$ = createEffect(() => {
+    const effectReqConfig = new EffectRequestConfig(this.requestClient, 'get');
+    const actionsConfig = new EffectActionsConfig(
+      actions.LOAD_RAW_MATERIALS,
+      actions.RAW_MATERIALS_LOADED_SUCCESS,
+      actions.RAW_MATERIALS_LOADED_FAIL
+    );
+    const config = new EffectConfigModel(
+      effectReqConfig,
+      actionsConfig,
+      `${environment.host}/inventories/raw_materials`
+    );
+
+    return this.effectFactory.create(config);
+  });
+
   loadBills$ = createEffect(() => {
     const effectReqConfig = new EffectRequestConfig(this.requestClient, 'get');
     const actionsConfig = new EffectActionsConfig(
