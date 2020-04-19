@@ -203,9 +203,11 @@ export class LoadDataEffects {
     );
     const config = new EffectConfigModel(
       effectReqConfig,
-      actionsConfig,
-      `${environment.host}/purchases`
+      actionsConfig
     );
+
+    const template = `${environment.host}/purchases/$$0`;
+    config.resourceFactory = new RestResourceFactory(template, ['state']);
 
     return this.effectFactory.create(config);
   });

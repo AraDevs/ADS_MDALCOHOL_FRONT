@@ -1,7 +1,19 @@
 <div class="p-4">
   <md-section-bar title="SideNav.Purchase" (buttonEvent)="add()"></md-section-bar>
-  <md-data-table [dataSource$]="dataPurchases" [config]="tableConfig" [loading$]="loadingPurchases$"
+  <md-basic-filter
+    labelA="BasicFilter.Active"
+    labelB="BasicFilter.Deleted"
+    keyA="active"
+    keyB="deleted"
+    (filterValue)="loadPurchases($event)"
+  >
+  </md-basic-filter>
+  <md-data-table [dataSource$]="dataPurchases$"    [config]="tableConfig" 
+    [loading$]="loadingPurchases$"
     [displayDeleteIcon]="true"
+    [hideDeleteIconByCondition]="true"
+    [hideDeleteIconCondition]="hideDeleteIcon"
+    (detail)="detail($event)"
     (delete)="delete($event)">
   </md-data-table>
 </div>
