@@ -15,7 +15,7 @@ import { BehaviorSubject, merge, Observable, Subject } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 import { SubSink } from 'subsink';
 import { BillTableComponent } from '../bill-table/bill-table.component';
-import { LoaddBillsService } from '@features/bill/services/load-bills.service';
+import { LoadBillsService } from '@features/bill/services/load-bills.service';
 
 @Component({
   selector: 'md-form',
@@ -51,7 +51,7 @@ export class FormComponent implements OnInit, OnDestroy {
     private errorService: ErrorService,
     private formService: FormService,
     private message: MessageService,
-    private loadBills: LoaddBillsService,
+    private loadBills: LoadBillsService,
     @Inject(DYNAMIC_MODAL_DATA) private data: any
   ) {}
 

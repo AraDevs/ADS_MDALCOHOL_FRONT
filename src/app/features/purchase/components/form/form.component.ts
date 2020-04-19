@@ -15,6 +15,7 @@ import { PurchaseTableComponent } from '../purchase-table/purchase-table.compone
 import { SuccessService, ErrorService } from '@shared/services';
 import { tap, map } from 'rxjs/operators';
 import { SubSink } from 'subsink';
+import { LoadPurchasesService } from '@features/purchase/services/load-purchases.service';
 
 @Component({
   selector: 'md-form',
@@ -47,6 +48,7 @@ export class FormComponent implements OnInit, OnDestroy {
     private errorService: ErrorService,
     private formService: FormService,
     private message: MessageService,
+    private loadPurchases: LoadPurchasesService,
     @Inject(DYNAMIC_MODAL_DATA) private data: any
   ) {}
 
@@ -59,7 +61,12 @@ export class FormComponent implements OnInit, OnDestroy {
     this.products$ = this.getProducts();
     this.computePerceptions();
     this.successService.success(state.SAVE_PURCHASES_SUCCESS, () => {
+      this.loadPurchases.reload();
       this.message.success('Messages.Add.Success').then(() => this.data.modalRef.close());
+    });
+    this.errorService.error(state.SAVE_PURCHASES_FAIL, (payload: any) => {
+      const { customErrorsServer } = payload;
+      this.errors.next(customErrorsServer);
     });
   }
 

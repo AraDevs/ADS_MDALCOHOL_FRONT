@@ -1,22 +1,29 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable, pipe } from 'rxjs';
+import { Observable, pipe, BehaviorSubject } from 'rxjs';
 import { DataTableConfig } from '@shared/types';
 import { Store, select } from '@ngrx/store';
 import { AppState } from '@state/app-state';
-import { LoadingService, ModalFactoryService } from '@shared/services';
+import { LoadingService, ModalFactoryService, SuccessService, ErrorService } from '@shared/services';
 import * as globalState from '@state/index';
 import { FormComponent } from '../form/form.component';
 import { filter } from 'rxjs/operators';
 import { MODAL_INITIAL_EVENT } from '@shared/constants';
+import { MessageService } from '@core/services/message.service';
+import Swal from 'sweetalert2';
+import * as state from '../../state/actions';
+import { LoadPurchasesService } from '../../services/load-purchases.service';
 
 @Component({
   selector: 'md-base',
   templateUrl: './base.component.html',
   styleUrls: ['./base.component.scss'],
-  providers: [LoadingService]
+  providers: [LoadingService, SuccessService, ErrorService]
 })
 export class BaseComponent implements OnInit {
-  dataPurchases: Observable<any[]>;
+  private purchase: any = null;
+  private purchaseState$ = new BehaviorSubject<'' | 'active' | 'deleted'>('deleted');
+
+  dataPurchases$: Observable<any[]>;
   loadingPurchases$: Observable<boolean>;
 
   tableConfig: DataTableConfig = {
@@ -33,8 +40,12 @@ export class BaseComponent implements OnInit {
 
   constructor(
     private store$: Store<AppState>,
+    private loadPurchasesService: LoadPurchasesService,
     private modalFactory: ModalFactoryService,
-    private loading: LoadingService
+    private loading: LoadingService,
+    private message: MessageService,
+    private successService: SuccessService,
+    private errorService: ErrorService
   ) {}
 
   ngOnInit(): void {
@@ -44,8 +55,16 @@ export class BaseComponent implements OnInit {
       globalState.PURCHASE_LOADED_FAIL
     ]);
 
-    this.store$.dispatch(globalState.LOAD_PURCHASE());
-    this.dataPurchases = this.store$.pipe(select(globalState.selectPurchases));
+    this.dataPurchases$ = this.loadPurchasesService.getPuschases();
+
+    // Purchase is deleted
+    this.successService.success(state.UPDATE_PURCHASES_SUCCESS, () => {
+      this.purchaseState$.next(this.purchaseState$.value);
+      this.purchase.message.success('Messages.Update.Success');
+    });
+    this.errorService.error(state.UPDATE_PURCHASES_FAIL, () => {
+      this.message.error('Messages.ErrorDeletePurchase', 'Error al eliminar factura');
+    });
   }
 
   add() {
@@ -59,7 +78,24 @@ export class BaseComponent implements OnInit {
   }
 
   delete(row: any) {
-    
+    this.message.messageWarning('Messages.DeletePurchase').then((result) => {
+      const id = { id: row.id };
+      if (result.dismiss !== Swal.DismissReason.cancel) {
+        this.store$.dispatch(state.UPDATE_PURCHASES({ payload: { data: id } }));
+      }
+    });
+  }
+
+  detail(row: any) {
+    console.log(row);
+  }
+
+  loadPurchases(filterValue: string) {
+    this.loadPurchasesService.loadPurchases(filterValue as any);
+  }
+
+  hideDeleteIcon(row: any) {
+    return row.state === 0;
   }
 
   private createModalForm(component: any, title: string, displayAcceptButton = true) {
