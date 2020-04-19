@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
 export class PurchaseTableConfiguration {
   getConfiguration(): ControlDataTableConfig {
     return {
-      displayedColumns: ['provider', 'product', 'quantity', 'price', 'total', 'actions'],
+      displayedColumns: ['product', 'provider', 'quantity', 'price', 'total', 'actions'],
       titles: {
         provider: 'Purchase.FormTable.Provider',
         product: 'Purchase.FormTable.Product',
@@ -15,8 +15,8 @@ export class PurchaseTableConfiguration {
         actions: 'Purchase.FormTable.Actions',
       },
       controls: {
-        provider: 'Select',
         product: 'Select',
+        provider: 'Text',
         quantity: 'Input',
         price: 'Input',
         total: 'Text',
