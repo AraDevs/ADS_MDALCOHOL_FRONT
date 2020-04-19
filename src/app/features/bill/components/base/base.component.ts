@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MessageService } from '@core/services/message.service';
-import { LoaddBillsService } from '@features/bill/services/load-bills.service';
+import { LoadBillsService } from '@features/bill/services/load-bills.service';
 import * as state from '@features/bill/state';
 import { Store } from '@ngrx/store';
 import { MODAL_INITIAL_EVENT } from '@shared/constants';
@@ -57,7 +57,7 @@ export class BaseComponent implements OnInit {
 
   constructor(
     private store$: Store<AppState>,
-    private loadBillsService: LoaddBillsService,
+    private loadBillsService: LoadBillsService,
     private modalFactory: ModalFactoryService,
     private loading: LoadingService,
     private message: MessageService,
@@ -78,7 +78,7 @@ export class BaseComponent implements OnInit {
     // bill is deleted
     this.successService.success(state.UPDATE_BILLS_SUCCESS, () => {
       this.billState$.next(this.billState$.value);
-      this.bill.this.message.success('Messages.Update.Success');
+      this.bill.message.success('Messages.Update.Success');
     });
     this.errorService.error(state.UPDATE_BILLS_FAIL, () => {
       this.message.error('Messages.ErrorDeleteBill', 'Error al eliminar factura');

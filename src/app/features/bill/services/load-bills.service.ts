@@ -8,7 +8,7 @@ import { switchMap, tap } from 'rxjs/operators';
 type BillState = '' | 'active' | 'deleted';
 
 @Injectable({ providedIn: 'root' })
-export class LoaddBillsService {
+export class LoadBillsService {
   constructor(private store$: Store<AppState>) {}
   private billState$ = new BehaviorSubject<BillState>('');
 
