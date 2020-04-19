@@ -8,8 +8,10 @@
     (filterValue)="loadPurchases($event)"
   >
   </md-basic-filter>
-  <md-data-table [dataSource$]="dataPurchases$"    [config]="tableConfig" 
+  <md-data-table [dataSource$]="dataPurchases$" [config]="tableConfig" 
     [loading$]="loadingPurchases$"
+    [displayUpdateIcon]="false"
+    [displayDetailIcon]="true"
     [displayDeleteIcon]="true"
     [hideDeleteIconByCondition]="true"
     [hideDeleteIconCondition]="hideDeleteIcon"
