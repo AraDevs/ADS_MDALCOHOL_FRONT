@@ -20,7 +20,6 @@ import { PurchaseRow } from './types';
 })
 export class PurchaseTableComponent implements OnInit {
   @Input() products$: Observable<any[]>;
-  @Input() providers$: Observable<any[]>;
   @Input() computePerception$: Observable<boolean>;
 
   private subs = new SubSink();
@@ -28,8 +27,6 @@ export class PurchaseTableComponent implements OnInit {
   // Relationship using for caching
   private productByRow = new Map<Key, Row>();
   private rowByProduct = new Map<Row, Key>();
-  private providerByRow = new Map<Key, Row>();
-  private rowByProvider = new Map<Row, Key>();
 
   form: FormGroup = new FormGroup({});
   config = this.tableConfig.getConfiguration();
@@ -78,7 +75,7 @@ export class PurchaseTableComponent implements OnInit {
       this.addControls(ids, controls);
 
       const rows = this.rows$.value;
-      const newRow = { ...controls, ...ids, total: 0 };
+      const newRow = { ...controls, ...ids, provider: '', total: 0 };
       this.rows$.next([...rows, newRow]);
     } else {
       this.message.error('Purchase.FormTable.Messages.AddMore');
@@ -97,24 +94,19 @@ export class PurchaseTableComponent implements OnInit {
     this.deleteRow$.next({ rows: newRows, subTotal });
   }
 
-  selectedValue(value: any, row: number, column: string) {
+  selectedValue(value: any, row: number) {
     const { id } = value;
-    const valueByRow = this.getValueByRow(column);
 
-    const rowHasValue = valueByRow.get(id) !== undefined;
+    const rowHasValue = this.productByRow.get(id) !== undefined;
     if (!rowHasValue) {
-      if (this.isProviderColumn(column)) {
-        const priceControl = this.rows$.value[row].price;
-        priceControl.setValue(value.value);
-        this.computeSubTotal(row, 'price');
-      }
-      this.cachingValue(value, row, column);
+      const priceControl = this.rows$.value[row].price;
+      priceControl.setValue(value.value);
+      this.computeSubTotal(row, 'price');
+
+      this.cachingValue(value, row);
     } else {
-      const message = `Purchase.FormTable.Messages.Selected${
-        this.isProviderColumn(column) ? 'Provider' : 'Product'
-      }`;
-      this.message.error(message);
-      const rows = this.unselectValue(row, column);
+      this.message.error('Purchase.FormTable.Messages.SelectedProduct');
+      const rows = this.unselectValue(row);
       this.rows$.next(rows);
     }
   }
@@ -127,30 +119,21 @@ export class PurchaseTableComponent implements OnInit {
    * @description If the value was selected per other row in the table, the current
    * selected product not will be selected for the user
    */
-  unselectValue(row: number, column: string) {
+  unselectValue(row: number) {
     this.removeCachedProduct(row);
 
     const rows = this.getRows();
-    const selectControl = rows[row][column];
+    const selectControl = rows[row].product;
     selectControl.setValue(null, { emitEvent: false });
 
-    if (!this.isProviderColumn(column)) {
-      const price = rows[row].price;
-      price.setValue(0);
-    }
+    const price = rows[row].price;
+    price.setValue(0);
 
     return rows;
   }
 
   getControlKey(data: any, column: string) {
     return data[column + 'Key'];
-  }
-
-  getSelectData(column: string) {
-    if (column === 'provider') {
-      return this.providers$;
-    }
-    return this.products$;
   }
 
   getValues() {
@@ -180,7 +163,11 @@ export class PurchaseTableComponent implements OnInit {
       }),
       map((res) => {
         const { subTotal, rows, row } = res;
+        const product = rows[row].product.value;
+
         rows[row].total = subTotal;
+        rows[row].provider = product.raw_material?.provider.partner.name;
+
         return rows;
       }),
       map((rows) => ({
@@ -190,19 +177,17 @@ export class PurchaseTableComponent implements OnInit {
     );
   }
 
-  private cachingValue(value: any, row: number, column: string) {
+  private cachingValue(value: any, row: number) {
     const { id } = value;
-    const valueByRow = this.getValueByRow(column);
-    const rowByValue = this.getRowByValue(column);
 
-    const prevValueId = valueByRow.get(row);
+    const prevValueId = this.productByRow.get(row);
 
     if (prevValueId) {
       this.productByRow.delete(prevValueId);
     }
 
-    valueByRow.set(id, row);
-    rowByValue.set(row, id);
+    this.productByRow.set(id, row);
+    this.productByRow.set(row, id);
   }
 
   private removeCachedProduct(row: number) {
@@ -217,26 +202,12 @@ export class PurchaseTableComponent implements OnInit {
     this.form.addControl(ids.productKey, controls.product);
     this.form.addControl(ids.quantityKey, controls.quantity);
     this.form.addControl(ids.priceKey, controls.price);
-    this.form.addControl(ids.providerKey, controls.provider);
   }
 
   private deleteControls(row: PurchaseRow) {
     this.form.removeControl(row.productKey);
     this.form.removeControl(row.quantityKey);
     this.form.removeControl(row.priceKey);
-    this.form.removeControl(row.providerKey);
-  }
-
-  private isProviderColumn(column: string) {
-    return column === 'provider';
-  }
-
-  private getValueByRow(column: string) {
-    return this.isProviderColumn(column) ? this.providerByRow : this.productByRow;
-  }
-
-  private getRowByValue(column: string) {
-    return this.isProviderColumn(column) ? this.rowByProvider : this.rowByProduct;
   }
 
   private getRows() {

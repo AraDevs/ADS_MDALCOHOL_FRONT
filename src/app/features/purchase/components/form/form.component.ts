@@ -20,7 +20,7 @@ import { SubSink } from 'subsink';
   selector: 'md-form',
   templateUrl: './form.component.html',
   styleUrls: ['./form.component.scss'],
-  providers: [FormModel, FormService, SuccessService, ErrorService]
+  providers: [FormModel, FormService, SuccessService, ErrorService],
 })
 export class FormComponent implements OnInit, OnDestroy {
   private subs = new SubSink();
@@ -34,7 +34,6 @@ export class FormComponent implements OnInit, OnDestroy {
   fields: Partial<InputControlConfig | SelectControlConfig>[];
   errors$ = this.errors.asObservable();
   products$: Observable<any[]>;
-  providers$: Observable<any[]>;
 
   computePerception$ = this._computePerception$.asObservable();
 
@@ -49,7 +48,7 @@ export class FormComponent implements OnInit, OnDestroy {
     private formService: FormService,
     private message: MessageService,
     @Inject(DYNAMIC_MODAL_DATA) private data: any
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.fields = this.formModel.getModel();
@@ -57,7 +56,6 @@ export class FormComponent implements OnInit, OnDestroy {
     this.store$.dispatch(globalState.LOAD_PROVIDERS());
     this.store$.dispatch(globalState.LOAD_RAW_MATERIALS());
 
-    this.providers$ = this.getProviders();
     this.products$ = this.getProducts();
     this.computePerceptions();
     this.successService.success(state.SAVE_PURCHASES_SUCCESS, () => {
@@ -75,13 +73,13 @@ export class FormComponent implements OnInit, OnDestroy {
       const data = this.formService.getPurchaseDTO(values);
       if (this.update) {
         const action = state.UPDATE_PURCHASES({
-          payload: { data: { ...data, id: this.purchase.id }}
+          payload: { data: { ...data, id: this.purchase.id } },
         });
         this.store$.dispatch(action);
       } else {
         console.log(data);
         const items = this.purchaseTable.getValues();
-        const action = state.SAVE_PURCHASES({ payload: { data: { ...data }}});
+        const action = state.SAVE_PURCHASES({ payload: { data: { ...data } } });
         this.store$.dispatch(action);
       }
     } else {
@@ -104,18 +102,17 @@ export class FormComponent implements OnInit, OnDestroy {
   private computePerceptions() {
     this.subs.sink = this.form
       .get('perception')
-      .valueChanges.pipe(tap((compute) => this._computePerception$.next(compute))).subscribe();
-  }
-
-  private getProviders() {
-    return this.store$.pipe(select(globalState.selectProviders),
-      map((providers) => providers.filter((provider) => provider.state === 'Activo')),
-      map((providers) => providers.map((provider) => ({ ...provider, label: provider.partner.name }))));
+      .valueChanges.pipe(tap((compute) => this._computePerception$.next(compute)))
+      .subscribe();
   }
 
   private getProducts() {
-    return this.store$.pipe(select(globalState.selectRawMaterials),
+    return this.store$.pipe(
+      select(globalState.selectRawMaterials),
       map((products) => products.filter((product) => product.state === 1)),
-      map((products) => products.map((product) => ({ ...product, label: product.name }))));
+      map((products) =>
+        products.map((product) => ({ ...product, label: product.name, value: product.price }))
+      )
+    );
   }
 }

@@ -4,7 +4,6 @@ import { v4 as uuidv4 } from 'uuid';
 
 @Injectable()
 export class PurchaseTableService {
-
   getTotalTitles() {
     return [
       'Purchase.FormTable.Footer.SubTotal',
@@ -15,7 +14,6 @@ export class PurchaseTableService {
 
   getRowControls() {
     const product = new FormControl(null, [Validators.required]);
-    const provider = new FormControl(null, [Validators.required]);
     const quantity = new FormControl(1, [Validators.required, Validators.pattern(/^[0-9]+$/)]);
     const price = new FormControl(0, [
       Validators.required,
@@ -23,7 +21,7 @@ export class PurchaseTableService {
       Validators.min(0.1),
     ]);
 
-    return { product, quantity, price, provider };
+    return { product, quantity, price };
   }
 
   getTotalsObj(products: any[]) {
@@ -38,7 +36,6 @@ export class PurchaseTableService {
       productKey: uuidv4(),
       quantityKey: uuidv4(),
       priceKey: uuidv4(),
-      providerKey: uuidv4(),
     };
   }
 }

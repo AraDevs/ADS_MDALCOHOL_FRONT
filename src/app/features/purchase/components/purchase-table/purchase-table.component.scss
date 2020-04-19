@@ -1,0 +1,27 @@
+.data-table-container {
+  overflow-x: auto;
+}
+
+.form-width {
+  min-width: 600px;
+}
+
+.actions {
+  mat-icon {
+    cursor: pointer;
+    user-select: none;
+  }
+}
+
+.mat-column-product {
+  flex: 0 0 250px;
+}
+
+
+.mat-column-provider {
+  flex: 0 0 150px;
+}
+
+button:focus {
+  outline: none;
+}

@@ -12,9 +12,9 @@
               <md-table-select
                 *ngSwitchCase="'Select'"
                 [form]="form"
-                [data$]="getSelectData(column)"
+                [data$]="products$"
                 [controlName]="getControlKey(data, column)"
-                (valueChange)="selectedValue($event, i, column)"
+                (valueChange)="selectedValue($event, i)"
               ></md-table-select>
 
               <md-table-input
@@ -26,7 +26,12 @@
               </md-table-input>
 
               <ng-container *ngSwitchDefault>
-                {{ data[column].toFixed(2) }}
+                <ng-container *ngIf="column === 'total'">
+                  {{ data[column].toFixed(2) }}
+                </ng-container>
+                <ng-container *ngIf="column !== 'total'">
+                  {{ data[column] }}
+                </ng-container>
               </ng-container>
             </div>
           </mat-cell>
