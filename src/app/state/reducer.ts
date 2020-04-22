@@ -9,6 +9,7 @@ export interface State {
   clientsActive: any[];
   products: any[];
   rawMaterials: any[];
+  finalMaterials: any[];
   sellers: any[];
   providers: any[];
   filterMunicipalities: any[];
@@ -30,6 +31,7 @@ const INITIAL_STATE: State = {
   clientsActive: [],
   products: [],
   rawMaterials: [],
+  finalMaterials: [],
   sellers: [],
   providers: [],
   filterMunicipalities: [],
@@ -94,6 +96,12 @@ const globalReducer = createReducer(
       return { ...inventory, name: inventory.name };
     });
     return { ...state, rawMaterials: data };
+  }),
+  on(actions.FINAL_MATERIALS_LOADED_SUCCESS, (state, { payload }) => {
+    const data = payload.map((inventory) => {
+      return { ...inventory, name: inventory.name };
+    });
+    return { ...state, finalMaterials: data };
   }),
   on(actions.INVENTORY_BY_CLIENT_LOADED_SUCCESS, (state, { payload }) => {
     const data = payload.map((inventory) => {

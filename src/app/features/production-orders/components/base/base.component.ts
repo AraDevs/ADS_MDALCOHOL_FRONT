@@ -1,14 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable, combineLatest, of } from 'rxjs';
-import { DataTableConfig } from '@shared/types';
-import { Store, select } from '@ngrx/store';
-import { AppState } from '@state/app-state';
-import { ModalFactoryService, LoadingService } from '@shared/services';
-import { SelectService } from '@core/services';
-import * as globalState from '@state/index';
 import { FormComponent } from '@features/production-orders/components/form/form.component';
-import { filter, switchMap, map } from 'rxjs/operators';
-import { MODAL_INITIAL_EVENT } from '../../../../shared/constants/index';
+import { select, Store } from '@ngrx/store';
+import { MODAL_INITIAL_EVENT } from '@shared/constants/index';
+import { LoadingService, ModalFactoryService } from '@shared/services';
+import { DataTableConfig } from '@shared/types';
+import { AppState } from '@state/app-state';
+import * as globalState from '@state/index';
+import { combineLatest, Observable, of } from 'rxjs';
+import { filter, map, switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'md-base',
@@ -19,7 +18,6 @@ import { MODAL_INITIAL_EVENT } from '../../../../shared/constants/index';
 export class BaseComponent implements OnInit {
 
   dataOrders: Observable<any[]>;
-  dataInvetories: Observable<any[]>;
   loadingProductions$: Observable<boolean>;
 
   tableConfig: DataTableConfig = {
@@ -50,8 +48,7 @@ export class BaseComponent implements OnInit {
     ]);
 
     this.store$.dispatch(globalState.LOAD_PRODUCTION_ORDERS());
-    this.store$.dispatch(globalState.LOAD_INVENTORIES());
-    this.dataInvetories = this.store$.pipe(select(globalState.selectInventories));
+    this.store$.dispatch(globalState.LOAD_FINAL_MATERIALS());
     this.dataOrders = this.store$.pipe(select(globalState.selectProductionOrders));
   }
 
