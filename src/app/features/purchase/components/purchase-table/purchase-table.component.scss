@@ -1,3 +1,11 @@
+$product-column-width: 250px;
+$provider-column-width: 150px;
+$quantity-total-action-column-width: 80px;
+$price-column-width: 120px;
+
+$row-width: $product-column-width + $provider-column-width +
+  ($quantity-total-action-column-width * 4) + $price-column-width;
+
 .data-table-container {
   overflow-x: auto;
 }
@@ -14,12 +22,25 @@
 }
 
 .mat-column-product {
-  flex: 0 0 250px;
+  flex: 0 0 $product-column-width;
 }
 
-
 .mat-column-provider {
-  flex: 0 0 150px;
+  flex: 0 0 $product-column-width;
+}
+
+.mat-column-quantity,
+.mat-column-total,
+.mat-column-actions {
+  flex: 0 0 $quantity-total-action-column-width;
+}
+
+.mat-column-price {
+  flex: 0 0 $price-column-width;
+}
+
+.full-row-width {
+  min-width: $row-width;
 }
 
 button:focus {

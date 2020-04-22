@@ -119,7 +119,8 @@ export class FormComponent implements OnInit, OnDestroy {
       map((products) => products.filter((product) => product.state === 1)),
       map((products) =>
         products.map((product) => ({ ...product, label: product.name, value: product.price }))
-      )
+      ),
+      map((products) => products.filter((product) => product.raw_material))
     );
   }
 }

@@ -34,3 +34,11 @@
     background-color: white;
   }
 }
+
+.md-modal-form-purchase {
+  .mat-dialog-container {
+    @media (min-width: 992px) {
+      width: 80vw;
+    }
+  }
+}

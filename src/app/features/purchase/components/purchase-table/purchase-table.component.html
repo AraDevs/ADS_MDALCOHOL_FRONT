@@ -64,10 +64,10 @@
         </ng-container>
       </ng-container>
 
-      <mat-header-row *matHeaderRowDef="config.displayedColumns"></mat-header-row>
-      <mat-row *matRowDef="let row; columns: config.displayedColumns"></mat-row>
+      <mat-header-row class="full-row-width" *matHeaderRowDef="config.displayedColumns"></mat-header-row>
+      <mat-row class="full-row-width"*matRowDef="let row; columns: config.displayedColumns"></mat-row>
       <mat-footer-row
-        class="py-2 border-0"
+        class="py-2 border-0 full-row-width"
         *matFooterRowDef="config.displayedColumns"
       ></mat-footer-row>
     </mat-table>

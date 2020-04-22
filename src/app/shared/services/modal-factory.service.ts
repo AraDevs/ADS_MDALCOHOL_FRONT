@@ -12,12 +12,12 @@ export class ModalFactoryService {
     const displayAcceptButton = data.displayAcceptButton === false ? false : true;
     const modal = this.dialog.open(ModalComponent, {
       data: { ...data, displayAcceptButton },
-      panelClass: ['p-0', 'md-modal']
+      panelClass: ['p-0', 'md-modal', ...(Array.isArray(data.panelClass) ? data.panelClass : [])],
     });
 
     return modal.afterOpened().pipe(
       switchMap(() => modal.componentInstance.events$),
-      map(event => ({ modal, event }))
+      map((event) => ({ modal, event }))
     );
   }
 }
