@@ -17,6 +17,7 @@ import { MessageService } from '@core/services/message.service';
 import Swal from 'sweetalert2';
 import * as state from '../../state/actions';
 import { LoadPurchasesService } from '../../services/load-purchases.service';
+import { PurchaseDetailComponent } from '../purchase-detail/purchase-detail.component';
 
 @Component({
   selector: 'md-base',
@@ -96,7 +97,19 @@ export class BaseComponent implements OnInit {
   }
 
   detail(row: any) {
-    console.log(row);
+    const title = 'Purchase.Modal.Titles.PurchaseDetail';
+    const configutation = {
+      component: PurchaseDetailComponent,
+      title,
+      displayAcceptButton: false,
+    };
+
+    this.createModalForm(configutation).subscribe((result) => {
+      const component = result.modal.componentInstance.getRenderedComponent<
+        PurchaseDetailComponent
+      >();
+      component.execute(row.id);
+    });
   }
 
   loadPurchases(filterValue: string) {

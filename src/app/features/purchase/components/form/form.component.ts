@@ -84,9 +84,10 @@ export class FormComponent implements OnInit, OnDestroy {
         });
         this.store$.dispatch(action);
       } else {
-        console.log(data);
         const items = this.purchaseTable.getValues();
-        const action = state.SAVE_PURCHASES({ payload: { data: { ...data } } });
+        const action = state.SAVE_PURCHASES({
+          payload: { data: { ...data, purchase_item: items } },
+        });
         this.store$.dispatch(action);
       }
     } else {

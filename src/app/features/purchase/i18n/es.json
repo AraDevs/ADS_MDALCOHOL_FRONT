@@ -12,7 +12,8 @@
   },
   "Modal": {
     "Titles": {
-      "FormModal": "Registro de Compras"
+      "FormModal": "Registro de Compras",
+      "PurchaseDetail": "Detalle de compra"
     }
   },
   "FormTable": {
