@@ -16,7 +16,10 @@ const purchaseReducer = createReducer(
   INITIAL_STATE,
   on(actions.PURCHASE_DETAIL_LOADED_SUCCESS, (state, { payload }) => ({
     ...state,
-    purchaseDetail: { ...payload /*bill_date: moment(payload.bill_date).format('DD-MM-YYYY')*/ },
+    purchaseDetail: {
+      ...payload,
+      purchase_date: moment(payload.purchase_date).format('DD-MM-YYYY'),
+    },
   })),
   on(actions.CLEAR_PURCHASE_DETAIL, (state) => ({
     ...state,

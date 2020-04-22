@@ -6,10 +6,10 @@ export class PurchaseDetailTableConfig {
       displayedColumns: ['product', 'quantity', 'price', 'total'],
 
       titles: {
-        product: 'Bill.FormTable.Product',
-        price: 'Bill.FormTable.Price',
-        quantity: 'Bill.FormTable.Quantity',
-        total: 'Bill.FormTable.Total',
+        product: 'Purchase.FormTable.Product',
+        price: 'Purchase.FormTable.Price',
+        quantity: 'Purchase.FormTable.Quantity',
+        total: 'Purchase.FormTable.Total',
       },
       keys: ['inventory.name', 'quantity', 'price', 'total'],
     };

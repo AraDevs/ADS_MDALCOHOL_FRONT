@@ -5,7 +5,7 @@ import { select, Store } from '@ngrx/store';
 import { LoadingService } from '@shared/services';
 import { AppState } from '@state/app-state';
 import { Observable, pipe } from 'rxjs';
-import { filter, map } from 'rxjs/operators';
+import { filter, map, switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'md-bill-detail',
@@ -18,7 +18,7 @@ import { filter, map } from 'rxjs/operators';
       [displayUpdateIcon]="false"
       [heightAuto]="true"
       [loading$]="loading$"
-      [dataSource$]="items$ | async"
+      [dataSource$]="items$"
     >
     </md-data-table>
 
@@ -46,7 +46,7 @@ export class BillDetailComponent implements OnInit, OnDestroy {
 
     this.totals$ = detail$.pipe(pipe(map((result) => result.totals)));
     this.details$ = detail$.pipe(pipe(map((result) => result.details)));
-    this.items$ = detail$.pipe(map((result) => result.items$));
+    this.items$ = detail$.pipe(switchMap((result) => result.items$ as Observable<any[]>));
 
     this.loading$ = this.getLoadingDetail();
   }
