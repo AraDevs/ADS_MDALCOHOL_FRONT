@@ -1,48 +1,24 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { ClientsModule } from './features/clients/clients.module';
 
 const routes: Routes = [
   {
-    path: 'users',
-    loadChildren: () => import('./features/users/users.module').then(m => m.UsersModule)
+    path: 'auth',
+    loadChildren: () => import('./pages/auth/auth.module').then((m) => m.AuthModule),
   },
   {
-    path: 'providers',
-    loadChildren: () => import('./features/providers/providers.module').then(m => m.ProvidersModule)
+    path: 'dashboard',
+    loadChildren: () => import('./pages/dashboard/dashboard.module').then((m) => m.DashboardModule),
   },
   {
-    path: 'sellers',
-    loadChildren: () => import('./features/sellers/sellers.module').then(m => m.SellersModule)
+    path: '',
+    pathMatch: 'full',
+    redirectTo: 'dashboard',
   },
-  {
-    path: 'clients',
-    loadChildren: () => import('./features/clients/clients.module').then(m => m.ClientsModule)
-  },
-  {
-    path: 'modal',
-    loadChildren: () => import('./features/test-modal/test-modal.module').then(m => m.TestModalModule)
-  },
-  {
-    path: 'inventories',
-    loadChildren: () => import('./features/inventories/inventories.module').then(m => m.InventoriesModule)
-  },
-  {
-    path: 'production-orders',
-    loadChildren: () => import('./features/production-orders/production-orders.module').then(m => m.ProductionOrdersModule)
-  },
-  {
-    path: 'bills',
-    loadChildren: () => import('./features/bill/bill.module').then(m => m.BillModule)
-  },
-  {
-    path: 'purchases',
-    loadChildren: () => import('./features/purchase/purchase.module').then(m => m.PurchaseModule)
-  }
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
 export class AppRoutingModule {}
