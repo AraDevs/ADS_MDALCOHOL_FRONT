@@ -17,9 +17,10 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatCardModule } from '@angular/material/card';
 import {
   MatMomentDateModule,
-  MAT_MOMENT_DATE_ADAPTER_OPTIONS
+  MAT_MOMENT_DATE_ADAPTER_OPTIONS,
 } from '@angular/material-moment-adapter';
 
 @NgModule({
@@ -60,7 +61,8 @@ import {
     MatProgressSpinnerModule,
     MatDialogModule,
     MatDatepickerModule,
-    MatMomentDateModule
+    MatMomentDateModule,
+    MatCardModule,
   ],
   exports: [
     LayoutModule,
@@ -80,7 +82,8 @@ import {
     MatProgressSpinnerModule,
     MatDialogModule,
     MatDatepickerModule,
-    MatMomentDateModule
-  ]
+    MatMomentDateModule,
+    MatCardModule,
+  ],
 })
 export class MaterialModule {}

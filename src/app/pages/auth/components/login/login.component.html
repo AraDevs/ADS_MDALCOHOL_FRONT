@@ -1,1 +1,26 @@
-<h1>Login</h1>
+<div class="d-flex justify-content-center align-items-center w-100 h-100 bg-light p-4">
+  <mat-card class="p-0 pb-4">
+    <mat-card-header class="d-flex justify-content-center align-items-center">
+      <mat-card-title>
+        {{ 'Login.Title' | transloco }}
+      </mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content>
+      <form class="login-form" [formGroup]="form" #formReference="ngForm" (submit)="login()">
+        <md-form-generator
+          [form]="form"
+          [formReference]="formReference"
+          [fields]="fields"
+          cssContainerClasses="row p-4"
+        >
+        </md-form-generator>
+      </form>
+    </mat-card-content>
+    <mat-card-actions class="d-flex justify-content-center">
+      <button mat-flat-button color="primary" type="submit">
+        {{ 'Login.Buttons.Enter' | transloco }}
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</div>

@@ -46,5 +46,23 @@
   "BasicFilter": {
     "Active": "Activo",
     "Deleted": "Eliminado"
+  },
+  "Login": {
+    "Title": "MD Dashboard",
+    "Form": {
+      "Username": "Usuario",
+      "Password": "Contraseña"
+    },
+    "FormValidator": {
+      "User": {
+        "Required": "Usuario requerido"
+      },
+      "Password": {
+        "Required": "Contraseña requerida"
+      }
+    },
+    "Buttons": {
+      "Enter": "Ingresar"
+    }
   }
 }
