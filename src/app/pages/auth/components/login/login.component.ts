@@ -3,11 +3,12 @@ import { FormModel } from './form-model';
 import { FactoryFormService } from '@core/services';
 import { InputControlConfig } from '@core/types';
 import { FormGroup } from '@angular/forms';
+import { LoginService } from './login.service';
 @Component({
   selector: 'md-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
-  providers: [FormModel],
+  providers: [FormModel, LoginService],
 })
 export class LoginComponent implements OnInit {
   form: FormGroup;
@@ -15,7 +16,8 @@ export class LoginComponent implements OnInit {
   constructor(
     private formModel: FormModel,
     private factoryForm: FactoryFormService,
-    private requestClient: ) {}
+    private loginService: LoginService
+  ) {}
 
   ngOnInit(): void {
     this.fields = this.formModel.getModel();
@@ -23,6 +25,9 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
-
+    if (this.form.valid) {
+      const { username, password } = this.form.value;
+      this.loginService.login(username, password);
+    }
   }
 }
