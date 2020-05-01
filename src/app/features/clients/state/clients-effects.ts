@@ -14,7 +14,7 @@ export class ClientsEffects {
   saveClients$ = createEffect(() => {
     const { SAVE_CLIENTS, SAVE_CLIENTS_SUCCESS, SAVE_CLIENTS_FAIL } = actions;
 
-    const effectReqConfig = new EffectRequestConfig(this.requestClient, 'save');
+    const effectReqConfig = new EffectRequestConfig(this.requestClient, 'post');
     const actionsConfig = new EffectActionsConfig(
       SAVE_CLIENTS,
       SAVE_CLIENTS_SUCCESS,
@@ -32,7 +32,7 @@ export class ClientsEffects {
   updateClients$ = createEffect(() => {
     const { UPDATE_CLIENTS, UPDATE_CLIENTS_SUCCESS, UPDATE_CLIENTS_FAIL } = actions;
 
-    const effectReqConfig = new EffectRequestConfig(this.requestClient, 'update');
+    const effectReqConfig = new EffectRequestConfig(this.requestClient, 'put');
     const actionsConfig = new EffectActionsConfig(
       UPDATE_CLIENTS,
       UPDATE_CLIENTS_SUCCESS,
@@ -50,7 +50,7 @@ export class ClientsEffects {
   saveSpecialPrice$ = createEffect(() => {
     const { SAVE_SPECIAL_PRICE, SAVE_SPECIAL_PRICE_SUCCESS, SAVE_SPECIAL_PRICE_FAIL } = actions;
 
-    const effectReqConfig = new EffectRequestConfig(this.requestClient, 'save');
+    const effectReqConfig = new EffectRequestConfig(this.requestClient, 'post');
     const actionsConfig = new EffectActionsConfig(
       SAVE_SPECIAL_PRICE,
       SAVE_SPECIAL_PRICE_SUCCESS,

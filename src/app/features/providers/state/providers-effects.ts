@@ -13,7 +13,7 @@ export class ProvidersEffects {
   saveProviders$ = createEffect(() => {
     const { SAVE_PROVIDERS, SAVE_PROVIDERS_SUCCESS, SAVE_PROVIDERS_FAIL } = actions;
 
-    const effectReqConfig = new EffectRequestConfig(this.requestClient, 'save');
+    const effectReqConfig = new EffectRequestConfig(this.requestClient, 'post');
     const actionsConfig = new EffectActionsConfig(
       SAVE_PROVIDERS,
       SAVE_PROVIDERS_SUCCESS,
@@ -31,7 +31,7 @@ export class ProvidersEffects {
   updateProviders$ = createEffect(() => {
     const { UPDATE_PROVIDERS, UPDATE_PROVIDERS_SUCCESS, UPDATE_PROVIDERS_FAIL } = actions;
 
-    const effectReqConfig = new EffectRequestConfig(this.requestClient, 'update');
+    const effectReqConfig = new EffectRequestConfig(this.requestClient, 'put');
     const actionsConfig = new EffectActionsConfig(
       UPDATE_PROVIDERS,
       UPDATE_PROVIDERS_SUCCESS,

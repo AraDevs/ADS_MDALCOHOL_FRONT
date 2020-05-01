@@ -16,7 +16,7 @@ export class ProductionOrdersEffects {
   saveProductionOrder$ = createEffect(() => {
     const { SAVE_PRODUCTION_ORDERS, SAVE_PRODUCTION_ORDERS_SUCCESS, SAVE_PRODUCTION_FAIL } = actions;
 
-    const effectReqConfig = new EffectRequestConfig(this.requestClient, 'save');
+    const effectReqConfig = new EffectRequestConfig(this.requestClient, 'post');
     const actionsConfig = new EffectActionsConfig(
       SAVE_PRODUCTION_ORDERS,
       SAVE_PRODUCTION_ORDERS_SUCCESS,
@@ -34,7 +34,7 @@ export class ProductionOrdersEffects {
   updateProductionOrders$ = createEffect(() => {
     const { UPDATE_PRODUCTION_ORDERS, UPDATE_PRODUCTION_SUCCESS, UPDATE_PRODUCTION_FAIL } = actions;
 
-    const effectReqConfig = new EffectRequestConfig(this.requestClient, 'update');
+    const effectReqConfig = new EffectRequestConfig(this.requestClient, 'put');
     const actionsConfig = new EffectActionsConfig(
       UPDATE_PRODUCTION_ORDERS,
       UPDATE_PRODUCTION_SUCCESS,
@@ -52,7 +52,7 @@ export class ProductionOrdersEffects {
   finishProductionOrders$ = createEffect(() => {
     const { FINISH_PRODUCTION_ORDERS, FINISH_PRODUCTION_SUCCESS, FINISH_PRODUCTION_FAIL } = actions;
 
-    const effectReqConfig = new EffectRequestConfig(this.requestClient, 'update');
+    const effectReqConfig = new EffectRequestConfig(this.requestClient, 'put');
     const actionsConfig = new EffectActionsConfig(
       FINISH_PRODUCTION_ORDERS,
       FINISH_PRODUCTION_SUCCESS,

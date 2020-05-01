@@ -1,11 +1,11 @@
-import { environment } from '@environments/environment';
 import { Injectable } from '@angular/core';
-import { EffectsFactoryService } from '@core/services';
 import { RequestClient } from '@core/client';
-import { createEffect, act } from '@ngrx/effects';
-import * as actions from './actions';
-import { EffectRequestConfig, EffectActionsConfig, EffectConfigModel } from '@core/types';
+import { EffectsFactoryService } from '@core/services';
+import { EffectActionsConfig, EffectConfigModel, EffectRequestConfig } from '@core/types';
 import { RestResourceFactory } from '@core/utils';
+import { environment } from '@environments/environment';
+import { createEffect } from '@ngrx/effects';
+import * as actions from './actions';
 
 /**
  * Load al the data that is shared between lazy modules

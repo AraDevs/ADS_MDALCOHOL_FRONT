@@ -29,7 +29,7 @@ export class UsersEffects {
   saveUsers$ = createEffect(() => {
     const { SAVE_USERS, SAVE_USERS_SUCCESS, SAVE_USERS_FAIL } = actions;
 
-    const effectReqConfig = new EffectRequestConfig(this.requestClient, 'save');
+    const effectReqConfig = new EffectRequestConfig(this.requestClient, 'post');
     const actionsConfig = new EffectActionsConfig(
       SAVE_USERS,
       SAVE_USERS_SUCCESS,
@@ -47,7 +47,7 @@ export class UsersEffects {
   updateUsers$ = createEffect(() => {
     const { UPDATE_USERS, UPDATE_USERS_SUCCESS, UPDATE_USERS_FAIL } = actions;
 
-    const effectReqConfig = new EffectRequestConfig(this.requestClient, 'update');
+    const effectReqConfig = new EffectRequestConfig(this.requestClient, 'put');
     const actionsConfig = new EffectActionsConfig(
       UPDATE_USERS,
       UPDATE_USERS_SUCCESS,

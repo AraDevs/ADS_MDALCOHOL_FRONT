@@ -14,7 +14,7 @@ export class BillsEffects {
   saveBills$ = createEffect(() => {
     const { SAVE_BILLS, SAVE_BILLS_SUCCESS, SAVE_BILLS_FAIL } = actions;
 
-    const effectReqConfig = new EffectRequestConfig(this.requestClient, 'save');
+    const effectReqConfig = new EffectRequestConfig(this.requestClient, 'post');
     const actionsConfig = new EffectActionsConfig(SAVE_BILLS, SAVE_BILLS_SUCCESS, SAVE_BILLS_FAIL);
     const config = new EffectConfigModel(
       effectReqConfig,
@@ -28,7 +28,7 @@ export class BillsEffects {
   updateBills$ = createEffect(() => {
     const { UPDATE_BILLS, UPDATE_BILLS_SUCCESS, UPDATE_BILLS_FAIL } = actions;
 
-    const effectReqConfig = new EffectRequestConfig(this.requestClient, 'update');
+    const effectReqConfig = new EffectRequestConfig(this.requestClient, 'put');
     const actionsConfig = new EffectActionsConfig(
       UPDATE_BILLS,
       UPDATE_BILLS_SUCCESS,

@@ -16,7 +16,7 @@ export class InventoriesEffects {
   saveInventories$ = createEffect(() => {
     const { SAVE_INVENTORIES, SAVE_INVENTORIES_SUCCESS, SAVE_INVENTORIES_FAIL} = actions;
 
-    const effectReqConfig = new EffectRequestConfig(this.requestClient, 'save');
+    const effectReqConfig = new EffectRequestConfig(this.requestClient, 'post');
     const actionsConfig = new EffectActionsConfig(
       SAVE_INVENTORIES,
       SAVE_INVENTORIES_SUCCESS,
@@ -34,7 +34,7 @@ export class InventoriesEffects {
   updateInventories$ = createEffect(() => {
     const { UPDATE_INVENTORIES, UPDATE_INVENTORIES_SUCCESS, UPDATE_INVENTORIES_FAIL } = actions;
 
-    const effectReqConfig = new EffectRequestConfig(this.requestClient, 'update');
+    const effectReqConfig = new EffectRequestConfig(this.requestClient, 'put');
     const actionsConfig = new EffectActionsConfig(
       UPDATE_INVENTORIES,
       UPDATE_INVENTORIES_SUCCESS,
