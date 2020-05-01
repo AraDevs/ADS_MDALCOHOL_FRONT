@@ -22,7 +22,7 @@ export class RequestHttpClient extends RequestClient {
     return { result: data$ };
   }
 
-  save<T>(requestData: RequestData<HttpOptions>): ResponseClientModel<T> {
+  post<T>(requestData: RequestData<HttpOptions>): ResponseClientModel<T> {
     const { resource, options, data } = requestData;
     const data$ = this.http
       .post<T>(resource, data, this.getOptions(options))
@@ -30,7 +30,7 @@ export class RequestHttpClient extends RequestClient {
     return { result: data$ };
   }
 
-  update<T>(requestData: RequestData<HttpOptions>): ResponseClientModel<T> {
+  put<T>(requestData: RequestData<HttpOptions>): ResponseClientModel<T> {
     const { resource, options, data } = requestData;
     const data$ = this.http
       .put<T>(resource, data, this.getOptions(options))

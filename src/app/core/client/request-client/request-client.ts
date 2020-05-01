@@ -15,6 +15,6 @@ export class ResponseClientModel<T> {
 
 export abstract class RequestClient {
   abstract get<T>(requestData: RequestData): ResponseClientModel<T>;
-  abstract save<T>(requestData: RequestData): ResponseClientModel<T>;
-  abstract update<T>(requestData: RequestData): ResponseClientModel<T>;
+  abstract post<T>(requestData: RequestData): ResponseClientModel<T>;
+  abstract put<T>(requestData: RequestData): ResponseClientModel<T>;
 }

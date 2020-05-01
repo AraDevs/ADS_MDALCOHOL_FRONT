@@ -6,8 +6,7 @@ export class RequestData<T = any> {
   private _options: T = null;
   private _resource: string;
 
-
-  constructor() { }
+  constructor() {}
 
   public get data(): any {
     return this._data;
@@ -20,6 +19,9 @@ export class RequestData<T = any> {
   public get options(): T {
     return this._options;
   }
+  public set options(value: T) {
+    this._options = value;
+  }
 
   public get resource(): string {
     return this._resource;
@@ -27,9 +29,5 @@ export class RequestData<T = any> {
 
   public set resource(value: string) {
     this._resource = value;
-  }
-
-  public set options(value: T) {
-    this._options = value;
   }
 }

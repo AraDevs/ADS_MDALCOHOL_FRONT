@@ -12,12 +12,17 @@ import { FormGroup } from '@angular/forms';
 export class LoginComponent implements OnInit {
   form: FormGroup;
   fields: Partial<InputControlConfig>[];
-  constructor(private formModel: FormModel, private factoryForm: FactoryFormService) {}
+  constructor(
+    private formModel: FormModel,
+    private factoryForm: FactoryFormService,
+    private requestClient: ) {}
 
   ngOnInit(): void {
     this.fields = this.formModel.getModel();
     this.form = this.factoryForm.createPlainForm(this.fields as any);
   }
 
-  login() {}
+  login() {
+
+  }
 }
