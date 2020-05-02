@@ -36,6 +36,9 @@
       ],
       "@state/*": [
         "app/state/*"
+      ],
+      "@auth/*": [
+        "app/pages/auth/*"
       ]
     }
   },

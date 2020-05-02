@@ -38,7 +38,7 @@ import { LoadDataEffects } from '@state/load-data-effects';
       logOnly: environment.production
     }),
     // Configure Effects
-    EffectsModule.forRoot([LoadDataEffects])
+    EffectsModule.forRoot([])
   ],
   providers: [
     {
