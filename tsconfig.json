@@ -34,6 +34,9 @@
       "@config/*": [
         "app/config/*"
       ],
+      "@dashboard-state/*": [
+        "app/pages/dashboard/state/*"
+      ],
       "@state/*": [
         "app/state/*"
       ],

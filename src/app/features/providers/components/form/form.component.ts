@@ -8,7 +8,7 @@ import { Store } from '@ngrx/store';
 import { MODAL_ACCEPT_EVENT, MODAL_INITIAL_EVENT, DYNAMIC_MODAL_DATA } from '@shared/constants';
 import { SuccessService } from '@shared/services';
 import { AppState } from '@state/app-state';
-import * as globalState from '@state/index';
+import * as globalState from '@dashboard-state/index';
 import { filter } from 'rxjs/operators';
 import { SubSink } from 'subsink';
 import { FormService } from './form.service';

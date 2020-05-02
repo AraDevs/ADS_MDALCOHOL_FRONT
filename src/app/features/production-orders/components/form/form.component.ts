@@ -10,7 +10,7 @@ import { FormService } from './form.service';
 import { Store } from '@ngrx/store';
 import { AppState } from '@state/app-state';
 import * as state from '@features/production-orders/state';
-import * as globalState from '@state/index';
+import * as globalState from '@dashboard-state/index';
 import { MessageService } from '@core/services/message.service';
 import { DYNAMIC_MODAL_DATA } from '@shared/constants';
 import * as moment from 'moment';

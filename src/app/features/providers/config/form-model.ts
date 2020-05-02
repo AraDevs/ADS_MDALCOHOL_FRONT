@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { of } from 'rxjs';
 import { Store, select } from '@ngrx/store';
 import { Validators } from '@angular/forms';
-import * as globalState from '@state/index';
+import * as globalState from '@dashboard-state/index';
 import { minLength, maxLength } from '@shared/Validator';
 
 @Injectable()

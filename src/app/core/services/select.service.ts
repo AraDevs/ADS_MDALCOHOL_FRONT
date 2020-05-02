@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { AppState } from '@state/app-state';
-import * as globalState from '@state/index';
+import * as globalState from '@dashboard-state/index';
 import { take } from 'rxjs/operators';
 
 @Injectable({

@@ -9,7 +9,7 @@ import { MessageService } from '@core/services/message.service';
 import { FactoryFormService } from '@core/services';
 import { Store, select } from '@ngrx/store';
 import { AppState } from '@state/app-state';
-import * as globalState from '@state/index';
+import * as globalState from '@dashboard-state/index';
 import * as state from '@features/purchase/state';
 import { PurchaseTableComponent } from '../purchase-table/purchase-table.component';
 import { SuccessService, ErrorService } from '@shared/services';

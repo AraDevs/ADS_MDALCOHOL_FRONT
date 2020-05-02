@@ -3,7 +3,7 @@ import { Validators } from '@angular/forms';
 import { InputControlConfig } from '@core/types';
 import { SelectControlConfig } from '@core/types/forms/select-control-config';
 import { select, Store } from '@ngrx/store';
-import * as globalState from '@state/index';
+import * as globalState from '@dashboard-state/index';
 import { map } from 'rxjs/operators';
 import { BehaviorSubject } from 'rxjs';
 

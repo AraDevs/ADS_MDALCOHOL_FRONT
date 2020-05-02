@@ -2,7 +2,7 @@ import { Store, select } from '@ngrx/store';
 import { Injectable } from '@angular/core';
 import { InputControlConfig, SelectControlConfig } from '@core/types';
 import { Validators } from '@angular/forms';
-import * as globalState from '@state/index';
+import * as globalState from '@dashboard-state/index';
 import { map } from 'rxjs/operators';
 import { BehaviorSubject } from 'rxjs';
 import { minLength, maxLength } from '@shared/Validator';

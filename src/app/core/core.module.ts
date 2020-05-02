@@ -4,13 +4,13 @@ import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '@environments/environment';
 import { EffectsModule } from '@ngrx/effects';
-import { reducer } from '@state/index';
+import { reducer } from '@dashboard-state/index';
 import { HttpClientModule } from '@angular/common/http';
 import { TranslocoRootModule } from '../transloco-root.module';
 import { RouterModule } from '@angular/router';
 import { MaterialModule } from '@shared/material/material.module';
 import { RequestClient, RequestHttpClient } from '@core/client';
-import { LoadDataEffects } from '@state/load-data-effects';
+import { LoadDataEffects } from '@dashboard-state/load-data-effects';
 
 @NgModule({
   declarations: [],

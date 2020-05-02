@@ -1,7 +1,7 @@
 import { Store, select } from '@ngrx/store';
 import { AppState } from '@state/app-state';
 import { BehaviorSubject } from 'rxjs';
-import * as globalState from '@state/index';
+import * as globalState from '@dashboard-state/index';
 import { tap, switchMap } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 

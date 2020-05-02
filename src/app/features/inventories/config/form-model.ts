@@ -1,6 +1,6 @@
 import { Store, select } from '@ngrx/store';
 import { Validators } from '@angular/forms';
-import * as globalState from '@state/index';
+import * as globalState from '@dashboard-state/index';
 import { map } from 'rxjs/operators';
 import { InputControlConfig, SelectControlConfig } from '@core/types';
 import { Injectable } from '@angular/core';

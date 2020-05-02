@@ -6,7 +6,7 @@ import { SuccessService, ErrorService } from '@shared/services';
 import { FormService } from '@features/sellers/components/form/form.service';import { FactoryFormService } from '@core/services';
 import { AppState } from '@state/app-state';
 import * as state from '@features/sellers/state';
-import * as globalState from '@state/index';
+import * as globalState from '@dashboard-state/index';
 import { Store } from '@ngrx/store';
 import { MessageService } from '@core/services/message.service';
 import { DYNAMIC_MODAL_DATA, MODAL_INITIAL_EVENT, MODAL_ACCEPT_EVENT } from '@shared/constants';

@@ -12,7 +12,7 @@ import {
 } from '@shared/services';
 import { DataTableConfig } from '@shared/types';
 import { AppState } from '@state/app-state';
-import * as globalState from '@state/index';
+import * as globalState from '@dashboard-state/index';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { filter } from 'rxjs/operators';
 import Swal from 'sweetalert2';

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import * as globalState from '@state/index';
+import * as globalState from '@dashboard-state/index';
 import { select, Store } from '@ngrx/store';
 import { DataTableConfig } from '@shared/types';
 import { Observable, combineLatest, of } from 'rxjs';

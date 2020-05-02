@@ -9,7 +9,7 @@ import {
   SuccessService,
   ErrorService,
 } from '@shared/services';
-import * as globalState from '@state/index';
+import * as globalState from '@dashboard-state/index';
 import { FormComponent } from '../form/form.component';
 import { filter } from 'rxjs/operators';
 import { MODAL_INITIAL_EVENT } from '@shared/constants';

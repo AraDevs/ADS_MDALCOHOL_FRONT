@@ -3,7 +3,7 @@ import { InputControlConfig } from '@core/types';
 import { SelectControlConfig } from '@core/types/forms/select-control-config';
 import { Validators } from '@angular/forms';
 import { Store, select } from '@ngrx/store';
-import * as globalState from '@state/index';
+import * as globalState from '@dashboard-state/index';
 import { map } from 'rxjs/operators';
 
 @Injectable()

@@ -5,7 +5,7 @@ import { MODAL_INITIAL_EVENT } from '@shared/constants';
 import { ModalFactoryService, LoadingService, ErrorService } from '@shared/services';
 import { DataTableConfig } from '@shared/types';
 import { AppState } from '@state/app-state';
-import * as globalState from '@state/index';
+import * as globalState from '@dashboard-state/index';
 import { combineLatest, Observable, of } from 'rxjs';
 import { filter, map, switchMap } from 'rxjs/operators';
 import { SubSink } from 'subsink';

@@ -8,7 +8,7 @@ import { AppState } from '@state/app-state';
 import { SuccessService, ErrorService } from '@shared/services';
 import { SubSink } from 'subsink';
 import * as state from '@features/clients/state';
-import * as globalState from '@state/index';
+import * as globalState from '@dashboard-state/index';
 import { MODAL_INITIAL_EVENT } from '@shared/constants';
 import { MODAL_ACCEPT_EVENT, DYNAMIC_MODAL_DATA } from '../../../../shared/constants/index';
 import { FormService } from '@features/clients/components/form/form.service';

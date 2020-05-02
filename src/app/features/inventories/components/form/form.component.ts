@@ -10,7 +10,7 @@ import { AppState } from '@state/app-state';
 import { MODAL_INITIAL_EVENT, MODAL_ACCEPT_EVENT } from '@shared/constants';
 import { MessageService } from '@core/services/message.service';
 import * as state from '@features/inventories/state';
-import * as globalState from '@state/index';
+import * as globalState from '@dashboard-state/index';
 import { DYNAMIC_MODAL_DATA } from '@shared/constants/index';
 import { SubSink } from 'subsink';
 import { Subject } from 'rxjs';

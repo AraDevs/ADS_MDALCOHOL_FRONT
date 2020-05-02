@@ -7,7 +7,7 @@ import { DashboardRoutingModule } from './dashboard-routing.module';
 import { AuthInterceptor } from './interceptors/auth-interceptor';
 import { HeaderInterceptor } from './interceptors/header-interceptor';
 import { EffectsModule } from '@ngrx/effects';
-import { LoadDataEffects } from '@state/load-data-effects';
+import { LoadDataEffects } from '@dashboard-state/load-data-effects';
 
 @NgModule({
   declarations: [BaseComponent],
