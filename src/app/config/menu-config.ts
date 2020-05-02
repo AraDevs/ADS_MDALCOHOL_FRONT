@@ -26,6 +26,12 @@ export const MENU_ITEMS = {
       icon: 'payments',
       userType: ADMINISTRATION,
     },
+    {
+      title: 'SideNav.Reports',
+      route: 'reports',
+      icon: 'picture_as_pdf',
+      userType: ADMINISTRATION,
+    },
   ],
   catalogs: [
     {
