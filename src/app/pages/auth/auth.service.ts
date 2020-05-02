@@ -3,13 +3,11 @@ import { RequestClient, RequestData } from '@core/client';
 import { environment } from '@environments/environment';
 import { map, tap } from 'rxjs/operators';
 import { Router } from '@angular/router';
+import { USER_TYPE_KEY, NAME_KEY, TOKEN_KEY } from '@shared/constants';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   private resource = environment.host + '/login';
-  private TOKEN_KEY = 'TOKEN_KEY';
-  private USER_TYPE_KEY = 'USER_TYPE_KEY';
-  private NAME_KEY = 'NAME_KEY';
 
   constructor(private requestClient: RequestClient, private router: Router) {}
 
@@ -29,18 +27,26 @@ export class AuthService {
     );
   }
 
-  getToken() {
-    return localStorage.getItem(this.TOKEN_KEY);
+  getUserType() {
+    const userType = localStorage.getItem(USER_TYPE_KEY);
+    if (userType != null) {
+      return userType.toUpperCase();
+    }
+    return userType;
   }
 
   isAuthenticated() {
     return this.getToken() !== null;
   }
 
+  getToken() {
+    return localStorage.getItem(TOKEN_KEY);
+  }
+
   logout() {
-    localStorage.removeItem(this.NAME_KEY);
-    localStorage.removeItem(this.TOKEN_KEY);
-    localStorage.removeItem(this.USER_TYPE_KEY);
+    localStorage.removeItem(NAME_KEY);
+    localStorage.removeItem(TOKEN_KEY);
+    localStorage.removeItem(USER_TYPE_KEY);
     this.router.navigateByUrl('/auth');
   }
 
@@ -53,8 +59,8 @@ export class AuthService {
 
   private saveUserInfo(data: any) {
     const { name, token, user_type: userType } = data;
-    localStorage.setItem(this.NAME_KEY, name);
-    localStorage.setItem(this.TOKEN_KEY, token);
-    localStorage.setItem(this.USER_TYPE_KEY, userType);
+    localStorage.setItem(NAME_KEY, name);
+    localStorage.setItem(TOKEN_KEY, token);
+    localStorage.setItem(USER_TYPE_KEY, userType);
   }
 }

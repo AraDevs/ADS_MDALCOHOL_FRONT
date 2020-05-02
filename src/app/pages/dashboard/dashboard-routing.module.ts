@@ -54,11 +54,6 @@ const routes: Routes = [
         path: 'purchases',
         loadChildren: () =>
           import('./../../features/purchase/purchase.module').then((m) => m.PurchaseModule),
-      },
-      {
-        path: '',
-        pathMatch: 'full',
-        redirectTo: 'users'
       }
     ],
   },

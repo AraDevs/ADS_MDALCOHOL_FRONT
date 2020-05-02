@@ -12,7 +12,7 @@ export interface UsersState {
 const INITIAL_STATE: UsersState = {
   users: [],
   user: null,
-  userType: ['Administracion', 'Produccion'],
+  userType: ['Administración', 'Producción'],
 };
 
 const usersReducer = createReducer(

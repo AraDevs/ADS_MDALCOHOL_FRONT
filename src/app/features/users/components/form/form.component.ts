@@ -87,8 +87,8 @@ export class FormComponent implements OnInit {
         this.user = this.formService.getUser(data);
         this.form.patchValue(this.user);
         //Aquí se elimina la password como algo necesario para el update
-        this.form.get('pass').disable();
-        this.form.get('pass').clearValidators();
+        this.form.get('password').disable();
+        this.form.get('password').clearValidators();
       }
     } else if (event === MODAL_ACCEPT_EVENT) {
       this.formBtn.nativeElement.click();

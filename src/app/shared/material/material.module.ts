@@ -18,6 +18,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatCardModule } from '@angular/material/card';
+import { MatMenuModule } from '@angular/material/menu';
 import {
   MatMomentDateModule,
   MAT_MOMENT_DATE_ADAPTER_OPTIONS,
@@ -63,6 +64,7 @@ import {
     MatDatepickerModule,
     MatMomentDateModule,
     MatCardModule,
+    MatMenuModule,
   ],
   exports: [
     LayoutModule,
@@ -84,6 +86,7 @@ import {
     MatDatepickerModule,
     MatMomentDateModule,
     MatCardModule,
+    MatMenuModule,
   ],
 })
 export class MaterialModule {}

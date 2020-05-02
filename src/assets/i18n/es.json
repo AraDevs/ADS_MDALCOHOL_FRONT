@@ -63,6 +63,7 @@
     },
     "Buttons": {
       "Enter": "Ingresar"
-    }
+    },
+    "Logout": "Cerrar Sesión"
   }
 }

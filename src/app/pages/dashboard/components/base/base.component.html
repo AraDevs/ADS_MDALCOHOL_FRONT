@@ -11,33 +11,42 @@
     <mat-nav-list>
       <h2 matSubheader>{{ 'Production' | transloco }}</h2>
 
-      <a
-        mat-list-item
-        *ngFor="let item of menu"
-        [routerLink]="item.route"
-        routerLinkActive="active-list-item"
-      >
-        <mat-icon matListIcon> {{ item.icon }} </mat-icon>
-        {{ item.title | transloco }}
-      </a>
+      <ng-container *ngFor="let item of menuItems.productions">
+        <a
+          mat-list-item
+          [routerLink]="item.route"
+          routerLinkActive="active-list-item"
+          *ngIf="item.userType === userType"
+        >
+          <mat-icon matListIcon> {{ item.icon }} </mat-icon>
+          {{ item.title | transloco }}
+        </a>
+      </ng-container>
 
-      <mat-divider></mat-divider>
+      <ng-container *ngIf="isAdministration()">
+        <mat-divider></mat-divider>
+        <h2 matSubheader>{{ 'Catalogs' | transloco }}</h2>
+      </ng-container>
 
-      <h2 matSubheader>{{ 'Catalogs' | transloco }}</h2>
-
-      <a
-        mat-list-item
-        *ngFor="let item of catalogs"
-        [routerLink]="item.route"
-        routerLinkActive="active-list-item"
-      >
-        <mat-icon matListIcon> {{ item.icon }} </mat-icon>
-        {{ item.title | transloco }}
-      </a>
+      <ng-container *ngFor="let item of menuItems.catalogs; first as isFirst">
+        <a
+          mat-list-item
+          [routerLink]="item.route"
+          routerLinkActive="active-list-item"
+          *ngIf="item.userType === userType"
+        >
+          <mat-icon matListIcon> {{ item.icon }} </mat-icon>
+          {{ item.title | transloco }}
+        </a>
+      </ng-container>
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>
-    <mat-toolbar color="primary">
+    <mat-toolbar
+      color="primary"
+      class="d-flex"
+      [class]="(isHandset$ | async) ? 'justify-content-between' : 'justify-content-end'"
+    >
       <button
         type="button"
         aria-label="Toggle sidenav"
@@ -47,6 +56,18 @@
       >
         <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
       </button>
+
+      <div>
+        <button mat-icon-button [matMenuTriggerFor]="menu">
+          <mat-icon>more_vert</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item (click)="logout()">
+            <mat-icon>logout</mat-icon>
+            <span>{{'Login.Logout' | transloco}}</span>
+          </button>
+        </mat-menu>
+      </div>
     </mat-toolbar>
 
     <router-outlet></router-outlet>

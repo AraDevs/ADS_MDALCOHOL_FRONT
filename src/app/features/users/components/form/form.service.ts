@@ -13,7 +13,7 @@ export class FormService {
       id: user.id,
       username: user.username,
       name: user.name,
-      pass: user.password,
+      password: user.password,
       usertype: {
         label: user.user_type,
         value: user.user_type
@@ -27,7 +27,7 @@ export class FormService {
     return{
       username: user.username,
       name: user.name,
-      pass: user.password,
+      password: user.password,
       user_type: user.usertype.value,
       state: user.state ? 1 : 0
     }
