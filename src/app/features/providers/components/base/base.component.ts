@@ -31,7 +31,7 @@ export class BaseComponent implements OnInit, OnDestroy {
       nit: 'Providers.Table.Titles.Nit',
       phone: 'Providers.Table.Titles.PartnerPhone',
       seller_phone: 'Providers.Table.Titles.SellerPhone',
-      actions: 'Acciones'
+      actions: 'Table.Actions'
     },
     keys: ['partner.name', 'partner.nit', 'partner.phone', 'seller_phone', 'Tabla.Actions']
   };

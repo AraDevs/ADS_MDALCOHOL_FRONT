@@ -1,16 +1,15 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { StoreModule } from '@ngrx/store';
-import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { HttpClientModule } from '@angular/common/http';
+import { NgModule } from '@angular/core';
+import { RouterModule } from '@angular/router';
+import { RequestClient, RequestHttpClient } from '@core/client';
+import { reducer } from '@dashboard-state/index';
 import { environment } from '@environments/environment';
 import { EffectsModule } from '@ngrx/effects';
-import { reducer } from '@dashboard-state/index';
-import { HttpClientModule } from '@angular/common/http';
-import { TranslocoRootModule } from '../transloco-root.module';
-import { RouterModule } from '@angular/router';
+import { StoreModule } from '@ngrx/store';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { MaterialModule } from '@shared/material/material.module';
-import { RequestClient, RequestHttpClient } from '@core/client';
-import { LoadDataEffects } from '@dashboard-state/load-data-effects';
+import { TranslocoRootModule } from '../transloco-root.module';
 
 @NgModule({
   declarations: [],
@@ -22,7 +21,7 @@ import { LoadDataEffects } from '@dashboard-state/load-data-effects';
     MaterialModule,
     // Configure Ngrx Store
     StoreModule.forRoot(
-      { data: reducer },
+      { sharedState: reducer },
       {
         runtimeChecks: {
           strictStateImmutability: true,

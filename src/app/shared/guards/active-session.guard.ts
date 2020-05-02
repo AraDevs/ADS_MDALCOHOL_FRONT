@@ -12,8 +12,9 @@ export class ActiveSessionGuard implements CanActivate {
 
     if (isAuthenticated) {
       this.router.navigateByUrl('/dashboard');
+      return false;
     }
 
-    return !isAuthenticated;
+    return true;
   }
 }

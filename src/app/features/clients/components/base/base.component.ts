@@ -40,7 +40,7 @@ export class BaseComponent implements OnInit, OnDestroy {
       registry_no: 'Clients.Table.Titles.Registry',
       person_type: 'Clients.Table.Titles.PersonType',
       partnerName: 'Clients.Table.Titles.SellerId',
-      actions: 'Acciones'
+      actions: 'Table.Actions'
     },
     keys: ['business_name', 'dui', 'registry_no', 'person_type', 'partnerName', 'Tabla.Actions']
   };

@@ -1,94 +1,94 @@
-import { DashboardState } from './reducer';
+import { SharedState } from './reducer';
 import { AppState } from '../../../state/app-state';
 import { createSelector, props } from '@ngrx/store';
 
-export const selectData = (state: AppState) => state.data;
-export const selectSellers = createSelector(selectData, (state: DashboardState) => state.sellers);
+export const selectData = (state: AppState) => state.sharedState;
+export const selectSellers = createSelector(selectData, (state: SharedState) => state.sellers);
 export const selectSellersById = createSelector(
   selectData,
-  (state: DashboardState, seller: number) => state.sellers.find((s) => s.id === seller)
+  (state: SharedState, seller: number) => state.sellers.find((s) => s.id === seller)
 );
 export const selectDepartments = createSelector(
   selectData,
-  (state: DashboardState) => state.departments
+  (state: SharedState) => state.departments
 );
 
 export const selectDepartmentByMunicipalityId = createSelector(
   selectData,
-  (state: DashboardState, municipalityId: number) =>
+  (state: SharedState, municipalityId: number) =>
     state.municipalities.find((m) => m.id === municipalityId).department
 );
 
 export const selectMunicipalities = createSelector(
   selectData,
-  (state: DashboardState) => state.filterMunicipalities
+  (state: SharedState) => state.filterMunicipalities
 );
 export const selectMunicipalityById = createSelector(
   selectData,
-  (state: DashboardState, municipalityId) =>
+  (state: SharedState, municipalityId) =>
     state.municipalities.find((m) => m.id === municipalityId)
 );
 
-export const selectClients = createSelector(selectData, (state: DashboardState) => state.clients);
+export const selectClients = createSelector(selectData, (state: SharedState) => state.clients);
 export const selectClientsActive = createSelector(
   selectData,
-  (state: DashboardState) => state.clientsActive
+  (state: SharedState) => state.clientsActive
 );
 
 export const selectTypePerson = createSelector(
   selectData,
-  (state: DashboardState) => state.typesPerson
+  (state: SharedState) => state.typesPerson
 );
 
 export const selectProviders = createSelector(
   selectData,
-  (state: DashboardState) => state.providers
+  (state: SharedState) => state.providers
 );
 // export const selectProvidersActive = createSelector(selectData, (state: DashboardState) => state.providersActive);
 export const selectProviderById = createSelector(
   selectData,
-  (state: DashboardState, provider: number) => state.providers.find((s) => s.id === provider)
+  (state: SharedState, provider: number) => state.providers.find((s) => s.id === provider)
 );
 
 // Inventories
 export const selectInventories = createSelector(
   selectData,
-  (state: DashboardState) => state.inventories
+  (state: SharedState) => state.inventories
 );
 export const selectInventoriesActive = createSelector(
   selectData,
-  (state: DashboardState) => state.inventoriesActive
+  (state: SharedState) => state.inventoriesActive
 );
 export const selectTypeProduct = createSelector(
   selectData,
-  (state: DashboardState) => state.productsType
+  (state: SharedState) => state.productsType
 );
 export const selectRawMaterials = createSelector(
   selectData,
-  (state: DashboardState) => state.rawMaterials
+  (state: SharedState) => state.rawMaterials
 );
 export const selectFinalMaterials = createSelector(
   selectData,
-  (state: DashboardState) => state.finalMaterials
+  (state: SharedState) => state.finalMaterials
 );
 
 // Production Orders
 export const selectProductionOrders = createSelector(
   selectData,
-  (state: DashboardState) => state.productionOrders
+  (state: SharedState) => state.productionOrders
 );
 
 // Bills
-export const selectBills = createSelector(selectData, (state: DashboardState) => state.bills);
+export const selectBills = createSelector(selectData, (state: SharedState) => state.bills);
 export const selectPaymentType = createSelector(
   selectData,
-  (state: DashboardState) => state.paymentType
+  (state: SharedState) => state.paymentType
 );
 
-export const selectBillType = createSelector(selectData, (state: DashboardState) => state.billType);
+export const selectBillType = createSelector(selectData, (state: SharedState) => state.billType);
 
 // Purchases
 export const selectPurchases = createSelector(
   selectData,
-  (state: DashboardState) => state.purchases
+  (state: SharedState) => state.purchases
 );

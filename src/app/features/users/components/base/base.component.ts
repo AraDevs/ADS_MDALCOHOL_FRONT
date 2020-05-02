@@ -26,7 +26,7 @@ export class BaseComponent implements OnInit {
     titles: {
       name: 'Users.Table.Titles.Name',
       username: 'Users.Table.Titles.User',
-      actions: 'Acciones'
+      actions: 'Table.Actions'
     },
     keys: ['name', 'username', 'Tabla.Actions']
   };

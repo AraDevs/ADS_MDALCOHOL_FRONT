@@ -29,7 +29,7 @@ export class BaseComponent implements OnInit {
       end_date: 'ProductionOrders.Table.Titles.EndDate',
       exp_date: 'ProductionOrders.Table.Titles.ExpDate',
       workers: 'ProductionOrders.Table.Titles.Workers',
-      actions: 'Acciones'
+      actions: 'Table.Actions'
     },
     keys: ['inventory.name', 'quantity', 'start_date', 'end_date', 'exp_date', 'workers', 'Tabla.Actions']
   };

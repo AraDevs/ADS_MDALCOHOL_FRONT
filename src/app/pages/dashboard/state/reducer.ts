@@ -2,7 +2,7 @@ import { Action, createReducer, on } from '@ngrx/store';
 import * as actions from './actions';
 import * as moment from 'moment';
 
-export interface DashboardState {
+export interface SharedState {
   departments: any[];
   municipalities: any[];
   clients: any[];
@@ -24,7 +24,7 @@ export interface DashboardState {
   purchases: any[];
 }
 
-const INITIAL_STATE: DashboardState = {
+const INITIAL_STATE: SharedState = {
   departments: [],
   municipalities: [],
   clients: [],
@@ -142,6 +142,6 @@ const globalReducer = createReducer(
   })
 );
 
-export function reducer(state: DashboardState | undefined, action: Action) {
+export function reducer(state: SharedState | undefined, action: Action) {
   return globalReducer(state, action);
 }

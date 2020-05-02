@@ -39,7 +39,7 @@ export class BaseComponent implements OnInit {
       purchase_date: 'Purchase.Table.PurchaseDate',
       payment_type: 'Purchase.Table.PaymentType',
       perception: 'Purchase.Table.Perception',
-      actions: 'Acciones',
+      actions: 'Table.Actions',
     },
     keys: ['id', 'purchase_date', 'payment_type', 'perception', 'Tabla.Actions'],
   };

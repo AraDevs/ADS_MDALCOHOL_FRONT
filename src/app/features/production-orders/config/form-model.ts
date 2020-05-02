@@ -1,11 +1,10 @@
-import { Store, select } from '@ngrx/store';
 import { Injectable } from '@angular/core';
-import { InputControlConfig, SelectControlConfig } from '@core/types';
 import { Validators } from '@angular/forms';
+import { InputControlConfig, SelectControlConfig } from '@core/types';
 import * as globalState from '@dashboard-state/index';
-import { map } from 'rxjs/operators';
+import { select, Store } from '@ngrx/store';
 import { BehaviorSubject } from 'rxjs';
-import { minLength, maxLength } from '@shared/Validator';
+import { map } from 'rxjs/operators';
 
 @Injectable()
 export class FormModel {
