@@ -106,6 +106,15 @@ export const FINAL_MATERIALS_LOADED_FAIL = createAction(
   props<{ payload: ErrorActionData }>()
 );
 
+export const LOAD_FINAL_PRODUCTS = createAction('Load Final Products');
+export const FINAL_PRODUCTS_LOADED_SUCCESS = createAction(
+  'Final Products Loaded Success',
+  props<{ payload: any[] }>()
+);
+export const FINAL_PRODUCTS_LOADED_FAIL = createAction(
+  'Final Products Loaded Fail',
+  props<{ payload: ErrorActionData }>()
+);
 
 // Production Orders
 export const LOAD_PRODUCTION_ORDERS = createAction('Load Production Orders');

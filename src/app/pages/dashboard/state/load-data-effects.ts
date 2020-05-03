@@ -158,6 +158,21 @@ export class LoadDataEffects {
     return this.effectFactory.create(config);
   });
 
+  loadFinalProducts$ = createEffect(() => {
+    const effectReqConfig = new EffectRequestConfig(this.requestClient, 'get');
+    const actionsConfig = new EffectActionsConfig(
+      actions.LOAD_FINAL_PRODUCTS,
+      actions.FINAL_PRODUCTS_LOADED_SUCCESS,
+      actions.FINAL_PRODUCTS_LOADED_FAIL
+    );
+    const config = new EffectConfigModel(
+      effectReqConfig,
+      actionsConfig,
+      `${environment.host}/inventories/final_products`
+    );
+
+    return this.effectFactory.create(config);
+  });
 
   loadBills$ = createEffect(() => {
     const effectReqConfig = new EffectRequestConfig(this.requestClient, 'get');
@@ -218,10 +233,7 @@ export class LoadDataEffects {
       actions.PURCHASE_LOADED_SUCCESS,
       actions.PURCHASE_LOADED_FAIL
     );
-    const config = new EffectConfigModel(
-      effectReqConfig,
-      actionsConfig
-    );
+    const config = new EffectConfigModel(effectReqConfig, actionsConfig);
 
     const template = `${environment.host}/purchases/$$0`;
     config.resourceFactory = new RestResourceFactory(template, ['state']);

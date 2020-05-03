@@ -46,6 +46,8 @@ export class BaseComponent implements OnInit, OnDestroy {
     this.store$.dispatch(dashboardState.LOAD_SELLERS());
     this.store$.dispatch(dashboardState.LOAD_DEPARTMENTS());
     this.store$.dispatch(dashboardState.LOAD_MUNICIPALITIES());
+    this.store$.dispatch(dashboardState.LOAD_FINAL_PRODUCTS());
+
 
     this.dataSet1Control = this.form.get('dataSet1') as FormControl;
     this.dataSet2Control = this.form.get('dataSet2') as FormControl;

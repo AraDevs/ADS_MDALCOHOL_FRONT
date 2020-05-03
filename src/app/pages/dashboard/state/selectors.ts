@@ -72,6 +72,11 @@ export const selectFinalMaterials = createSelector(
   (state: SharedState) => state.finalMaterials
 );
 
+export const selectFinalProducts = createSelector(
+  selectData,
+  (state: SharedState) => state.finalProducts
+);
+
 // Production Orders
 export const selectProductionOrders = createSelector(
   selectData,

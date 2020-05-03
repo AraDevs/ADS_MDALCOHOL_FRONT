@@ -10,7 +10,7 @@ import {
 } from '@features/reports/constants';
 import { select, Store } from '@ngrx/store';
 import { BehaviorSubject, of, Subject } from 'rxjs';
-import { filter, map, switchMap, tap } from 'rxjs/operators';
+import { filter, map, switchMap, tap, skip } from 'rxjs/operators';
 import * as dashboardState from '@dashboard-state/index';
 
 @Injectable()
@@ -46,6 +46,7 @@ export class FormModel {
         validatorMessages: ['FormValidator.RequiredSelected'],
         validationNames: ['required'],
         options$: this.reportTypeSubject.pipe(
+          skip(1),
           filter((type) => type !== REPORT_TYPES.DELETED_BILLS.value),
           switchMap((type) => this.getData(type))
         ),

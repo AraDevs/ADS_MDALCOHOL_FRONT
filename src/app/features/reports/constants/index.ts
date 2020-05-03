@@ -25,7 +25,7 @@ export const REPORT_RESOURCES = {
 export const SELECTORS = {
   [SALES_BY_CLIENT]: dashboardState.selectClientsActive,
   [SALES_BY_SELLER]: dashboardState.selectSellers,
-  [SALES_BY_PRODUCT]: dashboardState.selectInventoriesActive,
+  [SALES_BY_PRODUCT]: dashboardState.selectFinalProducts,
   [SALES_BY_ZONE]: dashboardState.selectDepartments,
 };
 
