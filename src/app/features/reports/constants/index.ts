@@ -7,11 +7,11 @@ const SALES_BY_ZONE = 'SALES_BY_ZONE';
 const DELETED_BILLS = 'DELETED:BILLS';
 
 export const REPORT_TYPES = {
-  SALES_BY_CLIENT,
-  SALES_BY_SELLER,
-  SALES_BY_PRODUCT,
-  SALES_BY_ZONE,
-  DELETED_BILLS,
+  SALES_BY_CLIENT: { label: 'Ventas por cliente', value: SALES_BY_CLIENT },
+  SALES_BY_SELLER: { label: 'Ventas por vendedor', value: SALES_BY_SELLER },
+  SALES_BY_PRODUCT: { label: 'Ventas por producto', value: SALES_BY_PRODUCT },
+  SALES_BY_ZONE: { label: 'Ventas por zona', value: SALES_BY_ZONE },
+  DELETED_BILLS: { label: 'Facturas eliminadas', value: DELETED_BILLS },
 };
 
 export const SELECTORS = {

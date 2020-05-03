@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { select, Store } from '@ngrx/store';
 import { AppState } from '@state/app-state';
-import * as globalState from '@dashboard-state/index';
+import * as dashboardState from '@dashboard-state/index';
 import { BehaviorSubject, Observable, merge } from 'rxjs';
 import { switchMap, tap } from 'rxjs/operators';
 
@@ -16,10 +16,10 @@ export class LoadBillsService {
    return this.billState$.pipe(
       tap((billState) => {
         this.store$.dispatch(
-          globalState.LOAD_BILLS({ payload: { metadata: { resource: { state: billState } } } })
+          dashboardState.LOAD_BILLS({ payload: { metadata: { resource: { state: billState } } } })
         );
       }),
-      switchMap(() => this.store$.pipe(select(globalState.selectBills)))
+      switchMap(() => this.store$.pipe(select(dashboardState.selectBills)))
     );
   }
 

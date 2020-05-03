@@ -5,7 +5,7 @@ import { MODAL_INITIAL_EVENT } from '@shared/constants';
 import { ModalFactoryService, LoadingService } from '@shared/services';
 import { DataTableConfig } from '@shared/types';
 import { AppState } from '@state/app-state';
-import * as globalState from '@dashboard-state/index';
+import * as dashboardState from '@dashboard-state/index';
 import { combineLatest, Observable, of } from 'rxjs';
 import { filter, map, switchMap } from 'rxjs/operators';
 import { SubSink } from 'subsink';
@@ -54,19 +54,19 @@ export class BaseComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.loadingClients$ = this.loading.getLoading([
-      globalState.LOAD_CLIENTS,
-      globalState.CLIENTS_LOADED_SUCCESS,
-      globalState.CLIENTS_LOADED_FAIL
+      dashboardState.LOAD_CLIENTS,
+      dashboardState.CLIENTS_LOADED_SUCCESS,
+      dashboardState.CLIENTS_LOADED_FAIL
     ]);
 
-    this.store$.dispatch(globalState.LOAD_DEPARTMENTS());
-    this.store$.dispatch(globalState.LOAD_MUNICIPALITIES());
-    this.store$.dispatch(globalState.LOAD_CLIENTS());
-    this.store$.dispatch(globalState.LOAD_SELLERS());
-    this.store$.dispatch(globalState.LOAD_INVENTORIES());
+    this.store$.dispatch(dashboardState.LOAD_DEPARTMENTS());
+    this.store$.dispatch(dashboardState.LOAD_MUNICIPALITIES());
+    this.store$.dispatch(dashboardState.LOAD_CLIENTS());
+    this.store$.dispatch(dashboardState.LOAD_SELLERS());
+    this.store$.dispatch(dashboardState.LOAD_INVENTORIES());
 
-    this.data = this.store$.pipe(select(globalState.selectDepartments));
-    this.dataClients = this.store$.pipe(select(globalState.selectClients));
+    this.data = this.store$.pipe(select(dashboardState.selectDepartments));
+    this.dataClients = this.store$.pipe(select(dashboardState.selectClients));
   }
 
   ngOnDestroy() {

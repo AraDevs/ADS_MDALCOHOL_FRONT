@@ -3,7 +3,7 @@ import { Validators } from '@angular/forms';
 import { InputControlConfig } from '@core/types';
 import { SelectControlConfig } from '@core/types/forms/select-control-config';
 import { select, Store } from '@ngrx/store';
-import * as globalState from '@dashboard-state/index';
+import * as dashboardState from '@dashboard-state/index';
 import { map } from 'rxjs/operators';
 import { BehaviorSubject } from 'rxjs';
 
@@ -32,7 +32,7 @@ export class SpecialPriceFormModel {
         validationNames: ['required'],
         label: 'Clients.PriceForm.Inventory',
         options$: this.store$.pipe(
-          select(globalState.selectInventories),
+          select(dashboardState.selectInventories),
           map((inventories: any[]) => {
             return inventories.map(inventory => ({ label: inventory.name, value: inventory.id }));
           })

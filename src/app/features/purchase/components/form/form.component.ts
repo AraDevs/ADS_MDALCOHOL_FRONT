@@ -9,7 +9,7 @@ import { MessageService } from '@core/services/message.service';
 import { FactoryFormService } from '@core/services';
 import { Store, select } from '@ngrx/store';
 import { AppState } from '@state/app-state';
-import * as globalState from '@dashboard-state/index';
+import * as dashboardState from '@dashboard-state/index';
 import * as state from '@features/purchase/state';
 import { PurchaseTableComponent } from '../purchase-table/purchase-table.component';
 import { SuccessService, ErrorService } from '@shared/services';
@@ -55,8 +55,8 @@ export class FormComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.fields = this.formModel.getModel();
     this.form = this.factoryForm.createPlainForm(this.fields as any);
-    this.store$.dispatch(globalState.LOAD_PROVIDERS());
-    this.store$.dispatch(globalState.LOAD_RAW_MATERIALS());
+    this.store$.dispatch(dashboardState.LOAD_PROVIDERS());
+    this.store$.dispatch(dashboardState.LOAD_RAW_MATERIALS());
 
     this.products$ = this.getProducts();
     this.computePerceptions();
@@ -116,7 +116,7 @@ export class FormComponent implements OnInit, OnDestroy {
 
   private getProducts() {
     return this.store$.pipe(
-      select(globalState.selectRawMaterials),
+      select(dashboardState.selectRawMaterials),
       map((products) => products.filter((product) => product.state === 1)),
       map((products) =>
         products.map((product) => ({ ...product, label: product.name, value: product.price }))

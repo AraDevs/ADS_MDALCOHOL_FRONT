@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { AppState } from '@state/app-state';
-import * as globalState from '@dashboard-state/index';
+import * as dashboardState from '@dashboard-state/index';
 import { take } from 'rxjs/operators';
 
 @Injectable({
@@ -13,28 +13,28 @@ export class SelectService {
 
   getDepartmentByMunicipalityId(id: number) {
     return this.store$.pipe(
-      select(globalState.selectDepartmentByMunicipalityId, id),
+      select(dashboardState.selectDepartmentByMunicipalityId, id),
       take(1)
     );
   }
 
   getMunicipalityById(id: number) {
     return this.store$.pipe(
-      select(globalState.selectMunicipalityById, id),
+      select(dashboardState.selectMunicipalityById, id),
       take(1)
     );
   }
 
   getSellerById(id: any) {
     return this.store$.pipe(
-      select(globalState.selectSellersById, id),
+      select(dashboardState.selectSellersById, id),
       take(1)
     );
   }
 
   getProviderById(id: any) {
     return this.store$.pipe(
-      select(globalState.selectProviderById, id),
+      select(dashboardState.selectProviderById, id),
       take(1)
     );
   }

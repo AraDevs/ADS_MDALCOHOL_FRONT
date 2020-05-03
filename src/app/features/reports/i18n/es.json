@@ -1,7 +1,7 @@
 {
   "Form": {
     "ReportType": "Tipos de reporte",
-    "Clients": "Clients"
+    "Clients": "Clientes"
   },
   "FormValidator": {
     "User": {

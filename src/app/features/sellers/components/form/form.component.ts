@@ -6,7 +6,7 @@ import { SuccessService, ErrorService } from '@shared/services';
 import { FormService } from '@features/sellers/components/form/form.service';import { FactoryFormService } from '@core/services';
 import { AppState } from '@state/app-state';
 import * as state from '@features/sellers/state';
-import * as globalState from '@dashboard-state/index';
+import * as dashboardState from '@dashboard-state/index';
 import { Store } from '@ngrx/store';
 import { MessageService } from '@core/services/message.service';
 import { DYNAMIC_MODAL_DATA, MODAL_INITIAL_EVENT, MODAL_ACCEPT_EVENT } from '@shared/constants';
@@ -45,11 +45,11 @@ export class FormComponent implements OnInit {
     this.fields = this.formModel.getModel();
     this.form = this.factoryForm.createPlainForm(this.fields as any);
     this.successService.success(state.SAVE_SELLERS_SUCCESS, () => {
-      this.store$.dispatch(globalState.LOAD_SELLERS());
+      this.store$.dispatch(dashboardState.LOAD_SELLERS());
       this.message.success('Messages.Add.Success').then(() => this.data.modalRef.close());
     });
     this.successService.success(state.UPDATE_SELLERS_SUCCESS, () => {
-      this.store$.dispatch(globalState.LOAD_SELLERS());
+      this.store$.dispatch(dashboardState.LOAD_SELLERS());
       this.message.success('Messages.Update.Success').then(() => this.data.modalRef.close());
     });
     this.errorService.error(state.SAVE_SELLERS_FAIL, (payload: any) => {

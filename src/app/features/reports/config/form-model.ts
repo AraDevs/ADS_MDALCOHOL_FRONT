@@ -1,7 +1,7 @@
+import { SelectControlConfig } from '@core/types';
 import { Injectable } from '@angular/core';
 import { Validators } from '@angular/forms';
-import { SelectControlConfig } from '@core/types/forms/select-control-config';
-import * as globalState from '@dashboard-state/index';
+import * as dashboardState from '@dashboard-state/index';
 import { REPORT_TYPES, SELECTORS, MAPPERS } from '@features/reports/constants';
 
 import { select, Store } from '@ngrx/store';
@@ -10,7 +10,7 @@ import { map, switchMap } from 'rxjs/operators';
 
 @Injectable()
 export class FormModel {
-  private reportTypeSubject = new BehaviorSubject(REPORT_TYPES.SALES_BY_CLIENT);
+  private reportTypeSubject = new BehaviorSubject(REPORT_TYPES.SALES_BY_CLIENT.value);
 
   constructor(private store$: Store<any>) {}
 
@@ -21,35 +21,33 @@ export class FormModel {
         fieldType: 'Select',
         id: 'reportType',
         cssClasses: '',
-        label: 'Report.Form.ReportType',
+        label: 'Reports.Form.ReportType',
         validations: [Validators.required],
         validatorMessages: ['FormValidator.RequiredSelected'],
         validationNames: ['required'],
-        options$: of(Object.values(REPORT_TYPES)).pipe(
-          map((types) => types.map((type) => ({ label: type, value: type })))
-        ),
+        options$: of(Object.values(REPORT_TYPES)),
       },
       {
         key: 'data',
         fieldType: 'Select',
         id: 'data',
         cssClasses: '',
-        label: 'Bill.Form.Client',
+        label: 'Reports.Form.Clients',
         validations: [Validators.required],
         validatorMessages: ['FormValidator.RequiredSelected'],
         validationNames: ['required'],
-        options$: this.reportTypeSubject.pipe(switchMap((type) => this.getData(type))),
+        options$: this.reportTypeSubject.pipe(switchMap((key) => this.getData(key))),
       },
     ];
   }
 
-  updateReportType(type: string) {
-    this.reportTypeSubject.next(type);
+  updateReportType(key: string) {
+    this.reportTypeSubject.next(key);
   }
 
-  private getData(type: string) {
-    const selector = SELECTORS[type];
-    const mapper = MAPPERS[type];
+  private getData(key: string) {
+    const selector = SELECTORS[key];
+    const mapper = MAPPERS[key];
 
     if (selector === REPORT_TYPES.SALES_BY_ZONE) {
       return this.store$.pipe(select(selector));

@@ -10,7 +10,7 @@ import { AppState } from '@state/app-state';
 import { MODAL_INITIAL_EVENT, MODAL_ACCEPT_EVENT } from '@shared/constants';
 import { MessageService } from '@core/services/message.service';
 import * as state from '@features/inventories/state';
-import * as globalState from '@dashboard-state/index';
+import * as dashboardState from '@dashboard-state/index';
 import { DYNAMIC_MODAL_DATA } from '@shared/constants/index';
 import { SubSink } from 'subsink';
 import { Subject } from 'rxjs';
@@ -51,11 +51,11 @@ export class FormComponent implements OnInit, OnDestroy {
     this.hideProviderControl();
 
     this.successService.success(state.SAVE_INVENTORIES_SUCCESS, () => {
-      this.store$.dispatch(globalState.LOAD_INVENTORIES());
+      this.store$.dispatch(dashboardState.LOAD_INVENTORIES());
       this.message.success('Messages.Add.Success').then(() => this.data.modalRef.close());
     });
     this.successService.success(state.UPDATE_INVENTORIES_SUCCESS, () => {
-      this.store$.dispatch(globalState.LOAD_INVENTORIES());
+      this.store$.dispatch(dashboardState.LOAD_INVENTORIES());
       this.message.success('Messages.Update.Success').then(() => this.data.modalRef.close());
     });
     this.errorService.error(state.SAVE_INVENTORIES_FAIL, (payload: any) => {

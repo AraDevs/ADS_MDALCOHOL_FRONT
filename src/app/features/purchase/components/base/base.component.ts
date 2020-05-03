@@ -9,7 +9,7 @@ import {
   SuccessService,
   ErrorService,
 } from '@shared/services';
-import * as globalState from '@dashboard-state/index';
+import * as dashboardState from '@dashboard-state/index';
 import { FormComponent } from '../form/form.component';
 import { filter } from 'rxjs/operators';
 import { MODAL_INITIAL_EVENT } from '@shared/constants';
@@ -56,9 +56,9 @@ export class BaseComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadingPurchases$ = this.loading.getLoading([
-      globalState.LOAD_PURCHASE,
-      globalState.PURCHASE_LOADED_SUCCESS,
-      globalState.PURCHASE_LOADED_FAIL,
+      dashboardState.LOAD_PURCHASE,
+      dashboardState.PURCHASE_LOADED_SUCCESS,
+      dashboardState.PURCHASE_LOADED_FAIL,
     ]);
 
     this.dataPurchases$ = this.loadPurchasesService.getPuschases();

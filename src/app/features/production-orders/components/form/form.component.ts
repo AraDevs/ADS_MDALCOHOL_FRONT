@@ -10,7 +10,7 @@ import { FormService } from './form.service';
 import { Store } from '@ngrx/store';
 import { AppState } from '@state/app-state';
 import * as state from '@features/production-orders/state';
-import * as globalState from '@dashboard-state/index';
+import * as dashboardState from '@dashboard-state/index';
 import { MessageService } from '@core/services/message.service';
 import { DYNAMIC_MODAL_DATA } from '@shared/constants';
 import * as moment from 'moment';
@@ -52,16 +52,16 @@ export class FormComponent implements OnInit {
     this.hideProductionControl();
 
     this.successService.success(state.SAVE_PRODUCTION_ORDERS_SUCCESS, () => {
-      this.store$.dispatch(globalState.LOAD_PRODUCTION_ORDERS());
+      this.store$.dispatch(dashboardState.LOAD_PRODUCTION_ORDERS());
       this.message.success('Messages.Add.Success').then(() => this.data.modalRef.close());
     });
     this.successService.success(state.UPDATE_PRODUCTION_SUCCESS, () => {
-      this.store$.dispatch(globalState.LOAD_PRODUCTION_ORDERS());
+      this.store$.dispatch(dashboardState.LOAD_PRODUCTION_ORDERS());
       this.message.success('Messages.Update.Success').then(() => this.data.modalRef.close());
     });
 
     this.successService.success(state.FINISH_PRODUCTION_SUCCESS, () => {
-      this.store$.dispatch(globalState.LOAD_PRODUCTION_ORDERS());
+      this.store$.dispatch(dashboardState.LOAD_PRODUCTION_ORDERS());
       this.message.success('Messages.Update.Success').then(() => this.data.modalRef.close());
     });
 

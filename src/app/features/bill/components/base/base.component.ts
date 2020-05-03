@@ -12,7 +12,7 @@ import {
 } from '@shared/services';
 import { DataTableConfig } from '@shared/types';
 import { AppState } from '@state/app-state';
-import * as globalState from '@dashboard-state/index';
+import * as dashboardState from '@dashboard-state/index';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { filter } from 'rxjs/operators';
 import Swal from 'sweetalert2';
@@ -67,11 +67,11 @@ export class BaseComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadingBills$ = this.loading.getLoading([
-      globalState.LOAD_BILLS,
-      globalState.BILLS_LOADED_SUCCESS,
-      globalState.BILLS_LOADED_FAIL,
+      dashboardState.LOAD_BILLS,
+      dashboardState.BILLS_LOADED_SUCCESS,
+      dashboardState.BILLS_LOADED_FAIL,
     ]);
-    this.store$.dispatch(globalState.LOAD_CLIENTS_ACTIVE());
+    this.store$.dispatch(dashboardState.LOAD_CLIENTS_ACTIVE());
 
     this.bills$ = this.loadBillsService.getBills();
 

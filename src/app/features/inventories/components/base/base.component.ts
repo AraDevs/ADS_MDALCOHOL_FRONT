@@ -5,7 +5,7 @@ import { MODAL_INITIAL_EVENT } from '@shared/constants';
 import { ModalFactoryService } from '@shared/services';
 import { DataTableConfig } from '@shared/types';
 import { AppState } from '@state/app-state';
-import * as globalState from '@dashboard-state/index';
+import * as dashboardState from '@dashboard-state/index';
 import { combineLatest, Observable, of } from 'rxjs';
 import { filter, map, switchMap } from 'rxjs/operators';
 import { FormComponent } from '../form/form.component';
@@ -42,15 +42,15 @@ export class BaseComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.dataInventories$ = this.store$.pipe(select(globalState.selectInventories));
+    this.dataInventories$ = this.store$.pipe(select(dashboardState.selectInventories));
     this.loadingInventories$ = this.loading.getLoading([
-      globalState.LOAD_INVENTORIES,
-      globalState.INVENTORIES_LOADED_SUCCESS,
-      globalState.INVENTORIES_LOADED_FAIL
+      dashboardState.LOAD_INVENTORIES,
+      dashboardState.INVENTORIES_LOADED_SUCCESS,
+      dashboardState.INVENTORIES_LOADED_FAIL
     ]);
 
-    this.store$.dispatch(globalState.LOAD_INVENTORIES());
-    this.store$.dispatch(globalState.LOAD_PROVIDERS());
+    this.store$.dispatch(dashboardState.LOAD_INVENTORIES());
+    this.store$.dispatch(dashboardState.LOAD_PROVIDERS());
   }
 
   update(inventory: any) {

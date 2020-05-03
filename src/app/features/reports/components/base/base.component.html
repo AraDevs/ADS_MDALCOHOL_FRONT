@@ -1,5 +1,5 @@
 <div class="p-4">
-  <md-section-bar title="SideNav.Reports" ></md-section-bar>
+  <md-section-bar title="SideNav.Reports" [displayButton]="false"></md-section-bar>
   <form [formGroup]="form" #formReference="ngForm" (submit)="generateReport()">
     <md-form-generator
       [form]="form"

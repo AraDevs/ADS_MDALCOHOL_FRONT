@@ -3,7 +3,7 @@ import { Validators } from '@angular/forms';
 import { InputControlConfig } from '@core/types';
 import { SelectControlConfig } from '@core/types/forms/select-control-config';
 import { select, Store } from '@ngrx/store';
-import * as globalState from '@dashboard-state/index';
+import * as dashboardState from '@dashboard-state/index';
 import { map } from 'rxjs/operators';
 import { minLength, maxLength } from '@shared/Validator';
 
@@ -57,7 +57,7 @@ export class FormModel {
         validationNames: ['required'],
         label: 'Clients.Form.PersonType',
         options$: this.store$.pipe(
-          select(globalState.selectTypePerson),
+          select(dashboardState.selectTypePerson),
           map((typesPerson: string[]) => {
             return typesPerson.map(person => ({ label: person, value: person }));
           })
@@ -73,7 +73,7 @@ export class FormModel {
         validatorMessages: ['FormValidator.RequiredSelected'],
         validationNames: ['required'],
         options$: this.store$.pipe(
-          select(globalState.selectSellers),
+          select(dashboardState.selectSellers),
           map((sellers: any[]) => {
             return sellers.map(obj => ({ ...obj, label: obj.name, value: obj.id }));
           })
@@ -111,7 +111,7 @@ export class FormModel {
         validations: [Validators.required],
         validatorMessages: ['FormValidator.RequiredSelected'],
         validationNames: ['required'],
-        options$: this.store$.pipe(select(globalState.selectDepartments))
+        options$: this.store$.pipe(select(dashboardState.selectDepartments))
       },
       {
         key: 'municipality',
@@ -122,7 +122,7 @@ export class FormModel {
         validations: [Validators.required],
         validatorMessages: ['FormValidator.RequiredSelected'],
         validationNames: ['required'],
-        options$: this.store$.pipe(select(globalState.selectMunicipalities))
+        options$: this.store$.pipe(select(dashboardState.selectMunicipalities))
       },
       {
         key: 'nit',

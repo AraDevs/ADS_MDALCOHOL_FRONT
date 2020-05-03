@@ -8,7 +8,7 @@ import { AppState } from '@state/app-state';
 import { SuccessService, ErrorService } from '@shared/services';
 import { SubSink } from 'subsink';
 import * as state from '@features/clients/state';
-import * as globalState from '@dashboard-state/index';
+import * as dashboardState from '@dashboard-state/index';
 import { MODAL_INITIAL_EVENT } from '@shared/constants';
 import { MODAL_ACCEPT_EVENT, DYNAMIC_MODAL_DATA } from '../../../../shared/constants/index';
 import { FormService } from '@features/clients/components/form/form.service';
@@ -48,14 +48,14 @@ export class FormComponent implements OnInit {
     this.form = this.factoryForm.createPlainForm(this.fields as any);
     this.subs.sink =  this.form.get('departmentId').valueChanges.subscribe(department => {
       const {id} = department;
-      this.store$.dispatch(globalState.FILTER_MUNICIPALITIES({payload: {id}}));
+      this.store$.dispatch(dashboardState.FILTER_MUNICIPALITIES({payload: {id}}));
     });
     this.successService.success(state.SAVE_CLIENTS_SUCCESS, () => {
-      this.store$.dispatch(globalState.LOAD_CLIENTS());
+      this.store$.dispatch(dashboardState.LOAD_CLIENTS());
       this.message.success('Messages.Add.Success').then(() => this.data.modalRef.close());
     });
     this.successService.success(state.UPDATE_CLIENTS_SUCCESS, () => {
-      this.store$.dispatch(globalState.LOAD_CLIENTS());
+      this.store$.dispatch(dashboardState.LOAD_CLIENTS());
       this.message.success('Messages.Update.Success').then(() => this.data.modalRef.close());
     });
     this.errorService.error(state.SAVE_CLIENTS_FAIL, (payload: any) => {

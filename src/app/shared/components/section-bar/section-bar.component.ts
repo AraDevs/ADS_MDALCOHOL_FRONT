@@ -9,6 +9,7 @@ import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectionStrategy
 export class SectionBarComponent implements OnInit {
   @Input() btnText = 'Buttons.New';
   @Input() title: string;
+  @Input() displayButton = true;
 
   @Output() buttonEvent = new EventEmitter<void>();
 

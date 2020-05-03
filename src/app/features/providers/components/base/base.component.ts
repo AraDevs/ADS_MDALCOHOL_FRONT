@@ -5,7 +5,7 @@ import { MODAL_INITIAL_EVENT } from '@shared/constants';
 import { ModalFactoryService, LoadingService, ErrorService } from '@shared/services';
 import { DataTableConfig } from '@shared/types';
 import { AppState } from '@state/app-state';
-import * as globalState from '@dashboard-state/index';
+import * as dashboardState from '@dashboard-state/index';
 import { combineLatest, Observable, of } from 'rxjs';
 import { filter, map, switchMap } from 'rxjs/operators';
 import { SubSink } from 'subsink';
@@ -45,16 +45,16 @@ export class BaseComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.loadingProviders$ = this.loading.getLoading([
-      globalState.LOAD_PROVIDERS,
-      globalState.PROVIDERS_LOADED_SUCCESS,
-      globalState.PROVIDERS_LOADED_FAIL
+      dashboardState.LOAD_PROVIDERS,
+      dashboardState.PROVIDERS_LOADED_SUCCESS,
+      dashboardState.PROVIDERS_LOADED_FAIL
     ]);
 
-    this.store$.dispatch(globalState.LOAD_PROVIDERS());
-    this.store$.dispatch(globalState.LOAD_DEPARTMENTS());
-    this.store$.dispatch(globalState.LOAD_MUNICIPALITIES());
-    this.dataDepartments = this.store$.pipe(select(globalState.selectDepartments));
-    this.dataProviders = this.store$.pipe(select(globalState.selectProviders));
+    this.store$.dispatch(dashboardState.LOAD_PROVIDERS());
+    this.store$.dispatch(dashboardState.LOAD_DEPARTMENTS());
+    this.store$.dispatch(dashboardState.LOAD_MUNICIPALITIES());
+    this.dataDepartments = this.store$.pipe(select(dashboardState.selectDepartments));
+    this.dataProviders = this.store$.pipe(select(dashboardState.selectProviders));
   }
 
   ngOnDestroy() {

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import * as globalState from '@dashboard-state/index';
+import * as dashboardState from '@dashboard-state/index';
 import { select, Store } from '@ngrx/store';
 import { DataTableConfig } from '@shared/types';
 import { Observable, combineLatest, of } from 'rxjs';
@@ -38,13 +38,13 @@ export class BaseComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadingSellers$ = this.loading.getLoading([
-      globalState.LOAD_SELLERS,
-      globalState.SELLERS_LOADED_SUCCESS,
-      globalState.SELLERS_LOADED_FAIL
+      dashboardState.LOAD_SELLERS,
+      dashboardState.SELLERS_LOADED_SUCCESS,
+      dashboardState.SELLERS_LOADED_FAIL
     ]);
 
-    this.store$.dispatch(globalState.LOAD_SELLERS());
-    this.dataSellers = this.store$.pipe(select(globalState.selectSellers));
+    this.store$.dispatch(dashboardState.LOAD_SELLERS());
+    this.dataSellers = this.store$.pipe(select(dashboardState.selectSellers));
   }
 
   update(seller: any) {

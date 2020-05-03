@@ -1,6 +1,6 @@
 import { Store, select } from '@ngrx/store';
 import { Validators } from '@angular/forms';
-import * as globalState from '@dashboard-state/index';
+import * as dashboardState from '@dashboard-state/index';
 import { map } from 'rxjs/operators';
 import { InputControlConfig, SelectControlConfig } from '@core/types';
 import { Injectable } from '@angular/core';
@@ -70,7 +70,7 @@ export class FormModel {
         validationNames: ['required'],
         label: 'Inventories.Form.Type',
         options$: this.store$.pipe(
-          select(globalState.selectTypeProduct),
+          select(dashboardState.selectTypeProduct),
           map((typesProduct: string[]) => {
             return typesProduct.map(product => ({ label: product, value: product }));
           })
@@ -87,7 +87,7 @@ export class FormModel {
         validationNames: ['required'],
         label: 'Inventories.Form.Provider',
         options$: this.store$.pipe(
-          select(globalState.selectProviders),
+          select(dashboardState.selectProviders),
           map((providers: any[]) => {
             return providers.map(provider => ({
               label: provider.partner.name,

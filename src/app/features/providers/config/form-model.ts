@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { of } from 'rxjs';
 import { Store, select } from '@ngrx/store';
 import { Validators } from '@angular/forms';
-import * as globalState from '@dashboard-state/index';
+import * as dashboardState from '@dashboard-state/index';
 import { minLength, maxLength } from '@shared/Validator';
 
 @Injectable()
@@ -45,7 +45,7 @@ export class FormModel {
         validations: [Validators.required],
         validatorMessages: ['FormValidator.RequiredSelected'],
         validationNames: ['required'],
-        options$: this.store$.pipe(select(globalState.selectDepartments))
+        options$: this.store$.pipe(select(dashboardState.selectDepartments))
       },
       {
         key: 'municipality',
@@ -56,7 +56,7 @@ export class FormModel {
         validations: [Validators.required],
         validatorMessages: ['FormValidator.RequiredSelected'],
         validationNames: ['required'],
-        options$: this.store$.pipe(select(globalState.selectMunicipalities))
+        options$: this.store$.pipe(select(dashboardState.selectMunicipalities))
       },
       {
         key: 'nit',

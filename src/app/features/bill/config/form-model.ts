@@ -3,7 +3,7 @@ import { InputControlConfig } from '@core/types';
 import { SelectControlConfig } from '@core/types/forms/select-control-config';
 import { Validators } from '@angular/forms';
 import { Store, select } from '@ngrx/store';
-import * as globalState from '@dashboard-state/index';
+import * as dashboardState from '@dashboard-state/index';
 import { map } from 'rxjs/operators';
 @Injectable()
 export class FormModel {
@@ -21,7 +21,7 @@ export class FormModel {
         validatorMessages: ['FormValidator.RequiredSelected'],
         validationNames: ['required'],
         options$: this.store$.pipe(
-          select(globalState.selectClientsActive),
+          select(dashboardState.selectClientsActive),
           map((clients: any[]) => {
             return clients.map(obj => ({ ...obj, label: obj.business_name, value: obj.id }));
           })
@@ -47,7 +47,7 @@ export class FormModel {
         validationNames: ['required'],
         label: 'Bill.Form.PaymentType',
         options$: this.store$.pipe(
-          select(globalState.selectPaymentType),
+          select(dashboardState.selectPaymentType),
           map((paymentType: string[]) => {
             return paymentType.map(payment => ({ label: payment, value: payment }));
           })
@@ -63,7 +63,7 @@ export class FormModel {
         validationNames: ['required'],
         label: 'Bill.Form.BillType',
         options$: this.store$.pipe(
-          select(globalState.selectBillType),
+          select(dashboardState.selectBillType),
           map((billType: string[]) => {
             return billType.map(bill => ({ label: bill, value: bill }));
           })

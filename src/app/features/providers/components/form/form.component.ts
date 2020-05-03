@@ -8,7 +8,7 @@ import { Store } from '@ngrx/store';
 import { MODAL_ACCEPT_EVENT, MODAL_INITIAL_EVENT, DYNAMIC_MODAL_DATA } from '@shared/constants';
 import { SuccessService } from '@shared/services';
 import { AppState } from '@state/app-state';
-import * as globalState from '@dashboard-state/index';
+import * as dashboardState from '@dashboard-state/index';
 import { filter } from 'rxjs/operators';
 import { SubSink } from 'subsink';
 import { FormService } from './form.service';
@@ -54,16 +54,16 @@ export class FormComponent implements OnInit {
       .valueChanges.pipe(filter(deparment => deparment))
       .subscribe(department => {
         const { id } = department;
-        this.store$.dispatch(globalState.FILTER_MUNICIPALITIES({ payload: { id } }));
+        this.store$.dispatch(dashboardState.FILTER_MUNICIPALITIES({ payload: { id } }));
       });
 
     this.successService.success(state.SAVE_PROVIDERS_SUCCESS, () => {
-      this.store$.dispatch(globalState.LOAD_PROVIDERS());
+      this.store$.dispatch(dashboardState.LOAD_PROVIDERS());
       this.message.success('Messages.Add.Success').then(() => this.data.modalRef.close());
     });
 
     this.successService.success(state.UPDATE_PROVIDERS_SUCCESS, () => {
-      this.store$.dispatch(globalState.LOAD_PROVIDERS());
+      this.store$.dispatch(dashboardState.LOAD_PROVIDERS());
       this.message.success('Messages.Update.Success').then(() => this.data.modalRef.close());
     });
 

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Validators } from '@angular/forms';
 import { InputControlConfig, SelectControlConfig } from '@core/types';
-import * as globalState from '@dashboard-state/index';
+import * as dashboardState from '@dashboard-state/index';
 import { select, Store } from '@ngrx/store';
 import { BehaviorSubject } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -24,7 +24,7 @@ export class FormModel {
         validationNames: ['required'],
         label: 'ProductionOrders.Form.Inventory',
         options$: this.store$.pipe(
-          select(globalState.selectFinalMaterials),
+          select(dashboardState.selectFinalMaterials),
           map((inventories: any[]) => {
             return inventories.map(obj => ({ ...obj, label: obj.name, value: obj.id}));
           }))

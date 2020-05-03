@@ -5,7 +5,7 @@ import { MODAL_INITIAL_EVENT } from '@shared/constants/index';
 import { LoadingService, ModalFactoryService } from '@shared/services';
 import { DataTableConfig } from '@shared/types';
 import { AppState } from '@state/app-state';
-import * as globalState from '@dashboard-state/index';
+import * as dashboardState from '@dashboard-state/index';
 import { combineLatest, Observable, of } from 'rxjs';
 import { filter, map, switchMap } from 'rxjs/operators';
 
@@ -42,14 +42,14 @@ export class BaseComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadingProductions$ = this.loading.getLoading([
-      globalState.LOAD_PRODUCTION_ORDERS,
-      globalState.PRODUCTION_ORDERS_LOADED_SUCCESS,
-      globalState.PRODUCTION_ORDERS_LOADED_FAIL
+      dashboardState.LOAD_PRODUCTION_ORDERS,
+      dashboardState.PRODUCTION_ORDERS_LOADED_SUCCESS,
+      dashboardState.PRODUCTION_ORDERS_LOADED_FAIL
     ]);
 
-    this.store$.dispatch(globalState.LOAD_PRODUCTION_ORDERS());
-    this.store$.dispatch(globalState.LOAD_FINAL_MATERIALS());
-    this.dataOrders = this.store$.pipe(select(globalState.selectProductionOrders));
+    this.store$.dispatch(dashboardState.LOAD_PRODUCTION_ORDERS());
+    this.store$.dispatch(dashboardState.LOAD_FINAL_MATERIALS());
+    this.dataOrders = this.store$.pipe(select(dashboardState.selectProductionOrders));
   }
 
   update(productionOrder: any) {

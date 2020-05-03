@@ -10,7 +10,7 @@ import { select, Store } from '@ngrx/store';
 import { DYNAMIC_MODAL_DATA, MODAL_ACCEPT_EVENT, MODAL_INITIAL_EVENT } from '@shared/constants';
 import { ErrorService, SuccessService } from '@shared/services';
 import { AppState } from '@state/app-state';
-import * as globalState from '@dashboard-state/index';
+import * as dashboardState from '@dashboard-state/index';
 import { BehaviorSubject, merge, Observable, Subject } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 import { SubSink } from 'subsink';
@@ -59,7 +59,7 @@ export class FormComponent implements OnInit, OnDestroy {
     this.fields = this.formModel.getModel();
     this.form = this.factoryForm.createPlainForm(this.fields as any);
     this.products$ = this.store$.pipe(
-      select(globalState.selectInventoriesActive),
+      select(dashboardState.selectInventoriesActive),
       map((products) => {
         return products.map((product) => ({
           ...product,
@@ -121,12 +121,12 @@ export class FormComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.subs.unsubscribe();
-    this.store$.dispatch(globalState.CLEAR_INVENTORY_BY_CLIENT());
+    this.store$.dispatch(dashboardState.CLEAR_INVENTORY_BY_CLIENT());
   }
 
   private loadInventoriesByClient(client) {
     const metadata = { resource: { id: client.id } };
-    this.store$.dispatch(globalState.LOAD_INVENTORY_BY_CLIENT({ payload: { metadata } }));
+    this.store$.dispatch(dashboardState.LOAD_INVENTORY_BY_CLIENT({ payload: { metadata } }));
   }
 
   private computeValues() {

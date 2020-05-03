@@ -1,7 +1,7 @@
 import { Store, select } from '@ngrx/store';
 import { AppState } from '@state/app-state';
 import { BehaviorSubject } from 'rxjs';
-import * as globalState from '@dashboard-state/index';
+import * as dashboardState from '@dashboard-state/index';
 import { tap, switchMap } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 
@@ -16,10 +16,10 @@ export class LoadPurchasesService {
     return this.puschaseState$.pipe(
       tap((purchaseState) => {
         this.store$.dispatch(
-          globalState.LOAD_PURCHASE({ payload: { metadata: { resource: { state: purchaseState } } } })
+          dashboardState.LOAD_PURCHASE({ payload: { metadata: { resource: { state: purchaseState } } } })
         );
       }),
-      switchMap(() => this.store$.pipe(select(globalState.selectPurchases)))
+      switchMap(() => this.store$.pipe(select(dashboardState.selectPurchases)))
     );
   }
 
