@@ -1,7 +1,11 @@
 {
   "Form": {
-    "ReportType": "Tipos de reporte",
-    "Clients": "Clientes"
+    "ReportTypes": "Tipos de reporte",
+    "Clients": "Clientes",
+    "Sellers": "Vendedores",
+    "Products": "Productos",
+    "Departments": "Departamentos",
+    "Municipalities": "Municipios"
   },
   "FormValidator": {
     "User": {

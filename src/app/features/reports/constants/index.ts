@@ -21,6 +21,13 @@ export const SELECTORS = {
   [SALES_BY_ZONE]: dashboardState.selectDepartments,
 };
 
+export const REPORT_LABELS = {
+  [SALES_BY_CLIENT]: 'Reports.Form.Clients',
+  [SALES_BY_SELLER]: 'Reports.Form.Sellers',
+  [SALES_BY_PRODUCT]: 'Reports.Form.Products',
+  [SALES_BY_ZONE]: 'Reports.Form.Departments',
+};
+
 export const MAPPERS = {
   [SALES_BY_CLIENT]: (client: any) => ({
     ...client,

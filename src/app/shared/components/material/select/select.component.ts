@@ -1,5 +1,12 @@
 import { AsyncPipe } from '@angular/common';
-import { ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Input,
+  OnDestroy,
+  OnInit,
+  WrappedValue,
+} from '@angular/core';
 import { AbstractControl, FormGroup, FormGroupDirective } from '@angular/forms';
 import { ControlValidationService } from '@core/services';
 import { SelectControlConfig } from '@core/types';
@@ -11,7 +18,7 @@ import { SubSink } from 'subsink';
   selector: 'md-select',
   templateUrl: './select.component.html',
   styleUrls: ['./select.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SelectComponent implements OnInit, OnDestroy {
   @Input() form: FormGroup;
@@ -50,7 +57,11 @@ export class SelectComponent implements OnInit, OnDestroy {
   getLabelValue(): string {
     const { label } = this.field;
     if (isObservable(label)) {
-      return this.asyncPipe.transform(label) as string;
+      const result = this.asyncPipe.transform(label) as any;
+      if (result instanceof WrappedValue) {
+        return WrappedValue.unwrap(result) as string;
+      }
+      return result as string;
     }
     return label;
   }
