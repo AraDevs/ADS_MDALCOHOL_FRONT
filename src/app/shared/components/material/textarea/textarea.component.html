@@ -1,5 +1,5 @@
 <mat-form-field [hidden]=" field.hidden$ | async" appearance="outline">
-  <mat-label>{{field.label | transloco}}</mat-label>
+  <mat-label>{{getLabelValue() | transloco}}</mat-label>
   <textarea matInput [id]="field.id" [formControl]="control"></textarea>
   <mat-error *ngIf="error$ | async as error">{{ error | transloco}}</mat-error>
 </mat-form-field>

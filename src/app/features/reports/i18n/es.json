@@ -1,0 +1,12 @@
+{
+  "Form": {
+    "ReportType": "Tipos de reporte",
+    "Clients": "Clients"
+  },
+  "FormValidator": {
+    "User": {
+      "Required": "Usuario requerido",
+      "Email": "Introduzca un correo electrónico válido"
+    }
+  }
+}

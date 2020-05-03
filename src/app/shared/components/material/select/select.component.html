@@ -1,5 +1,5 @@
 <mat-form-field [hidden]=" field.hidden$ | async" appearance="outline">
-  <mat-label>{{field.label | transloco}}</mat-label>
+  <mat-label>{{getLabelValue() | transloco}}</mat-label>
   <mat-select [formControl]="control" [compareWith]="compareFn">
     <!-- <mat-option>Clear</mat-option> -->
     <ng-container *ngIf="field.options$ | async as options">

@@ -7,7 +7,7 @@ export interface ControlConfig {
   key: string;
   fieldType: FieldType;
   name?: string;
-  label?: string;
+  label?: string | Observable<string>;
   placeholder?: string;
   id?: string;
   defautlValue?: any;

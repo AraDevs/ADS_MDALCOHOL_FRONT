@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, AsyncPipe } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
@@ -27,24 +27,25 @@ import { TranslocoRootModule } from '../transloco-root.module';
           strictStateImmutability: true,
           strictActionImmutability: true,
           strictStateSerializability: true,
-          strictActionSerializability: true
-        }
+          strictActionSerializability: true,
+        },
       }
     ),
     // Configure Devtools for Ngrx in development
     StoreDevtoolsModule.instrument({
       maxAge: 25,
-      logOnly: environment.production
+      logOnly: environment.production,
     }),
     // Configure Effects
-    EffectsModule.forRoot([])
+    EffectsModule.forRoot([]),
   ],
   providers: [
     {
       provide: RequestClient,
-      useClass: RequestHttpClient
-    }
+      useClass: RequestHttpClient,
+    },
+    AsyncPipe,
   ],
-  exports: [TranslocoRootModule, MaterialModule]
+  exports: [TranslocoRootModule, MaterialModule],
 })
 export class CoreModule {}

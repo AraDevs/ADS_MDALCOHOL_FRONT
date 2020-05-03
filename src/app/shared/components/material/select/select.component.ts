@@ -1,23 +1,24 @@
-import { Component, Input, OnInit, OnDestroy } from '@angular/core';
-import { FormGroup, FormGroupDirective, AbstractControl } from '@angular/forms';
+import { AsyncPipe } from '@angular/common';
+import { ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { AbstractControl, FormGroup, FormGroupDirective } from '@angular/forms';
 import { ControlValidationService } from '@core/services';
 import { SelectControlConfig } from '@core/types';
-import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { BehaviorSubject, isObservable, Observable, Subject } from 'rxjs';
 import { filter } from 'rxjs/operators';
 import { SubSink } from 'subsink';
 
 @Component({
   selector: 'md-select',
   templateUrl: './select.component.html',
-  styleUrls: ['./select.component.scss']
+  styleUrls: ['./select.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SelectComponent implements OnInit, OnDestroy {
-
   @Input() form: FormGroup;
   @Input() field: SelectControlConfig;
   @Input() formReference: FormGroupDirective;
   @Input() cssClasses = '';
-  @Input() options$: Observable<{ label: string;[key: string]: string; }[]>;
+  @Input() options$: Observable<{ label: string; [key: string]: string }[]>;
 
   control: AbstractControl;
 
@@ -26,7 +27,7 @@ export class SelectComponent implements OnInit, OnDestroy {
   error$ = this.error.asObservable();
   setDefaultOption$ = new BehaviorSubject('');
 
-  constructor(private validator: ControlValidationService) { }
+  constructor(private validator: ControlValidationService, private asyncPipe: AsyncPipe) {}
 
   ngOnInit() {
     this.control = this.form.get(this.field.key);
@@ -36,14 +37,22 @@ export class SelectComponent implements OnInit, OnDestroy {
     });
 
     this.subs.sink = this.control.valueChanges
-      .pipe(filter(val => val === null || val === ''))
-      .subscribe(val => {
+      .pipe(filter((val) => val === null || val === ''))
+      .subscribe((val) => {
         this.setDefaultOption$.next(val);
       });
   }
 
   ngOnDestroy() {
     this.subs.unsubscribe();
+  }
+
+  getLabelValue(): string {
+    const { label } = this.field;
+    if (isObservable(label)) {
+      return this.asyncPipe.transform(label) as string;
+    }
+    return label;
   }
 
   compareFn(c1: any, c2: any): boolean {

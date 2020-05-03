@@ -5,7 +5,6 @@ import { Validators } from '@angular/forms';
 import { Store, select } from '@ngrx/store';
 import * as globalState from '@dashboard-state/index';
 import { map } from 'rxjs/operators';
-
 @Injectable()
 export class FormModel {
   constructor(private store$: Store<any>) {}

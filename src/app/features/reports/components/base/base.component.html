@@ -1,1 +1,13 @@
-<p>base works!</p>
+<div class="p-4">
+  <md-section-bar title="SideNav.Reports" ></md-section-bar>
+  <form [formGroup]="form" #formReference="ngForm" (submit)="generateReport()">
+    <md-form-generator
+      [form]="form"
+      [formReference]="formReference"
+      [fields]="fields"
+      [displayContainerCheckboxs]="true"
+    >
+    </md-form-generator>
+    <button #formBtn [hidden]="true" type="submit"></button>
+  </form>
+</div>
