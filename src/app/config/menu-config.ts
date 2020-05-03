@@ -1,6 +1,8 @@
 import { PRODUCTION, ADMINISTRATION } from '@shared/constants';
 
 export const MENU_ITEMS = {
+  administrationRouteRedirect: 'bills',
+  productionRouteRedirect: 'inventories',
   productions: [
     {
       title: 'SideNav.Inventories',

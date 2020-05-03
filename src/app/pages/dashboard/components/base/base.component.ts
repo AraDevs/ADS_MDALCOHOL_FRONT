@@ -27,15 +27,29 @@ export class BaseComponent implements OnInit {
     private breakpointObserver: BreakpointObserver,
     private authService: AuthService,
     private router: Router,
-    private route: ActivatedRoute
+    private activeRoute: ActivatedRoute
   ) {}
   ngOnInit() {
+    this.redirect();
+  }
+
+  redirect() {
+    const segments = this.router.url.split('/');
+    const route = segments[segments.length - 1];
+    const find = this.menuItems.productions.find(
+      (item) => item.route === route && item.userType === this.userType
+    );
+
+    if (find !== undefined) {
+      return;
+    }
+
     const routeToRedirect =
       this.userType === PRODUCTION
-        ? this.menuItems.productions.find((item) => item.userType === PRODUCTION).route
-        : this.menuItems.productions.find((item) => item.userType !== ADMINISTRATION).route;
+        ? this.menuItems.productionRouteRedirect
+        : this.menuItems.administrationRouteRedirect;
 
-    this.router.navigate([routeToRedirect], { relativeTo: this.route });
+    this.router.navigate([routeToRedirect], { relativeTo: this.activeRoute });
   }
 
   isAdministration() {
