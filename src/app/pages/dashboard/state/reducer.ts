@@ -54,13 +54,21 @@ const globalReducer = createReducer(
   }),
   on(actions.DEPARTMENTS_LOADED_SUCCESS, (state, { payload }) => {
     const data = payload.map((department) => {
-      return { ...department, label: department.name, value: department.id };
+      return {
+        ...department,
+        label: department.name,
+        value: department.id,
+      };
     });
     return { ...state, departments: data };
   }),
   on(actions.MUNICIPALITIES_LOADED_SUCCESS, (state, { payload }) => {
     const data = payload.map((municipality) => {
-      return { ...municipality, label: municipality.name, valued: municipality.id };
+      return {
+        ...municipality,
+        label: municipality.name,
+        value: municipality.id,
+      };
     });
     return { ...state, municipalities: data };
   }),

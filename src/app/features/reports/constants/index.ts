@@ -14,6 +14,14 @@ export const REPORT_TYPES = {
   DELETED_BILLS: { label: 'Facturas eliminadas', value: DELETED_BILLS },
 };
 
+export const REPORT_RESOURCES = {
+  SALES_BY_CLIENT: 'reports/sales/by_client/$$0',
+  SALES_BY_SELLER: 'reports/sales/by_seller/$$0',
+  SALES_BY_PRODUCT: 'reports/sales/by_product/$$0',
+  SALES_BY_ZONE: 'reports/sales/by_location/$$0',
+  DELETED_BILLS: 'reports/sales/deleted',
+};
+
 export const SELECTORS = {
   [SALES_BY_CLIENT]: dashboardState.selectClientsActive,
   [SALES_BY_SELLER]: dashboardState.selectSellers,
@@ -21,11 +29,15 @@ export const SELECTORS = {
   [SALES_BY_ZONE]: dashboardState.selectDepartments,
 };
 
-export const REPORT_LABELS = {
+export const LABELS_DATA_SET_1 = {
   [SALES_BY_CLIENT]: 'Reports.Form.Clients',
   [SALES_BY_SELLER]: 'Reports.Form.Sellers',
   [SALES_BY_PRODUCT]: 'Reports.Form.Products',
   [SALES_BY_ZONE]: 'Reports.Form.Departments',
+};
+
+export const LABELS_DATA_SET_2 = {
+  [SALES_BY_ZONE]: 'Reports.Form.Municipalities',
 };
 
 export const MAPPERS = {

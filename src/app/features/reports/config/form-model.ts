@@ -1,7 +1,13 @@
 import { Injectable } from '@angular/core';
 import { Validators } from '@angular/forms';
 import { SelectControlConfig } from '@core/types';
-import { MAPPERS, REPORT_LABELS, REPORT_TYPES, SELECTORS } from '@features/reports/constants';
+import {
+  MAPPERS,
+  LABELS_DATA_SET_1,
+  REPORT_TYPES,
+  SELECTORS,
+  LABELS_DATA_SET_2,
+} from '@features/reports/constants';
 import { select, Store } from '@ngrx/store';
 import { BehaviorSubject, of, Subject } from 'rxjs';
 import { filter, map, switchMap, tap } from 'rxjs/operators';
@@ -28,13 +34,13 @@ export class FormModel {
         options$: of(Object.values(REPORT_TYPES)),
       },
       {
-        key: 'data',
+        key: 'dataSet1',
         fieldType: 'Select',
-        id: 'data',
+        id: 'dataSet1',
         cssClasses: '',
         label: this.reportTypeSubject.pipe(
           filter((type) => type !== REPORT_TYPES.DELETED_BILLS.value),
-          map((type) => this.getLabel(type))
+          map((type) => LABELS_DATA_SET_1[type])
         ),
         validations: [Validators.required],
         validatorMessages: ['FormValidator.RequiredSelected'],
@@ -48,14 +54,17 @@ export class FormModel {
         ),
       },
       {
-        key: 'municipalities',
+        key: 'dataSet2',
         fieldType: 'Select',
-        id: 'municipalities',
+        id: 'dataSet2',
         cssClasses: '',
-        label: 'Reports.Form.Municipalities',
+        label: this.reportTypeSubject.pipe(
+          filter((type) => type !== REPORT_TYPES.DELETED_BILLS.value),
+          map((type) => LABELS_DATA_SET_2[type])
+        ),
         validations: [Validators.required],
-        validatorMessages: ['FormValidator.RequiredSelected'],
-        validationNames: ['required'],
+        validatorMessages: [],
+        validationNames: [],
         options$: this.store$.pipe(select(dashboardState.selectMunicipalities)),
         hidden$: this.reportTypeSubject.pipe(
           map((type) => type !== REPORT_TYPES.SALES_BY_ZONE.value)
@@ -66,11 +75,6 @@ export class FormModel {
 
   updateReportType(type: string) {
     this.reportTypeSubject.next(type);
-  }
-
-
-  private getLabel(type: string) {
-    return REPORT_LABELS[type];
   }
 
   private getData(type: string) {

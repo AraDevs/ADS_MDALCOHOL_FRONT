@@ -7,10 +7,5 @@
     "Departments": "Departamentos",
     "Municipalities": "Municipios"
   },
-  "FormValidator": {
-    "User": {
-      "Required": "Usuario requerido",
-      "Email": "Introduzca un correo electrónico válido"
-    }
-  }
+  "GenerateReport": "Descargar reporte"
 }

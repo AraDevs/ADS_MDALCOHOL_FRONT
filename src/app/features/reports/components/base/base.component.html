@@ -1,6 +1,6 @@
 <div class="p-4">
   <md-section-bar title="SideNav.Reports" [displayButton]="false"></md-section-bar>
-  <form [formGroup]="form" #formReference="ngForm" (submit)="generateReport()">
+  <form [formGroup]="form" #formReference="ngForm">
     <md-form-generator
       [form]="form"
       [formReference]="formReference"
@@ -8,6 +8,10 @@
       [displayContainerCheckboxs]="true"
     >
     </md-form-generator>
-    <button #formBtn [hidden]="true" type="submit"></button>
+    <ng-container *ngIf="resource$ | async as resource">
+      <a mat-flat-button color="primary" [href]="resource" download>{{
+        'Reports.GenerateReport' | transloco
+      }}</a>
+    </ng-container>
   </form>
 </div>
