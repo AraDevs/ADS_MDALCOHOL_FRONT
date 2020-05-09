@@ -24,7 +24,7 @@ export class FormModel {
         validationNames: ['required'],
         label: 'ProductionOrders.Form.Inventory',
         options$: this.store$.pipe(
-          select(dashboardState.selectFinalMaterials),
+          select(dashboardState.selectFinalProducts),
           map((inventories: any[]) => {
             return inventories.map(obj => ({ ...obj, label: obj.name, value: obj.id}));
           }))

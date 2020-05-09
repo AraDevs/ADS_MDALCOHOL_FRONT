@@ -48,7 +48,7 @@ export class BaseComponent implements OnInit {
     ]);
 
     this.store$.dispatch(dashboardState.LOAD_PRODUCTION_ORDERS());
-    this.store$.dispatch(dashboardState.LOAD_FINAL_MATERIALS());
+    this.store$.dispatch(dashboardState.LOAD_FINAL_PRODUCTS());
     this.dataOrders = this.store$.pipe(select(dashboardState.selectProductionOrders));
   }
 
