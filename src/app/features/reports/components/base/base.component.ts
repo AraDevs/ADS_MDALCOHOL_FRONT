@@ -48,7 +48,6 @@ export class BaseComponent implements OnInit, OnDestroy {
     this.store$.dispatch(dashboardState.LOAD_MUNICIPALITIES());
     this.store$.dispatch(dashboardState.LOAD_FINAL_PRODUCTS());
 
-
     this.dataSet1Control = this.form.get('dataSet1') as FormControl;
     this.dataSet2Control = this.form.get('dataSet2') as FormControl;
 
@@ -69,7 +68,7 @@ export class BaseComponent implements OnInit, OnDestroy {
 
     const data$ = combineLatest([
       reportType$,
-      merge(selectData$, this.dataSet2Control.valueChanges),
+      merge(selectData$, this.dataSet2Control.valueChanges.pipe(startWith([null]))),
     ]);
 
     this.subs.sink = combineLatest([reportType$, selectData$])
